@@ -35,4 +35,81 @@ unsigned long CCryptoContext::GetProvider() {
     return m_dwProvider;
 }
 
+#pragma pack(push, 1)
+class CMenu {
+public:
+    unsigned char m_byteMenuID;
+    char m_charTitle[33];
+    char m_charItems[12][2][33];
+    char m_charHeader[2][33];
 
+    char* GetMenuTitle();
+    char* GetMenuItem(unsigned char byteColumn, unsigned char byteRow);
+    char* GetMenuHeader(unsigned char byteColumn);
+};
+
+char* CMenu::GetMenuTitle() {
+    return m_charTitle;
+}
+
+char* CMenu::GetMenuItem(unsigned char byteColumn, unsigned char byteRow) {
+    return m_charItems[byteRow][byteColumn];
+}
+
+char* CMenu::GetMenuHeader(unsigned char byteColumn) {
+    return m_charHeader[byteColumn];
+}
+
+struct VEHICLE_TYPE {
+    char gap0[0x45c];
+    unsigned short wAlarmState; // 0x45c
+    char gap1[0x62];
+    float fHealth;              // 0x4c0
+    char gap2[0x3a8];
+    unsigned long dwHydraThrusters; // 0x86c
+    char gap3[0xdc];
+    float fTankRotX;            // 0x94c
+    float fTankRotY;            // 0x950
+};
+
+class CVehicle {
+public:
+    char gap[0x4c];
+    VEHICLE_TYPE* m_pVehicle;
+
+    float GetTankRotX();
+    float GetTankRotY();
+    unsigned long GetHydraThrusters();
+    void SetHydraThrusters(unsigned long dwDirection);
+    void SetHealth(float fHealth);
+    void SetAlarmState(unsigned short wState);
+};
+
+float CVehicle::GetTankRotX() {
+    return m_pVehicle->fTankRotX;
+}
+
+float CVehicle::GetTankRotY() {
+    return m_pVehicle->fTankRotY;
+}
+
+unsigned long CVehicle::GetHydraThrusters() {
+    if (m_pVehicle) return m_pVehicle->dwHydraThrusters;
+    return 0;
+}
+
+void CVehicle::SetHydraThrusters(unsigned long dwDirection) {
+    if (!m_pVehicle) return;
+    m_pVehicle->dwHydraThrusters = dwDirection;
+}
+
+void CVehicle::SetHealth(float fHealth) {
+    if (!m_pVehicle) return;
+    m_pVehicle->fHealth = fHealth;
+}
+
+void CVehicle::SetAlarmState(unsigned short wState) {
+    m_pVehicle->wAlarmState = wState;
+}
+
+#pragma pack(pop)
