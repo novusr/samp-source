@@ -452,5 +452,174 @@
         }
       ]
     }
+  },
+  {
+    "run": "d",
+    "matched": 20,
+    "total": 20,
+    "functions": [
+      {
+        "name": "PlayerPool.GetSlotState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "PlayerPool.GetAt",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "LocalPlayer.AreKeysChanged",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.ctor",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.UpdateCount",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.FindIDFromGtaPtr",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.DeleteAll",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "StoreLocalCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "RestoreLocalCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "SetPlayerCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "GetLocalAspect",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "GetLocalZoom",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "SetRemoteCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Game.SetWeather",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Game.SetGravity",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsCellphoneEnabled",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetPissingState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CCryptoContext.GetProvider",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.sqrtf",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.atan2f",
+        "exact": true,
+        "difference_offsets": []
+      }
+    ],
+    "build": {
+      "run": "baseline",
+      "utc": "2026-10-22T21:27:23.515040+00:00",
+      "options": [
+        "/nologo",
+        "/c",
+        "/Ox",
+        "/Og",
+        "/Ob1",
+        "/Oi",
+        "/Ot",
+        "/Oy",
+        "/MT",
+        "/Zp1",
+        "/EHsc",
+        "/Gy"
+      ],
+      "toolchain": [
+        {
+          "name": "cl.exe",
+          "version": "13.10.3077",
+          "sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+        },
+        {
+          "name": "c1xx.dll",
+          "version": "13.10.3077",
+          "sha256": "353f3d5dcd050b876e1c044b99c4bf47958d255f395a4919f406a19921be4dfa"
+        },
+        {
+          "name": "c2.dll",
+          "version": "13.10.3077",
+          "sha256": "bcd28f39b1798b07989c30a1df471cf87fc20e3802d130901a08f83800e6b81e"
+        },
+        {
+          "name": "link.exe",
+          "version": "7.10.3077",
+          "sha256": "0d5f9712d0da843d787bf4ce4e678abc6b737940996706b2c86101eac9df3e3c"
+        }
+      ],
+      "units": [
+        {
+          "unit": "pools",
+          "source_sha256": "2520a0b4117b272a93a567e9fe085b02dc2a992d52c519809c8623b10767e0a8",
+          "object_sha256": "9529cdb56cbb8560273036cbb8a8feb912b15ecf619816afe562d302a519d5de"
+        },
+        {
+          "unit": "actors",
+          "source_sha256": "a4d91bcf45a98db629d5632a9cd9b54195c0ce0425e8e11511c299b5144dd163",
+          "object_sha256": "f0d3382f7704fc835589ab92ec1568658329e4e5c4afba65c75f42d0324a3396"
+        },
+        {
+          "unit": "camera",
+          "source_sha256": "252d2912bd7fda6a466235a2f5b240d531f74a98eb404513c6f45b3ae6fc65af",
+          "object_sha256": "df215f6fe7d32260e25d2f3350cce71af2e79462e80ff8f5a25364d9bb84b360"
+        },
+        {
+          "unit": "game",
+          "source_sha256": "465ca9f9d266b326d78a014e91a3befe175a1f685598ddd0f55eab811602f617",
+          "object_sha256": "f94dc5daa4dcb957af2ea15e6b33b3e3246462e2fa267f91a4c5bd8a4dcdcdbc"
+        }
+      ]
+    }
   }
 ]

@@ -29,4 +29,21 @@ int LocalPlayer::AreKeysChanged(unsigned short a, unsigned short b, unsigned sho
     if (a == key1 && b == key2 && c == key3) return 0;
     return 1;
 }
+class CPlayerPed {
+public:
+    char gap[0x48];
+    int m_iCellPhoneEnabled;
+    char gap2[0x2a6];
+    int m_iPissingState;
+    int IsCellphoneEnabled();
+    int GetPissingState();
+};
+int CPlayerPed::IsCellphoneEnabled() {
+    return m_iCellPhoneEnabled;
+}
+int CPlayerPed::GetPissingState() {
+    return m_iPissingState;
+}
+
 #pragma pack(pop)
+

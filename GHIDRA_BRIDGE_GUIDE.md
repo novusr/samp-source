@@ -127,3 +127,34 @@ Data ekspor saat ini sudah lengkap. Jika di kemudian hari Anda menambahkan anota
 ```bash
 ghidra-bridge export all
 ```
+
+---
+
+## 5. Alur Kerja Rekonstruksi & Matching Fungsi Leaf
+
+Contoh siklus end-to-end rekonstruksi fungsi leaf (seperti `CPlayerPed::IsCellphoneEnabled`, `CCryptoContext::GetProvider`, dll.):
+
+1. **Analisis & Ranking Kandidat Uncovered:**
+   ```bash
+   python3 tools/rank_uncovered_candidates.py \
+     --proof evidence/checkpoint32/client-router-rpc-acceptance.json \
+     --discovery evidence/checkpoint32/michael-player-discovery.json \
+     --discovery evidence/checkpoint32/ui-pools-discovery.json \
+     --output build/ranked-uncovered.json
+   ```
+
+2. **Dekomposisi & Inspeksi Assembly via Ghidra Bridge:**
+   ```bash
+   ghidra-bridge decompile 100ae0a0
+   ghidra-bridge asm 100ae0a0
+   ```
+
+3. **Rekonstruksi di Source Code (`src/`):**
+   Tuliskan implementasi C++ murni yang mereproduksi register dan layout akses yang identik.
+
+4. **Kompilasi & Verifikasi Exact Matching:**
+   ```bash
+   python3 tools/build_linux.py --run baseline
+   python3 tools/verify.py --run baseline
+   ```
+

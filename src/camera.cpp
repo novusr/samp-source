@@ -32,4 +32,17 @@ void __stdcall SetRemoteCamera(unsigned char id) {
     *cameraZoom = zoom;
     *aspectRatio = remoteAspect[id] + 1.0f;
 }
+
+double __cdecl sqrt(double);
+double __cdecl atan2(double, double);
+#pragma intrinsic(sqrt, atan2)
+
+float _sqrtf(float x) {
+    return (float)sqrt((double)x);
 }
+
+float _atan2f(float y, float x) {
+    return (float)atan2((double)y, (double)x);
+}
+}
+

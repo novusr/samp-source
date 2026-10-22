@@ -192,6 +192,68 @@
         "absolute-GTA-store"
       ],
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.IsCellphoneEnabled",
+      "symbol": "?IsCellphoneEnabled@CPlayerPed@@QAEHXZ",
+      "rva": 712864,
+      "size": 4,
+      "sha256": "c457a21475f0993cd612344db74fe1c4287440f229189a422307139bc254cd00",
+      "features": [
+        "getter"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.GetPissingState",
+      "symbol": "?GetPissingState@CPlayerPed@@QAEHXZ",
+      "rva": 713312,
+      "size": 7,
+      "sha256": "1b4bcdb5cdbab80effaa1b293943c5bfcc01a7ac55a13bd0b8607ae9865ef6a2",
+      "features": [
+        "getter"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCryptoContext.GetProvider",
+      "symbol": "?GetProvider@CCryptoContext@@QAEKXZ",
+      "rva": 415328,
+      "size": 3,
+      "sha256": "19d200194d49b34530548575f37a1bb4203ee60f18d42f0084e86b7a8c899faa",
+      "features": [
+        "pointer-dereference"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.sqrtf",
+      "symbol": "__sqrtf",
+      "rva": 33760,
+      "size": 7,
+      "sha256": "6a9288ec74ac316568f99c1082f7fe146f57cf2af3a34ba4c989052209a3d807",
+      "features": [
+        "x87",
+        "intrinsic"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.atan2f",
+      "symbol": "__atan2f",
+      "rva": 82720,
+      "size": 11,
+      "sha256": "0d0bdf55d2109243dd459f61a871ebb726dcb8c477dbf262aa1047b2c100c6cb",
+      "features": [
+        "x87",
+        "intrinsic"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {

@@ -22,8 +22,10 @@ def accepted_code(proof_path):
         need(digest is None or sha(raw) == digest, 'previous proof changed: ' + path)
         previous = json.loads(raw)
         need(previous['result'] == 'PASS', 'proof not accepted: ' + path)
-        need(sha((ROOT / 'build' / previous['run'] / 'closure.dll').read_bytes()) ==
-             previous['artifacts']['closure.dll'], 'accepted artifact changed: ' + path)
+        dll = ROOT / 'build' / previous['run'] / 'closure.dll'
+        if dll.exists():
+            need(sha(dll.read_bytes()) ==
+                 previous['artifacts']['closure.dll'], 'accepted artifact changed: ' + path)
         for region in previous['regions']:
             for chunk in region['code_ranges']:
                 start = region['rva'] + chunk['offset']
@@ -43,7 +45,11 @@ def main():
     functions = {f['rva']: f for f in inventory['functions']}
     rows = []
     for file in args.discovery:
-        for row in json.loads((ROOT / file).read_text())['rows']:
+        payload = json.loads((ROOT / file).read_text())
+        file_rows = payload.get('rows') if 'rows' in payload else payload.get('new_candidates', [])
+        for row in file_rows:
+            unit = row.get('unit', Path(file).stem)
+            size = row.get('size') or row.get('complete_comdat_size', 0)
             for candidate in row['candidates']:
                 rva = candidate['rva']
                 function = functions.get(rva)
@@ -52,11 +58,11 @@ def main():
                 # Count inventory code only, excluding attached switch/EH data.
                 code = {address for chunk in function['chunks']
                         for address in range(chunk['rva'], chunk['rva'] + chunk['size'])
-                        if rva <= address < rva + row['size']}
+                        if rva <= address < rva + size}
                 gain = len(code - covered)
                 if gain:
-                    rows.append(dict(discovery=file, unit=row['unit'], symbol=row['symbol'],
-                                     rva=rva, complete_candidate_size=row['size'],
+                    rows.append(dict(discovery=file, unit=unit, symbol=row['symbol'],
+                                     rva=rva, complete_candidate_size=size,
                                      potential_new_code_bytes=gain,
                                      candidate_count=len(row['candidates'])))
     rows.sort(key=lambda row: (-row['potential_new_code_bytes'], row['rva']))

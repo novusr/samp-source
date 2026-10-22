@@ -24,3 +24,15 @@ void Game::SetGravity(float gravity) {
     Unprotect((void*)0x863984, 4);
     *(float*)0x863984 = gravity;
 }
+
+class CCryptoContext {
+public:
+    unsigned long m_dwProvider;
+    unsigned long GetProvider();
+};
+
+unsigned long CCryptoContext::GetProvider() {
+    return m_dwProvider;
+}
+
+

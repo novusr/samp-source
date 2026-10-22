@@ -121,7 +121,12 @@ Output yang diharapkan dari `verify.py`:
 RAW_EXACT                 PlayerPool.GetSlotState            26 bytes
 RAW_EXACT                 PlayerPool.GetAt                   36 bytes
 ...
-PASS: 15/15 functions, 540 unique code bytes
+RAW_EXACT                 CPlayerPed.IsCellphoneEnabled       4 bytes
+RAW_EXACT                 CPlayerPed.GetPissingState          7 bytes
+RAW_EXACT                 CCryptoContext.GetProvider          3 bytes
+RAW_EXACT                 Math.sqrtf                          7 bytes
+RAW_EXACT                 Math.atan2f                        11 bytes
+PASS: 20/20 functions, 572 unique code bytes
 ```
 
 Jalankan unit tests verifier:
