@@ -55,6 +55,8 @@ This is an early reconstruction, not a playable replacement DLL. Matching indivi
 
 Reproduction requires your own R5 DLL, Visual Studio .NET 2003 and Python. The current build automation uses a Windows VM through Parallels on macOS. The original DLL, build artifacts and compiler are not included.
 
+**Linux users:** A full native Linux workflow using Wine is supported. The Visual C++ Toolkit 2003 (`cl.exe` 13.10.3077) runs correctly under Wine and produces bit-identical object files. See **[docs/linux-setup.md](docs/linux-setup.md)** for the complete setup guide.
+
 ## Credits
 
 Built on earlier community work, including [dashr9230/SA-MP](https://github.com/dashr9230/SA-MP), with [source provenance recorded](config/checkpoint32/provenance.json). Prior work provides leads; binary comparisons establish the matches.
