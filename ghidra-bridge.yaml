@@ -1,0 +1,13 @@
+# ghidra-ai-bridge configuration for SA-MP 0.3.7-R5 (R5-Reversed)
+ghidra:
+  install_dir: /opt/ghidra
+  project_dir: /home/novusr/Documents/R5-Reversed/private
+  project_name: samp-source
+  program_name: samp.dll
+
+paths:
+  export_dir: /home/novusr/Documents/R5-Reversed/ghidra_export
+  address_map: /home/novusr/Documents/R5-Reversed/ghidra_export/address_map.json
+
+source:
+  root: /home/novusr/Documents/R5-Reversed/client/saco
