@@ -253,7 +253,7 @@ float CEntity::GetDistanceFromLocalPlayerPed()
 	CPlayerPed *pLocalPlayerPed = pGame->FindPlayerPed();
 	CLocalPlayer *pLocalPlayer=NULL;
 
-	if(!pLocalPlayerPed) return 10000.0f;
+	if(!pLocalPlayerPed) return 100000.0f;
 
 	GetMatrix(&matThis);
 
@@ -305,7 +305,7 @@ float CEntity::Get2DDistanceFromLocalPlayerPed()
 	CPlayerPed *pLocalPlayerPed = pGame->FindPlayerPed();
 	CLocalPlayer *pLocalPlayer=NULL;
 
-	if(!pLocalPlayerPed) return 10000.0f;
+	if(!pLocalPlayerPed) return 100000.0f;
 
 	GetMatrix(&matThis);
 
@@ -710,6 +710,7 @@ BOOL CEntity::IsStationary()
 
 
 // Symbolic GTA matrix ABI bridge; full R5 body at 0x9F8F0.
+// R5: 0x1009F8F0
 void CEntity::GetEulerAngles(float *x, float *y, float *z)
 {
  if(!m_pEntity) return;
