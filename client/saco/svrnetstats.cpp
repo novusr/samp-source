@@ -7,6 +7,7 @@ char szSvrStatBuf[16384];
 char szSvrDrawLine[1024];
 RakNetStatisticsStruct RakServerStats;
 
+// R5: 0x10071220
 CSvrNetStats::CSvrNetStats(IDirect3DDevice9 *pD3DDevice)
 {
 	m_dwLastUpdateTick = GetTickCount();

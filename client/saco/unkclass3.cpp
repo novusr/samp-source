@@ -3,6 +3,7 @@
 
 extern CConfig *pConfig;
 
+// R5: 0x1006F480
 CUnkClass3::CUnkClass3(IDirect3DDevice9 *pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;
@@ -18,6 +19,7 @@ CUnkClass3::CUnkClass3(IDirect3DDevice9 *pD3DDevice)
 	memset(field_89, 0, sizeof(field_89));
 }
 
+// R5: 0x1006FA20
 void CUnkClass3::ResetDialogControls(CDXUTDialog *pDialog)
 {
 	m_pDialog = pDialog;

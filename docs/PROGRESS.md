@@ -1,29 +1,29 @@
 # Status & Progress Rekonstruksi SA-MP 0.3.7 R5
 
-> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 21:55 UTC**.
+> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 22:15 UTC**.
 
 ## 🎯 PROGRES KESELURUHAN PROYEK (MENUJU 100%)
 
-### `███████████████████████░░░░░░░` **78.2% / 100.0%**
+### `████████████████████████░░░░░░` **78.3% / 100.0%**
 
 | Pilar Penyelesaian Proyek | Progress Bar | Capaian Saat Ini | Persentase | Target 100% |
 | :--- | :--- | ---: | ---: | :--- |
-| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1178 / 1501 fungsi** | **78.5%** | Seluruh method class terimplementasi |
-| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3350 / 5265 fungsi** | **63.6%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
+| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1181 / 1501 fungsi** | **78.7%** | Seluruh method class terimplementasi |
+| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3359 / 5265 fungsi** | **63.8%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
 | **3. Kompilasi Unit MSVC 2003 (`tools/build.py`)** | `████████████████████` | **150 / 151 unit `.cpp`** | **99.3%** | 151/151 unit `.cpp` lolos compile & link ke `samp.dll` |
-| **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **124 / 516 file selesai** | **24.0%** | 0 file tersisa di `_reference/` (tersisa 392 file) |
+| **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **125 / 516 file selesai** | **24.2%** | 0 file tersisa di `_reference/` (tersisa 391 file) |
 
 ### Rincian 5.265 Fungsi di Binary `samp.dll` R5 (`_index.json`)
 
 | Kategori | Keterangan | Jumlah (`_index.json`) | Persentase dari 5.265 |
 | :--- | :--- | ---: | ---: |
-| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **561** | 10.7% |
+| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **570** | 10.8% |
 | ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **11** | 0.2% |
 | ✅ `IN_VENDOR` | Fungsi di `vendor/upstream/` (DXUT & RakNet) | **678** | 12.9% |
 | ⚙️ `CRT_OR_TEMPLATE` | Otomatis dari Compiler MSVC 2003 (`libcmt.lib`, SEH, STL/Template) | **2100** | 39.9% |
-| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **216** | 4.1% |
-| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **359** | 6.8% |
-| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1340** | 25.5% |
+| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **213** | 4.0% |
+| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **358** | 6.8% |
+| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1335** | 25.4% |
 | **TOTAL BINARY R5** | **Seluruh fungsi di `samp.dll` 0.3.7 R5** | **5265** | **100.0%** |
 
 ---
@@ -32,7 +32,7 @@
 
 | Modul | Progress | Selesai (`Done`) | Di `_reference/` | Belum (`Todo`) | Total Fungsi Class |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| **game** | `██████████████░` ** 93.5%** | 290 | 0 | 20 | 310 |
+| **game** | `██████████████░` ** 94.5%** | 293 | 0 | 17 | 310 |
 | **net** | `███████████████` **100.0%** | 51 | 0 | 0 | 51 |
 | **root (UI/Core)** | `███████████████` ** 97.9%** | 92 | 0 | 2 | 94 |
 | **archive** | `███████████████` **100.0%** | 1 | 0 | 0 | 1 |
@@ -40,7 +40,7 @@
 | **d3d9 (DXUT)** | `███████░░░░░░░░` ** 49.4%** | 277 | 1 | 283 | 561 |
 | **raknet** | `██████████████░` ** 96.3%** | 448 | 0 | 17 | 465 |
 | **other** | `███████░░░░░░░░` ** 43.6%** | 71 | 79 | 13 | 163 |
-| **TOTAL MODUL UTAMA** | `████████████░░░` ** 78.5%** | **1178** | - | **323** | **1501** |
+| **TOTAL MODUL UTAMA** | `████████████░░░` ** 78.7%** | **1181** | - | **320** | **1501** |
 
 ---
 
@@ -48,13 +48,13 @@
 
 | Status | Modul | Class | Progress | Done / Total | Annot | InSrc | InRef | Todo | File Target |
 | :---: | :--- | :--- | :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| ✅ | game | `CCamera` | `██████████` 100.0% | **14/14** | 14 | 0 | 0 | 0 | `game/camera.cpp` |
 | ✅ | game | `CGame` | `██████████` 100.0% | **66/66** | 66 | 0 | 0 | 0 | `game/game.cpp` |
 | ✅ | game | `CMenu` | `██████████` 100.0% | **11/11** | 11 | 0 | 0 | 0 | `game/menu.cpp` |
 | 🔄 | game | `CPlayerPed` | `██████████`  98.8% | **82/83** | 81 | 1 | 0 | 1 | `game/playerped.cpp` |
+| 🔄 | game | `CEntity` | `██████████`  97.8% | **45/46** | 45 | 0 | 0 | 1 | `game/entity.cpp` |
 | 🔄 | game | `CActorPed` | `█████████░`  94.4% | **17/18** | 17 | 0 | 0 | 1 | `game/actorped.cpp` |
 | 🔄 | game | `CVehicle` | `█████████░`  94.1% | **32/34** | 32 | 0 | 0 | 2 | `game/vehicle.cpp` |
-| 🔄 | game | `CEntity` | `█████████░`  93.5% | **43/46** | 43 | 0 | 0 | 3 | `game/entity.cpp` |
-| 🔄 | game | `CCamera` | `█████████░`  92.9% | **13/14** | 13 | 0 | 0 | 1 | `game/camera.cpp` |
 | 🔄 | game | `CTask` | `█████████░`  92.3% | **12/13** | 7 | 5 | 0 | 1 | `game/task.cpp` |
 | 🔄 | game | `CAudio` | `████████░░`  77.8% | **7/9** | 7 | 0 | 0 | 2 | `game/audio.cpp` |
 | 🔄 | game | `CTaskJetpack` | `████████░░`  75.0% | **3/4** | 1 | 2 | 0 | 1 | `game/task.cpp` |

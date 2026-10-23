@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+// R5: 0x10060D40
 CNetStats::CNetStats(IDirect3DDevice9 *pD3DDevice)
 {
 	field_8 = GetTickCount();
