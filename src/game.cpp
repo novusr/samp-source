@@ -323,7 +323,8 @@ public:
     void SetTurnSpeedVector(_VECTOR vec);
     void GetMoveSpeedVector(_VECTOR* pVec);
     void GetTurnSpeedVector(_VECTOR* pVec);
-    unsigned long GetWorldBoundRadius();    void GetBoundCentre(_VECTOR *pVector);
+    unsigned long GetWorldBoundRadius();    void GetBoundCentre(_VECTOR *pVector);    void ApplyTurnSpeed();
+
 
 };
 
@@ -693,4 +694,16 @@ _PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex)
 		mov pPed, eax
 	}
 	return pPed;
+}
+
+
+// Matched void CEntity::ApplyTurnSpeed (0x1009ee90)
+void CEntity::ApplyTurnSpeed()
+{
+	unsigned long dwEnt = (unsigned long)m_pEntity;
+	if (!dwEnt) return;
+
+	_asm mov ecx, dwEnt
+	_asm mov eax, 0x542E20
+	_asm call eax
 }

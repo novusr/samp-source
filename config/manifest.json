@@ -927,6 +927,19 @@
     },
     {
       "unit": "game",
+      "name": "void CEntity::ApplyTurnSpeed",
+      "symbol": "?ApplyTurnSpeed@CEntity@@QAEXXZ",
+      "rva": 650896,
+      "size": 28,
+      "sha256": "9313cc1af16be28652c1eb60782f3105086b0b5ecf3f48835d04f527a4ff9960",
+      "features": [
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "void CEntity::GetBoundCentre",
       "symbol": "?GetBoundCentre@CEntity@@QAEXPAU_VECTOR@@@Z",
       "rva": 650992,
