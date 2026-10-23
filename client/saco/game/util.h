@@ -86,3 +86,7 @@ const char* GetTaskNameFromTask(DWORD *task);
 BYTE * __stdcall GetModelInfo(int model);
 WORD __stdcall GetModelReferenceCount(int model);
 
+struct RpClump;
+void QueryEntityMatrixAxis(MATRIX4X4 *matrix, int axis, float *angle);
+int GetEntityClumpAtomicCount(RpClump *clump);
+

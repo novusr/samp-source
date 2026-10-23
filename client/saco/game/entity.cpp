@@ -10,6 +10,7 @@
 extern CGame *pGame;
 extern CNetGame	*pNetGame;
 extern CChatWindow *pChatWindow;
+extern int __stdcall ModelInfoLoaded(UINT model);
 
 //-----------------------------------------------------------
 
@@ -729,6 +730,23 @@ void CEntity::GetEulerAngles(float *x, float *y, float *z)
  *z = *z * 57.295776f * -1.0f;
 }
 
+// R5: 0x1009F960
+void CEntity::GetMatrixAxisAngles(float *x, float *y, float *z)
+{
+	if(m_pEntity) {
+		MATRIX4X4 *matrix = m_pEntity->mat;
+		if(matrix) {
+			float angle = 0.0f;
+			QueryEntityMatrixAxis(matrix, 0, &angle);
+			*x = angle;
+			QueryEntityMatrixAxis(matrix, 1, &angle);
+			*y = angle;
+			QueryEntityMatrixAxis(matrix, 2, &angle);
+			*z = angle;
+		}
+	}
+}
+
 // Symbolic GTA physical-force ABI bridge; full R5 body at 0x9F9D0.
 // R5: 0x1009F9D0
 void CEntity::ApplyForce(float x, float y, float z, float px, float py, float pz)
@@ -758,6 +776,16 @@ void CEntity::PlayAudio(int event)
  _asm lea ecx, [edx+0x138]
  _asm mov edx, 0x4F6420
  _asm call edx
+}
+
+// R5: 0x1009FA30
+int CEntity::GetAtomicCount()
+{
+	if(m_pEntity) {
+		RpClump *clump = (RpClump*)ModelInfoLoaded(m_pEntity->nModelIndex);
+		if(clump) return GetEntityClumpAtomicCount(clump);
+	}
+	return -1;
 }
 
 // R5: 0x1009FA60

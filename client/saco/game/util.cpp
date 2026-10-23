@@ -1073,3 +1073,51 @@ WORD __stdcall GetModelReferenceCount(int model)
 	if (!pModelInfo) return 0;
 	return *(WORD *)(pModelInfo + 8);
 }
+
+extern int iGtaVersion;
+VECTOR r5MatrixRotationAxes[3] = {
+	{ 1.0f, 0.0f, 0.0f },
+	{ 0.0f, 1.0f, 0.0f },
+	{ 0.0f, 0.0f, 1.0f }
+};
+VECTOR r5MatrixQueryAxis;
+VECTOR r5MatrixQueryCenter;
+float r5MatrixQueryAngle;
+
+// R5: 0x100B5830
+void QueryEntityMatrixAxis(MATRIX4X4 *matrix, int axis, float *angle)
+{
+	r5MatrixQueryAxis = r5MatrixRotationAxes[axis];
+	DWORD dwFunc = (iGtaVersion != 1) ? 0x7F2760 : 0x7F2720;
+	_asm {
+		lea eax, r5MatrixQueryCenter
+		push eax
+		lea eax, r5MatrixQueryAngle
+		push eax
+		lea eax, r5MatrixQueryAxis
+		push eax
+		push matrix
+		mov edx, dwFunc
+		call edx
+		pop edx
+		pop edx
+		pop edx
+		pop edx
+	}
+	*angle = r5MatrixQueryAngle;
+}
+
+// R5: 0x100B1410
+int GetEntityClumpAtomicCount(RpClump *clump)
+{
+	int result = 0;
+	_asm {
+		push clump
+		mov edx, 0x7498E0
+		call edx
+		pop edx
+		mov result, eax
+	}
+	return result;
+}
+

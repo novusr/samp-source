@@ -50,9 +50,11 @@ public:
 	DWORD GetWorldBoundRadius();
 	void  SetEulerAngles(float fX, float fY, float fZ);
 	void  GetEulerAngles(float *x, float *y, float *z);
+	void  GetMatrixAxisAngles(float *x, float *y, float *z);
 	void  ApplyForce(float x, float y, float z, float px, float py, float pz);
 
 	void PlayAudio(int event);
+	int  GetAtomicCount();
 	PDWORD GetRwObject();
 	BYTE IsNativeTarget();
 	void DeleteRwObject();
