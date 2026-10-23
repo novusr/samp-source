@@ -363,11 +363,10 @@ _COMMENT_STRING_RE = re.compile(
     re.MULTILINE,
 )
 
-# Matches top-level C++ method or function definitions
 _FUNC_HEADER_RE = re.compile(
     r"(?m)^(?P<indent>[ \t]*)"
     r"(?!if\b|for\b|while\b|switch\b|catch\b|else\b|return\b|sizeof\b|typedef\b|struct\b|class\b|enum\b|union\b|namespace\b)"
-    r"(?P<prefix>(?:[A-Za-z_][\w:<>\*\s,&]*?\s+|\b))?"
+    r"(?P<prefix>(?:[A-Za-z_][\w:<>\*\s,&]*?(?:[\*\s]|&)\s*|\b))?"
     r"(?:(?P<cls>[A-Za-z_]\w*)::)?(?P<meth>~?[A-Za-z_]\w*)\s*"
     r"\((?P<args>[^;{}]*)\)\s*(?:const\s*)?\{",
 )
