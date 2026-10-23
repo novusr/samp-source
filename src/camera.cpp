@@ -94,3 +94,111 @@ float __stdcall SquaredDistanceBetweenPoints(_VECTOR* vec1, _VECTOR* vec2) {
     return (fDX * fDX) + (fDY * fDY) + (fDZ * fDZ);
 }
 
+inline char Util_toupper(char c) {
+    return ((c > (char)0x60) && (c < (char)0x7b)) ? c - 0x20 : c;
+}
+
+char* Util_stristr(const char* String, const char* Pattern) {
+    char *pptri, *sptri, *starti;
+
+    for (starti = (char*)String; *starti != '\0'; starti++) {
+        for (; ((*starti != '\0') && (Util_toupper(*starti) != Util_toupper(*Pattern))); starti++);
+
+        pptri = (char*)Pattern;
+        sptri = (char*)starti;
+
+        while (Util_toupper(*sptri) == Util_toupper(*pptri)) {
+            sptri++;
+            pptri++;
+
+            if ('\0' == *pptri)
+                return (starti);
+        }
+    }
+
+    return 0;
+}
+
+int Util_wildcmp(char* wild, char* string) {
+    char *cp, *mp;
+
+    while ((*string) && (*wild != '*')) {
+        if ((*wild != *string) && (*wild != '?')) {
+            return 0;
+        }
+        wild++;
+        string++;
+    }
+
+    while (*string) {
+        if (*wild == '*') {
+            if (!*++wild) {
+                return 1;
+            }
+            mp = wild;
+            cp = string + 1;
+        } else if ((*wild == *string) || (*wild == '?')) {
+            wild++;
+            string++;
+        } else {
+            wild = mp;
+            string = cp++;
+        }
+    }
+
+    while (*wild == '*') {
+        wild++;
+    }
+
+    return !*wild;
+}
+
+int Util_strnicmp(const char* s1, const char* s2, unsigned int n) {
+    if (n == 0) return 0;
+
+    do {
+        if (Util_toupper((unsigned char)*s1) != Util_toupper((unsigned char)*s2++))
+            return (int)Util_toupper((unsigned char)*s1) - (int)Util_toupper((unsigned char)*--s2);
+        if (*s1++ == 0)
+            break;
+    } while (--n != 0);
+
+    return 0;
+}
+
+char* Util_itoa(int v, char* s, int r) {
+    int i, neg = 0;
+    char* p = s;
+    char* q = s;
+
+    if (r < 0 || r > 35) {
+        *s = 0;
+        return (s);
+    }
+    if (r == 0) r = 10;
+    if (v == 0) {
+        *p++ = '0';
+        *p = 0;
+        return (s);
+    }
+    if (v < 0) {
+        neg = 1;
+        v = -v;
+    }
+    while (v > 0) {
+        i = v % r;
+        if (i > 9) i += 7;
+        *p++ = '0' + i;
+        v /= r;
+    }
+    if (neg) *p++ = '-';
+    *p-- = 0;
+    q = s;
+    while (p > q) {
+        i = *q;
+        *q++ = *p;
+        *p-- = i;
+    }
+    return (s);
+}
+

@@ -49,7 +49,11 @@ struct _VEHICLE_TYPE {
     char gap1[0x43c];               // 0x24 to 0x460
     void* pDriver;                  // 0x460
 };
-struct _ENTITY_TYPE;
+struct _ENTITY_TYPE {
+    void* vtable;
+    char gap0[0x14];
+    void* pRwObject;
+};
 
 struct PED_TYPE {
     char gap0[0x46c];
@@ -111,6 +115,7 @@ public:
     int HasGoggles();
     int IsAPassenger();
     _WEAPON_SLOT_TYPE* FindWeaponSlot(unsigned long dwWeapon);
+    int IsInJetpackMode();
 };
 
 int CPlayerPed::IsCellphoneEnabled() {
@@ -219,6 +224,143 @@ _WEAPON_SLOT_TYPE* CPlayerPed::FindWeaponSlot(unsigned long dwWeapon) {
         }
     }
     return 0;
+}
+
+int CPlayerPed::IsInJetpackMode() {
+    if (m_pPed && !(m_pPed->dwStateFlags & 0x100)) {
+        void* pTaskManager = *(void**)((char*)m_pPed + 0x47c);
+        void* pTask = *(void**)((char*)pTaskManager + 0x10);
+        if (pTask) {
+            return *(void**)pTask == (void*)0x8705c4;
+        }
+    }
+    return 0;
+}
+
+class CObject {
+public:
+    char gap[0x40];
+    _ENTITY_TYPE* m_pEntity;
+};
+
+class CObjectPool {
+public:
+    int lastActive;
+    int slots[1000];
+    CObject* objects[1000];
+
+    CObjectPool();
+    int FindIDFromGtaPtr(_ENTITY_TYPE* pGtaEntity);
+};
+
+CObjectPool::CObjectPool() {
+    int i = 1000;
+    unsigned long* p = (unsigned long*)this;
+    do {
+        p[1] = 0;
+        p[0x3e9] = 0;
+        --i;
+        ++p;
+    } while (i != 0);
+    lastActive = 0;
+}
+
+int CObjectPool::FindIDFromGtaPtr(_ENTITY_TYPE* pGtaEntity) {
+    int i = 1;
+    if (lastActive >= 1) {
+        do {
+            CObject* pObj = objects[i];
+            if (pObj && pGtaEntity == pObj->m_pEntity)
+                return i;
+            ++i;
+        } while (i <= lastActive);
+    }
+    return 0xffff;
+}
+
+struct _VECTOR {
+    float X, Y, Z;
+};
+
+struct _MATRIX4X4 {
+    _VECTOR right;
+    unsigned long flagsRight;
+    _VECTOR up;
+    unsigned long flagsUp;
+    _VECTOR at;
+    unsigned long flagsAt;
+    _VECTOR pos;
+    unsigned long flagsPos;
+};
+
+extern "C" double __cdecl sqrt(double);
+#pragma intrinsic(sqrt)
+
+class RPCObjectOpsView {
+public:
+    char gap[0x40];
+    _ENTITY_TYPE* m_pEntity; // 0x40
+    char gap1[4];            // 0x44
+    unsigned char m_bIsAdded;// 0x48
+    char gap2[0xc2];         // 0x49 to 0x10b
+    _VECTOR m_vecTarget;     // 0x10b to 0x117
+
+    int IsAdded();
+    float DistanceRemaining(_MATRIX4X4* pMatrix);
+};
+
+int RPCObjectOpsView::IsAdded() {
+    if (m_pEntity && *(void**)m_pEntity != (void*)0x863c40 && m_pEntity->pRwObject && m_bIsAdded)
+        return 1;
+    return 0;
+}
+
+float RPCObjectOpsView::DistanceRemaining(_MATRIX4X4* pMatrix) {
+    float fSZ = pMatrix->pos.Z - m_vecTarget.Z;
+    float fSY = pMatrix->pos.Y - m_vecTarget.Y;
+    float fSX = pMatrix->pos.X - m_vecTarget.X;
+    return (float)sqrt((double)(fSX * fSX + fSY * fSY + fSZ * fSZ));
+}
+
+class CVehicle;
+class R5VehicleTrailerPoolView {
+public:
+    char gap0[0x1134];
+    CVehicle* m_pVehicles[2000]; // 0x1134
+    int m_bSlotState[2000];      // 0x3074
+
+    CVehicle* GetAt(unsigned short id);
+    int GetSlotState(unsigned short id);
+};
+
+CVehicle* R5VehicleTrailerPoolView::GetAt(unsigned short id) {
+    if (id >= 2000 || !m_bSlotState[id]) return 0;
+    return m_pVehicles[id];
+}
+
+int R5VehicleTrailerPoolView::GetSlotState(unsigned short id) {
+    if (id >= 2000) return 0;
+    return m_bSlotState[id];
+}
+
+class RPCVehicleMotionPoolView {
+public:
+    int lastActive;              // 0x00
+    char gap[0x4fb0];            // 0x04 to 0x4fb4
+    _VEHICLE_TYPE* vehicles[2000]; // 0x4fb4
+
+    unsigned short FindIDFromGtaPtr(_VEHICLE_TYPE* pVehicle);
+};
+
+unsigned short RPCVehicleMotionPoolView::FindIDFromGtaPtr(_VEHICLE_TYPE* pVehicle) {
+    int i = 1;
+    if (lastActive >= 1) {
+        do {
+            if (pVehicle == vehicles[i]) return (unsigned short)i;
+            ++i;
+        } while (i <= lastActive);
+    }
+    return 0xffff;
 }
 
 #pragma pack(pop)

@@ -174,6 +174,13 @@ public:
     int IsFrameLimiterEnabled();
     void ToggleRadar(int bToggle);
     void DisplayHud(int bDisp);
+    int GetScreenWidth();
+    int GetScreenHeight();
+    void SetWantedLevel(unsigned char byteLevel);
+    void SetGameTextCount(unsigned short wCount);
+    int IsUsingController();
+    int GetLoadedVehicleModelCount();
+    void GetWorldTime(unsigned char* pHour, unsigned char* pMinute);
 };
 
 int CGame::GetWorldWeather() {
@@ -228,6 +235,233 @@ void CGame::DisplayHud(int bDisp) {
         *(unsigned char*)0xba6769 = 0;
         *(unsigned char*)0xbaa3fb = 1;
     }
+}
+
+int CGame::GetScreenWidth() {
+    return *(int*)0xc17044;
+}
+
+int CGame::GetScreenHeight() {
+    return *(int*)0xc17048;
+}
+
+void CGame::SetWantedLevel(unsigned char byteLevel) {
+    *(unsigned char*)0x58db60 = byteLevel;
+}
+
+void CGame::SetGameTextCount(unsigned short wCount) {
+    *(unsigned short*)0xa44b68 = wCount;
+}
+
+int CGame::IsUsingController() {
+    return *(unsigned char*)0xba6818 != 0;
+}
+
+int CGame::GetLoadedVehicleModelCount() {
+    int count = 0;
+    for (unsigned long p = 0x8e6c10; p != 0x8e7c8c; p += 0x14) {
+        if (*(int*)p) count++;
+    }
+    return count;
+}
+
+void CGame::GetWorldTime(unsigned char* pHour, unsigned char* pMinute) {
+    *pMinute = *(unsigned char*)0xb70152;
+    *pHour = *(unsigned char*)0xb70153;
+}
+
+struct _VECTOR {
+    float X, Y, Z;
+};
+
+struct _MATRIX4X4 {
+    _VECTOR right;
+    unsigned long flagsRight;
+    _VECTOR up;
+    unsigned long flagsUp;
+    _VECTOR at;
+    unsigned long flagsAt;
+    _VECTOR pos;
+    unsigned long flagsPos;
+};
+
+struct ENTITY_TYPE {
+    void* vtable;            // 0x00
+    char gap0[0x10];         // 0x04 to 0x14
+    _MATRIX4X4* mat;         // 0x14
+    void* pRwObject;         // 0x18
+    unsigned long nFlags;    // 0x1c
+    char gap1[0x2];          // 0x20 to 0x22
+    unsigned short nModelIndex; // 0x22
+    char gap2[0x1c];         // 0x24 to 0x40
+    unsigned long dwUnkFlags;// 0x40
+    _VECTOR vecMoveSpeed;    // 0x44
+    _VECTOR vecTurnSpeed;    // 0x50
+    char gap3[0x58];         // 0x5c to 0xb4
+    void* pSector;           // 0xb4
+};
+
+class CEntity {
+public:
+    char gap[0x40];
+    ENTITY_TYPE* m_pEntity;  // 0x40
+
+    void GetMatrix(_MATRIX4X4* pMatrix);
+    void SetMatrix(_MATRIX4X4 matrix);
+    void SetMoveSpeedVector(_VECTOR vec);
+    int IsAdded();
+    int IsCollisionCheckingEnabled();
+    void SetCollisionChecking(int bEnable);
+    void SetGravityProcessing(int bEnable);
+    void DisableStreaming();
+    void EnableTunnelTransition();
+    void SetApplySpeed(int bState);
+    void MakeNonCollidable();
+    unsigned long* GetRwObject();
+    unsigned char IsNativeTarget();
+    unsigned int GetModelIndex();
+    void SetTurnSpeedVector(_VECTOR vec);
+    void GetMoveSpeedVector(_VECTOR* pVec);
+    void GetTurnSpeedVector(_VECTOR* pVec);
+    unsigned long GetWorldBoundRadius();
+};
+
+void CEntity::GetMatrix(_MATRIX4X4* pMatrix) {
+    if (!m_pEntity || !m_pEntity->mat) return;
+
+    pMatrix->right.X = m_pEntity->mat->right.X;
+    pMatrix->right.Y = m_pEntity->mat->right.Y;
+    pMatrix->right.Z = m_pEntity->mat->right.Z;
+
+    pMatrix->up.X = m_pEntity->mat->up.X;
+    pMatrix->up.Y = m_pEntity->mat->up.Y;
+    pMatrix->up.Z = m_pEntity->mat->up.Z;
+
+    pMatrix->at.X = m_pEntity->mat->at.X;
+    pMatrix->at.Y = m_pEntity->mat->at.Y;
+    pMatrix->at.Z = m_pEntity->mat->at.Z;
+
+    pMatrix->pos.X = m_pEntity->mat->pos.X;
+    pMatrix->pos.Y = m_pEntity->mat->pos.Y;
+    pMatrix->pos.Z = m_pEntity->mat->pos.Z;
+}
+
+void CEntity::SetMatrix(_MATRIX4X4 Matrix) {
+    if (!m_pEntity || !m_pEntity->mat) return;
+
+    m_pEntity->mat->right.X = Matrix.right.X;
+    m_pEntity->mat->right.Y = Matrix.right.Y;
+    m_pEntity->mat->right.Z = Matrix.right.Z;
+
+    m_pEntity->mat->up.X = Matrix.up.X;
+    m_pEntity->mat->up.Y = Matrix.up.Y;
+    m_pEntity->mat->up.Z = Matrix.up.Z;
+
+    m_pEntity->mat->at.X = Matrix.at.X;
+    m_pEntity->mat->at.Y = Matrix.at.Y;
+    m_pEntity->mat->at.Z = Matrix.at.Z;
+
+    m_pEntity->mat->pos.X = Matrix.pos.X;
+    m_pEntity->mat->pos.Y = Matrix.pos.Y;
+    m_pEntity->mat->pos.Z = Matrix.pos.Z;
+}
+
+void CEntity::SetMoveSpeedVector(_VECTOR vec) {
+    m_pEntity->vecMoveSpeed.X = vec.X;
+    m_pEntity->vecMoveSpeed.Y = vec.Y;
+    m_pEntity->vecMoveSpeed.Z = vec.Z;
+}
+
+int CEntity::IsAdded() {
+    if (m_pEntity && *(void**)m_pEntity != (void*)0x863c40 && m_pEntity->pSector)
+        return 1;
+    return 0;
+}
+
+int CEntity::IsCollisionCheckingEnabled() {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40)
+        return 1;
+    return *(unsigned char*)((char*)m_pEntity + 0x1c) & 1;
+}
+
+void CEntity::SetCollisionChecking(int bEnable) {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40) return;
+    if (bEnable)
+        m_pEntity->nFlags |= 1;
+    else
+        m_pEntity->nFlags &= ~1;
+}
+
+void CEntity::SetGravityProcessing(int bEnable) {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40) return;
+    if (bEnable)
+        m_pEntity->nFlags &= 0x7ffffffd;
+    else
+        m_pEntity->nFlags |= 0x80000002;
+}
+
+void CEntity::DisableStreaming() {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40) return;
+    m_pEntity->nFlags |= 0x80400;
+}
+
+void CEntity::EnableTunnelTransition() {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40) return;
+    m_pEntity->nFlags |= 0x80000000;
+}
+
+void CEntity::SetApplySpeed(int bState) {
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863c40) return;
+    if (!bState) {
+        m_pEntity->dwUnkFlags |= 0x2000;
+    } else {
+        m_pEntity->dwUnkFlags &= ~0x2000;
+    }
+}
+
+void CEntity::MakeNonCollidable() {
+    if (m_pEntity)
+        m_pEntity->dwUnkFlags &= 0xfffffff7;
+}
+
+unsigned long* CEntity::GetRwObject() {
+    if (!m_pEntity) return (unsigned long*)m_pEntity;
+    return (unsigned long*)m_pEntity->pRwObject;
+}
+
+unsigned char CEntity::IsNativeTarget() {
+    if (m_pEntity && m_pEntity == *(ENTITY_TYPE**)0xb7cd68)
+        return 1;
+    return 0;
+}
+
+unsigned int CEntity::GetModelIndex() {
+    return m_pEntity->nModelIndex;
+}
+
+void CEntity::SetTurnSpeedVector(_VECTOR vec) {
+    m_pEntity->vecTurnSpeed.X = vec.X;
+    m_pEntity->vecTurnSpeed.Y = vec.Y;
+    m_pEntity->vecTurnSpeed.Z = vec.Z;
+}
+
+void CEntity::GetMoveSpeedVector(_VECTOR* pVec) {
+    pVec->X = m_pEntity->vecMoveSpeed.X;
+    pVec->Y = m_pEntity->vecMoveSpeed.Y;
+    pVec->Z = m_pEntity->vecMoveSpeed.Z;
+}
+
+void CEntity::GetTurnSpeedVector(_VECTOR* pVec) {
+    pVec->X = m_pEntity->vecTurnSpeed.X;
+    pVec->Y = m_pEntity->vecTurnSpeed.Y;
+    pVec->Z = m_pEntity->vecTurnSpeed.Z;
+}
+
+unsigned long CEntity::GetWorldBoundRadius() {
+    if (m_pEntity && m_pEntity->pRwObject && *(void**)m_pEntity != (void*)0x863c40) {
+        return *(unsigned long*)((char*)m_pEntity->pRwObject + 0x38);
+    }
+    return 0;
 }
 
 #pragma pack(pop)

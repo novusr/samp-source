@@ -1354,5 +1354,649 @@
         }
       ]
     }
+  },
+  {
+    "run": "g",
+    "matched": 115,
+    "total": 115,
+    "functions": [
+      {
+        "name": "PlayerPool.GetSlotState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "PlayerPool.GetAt",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "LocalPlayer.AreKeysChanged",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.ctor",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.UpdateCount",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.FindIDFromGtaPtr",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "ActorPool.DeleteAll",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "StoreLocalCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "RestoreLocalCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "SetPlayerCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "GetLocalAspect",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "GetLocalZoom",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "SetRemoteCamera",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Game.SetWeather",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Game.SetGravity",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsCellphoneEnabled",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetPissingState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CCryptoContext.GetProvider",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.sqrtf",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.atan2f",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "PlayerPool.GetLocalPlayer",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetActionTrigger",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetGtaVehicle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetGtaContactEntity",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetGtaContactVehicle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsDancing",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetStateFlags",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetFightingStyle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.SetHealth",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.SetArmour",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.SetStateFlags",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CMenu.GetMenuTitle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CMenu.GetMenuHeader",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CMenu.GetMenuItem",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.GetTankRotX",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.GetTankRotY",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.GetHydraThrusters",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetHydraThrusters",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetHealth",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetAlarmState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetTrailer",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetTankRot",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.IsATrainPart",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetEngineState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.SetSirenOn",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CVehicle.IsSirenOn",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.GetActionTrigger",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.GetStateFlags",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.SetArmour",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.SetStateFlags",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.SetActionTrigger",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CActorPed.IsInVehicle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.SetActionTrigger",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsInVehicle",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsOnGround",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.HasObjectAttached",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.GetCurrentWeaponSlot",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.HasGoggles",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsAPassenger",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.FindWeaponSlot",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetWorldWeather",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.IsHudEnabled",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetLocalMoney",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetMemoryUsedForStreaming",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetMemoryAvailableForStreaming",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetTimeInMilliseconds",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetRwObjectsCount",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.EnableFrameLimiter",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.IsGameLoaded",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.IsFrameLimiterEnabled",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.ToggleRadar",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.DisplayHud",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.FloatDifference",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.FloatOffset",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.SquaredDistanceBetweenHorizontalPoints",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.DistanceBetweenHorizontalPoints",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.DistanceBetweenPoints",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.SquaredDistanceBetweenPoints_floats",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Math.SquaredDistanceBetweenPoints_vectors",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.IsAdded",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.IsCollisionCheckingEnabled",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.SetCollisionChecking",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.SetGravityProcessing",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.DisableStreaming",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.EnableTunnelTransition",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.MakeNonCollidable",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetRwObject",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.IsNativeTarget",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetModelIndex",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.SetTurnSpeedVector",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetMoveSpeedVector",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetTurnSpeedVector",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetWorldBoundRadius",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.SetMoveSpeedVector",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.GetMatrix",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CEntity.SetMatrix",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetScreenWidth",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetScreenHeight",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.SetWantedLevel",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.SetGameTextCount",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.IsUsingController",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetLoadedVehicleModelCount",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CGame.GetWorldTime",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CPlayerPed.IsInJetpackMode",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CObjectPool.ctor",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "CObjectPool.FindIDFromGtaPtr",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "RPCObjectOpsView.IsAdded",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "RPCObjectOpsView.DistanceRemaining",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "R5VehicleTrailerPoolView.GetSlotState",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "R5VehicleTrailerPoolView.GetAt",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "RPCVehicleMotionPoolView.FindIDFromGtaPtr",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Util.stristr",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Util.wildcmp",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Util.strnicmp",
+        "exact": true,
+        "difference_offsets": []
+      },
+      {
+        "name": "Util.itoa",
+        "exact": true,
+        "difference_offsets": []
+      }
+    ],
+    "build": {
+      "run": "baseline",
+      "utc": "2026-10-23T09:13:14.879186+00:00",
+      "options": [
+        "/nologo",
+        "/c",
+        "/Ox",
+        "/Og",
+        "/Ob1",
+        "/Oi",
+        "/Ot",
+        "/Oy",
+        "/MT",
+        "/Zp1",
+        "/EHsc",
+        "/Gy"
+      ],
+      "toolchain": [
+        {
+          "name": "cl.exe",
+          "version": "13.10.3077",
+          "sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+        },
+        {
+          "name": "c1xx.dll",
+          "version": "13.10.3077",
+          "sha256": "353f3d5dcd050b876e1c044b99c4bf47958d255f395a4919f406a19921be4dfa"
+        },
+        {
+          "name": "c2.dll",
+          "version": "13.10.3077",
+          "sha256": "bcd28f39b1798b07989c30a1df471cf87fc20e3802d130901a08f83800e6b81e"
+        },
+        {
+          "name": "link.exe",
+          "version": "7.10.3077",
+          "sha256": "0d5f9712d0da843d787bf4ce4e678abc6b737940996706b2c86101eac9df3e3c"
+        }
+      ],
+      "units": [
+        {
+          "unit": "pools",
+          "source_sha256": "6f62aa6d03a30258e3014c237cca865ce4cffceca0d60e66bfc08f51c0cbcce1",
+          "object_sha256": "51938b8d9ef4195424a3ae3af6fbcf2bdb2ea9b613da1bc2d6e405d8f1749276"
+        },
+        {
+          "unit": "actors",
+          "source_sha256": "e148ba1782934cae78af6b7e5eb8acd64c02ee9fcac8c4f19971a9e0c9c3820d",
+          "object_sha256": "c2c16c8181acc833bc37b56e76eef987f7d5fa6e4b834e365bd9ac437ced82d9"
+        },
+        {
+          "unit": "camera",
+          "source_sha256": "eaa5be53258b12f7860f10150b08eb392a9a731a082302d2c538a1b5009cb0de",
+          "object_sha256": "2832ac40e24f71e7a9bac18938bb8335d0c86b0476c09432f387625ee949ed83"
+        },
+        {
+          "unit": "game",
+          "source_sha256": "ca6ec7adbb2d63db86bd23942544435a478aa3463ebeced2eccbaf74dcb7c92e",
+          "object_sha256": "1a6af90e03ffda1c489767fee3187b694c12a5187958a885ddb367759e784623"
+        }
+      ]
+    }
   }
 ]
