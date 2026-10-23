@@ -2522,6 +2522,30 @@
       ],
       "sha256": "d0c34f8d555d8b54db6e1e10eac51711cf6635fd49901665d1782bb48297becb",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Util.MD5Init",
+      "symbol": "?MD5Init@@YAXPAUMD5Context@@@Z",
+      "rva": 405680,
+      "size": 40,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "0a3c23301ad7459ab8ca98e6c2c1af4cc46aad7dbd9dd83de2f64723f0079854",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Util.MD5Transform",
+      "symbol": "?MD5Transform@@YAXQAKQBK@Z",
+      "rva": 405728,
+      "size": 2162,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "8a58840b003bbff6d2900b71c00617b59200d7a26ab0f7da734a19f03df28525",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {
