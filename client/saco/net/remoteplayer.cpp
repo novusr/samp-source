@@ -9,6 +9,7 @@ extern CNetGame* pNetGame;
 
 //----------------------------------------------------
 
+// R5: 0x100165E0
 CRemotePlayer::CRemotePlayer()
 {
 	field_1E7 = 0;
@@ -32,6 +33,7 @@ CRemotePlayer::CRemotePlayer()
 
 //----------------------------------------------------
 
+// R5: 0x10015FA0
 void CRemotePlayer::ResetAllSyncAttributes()
 {
 	field_1E7 = 0;
@@ -63,6 +65,7 @@ void CRemotePlayer::ResetAllSyncAttributes()
 
 //----------------------------------------------------
 
+// R5: 0x10016150
 void CRemotePlayer::SetPlayerColor(DWORD dwColor)
 {
 	SetRadarColor(m_PlayerID,dwColor);
@@ -77,6 +80,7 @@ DWORD CRemotePlayer::GetPlayerColorAsRGBA()
 
 //----------------------------------------------------
 
+// R5: 0x10016180
 DWORD CRemotePlayer::GetPlayerColorAsARGB()
 {
 	return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;

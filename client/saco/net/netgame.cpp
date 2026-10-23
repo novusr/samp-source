@@ -101,6 +101,7 @@ void CNetGame::InitPools()
 	m_pPools->pActorPool	= new CActorPool();
 }
 
+// R5: 0x100088E0
 DWORD CNetGame::GetTime()
 {
 	return (DWORD)RakNet::GetTime();
@@ -109,6 +110,7 @@ DWORD CNetGame::GetTime()
 //-----------------------------------------------------------
 // Puts a personal marker using any of the radar icons on the map
 
+// R5: 0x1000A300
 void CNetGame::SetMapIcon(BYTE byteIndex, float fX, float fY, float fZ, BYTE byteIcon, DWORD dwColor, int iStyle)
 {
 	if (byteIndex >= 100) return;
@@ -120,6 +122,7 @@ void CNetGame::SetMapIcon(BYTE byteIndex, float fX, float fY, float fZ, BYTE byt
 //-----------------------------------------------------------
 // Removes the Map Icon
 
+// R5: 0x10008FB0
 void CNetGame::DisableMapIcon(BYTE byteIndex)
 {
 	if (byteIndex >= 100) return;
@@ -129,6 +132,7 @@ void CNetGame::DisableMapIcon(BYTE byteIndex)
 
 //----------------------------------------------------
 
+// R5: 0x1000A2C0
 void CNetGame::ResetMapIcons()
 {
 	BYTE i;

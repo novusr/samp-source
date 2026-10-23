@@ -24,6 +24,7 @@ void __declspec(naked) ProcessLineOfSight(VECTOR *vecOrigin, VECTOR *vecLine, VE
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3B20
 void __stdcall WorldAddEntity(DWORD *dwEnt)
 {
 	_asm push dwEnt
@@ -34,6 +35,7 @@ void __stdcall WorldAddEntity(DWORD *dwEnt)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3B40
 void __stdcall WorldRemoveEntity(DWORD *dwEnt)
 {
 	_asm push dwEnt
@@ -51,6 +53,7 @@ void __stdcall GameDisableCheatCodes()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3B70
 PED_TYPE * __stdcall GamePool_Ped_GetAt(int iID)
 {
 	PED_TYPE *pActorRet;
@@ -67,6 +70,7 @@ PED_TYPE * __stdcall GamePool_Ped_GetAt(int iID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3BA0
 int __stdcall GamePool_Ped_GetIndex(PED_TYPE *pActor)
 {
 	int iRetVal;
@@ -83,6 +87,7 @@ int __stdcall GamePool_Ped_GetIndex(PED_TYPE *pActor)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3BD0
 VEHICLE_TYPE * __stdcall GamePool_Vehicle_GetAt(int iID)
 {
 	VEHICLE_TYPE *pVehicleRet;
@@ -99,6 +104,7 @@ VEHICLE_TYPE * __stdcall GamePool_Vehicle_GetAt(int iID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3C00
 DWORD __stdcall GamePool_Vehicle_GetIndex(VEHICLE_TYPE *pVehicle)
 {
 	DWORD dwID=0;
@@ -115,6 +121,7 @@ DWORD __stdcall GamePool_Vehicle_GetIndex(VEHICLE_TYPE *pVehicle)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3C30
 ENTITY_TYPE * __stdcall GamePool_Object_GetAt(int iID)
 {
 	ENTITY_TYPE *pObjectRet;
@@ -132,6 +139,7 @@ ENTITY_TYPE * __stdcall GamePool_Object_GetAt(int iID)
 //-----------------------------------------------------------
 // Return the PED_TYPE * of the local player actor.
 
+// R5: 0x100B3C60
 PED_TYPE * __stdcall GamePool_FindPlayerPed()
 {
 	return *(PED_TYPE **)(0xB7CD98);
@@ -139,6 +147,7 @@ PED_TYPE * __stdcall GamePool_FindPlayerPed()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3C70
 BUILDING_TYPE * GamePool_GetBuilding()
 {
 	BUILDING_TYPE *pBuildingRet;
@@ -153,6 +162,7 @@ BUILDING_TYPE * GamePool_GetBuilding()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3C90
 DUMMY_TYPE * GamePool_GetDummy()
 {
 	DUMMY_TYPE *pDummyRet;
@@ -167,6 +177,7 @@ DUMMY_TYPE * GamePool_GetDummy()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3CB0
 OBJECT_TYPE * GamePool_GetObject()
 {
 	OBJECT_TYPE *pObjectRet;
@@ -181,6 +192,7 @@ OBJECT_TYPE * GamePool_GetObject()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3D90
 void ReplaceBuildingModel(ENTITY_TYPE *pEntity, int iModelID)
 {
 	_asm push iModelID
@@ -191,6 +203,7 @@ void ReplaceBuildingModel(ENTITY_TYPE *pEntity, int iModelID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3E00
 int GetInvalidModelInfoCount()
 {
 	DWORD *dwModelInfos = (DWORD *)0xA9C068;
@@ -206,6 +219,7 @@ int GetInvalidModelInfoCount()
 //-----------------------------------------------------------
 // Translate Weapon model ID into actual weapon ID.
 
+// R5: 0x100B3E20
 int __stdcall GameGetWeaponModelIDFromWeaponID(int iWeaponID)
 {
 	switch(iWeaponID)
@@ -346,6 +360,7 @@ int __stdcall GameGetWeaponModelIDFromWeaponID(int iWeaponID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4050
 DWORD * GetNextTaskFromTask(DWORD *task)
 {
 	DWORD *ret_task=NULL;
@@ -366,6 +381,7 @@ DWORD * GetNextTaskFromTask(DWORD *task)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B40A0
 int GetTaskTypeFromTask(DWORD *task)
 {
 	int i = 0;
@@ -393,6 +409,7 @@ const char* GetTaskNameFromTask(DWORD *task)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B41C0
 BOOL __stdcall GameIsEntityOnScreen(DWORD * pdwEnt)
 {
 	BOOL bResult = FALSE;
@@ -407,6 +424,7 @@ BOOL __stdcall GameIsEntityOnScreen(DWORD * pdwEnt)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4300
 void __stdcall InitPlayerPedPtrRecords()
 {
 	memset(&dwPlayerPedPtrs[0],0,sizeof(DWORD) * PLAYER_PED_SLOTS);
@@ -415,6 +433,7 @@ void __stdcall InitPlayerPedPtrRecords()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4320
 void __stdcall SetPlayerPedPtrRecord(BYTE bytePlayer, DWORD dwPedPtr)
 {
 	dwPlayerPedPtrs[bytePlayer] = dwPedPtr;
@@ -423,6 +442,7 @@ void __stdcall SetPlayerPedPtrRecord(BYTE bytePlayer, DWORD dwPedPtr)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4350
 DWORD __stdcall GetPlayerPedPtrRecord(BYTE bytePlayer)
 {
 	return dwPlayerPedPtrs[bytePlayer];
@@ -430,6 +450,7 @@ DWORD __stdcall GetPlayerPedPtrRecord(BYTE bytePlayer)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4360
 BYTE __stdcall FindPlayerNumFromPedPtr(DWORD dwPedPtr)
 {
 	BYTE x = 0;
@@ -443,6 +464,7 @@ BYTE __stdcall FindPlayerNumFromPedPtr(DWORD dwPedPtr)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4390
 void __stdcall FUNC_100B4390(BYTE bytePlayer, DWORD a2, DWORD a3, DWORD a4, DWORD a5)
 {
 	if(bytePlayer < PLAYER_PED_SLOTS)
@@ -456,6 +478,7 @@ void __stdcall FUNC_100B4390(BYTE bytePlayer, DWORD a2, DWORD a3, DWORD a4, DWOR
 
 //-----------------------------------------------------------
 
+// R5: 0x100B43D0
 struc_13 * __stdcall FUNC_100B43D0(BYTE bytePlayer)
 {
 	if(bytePlayer < PLAYER_PED_SLOTS)
@@ -467,6 +490,7 @@ struc_13 * __stdcall FUNC_100B43D0(BYTE bytePlayer)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B43F0
 BYTE __stdcall FUNC_100B43F0(DWORD *pdwRenderWare)
 {
 	BYTE x = 0;
@@ -490,6 +514,7 @@ BYTE __stdcall FUNC_100B43F0(DWORD *pdwRenderWare)
 
 
 
+// R5: 0x100B4480
 DWORD __stdcall CRC32FromUpcaseString(char *szString)
 {
 	DWORD dwResult = 0;
@@ -507,6 +532,7 @@ DWORD __stdcall CRC32FromUpcaseString(char *szString)
 
 
 
+// R5: 0x100B4B50
 bool FUNC_100B4B50(VECTOR *vecPos)
 {
 	if( vecPos->X < 20000.0f && vecPos->X > -20000.0f &&
@@ -525,6 +551,7 @@ bool FUNC_100B4B50(VECTOR *vecPos)
 
 //----------------------------------------------------
 
+// R5: 0x100B47F0
 bool HasCollisionLoaded(VECTOR *vec)
 {
 	bool bResult = false;
@@ -562,6 +589,7 @@ BOOL __stdcall IsATrainPart(ENTITY_TYPE *pEntity)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B48A0
 float FloatDifference(float f1, float f2)
 {
 	return f1 - f2;
@@ -569,6 +597,7 @@ float FloatDifference(float f1, float f2)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B48B0
 float FloatOffset(float f1, float f2)
 {
 	if(f1 >= f2) return f1 - f2;
@@ -577,6 +606,7 @@ float FloatOffset(float f1, float f2)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B48E0
 float NormalizeAngle(float fAngle)
 {
 	if(fAngle > 180.0f) fAngle -= 360.0f;
@@ -586,6 +616,7 @@ float NormalizeAngle(float fAngle)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4910
 float __stdcall SquaredDistanceBetweenHorizontalPoints(float x1, float y1, float x2, float y2)
 {
 	float fSX,fSY;
@@ -598,6 +629,7 @@ float __stdcall SquaredDistanceBetweenHorizontalPoints(float x1, float y1, float
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4940
 float __stdcall DistanceBetweenHorizontalPoints(float x1, float y1, float x2, float y2)
 {
 	float fSX,fSY;
@@ -610,6 +642,7 @@ float __stdcall DistanceBetweenHorizontalPoints(float x1, float y1, float x2, fl
 
 //-----------------------------------------------------------
 
+// R5: 0x100B4970
 float __stdcall DistanceBetweenPoints(float x1, float y1, float z1, float x2, float y2, float z2)
 {
 	float fSX,fSY,fSZ;
@@ -649,6 +682,7 @@ float __stdcall SquaredDistanceBetweenPoints(VECTOR *vec1, VECTOR *vec2)
 
 //----------------------------------------------------
 
+// R5: 0x100B4A30
 void _VectorNormalise(VECTOR *vec)
 {
 	_asm mov ecx, vec
@@ -665,6 +699,7 @@ float GetNormalisation(VECTOR *vec)
 
 //----------------------------------------------------
 
+// R5: 0x100B5970
 float DegToRad(float fDegrees)
 {
 	if (fDegrees > 360.0f || fDegrees < 0.0f) return 0.0f;
@@ -677,6 +712,7 @@ float DegToRad(float fDegrees)
 
 //----------------------------------------------------
 
+// R5: 0x100B59E0
 float InvDegToRad(float fDegrees)
 {
 	if (fDegrees > 360.0f || fDegrees < 0.0f) return 0.0f;
@@ -689,6 +725,7 @@ float InvDegToRad(float fDegrees)
 
 //----------------------------------------------------
 
+// R5: 0x100B5AA0
 bool IsNumeric(char * szString)
 {
 	while(*szString) {
@@ -707,6 +744,7 @@ DWORD FrameBufferTexture=0;
 
 extern CChatWindow * pChatWindow;
 
+// R5: 0x100B5AD0
 void _VehicleEnvMappingFromScreen()
 {
 	/*
@@ -745,6 +783,7 @@ void _VehicleEnvMappingFromScreen()
 int Width,Height,Depth;
 DWORD dwRwImage;
 
+// R5: 0x100B5B50
 void WriteRwRasterToFile(DWORD raster,char *filename)
 {
 	// RwImageCreate(width,height,depth)
@@ -792,6 +831,7 @@ void WriteRwRasterToFile(DWORD raster,char *filename)
 DWORD CamFrameBuffer2=0;
 DWORD CamZBuffer2=0;
 
+// R5: 0x100B5BC0
 void SaveCameraRaster(char *filename)
 {
 	// get the frame buffer from the main RwCamera
@@ -838,6 +878,7 @@ void SaveCameraRaster(char *filename)
 
 //----------------------------------------------------
 
+// R5: 0x100B5C90
 void CreateCameraRaster()
 {
 	if(CamFrameBuffer2 || CamZBuffer2) return;
@@ -877,6 +918,7 @@ void CreateCameraRaster()
 
 //----------------------------------------------------
 
+// R5: 0x100B5DA0
 void ResetLocalPad(int unk1, int unk2)
 {
 	// CPad__GetPadAt(int index)
@@ -895,6 +937,7 @@ void ResetLocalPad(int unk1, int unk2)
 
 //----------------------------------------------------
 
+// R5: 0x100B5DC0
 BOOL IsFileOrDirectoryExists(char * szPath)
 {
 	struct _stat buf;
@@ -953,6 +996,7 @@ DWORD GetColorFromEmbedCode(wchar_t *szString)
 	return 0xFFFFFFFF;
 }
 
+// R5: 0x100B60C0
 void RemoveColorEmbedsFromString(char *szString)
 {
 	while(*szString)
@@ -967,12 +1011,14 @@ void RemoveColorEmbedsFromString(char *szString)
 	*szString = 0;
 }
 
+// R5: 0x100B6100
 DWORD unnamed_100B6100(char *szString, int nMaxLen)
 {
 	char tmp_buf[2049];
 	memset(tmp_buf, 0, sizeof(tmp_buf));
 
 	if(szString &&
+// R5: 0x100CBDF0
 		strlen(szString) < 400 &&
 		strstr(szString, "~k~") != NULL)
 	{
@@ -992,6 +1038,7 @@ DWORD unnamed_100B6100(char *szString, int nMaxLen)
 	return 0;
 }
 
+// R5: 0x100B61E0
 UINT GetVehicleSubtypeFromVehiclePtr(VEHICLE_TYPE *pVehicle)
 {
 	if(!pVehicle) return 0;

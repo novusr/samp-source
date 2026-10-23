@@ -78,6 +78,7 @@ void __stdcall GameSetRemotePlayerCameraExtZoom(BYTE bytePlayerID)
 
 //----------------------------------------------------------
 
+// R5: 0x1009C890
 void __stdcall GameSetPlayerCameraMode(BYTE byteMode, BYTE bytePlayerID)
 {
 	byteCameraMode[bytePlayerID] = byteMode;
@@ -85,6 +86,7 @@ void __stdcall GameSetPlayerCameraMode(BYTE byteMode, BYTE bytePlayerID)
 
 //----------------------------------------------------------
 
+// R5: 0x1009C8B0
 BYTE __stdcall GameGetPlayerCameraMode(BYTE bytePlayerID)
 {
 	return byteCameraMode[bytePlayerID];
@@ -92,6 +94,7 @@ BYTE __stdcall GameGetPlayerCameraMode(BYTE bytePlayerID)
 
 //----------------------------------------------------------
 
+// R5: 0x1009C8C0
 BYTE __stdcall GameGetLocalPlayerCameraMode()
 {
 	return *pbyteCameraMode;
@@ -99,6 +102,7 @@ BYTE __stdcall GameGetLocalPlayerCameraMode()
 
 //----------------------------------------------------------
 
+// R5: 0x1009C8D0
 void __stdcall GameAimSyncInit()
 {
 	memset(&caLocalPlayerAim,0,sizeof(CAMERA_AIM));
@@ -115,6 +119,7 @@ void __stdcall GameAimSyncInit()
 
 //----------------------------------------------------------
 
+// R5: 0x1009C940
 void __stdcall GameStoreLocalPlayerAim()
 {
 	memcpy(&caLocalPlayerAim,pcaInternalAim,sizeof(CAMERA_AIM));
@@ -122,6 +127,7 @@ void __stdcall GameStoreLocalPlayerAim()
 
 //----------------------------------------------------------
 
+// R5: 0x1009C960
 void __stdcall GameSetLocalPlayerAim()
 {
 	memcpy(pcaInternalAim,&caLocalPlayerAim,sizeof(CAMERA_AIM));
@@ -130,6 +136,7 @@ void __stdcall GameSetLocalPlayerAim()
 
 //----------------------------------------------------------
 
+// R5: 0x1009C980
 CAMERA_AIM * __stdcall GameGetInternalAim()
 {
 	return pcaInternalAim;
@@ -137,6 +144,7 @@ CAMERA_AIM * __stdcall GameGetInternalAim()
 
 //----------------------------------------------------------
 
+// R5: 0x1009C990
 void __stdcall GameStoreRemotePlayerAim(int iPlayer, CAMERA_AIM * caAim)
 {
 	memcpy(&caRemotePlayerAim[iPlayer],caAim,sizeof(CAMERA_AIM));
@@ -144,6 +152,7 @@ void __stdcall GameStoreRemotePlayerAim(int iPlayer, CAMERA_AIM * caAim)
 
 //----------------------------------------------------------
 
+// R5: 0x1009C9C0
 void __stdcall GameSetRemotePlayerAim(int iPlayer)
 {
 	memcpy(pcaInternalAim,&caRemotePlayerAim[iPlayer],sizeof(CAMERA_AIM));
@@ -151,6 +160,7 @@ void __stdcall GameSetRemotePlayerAim(int iPlayer)
 
 //----------------------------------------------------------
 
+// R5: 0x1009C9F0
 CAMERA_AIM * __stdcall GameGetRemotePlayerAim(int iPlayer)
 {
     return &caRemotePlayerAim[iPlayer];
@@ -158,6 +168,7 @@ CAMERA_AIM * __stdcall GameGetRemotePlayerAim(int iPlayer)
 
 //----------------------------------------------------------
 
+// R5: 0x1009CA10
 void __stdcall GameSetPlayerWeaponSkillLevel(int iPlayer, int iSkill, WORD wLevel)
 {
 	if(iSkill < 11 && iPlayer < PLAYER_PED_SLOTS) {
@@ -167,6 +178,7 @@ void __stdcall GameSetPlayerWeaponSkillLevel(int iPlayer, int iSkill, WORD wLeve
 
 //----------------------------------------------------------
 
+// R5: 0x1009CA40
 void __stdcall GameSetLocalPlayerWeaponSkillLevel(int iSkill, WORD wLevel)
 {
 	if(iSkill < 11) {
@@ -177,6 +189,7 @@ void __stdcall GameSetLocalPlayerWeaponSkillLevel(int iSkill, WORD wLevel)
 
 //----------------------------------------------------------
 
+// R5: 0x1009CB30
 void __stdcall GameStoreLocalPlayerWeaponSkills()
 {
 	fLocalWeaponSkill[0] = pfStats[69]; // pistol
@@ -194,6 +207,7 @@ void __stdcall GameStoreLocalPlayerWeaponSkills()
 
 //----------------------------------------------------------
 
+// R5: 0x1009CBC0
 void __stdcall GameSetLocalPlayerWeaponSkills()
 {
 	pfStats[69] = fLocalWeaponSkill[0]; // pistol
@@ -211,6 +225,7 @@ void __stdcall GameSetLocalPlayerWeaponSkills()
 
 //----------------------------------------------------------
 
+// R5: 0x1009CC90
 void __stdcall GameResetLocalPlayerWeaponSkills()
 {
 	pfStats[69] = 999.0f; // pistol
@@ -230,6 +245,7 @@ void __stdcall GameResetLocalPlayerWeaponSkills()
 
 //----------------------------------------------------------
 
+// R5: 0x1009CD20
 void __stdcall GameSetRemotePlayerWeaponSkills(int iPlayer)
 {
 	pfStats[69] = fWeaponSkill[iPlayer][0]; // pistol

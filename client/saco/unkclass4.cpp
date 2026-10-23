@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+// R5: 0x10071660
 CUnkClass4::CUnkClass4(IDirect3DDevice9 *pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;
@@ -13,6 +14,7 @@ CUnkClass4::CUnkClass4(IDirect3DDevice9 *pD3DDevice)
 	field_1C = 38;
 }
 
+// R5: 0x100716A0
 void CUnkClass4::ResetDialogControls(CDXUTDialog *pDialog)
 {
 	D3DXCOLOR Color;

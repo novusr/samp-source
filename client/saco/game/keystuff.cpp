@@ -18,6 +18,7 @@ BYTE   *pbyteDriveByRight = (BYTE *)0xB6F1A5;
 
 //-----------------------------------------------------------
 
+// R5: 0x100A72A0
 void GameKeyStatesInit()
 {
 	int x=0;
@@ -30,6 +31,7 @@ void GameKeyStatesInit()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A72C0
 void GameStoreLocalPlayerKeys()
 {
 	memcpy(&GcsLocalPlayerKeys,pGcsInternalKeys,sizeof(GTA_CONTROLSET));
@@ -41,6 +43,7 @@ void GameStoreLocalPlayerKeys()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7300
 void GameSetLocalPlayerKeys()
 {
 	memcpy(pGcsInternalKeys,&GcsLocalPlayerKeys,sizeof(GTA_CONTROLSET));
@@ -52,6 +55,7 @@ void GameSetLocalPlayerKeys()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7340
 void GameStoreRemotePlayerKeys(int iPlayer, GTA_CONTROLSET * pGcsKeyStates)
 {
 	memcpy(&GcsRemotePlayerKeys[iPlayer],pGcsKeyStates,sizeof(GTA_CONTROLSET));
@@ -59,6 +63,7 @@ void GameStoreRemotePlayerKeys(int iPlayer, GTA_CONTROLSET * pGcsKeyStates)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7360
 void GameSetRemotePlayerKeys(int iPlayer)
 {
 	// Use this to sync between player and remote player.
@@ -81,6 +86,7 @@ void GameSetRemotePlayerKeys(int iPlayer)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A73B0
 GTA_CONTROLSET * GameGetInternalKeys()
 {
 	return pGcsInternalKeys;
@@ -95,6 +101,7 @@ GTA_CONTROLSET * GameGetLocalPlayerKeys()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A73D0
 GTA_CONTROLSET * GameGetPlayerKeys(int iPlayer)
 {
 	return &GcsRemotePlayerKeys[iPlayer];
@@ -102,6 +109,7 @@ GTA_CONTROLSET * GameGetPlayerKeys(int iPlayer)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A73E0
 void GameResetPlayerKeys(int iPlayer)
 {
 	memset(&GcsRemotePlayerKeys[iPlayer],0,sizeof(GTA_CONTROLSET));

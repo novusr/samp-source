@@ -3,6 +3,7 @@
 
 //----------------------------------------------------
 
+// R5: 0x100141B0
 CNetPlayer::CNetPlayer(PCHAR szPlayerName, BOOL bIsNPC)
 {
 	m_bIsNPC = bIsNPC;
@@ -14,6 +15,7 @@ CNetPlayer::CNetPlayer(PCHAR szPlayerName, BOOL bIsNPC)
 
 //----------------------------------------------------
 
+// R5: 0x10013F60
 CNetPlayer::~CNetPlayer()
 {
 	SAFE_DELETE(m_pRemotePlayer);

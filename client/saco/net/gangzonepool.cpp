@@ -5,6 +5,7 @@ extern CGame* pGame;
 
 //----------------------------------------------------
 
+// R5: 0x10002120
 CGangZonePool::CGangZonePool()
 {
 	for (WORD wZone = 0; wZone < MAX_GANG_ZONES; wZone++)
@@ -14,6 +15,7 @@ CGangZonePool::CGangZonePool()
 	}
 }
 
+// R5: 0x10002150
 CGangZonePool::~CGangZonePool()
 {
 	for (WORD wZone = 0; wZone < MAX_GANG_ZONES; wZone++)
@@ -26,6 +28,7 @@ CGangZonePool::~CGangZonePool()
 	}
 }
 
+// R5: 0x10002180
 void CGangZonePool::New(WORD wZone, float fMinX, float fMinY, float fMaxX, float fMaxY, DWORD dwColor)
 {
 	if (m_pGangZone[wZone])
@@ -49,6 +52,7 @@ void CGangZonePool::New(WORD wZone, float fMinX, float fMinY, float fMaxX, float
 	}
 }
 
+// R5: 0x10002200
 void CGangZonePool::Flash(WORD wZone, DWORD dwColor)
 {
 	if (m_pGangZone[wZone])
@@ -57,6 +61,7 @@ void CGangZonePool::Flash(WORD wZone, DWORD dwColor)
 	}
 }
 
+// R5: 0x10002220
 void CGangZonePool::StopFlash(WORD wZone)
 {
 	if (m_pGangZone[wZone])
@@ -65,6 +70,7 @@ void CGangZonePool::StopFlash(WORD wZone)
 	}
 }
 
+// R5: 0x10002240
 void CGangZonePool::Delete(WORD wZone)
 {
 	if (m_pGangZone[wZone])
@@ -75,6 +81,7 @@ void CGangZonePool::Delete(WORD wZone)
 	}
 }
 
+// R5: 0x10002270
 void CGangZonePool::Draw()
 {
 	static int iLastTick = 0;

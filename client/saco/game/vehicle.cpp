@@ -5,6 +5,7 @@
 //-----------------------------------------------------------
 // CONSTRUCTOR
 
+// R5: 0x100B83D0
 CVehicle::CVehicle(int iType, float fPosX, float fPosY,
 				   float fPosZ, float fRotation, BOOL bKeepModelLoaded,
 				   int a8)
@@ -14,6 +15,7 @@ CVehicle::CVehicle(int iType, float fPosX, float fPosY,
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7090
 void CVehicle::LinkToInterior(int iInterior)
 {
 	if(GamePool_Vehicle_GetAt(m_dwGTAId)) {
@@ -25,6 +27,7 @@ void CVehicle::LinkToInterior(int iInterior)
 // If the game has internally destroyed the vehicle
 // during this frame, the vehicle pointer should become 0
 
+// R5: 0x100B70C0
 void CVehicle::ResetPointers()
 {
 	if(!m_pVehicle) return;
@@ -35,6 +38,7 @@ void CVehicle::ResetPointers()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B70E0
 BOOL CVehicle::HasADriver()
 {
 	if(!m_pVehicle) return FALSE;
@@ -49,6 +53,7 @@ BOOL CVehicle::HasADriver()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7130
 BOOL CVehicle::IsOccupied()
 {
 	if(m_pVehicle) {
@@ -66,6 +71,7 @@ BOOL CVehicle::IsOccupied()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7230
 void CVehicle::SetLockedState(int iLocked)
 {
 	if(!m_pVehicle) return;
@@ -79,6 +85,7 @@ void CVehicle::SetLockedState(int iLocked)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7270
 void CVehicle::SetEngineState(BOOL bState)
 {
 	if(!m_pVehicle) return;
@@ -92,6 +99,7 @@ void CVehicle::SetEngineState(BOOL bState)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B72A0
 float CVehicle::GetHealth()
 {
 	if(m_pVehicle) return m_pVehicle->fHealth;
@@ -100,6 +108,7 @@ float CVehicle::GetHealth()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B72C0
 void CVehicle::SetHealth(float fHealth)
 {
 	if(m_pVehicle) {
@@ -109,6 +118,7 @@ void CVehicle::SetHealth(float fHealth)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B72E0
 void CVehicle::SetColor(BYTE byteColor1, BYTE byteColor2)
 {
 	if(m_pVehicle && GamePool_Vehicle_GetAt(m_dwGTAId))  {
@@ -122,6 +132,7 @@ void CVehicle::SetColor(BYTE byteColor1, BYTE byteColor2)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7330
 void CVehicle::UpdateColor()
 {
 	if(!m_pVehicle) return;
@@ -139,6 +150,7 @@ void CVehicle::UpdateColor()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7390
 UINT CVehicle::GetVehicleSubtype()
 {
 	if(m_pVehicle) {
@@ -149,6 +161,7 @@ UINT CVehicle::GetVehicleSubtype()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B73B0
 BOOL CVehicle::HasSunk()
 {
 	if(!m_pVehicle) return FALSE;
@@ -158,6 +171,7 @@ BOOL CVehicle::HasSunk()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B73D0
 BOOL CVehicle::IsWrecked()
 {
 	if(!m_pVehicle) return FALSE;
@@ -167,6 +181,7 @@ BOOL CVehicle::IsWrecked()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B73F0
 BOOL CVehicle::IsDriverLocalPlayer()
 {
 	if(m_pVehicle) {
@@ -179,6 +194,7 @@ BOOL CVehicle::IsDriverLocalPlayer()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7460
 BOOL CVehicle::IsATrainPart()
 {
 	int nModel;
@@ -195,6 +211,7 @@ BOOL CVehicle::IsATrainPart()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B74A0
 BOOL CVehicle::HasTurret()
 {
 	int nModel = GetModelIndex();
@@ -226,6 +243,7 @@ void CVehicle::SetHornState(BYTE byteState)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7540
 void CVehicle::SetSirenOn(BYTE byteState)
 {
 	m_pVehicle->bSirenOn = byteState;
@@ -233,6 +251,7 @@ void CVehicle::SetSirenOn(BYTE byteState)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7560
 BOOL CVehicle::IsSirenOn()
 {
 	return (m_pVehicle->bSirenOn == 1);
@@ -240,6 +259,7 @@ BOOL CVehicle::IsSirenOn()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B7580
 void CVehicle::SetAlarmState(WORD wState)
 {
 	m_pVehicle->wAlarmState = wState;
@@ -298,6 +318,7 @@ UINT CVehicle::GetPassengersMax()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B76A0
 void CVehicle::SetHydraThrusters(DWORD dwDirection)
 {
 	if(m_pVehicle) m_pVehicle->dwHydraThrusters = dwDirection; // 0x00 - 0x80 // byte
@@ -305,6 +326,7 @@ void CVehicle::SetHydraThrusters(DWORD dwDirection)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B76C0
 DWORD CVehicle::GetHydraThrusters()
 {
 	if(m_pVehicle) return m_pVehicle->dwHydraThrusters;
@@ -317,17 +339,20 @@ DWORD CVehicle::GetHydraThrusters()
 
 
 // Transferred from michael-fa-samp dc9eb80, client/game/vehicle.cpp.
+// R5: 0x100B78A0
 void CVehicle::SetTankRot(float X, float Y)
 {
 	m_pVehicle->fTankRotX = X;
 	m_pVehicle->fTankRotY = Y;
 }
 
+// R5: 0x100B78C0
 float CVehicle::GetTankRotX()
 {
 	return m_pVehicle->fTankRotX;
 }
 
+// R5: 0x100B78D0
 float CVehicle::GetTankRotY()
 {
 	return m_pVehicle->fTankRotY;

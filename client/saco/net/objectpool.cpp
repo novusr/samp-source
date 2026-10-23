@@ -1,6 +1,7 @@
 
 #include "../main.h"
 
+// R5: 0x10012800
 CObjectPool::CObjectPool()
 {
 	for(WORD wObjectID = 0; wObjectID < MAX_OBJECTS; wObjectID++)
@@ -15,6 +16,7 @@ CObjectPool::CObjectPool()
 // and invalid ID65535. CObject remains incomplete; only its verified Entity
 // base field at0x40 is accessed. No CObject implementation is counted.
 
+// R5: 0x100129D0
 CObject* CObjectPool::GetObjFromGtaPtr(ENTITY_TYPE * pGtaObject)
 {
 	int x=1;
@@ -30,6 +32,7 @@ CObject* CObjectPool::GetObjFromGtaPtr(ENTITY_TYPE * pGtaObject)
 	return NULL;
 }
 
+// R5: 0x10012A10
 int CObjectPool::FindIDFromGtaPtr(ENTITY_TYPE * pGtaObject)
 {
 	int x=1;

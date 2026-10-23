@@ -32,14 +32,15 @@ bermain di server R5.
 | [`client/saco/_reference/`](client/saco/_reference/) | Potongan kode yang dulu sudah terverifikasi byte-exact (`closure_*`, `eval_*`, `matching/`). Bahan untuk digabung ke source utama, lalu dihapus. |
 | [`client/archive/`](client/archive/) | Kunci arsip (`pkey.h`, `skey.h`). |
 | [`vendor/upstream/`](vendor/upstream/) | RakNet dan source referensi upstream (read-only). |
+| [`tools/`](tools/) | Tool rekonstruksi fungsional: `build.py`, `progress.py`, `decompile.py`, `merge_ref.py`. |
 | [`config/toolchain.json`](config/toolchain.json) | Versi & hash compiler MSVC 2003 serta flag default. |
 | [`docs/`](docs/) | Dokumentasi setup dan alur kerja. |
 | `ghidra_export/`, `private/`, `build/` | Lokal saja (di-ignore): ekspor Ghidra, `samp.dll` asli, hasil build. |
 
 ## Dokumentasi
 
-- [Alur kerja rekonstruksi](docs/workflow.md) — cara mendekompilasi & menulis ulang fungsi.
-- [Setup Linux (Wine + MSVC 2003)](docs/linux-setup.md)
+- [Alur kerja rekonstruksi](docs/workflow.md) — cara mendekompilasi, menggabungkan `_reference/`, & menulis ulang fungsi.
+- [Setup Linux (Wine + MSVC 2003)](docs/linux-setup.md) — penggunaan `tools/build.py`.
 - [Panduan Ghidra Bridge](GHIDRA_BRIDGE_GUIDE.md) — query hasil ekspor Ghidra secara offline.
 - [Aturan proyek](AGENTS.md)
 
@@ -48,9 +49,9 @@ bermain di server R5.
 | Milestone | Status |
 |---|---|
 | Ekspor Ghidra R5 (5.265 fungsi) | Selesai |
-| Source dasar klien (`client/saco/`) | Ada, belum lengkap 1:1 |
-| Gabungkan `_reference/` ke source utama | Belum |
-| Build sistem DLL penuh (Wine + MSVC 2003) | Belum |
+| Tooling build & tracking (`tools/`) | Selesai |
+| Anotasi awal `// R5:` otomatis di `client/saco/` | 617 fungsi teranotasi |
+| Gabungkan `_reference/` ke source utama | Sedang berjalan |
 | Dekompilasi seluruh fungsi R5 | Sedang berjalan |
 | DLL bisa dimainkan di server R5 | Target akhir |
 

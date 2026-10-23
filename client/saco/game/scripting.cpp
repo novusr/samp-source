@@ -33,6 +33,7 @@ int __declspec(naked) ExecuteScriptBuf()
 	}
 }
 
+// R5: 0x100B2310
 int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...)
 {
 	va_list ap;
@@ -132,6 +133,7 @@ int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...)
 	return result;
 }
 
+// R5: 0x100B2550
 void InitScripting()
 {
 	gst = new GAME_SCRIPT_THREAD;

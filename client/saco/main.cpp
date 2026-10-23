@@ -148,6 +148,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
 //----------------------------------------------------
 
+// R5: 0x100C3AD0
 PCHAR GetSAMPPath()
 {
 	return szSAMPDir;
@@ -162,6 +163,7 @@ PCHAR GetCachePath()
 
 //----------------------------------------------------
 
+// R5: 0x100C3AF0
 void SetupCacheDirectories()
 {
 	ZeroMemory(szCacheDir, sizeof(szCacheDir));
@@ -210,6 +212,7 @@ PCHAR GetArtworkProxy()
 
 //----------------------------------------------------
 
+// R5: 0x100C3C70
 void SetupDirectories()
 {
 	ZeroMemory(szSAMPDir, sizeof(szSAMPDir));
@@ -300,6 +303,7 @@ void HookRwRenderStateSet()
 
 //----------------------------------------------------
 
+// R5: 0x100C3E20
 void CallRwRenderStateSet(int state, int option)
 {
 	_asm push option
@@ -431,6 +435,7 @@ void TheGraphicsLoop()
 
 //----------------------------------------------------
 
+// R5: 0x100C3E80
 void QuitGame()
 {
 	if(pNetGame && pNetGame->GetGameState() == GAMESTATE_CONNECTED) {
@@ -619,6 +624,7 @@ int FUNC_100C46B0(bool a1)
 
 //----------------------------------------------------
 
+// R5: 0x100C5290
 int GetFontSize()
 {
 	int size;
@@ -635,6 +641,7 @@ int GetFontSize()
 	return size + 2 * pConfig->GetIntVariable("fontsize");
 }
 
+// R5: 0x100C52E0
 int GetDeathWindowFontSize()
 {
 	int size = 14;
@@ -647,11 +654,13 @@ int GetDeathWindowFontSize()
 	return fontsize;
 }
 
+// R5: 0x100C5320
 int GetUIFontSize()
 {
 	return 2 * pConfig->GetIntVariable("fontsize") + 20;
 }
 
+// R5: 0x100C5340
 int GetFontWeight()
 {
 	int fontweight = pConfig->GetIntVariable("fontweight");

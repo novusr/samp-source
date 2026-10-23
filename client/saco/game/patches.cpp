@@ -90,6 +90,7 @@ void SetTimedObjects(int iTimedObjects)
 
 //----------------------------------------------------------
 
+// R5: 0x100AA470
 void UnFuckAndCheck(DWORD addr, int size, BYTE byteCheck)
 {
 	DWORD d;
@@ -109,6 +110,7 @@ void UnFuckAndCheck(DWORD addr, int size, BYTE byteCheck)
 
 //----------------------------------------------------------
 
+// R5: 0x100AA4C0
 void UnFuck(DWORD addr, int size)
 {
 	DWORD d;
@@ -219,6 +221,7 @@ void ApplyGameLimitPatches()
 
 //----------------------------------------------------------
 
+// R5: 0x100AA710
 BOOL ApplyPreGamePatches()
 {
 	BYTE * pbyteVersionDetermination = (PBYTE)ADDR_BYPASS_VIDS_USA10;

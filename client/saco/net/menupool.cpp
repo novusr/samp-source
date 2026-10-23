@@ -22,6 +22,7 @@ extern CNetGame* pNetGame;
 
 //----------------------------------------------------
 
+// R5: 0x10007E60
 CMenuPool::CMenuPool()
 {
 	// loop through and initialize all net players to null and slot states to false
@@ -35,6 +36,7 @@ CMenuPool::CMenuPool()
 
 //----------------------------------------------------
 
+// R5: 0x100081C0
 CMenuPool::~CMenuPool()
 {
 	if (m_byteCurrentMenu != MAX_MENUS) m_pMenus[m_byteCurrentMenu]->Hide();
@@ -50,6 +52,7 @@ CMenuPool::~CMenuPool()
 
 //----------------------------------------------------
 
+// R5: 0x10007EB0
 CMenu* CMenuPool::New(BYTE byteMenuID, float fX, float fY, BYTE byteColumns, float fCol1Width, float fCol2Width, MENU_INT *MenuInteraction)
 {
 	SAFE_DELETE(m_pMenus[byteMenuID]);
@@ -67,6 +70,7 @@ CMenu* CMenuPool::New(BYTE byteMenuID, float fX, float fY, BYTE byteColumns, flo
 
 //----------------------------------------------------
 
+// R5: 0x10007F70
 BOOL CMenuPool::Delete(BYTE byteMenuID)
 {
 	if (m_bMenuSlotState[byteMenuID] == FALSE || !m_pMenus[byteMenuID])
@@ -83,6 +87,7 @@ BOOL CMenuPool::Delete(BYTE byteMenuID)
 
 //----------------------------------------------------
 
+// R5: 0x10007FC0
 void CMenuPool::ShowMenu(BYTE byteMenuID)
 {
 	if (byteMenuID >= MAX_MENUS) return;
@@ -95,6 +100,7 @@ void CMenuPool::ShowMenu(BYTE byteMenuID)
 	m_byteExited = 0;
 }
 
+// R5: 0x10008020
 void CMenuPool::HideMenu(BYTE byteMenuID)
 {
 	if (byteMenuID >= MAX_MENUS || m_byteCurrentMenu == MAX_MENUS) return;
@@ -103,6 +109,7 @@ void CMenuPool::HideMenu(BYTE byteMenuID)
 	m_byteCurrentMenu = MAX_MENUS;
 }
 
+// R5: 0x10008060
 PCHAR CMenuPool::GetTextPointer(PCHAR szName)
 {
 	if (m_byteCurrentMenu == MAX_MENUS) return NULL;
@@ -120,6 +127,7 @@ PCHAR CMenuPool::GetTextPointer(PCHAR szName)
 	return NULL;
 }
 
+// R5: 0x10008200
 void CMenuPool::Process()
 {
 	if (m_byteCurrentMenu == MAX_MENUS) return;

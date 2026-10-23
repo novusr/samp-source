@@ -27,6 +27,7 @@ HealthBarVertices1_s HealthBarVertices1[4] =
 
 extern D3DXMATRIX matView, matProj;
 
+// R5: 0x1006CCF0
 CNewPlayerTags::CNewPlayerTags(IDirect3DDevice9* pDevice)
 {
 	m_pDevice			= pDevice;
@@ -36,12 +37,14 @@ CNewPlayerTags::CNewPlayerTags(IDirect3DDevice9* pDevice)
 	D3DXCreateSprite(pDevice, &m_pSprite);
 }
 
+// R5: 0x1006CD20
 CNewPlayerTags::~CNewPlayerTags()
 {
 	if(m_pStates) m_pStates->Release();
 	SAFE_DELETE(m_pSprite);
 }
 
+// R5: 0x1006D6B0
 void CNewPlayerTags::Begin()
 {
 	if (!m_pStates) {
@@ -67,6 +70,7 @@ void CNewPlayerTags::Begin()
 	m_pDevice->SetRenderState(D3DRS_ZENABLE, 0);
 }
 
+// R5: 0x1006CD50
 void CNewPlayerTags::End()
 {
 	if(m_pSprite)
@@ -76,6 +80,7 @@ void CNewPlayerTags::End()
 		m_pStates->Apply();
 }
 
+// R5: 0x1006D650
 void CNewPlayerTags::DeleteDeviceObjects()
 {
 	SAFE_RELEASE(m_pStates);
@@ -84,6 +89,7 @@ void CNewPlayerTags::DeleteDeviceObjects()
 		m_pSprite->OnLostDevice();
 }
 
+// R5: 0x1006D680
 void CNewPlayerTags::RestoreDeviceObjects()
 {
 	if(m_pSprite)
@@ -93,6 +99,7 @@ void CNewPlayerTags::RestoreDeviceObjects()
 		m_pDevice->CreateStateBlock(D3DSBT_ALL, &m_pStates);
 }
 
+// R5: 0x1006D0A0
 void CNewPlayerTags::Draw(D3DXVECTOR3* pPlayerPos, float fHealth, float fArmor, float fDistanceFromLocalPlayer)
 {
 	D3DXVECTOR3 TagPos = *pPlayerPos;

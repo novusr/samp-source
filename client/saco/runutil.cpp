@@ -4,6 +4,7 @@
 
 //----------------------------------------------------
 
+// R5: 0x100177D0
 void Util_UrlUnencode(char *enc)
 {
 	char *write_pos = enc;
@@ -27,6 +28,7 @@ void Util_UrlUnencode(char *enc)
 
 //----------------------------------------------------
 
+// R5: 0x10017850
 inline char Util_toupper(char c) {return ((c>(char)0x60) && (c<(char)0x7b))? c-0x20:c;}
 
 //----------------------------------------------------
@@ -59,6 +61,7 @@ char *Util_stristr(const char *String, const char *Pattern)
 
 //----------------------------------------------------
 
+// R5: 0x10017930
 void Util_strupr(char *string)
 {
 	char *p = string;
@@ -71,6 +74,7 @@ void Util_strupr(char *string)
 
 //----------------------------------------------------
 
+// R5: 0x10017960
 int Util_wildcmp(char *wild, char *string)
 {
 	char *cp, *mp;
@@ -118,6 +122,7 @@ int Util_wildcmp(char *wild, char *string)
 
 //----------------------------------------------------
 
+// R5: 0x10017A00
 int Util_strnicmp(const char *s1, const char *s2, size_t n)
 {
 	if (n == 0) return 0;
@@ -153,6 +158,7 @@ char *Util_strrev(char *str)
 
 //----------------------------------------------------
 
+// R5: 0x10017AF0
 char * Util_itoa(int v, char *s, int r)
 {
 	int i,neg = 0;
@@ -194,6 +200,7 @@ char * Util_itoa(int v, char *s, int r)
 
 char * Base64Encoding = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
+// R5: 0x10017B90
 void Util_Base64Encode( char *cpInput, char *cpOutput )
 {
 	int nIdx[ 4 ];
@@ -238,6 +245,7 @@ void Util_Base64Encode( char *cpInput, char *cpOutput )
 // Simple rotate right 3 character encoding for
 // hiding strings in the exe.
 
+// R5: 0x1009DA00
 void K_EncodeString(char *szInput, char *szOutput)
 {
 	char b;
@@ -256,6 +264,7 @@ void K_EncodeString(char *szInput, char *szOutput)
 
 //----------------------------------------------------
 
+// R5: 0x1009DA40
 char * K_DecodeString(unsigned char *szInput)
 {
 	char b;

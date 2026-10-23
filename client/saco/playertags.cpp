@@ -28,6 +28,7 @@ HealthBarVertices_s HealthBarVertices[4] =
 
 extern BYTE m_Metrics[256];
 
+// R5: 0x1006DEA0
 CPlayerTags::CPlayerTags(IDirect3DDevice9* pDevice)
 {
 	m_pDevice			= pDevice;
@@ -41,6 +42,7 @@ CPlayerTags::CPlayerTags(IDirect3DDevice9* pDevice)
 	m_fScale			= 0.0075f;
 }
 
+// R5: 0x1006DED0
 CPlayerTags::~CPlayerTags()
 {
 	if (m_pTexture) m_pTexture->Release();
@@ -49,6 +51,7 @@ CPlayerTags::~CPlayerTags()
 	if (m_pNewStates) m_pNewStates->Release();
 }
 
+// R5: 0x1006E4D0
 void CPlayerTags::Begin()
 {
 	if ((!m_pOldStates) || (!m_pNewStates))
@@ -61,6 +64,7 @@ void CPlayerTags::Begin()
 	m_pNewStates->Apply();
 }
 
+// R5: 0x1006E510
 void CPlayerTags::End()
 {
 	if (!m_pOldStates)
@@ -72,6 +76,7 @@ void CPlayerTags::End()
 	m_pOldStates->Apply();
 }
 
+// R5: 0x1006E540
 void CPlayerTags::Draw(D3DXMATRIX* pWorldTransform, char* pNameText, DWORD dwColor, float fHealth)
 {
 	if ((!m_pVB) || (!m_pTexture))
@@ -138,6 +143,7 @@ void CPlayerTags::Draw(D3DXMATRIX* pWorldTransform, char* pNameText, DWORD dwCol
 	// --- end: HealthBar drawing ---
 }
 
+// R5: 0x1006DF10
 inline void CPlayerTags::InitQuad(char c, float x, float y2, NameTextVertex_s* pVB)
 {
 	float x2  = x + ((float)m_Metrics[c] * m_fScale);
@@ -155,6 +161,7 @@ inline void CPlayerTags::InitQuad(char c, float x, float y2, NameTextVertex_s* p
 	pVB[5].Initialise(x2, y2, tu2, tv2);
 }
 
+// R5: 0x1006E040
 void CPlayerTags::DeleteDeviceObjects()
 {
 	if (m_pVB)
@@ -184,6 +191,7 @@ void CPlayerTags::DeleteDeviceObjects()
 	}
 }
 
+// R5: 0x1006E090
 void CPlayerTags::RestoreDeviceObjects()
 {
 	if (!m_pTexture)

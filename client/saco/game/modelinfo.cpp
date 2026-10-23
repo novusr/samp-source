@@ -5,6 +5,7 @@ BYTE *extendedModelInfoStorage[65535];
 BYTE **extendedModelInfos = extendedModelInfoStorage + 32767;
 BOOL useExtendedModelInfos = FALSE;
 
+// R5: 0x100A7A40
 BYTE *__stdcall GetModelInfo(int model)
 {
     if(useExtendedModelInfos) return extendedModelInfos[model];
@@ -13,6 +14,7 @@ BYTE *__stdcall GetModelInfo(int model)
 }
 
 // Unmatched provider: retain its semantic implementation, exclude coverage.
+// R5: 0x100B45A0
 int __stdcall ModelInfoLoaded(UINT model)
 {
     BYTE *info = GetModelInfo(model);

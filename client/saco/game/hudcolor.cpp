@@ -1010,6 +1010,7 @@ DWORD dwUseHudColors[NUM_RADAR_COLORS];
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7210
 void __stdcall SetRadarColor(int nIndex,DWORD dwColor)
 {
 	if(nIndex < sizeof(dwUseHudColors)) {
@@ -1019,6 +1020,7 @@ void __stdcall SetRadarColor(int nIndex,DWORD dwColor)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7230
 DWORD __stdcall TranslateColorCodeToRGBA(int iCode)
 {
 	// Special internal colors
@@ -1033,6 +1035,7 @@ DWORD __stdcall TranslateColorCodeToRGBA(int iCode)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A7280
 void GameResetRadarColors()
 {
 	memcpy(&dwUseHudColors[0],&dwHudColors[0],sizeof(DWORD)*NUM_RADAR_COLORS);

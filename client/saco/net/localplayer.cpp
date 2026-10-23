@@ -7,6 +7,7 @@ extern CNetGame		 *pNetGame;
 
 //----------------------------------------------------------
 
+// R5: 0x10004C50
 CLocalPlayer::CLocalPlayer()
 {
 	field_147 = GetTickCount();
@@ -45,6 +46,7 @@ CLocalPlayer::CLocalPlayer()
 
 //----------------------------------------------------------
 
+// R5: 0x10002E90
 void CLocalPlayer::ResetAllSyncAttributes()
 {
 	field_17D = 0;
@@ -81,6 +83,7 @@ void CLocalPlayer::ResetAllSyncAttributes()
 
 //----------------------------------------------------------
 
+// R5: 0x10005A10
 void CLocalPlayer::Say(PCHAR szText)
 {
 	// TODO: CLocalPlayer::Say .text:10005A10
@@ -88,6 +91,7 @@ void CLocalPlayer::Say(PCHAR szText)
 
 //----------------------------------------------------------
 
+// R5: 0x10003ED0
 void CLocalPlayer::SetPlayerColor(DWORD dwColor)
 {
 	SetRadarColor(pNetGame->GetPlayerPool()->GetLocalPlayerID(),dwColor);
@@ -102,6 +106,7 @@ DWORD CLocalPlayer::GetPlayerColorAsRGBA()
 
 //----------------------------------------------------
 
+// R5: 0x10003F20
 DWORD CLocalPlayer::GetPlayerColorAsARGB()
 {
 	return (TranslateColorCodeToRGBA(pNetGame->GetPlayerPool()->GetLocalPlayerID()) >> 8) | 0xFF000000;

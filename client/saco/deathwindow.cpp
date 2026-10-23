@@ -9,6 +9,7 @@ extern CGame *pGame;
 
 //----------------------------------------------------
 
+// R5: 0x1006A650
 CDeathWindow::CDeathWindow(IDirect3DDevice9 *pD3DDevice)
 {
 	int x=0;
@@ -34,6 +35,7 @@ CDeathWindow::CDeathWindow(IDirect3DDevice9 *pD3DDevice)
 
 //----------------------------------------------------
 
+// R5: 0x10069B40
 CDeathWindow::~CDeathWindow()
 {
 	SAFE_RELEASE(m_pD3DFont);
@@ -44,6 +46,7 @@ CDeathWindow::~CDeathWindow()
 
 //----------------------------------------------------
 
+// R5: 0x10069BB0
 void CDeathWindow::CreateAuxFonts()
 {
 	D3DXCreateFont(m_pD3DDevice, 20, 0, FW_NORMAL, 1, FALSE,
@@ -57,6 +60,7 @@ void CDeathWindow::CreateAuxFonts()
 
 //----------------------------------------------------
 
+// R5: 0x1006A150
 void CDeathWindow::CreateFonts()
 {
 	if(!m_pD3DDevice) return;
@@ -93,6 +97,7 @@ void CDeathWindow::CreateFonts()
 
 //----------------------------------------------------
 
+// R5: 0x1006A2E0
 void CDeathWindow::Draw()
 {
 	RECT rect;
@@ -181,6 +186,7 @@ void CDeathWindow::Draw()
 
 //----------------------------------------------------
 
+// R5: 0x1006A6B0
 void CDeathWindow::AddMessage( CHAR *szKiller,
 							   CHAR *szKillee,
 							   DWORD dwKillerColor,
@@ -192,6 +198,7 @@ void CDeathWindow::AddMessage( CHAR *szKiller,
 
 //----------------------------------------------------
 
+// R5: 0x1006A5D0
 void CDeathWindow::AddToDeathWindowBuffer( CHAR *szKiller,
 										   CHAR *szKillee,
 										   DWORD dwKillerColor,
@@ -215,6 +222,7 @@ void CDeathWindow::AddToDeathWindowBuffer( CHAR *szKiller,
 
 //----------------------------------------------------
 
+// R5: 0x10069C20
 void CDeathWindow::PushBack()
 {
 	int x=0;
@@ -226,6 +234,7 @@ void CDeathWindow::PushBack()
 
 //----------------------------------------------------
 
+// R5: 0x10069C40
 void CDeathWindow::RenderText(CHAR *sz,RECT rect,DWORD dwColor,DWORD dwParams)
 {
 	rect.top -= 1;
@@ -245,6 +254,7 @@ void CDeathWindow::RenderText(CHAR *sz,RECT rect,DWORD dwColor,DWORD dwParams)
 
 //----------------------------------------------------
 
+// R5: 0x10069D40
 void CDeathWindow::RenderWeaponSprite(CHAR *WeaponChar,RECT rect,DWORD dwColor)
 {
 	rect.top -= 5;
@@ -257,6 +267,7 @@ void CDeathWindow::RenderWeaponSprite(CHAR *WeaponChar,RECT rect,DWORD dwColor)
 
 //----------------------------------------------------
 
+// R5: 0x10069DD0
 SIZE CDeathWindow::GetSymbolSize()
 {
 	SIZE ret;
@@ -278,6 +289,7 @@ SIZE CDeathWindow::GetSymbolSize()
 
 //----------------------------------------------------
 
+// R5: 0x10069E50
 PCHAR CDeathWindow::SpriteIDForWeapon(BYTE byteWeaponID)
 {
 	switch (byteWeaponID) {

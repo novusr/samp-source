@@ -8,6 +8,7 @@ char *GetFontFace();
 
 //----------------------------------------------------
 
+// R5: 0x1006BAF0
 CFontRender::CFontRender(IDirect3DDevice9* pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;
@@ -21,6 +22,7 @@ CFontRender::CFontRender(IDirect3DDevice9* pD3DDevice)
 	CreateFonts();
 }
 
+// R5: 0x1006B100
 CFontRender::~CFontRender()
 {
 	SAFE_RELEASE(field_0);
@@ -31,6 +33,7 @@ CFontRender::~CFontRender()
 	SAFE_RELEASE(field_10);
 }
 
+// R5: 0x1006B8E0
 void CFontRender::CreateFonts()
 {
 	if(!m_pD3DDevice) return;
@@ -83,6 +86,7 @@ void CFontRender::CreateFonts()
 	field_24 = MeasureText2("Y").cy;
 }
 
+// R5: 0x1006B180
 void CFontRender::DeleteDeviceObjects()
 {
 	field_0->OnLostDevice();
@@ -93,6 +97,7 @@ void CFontRender::DeleteDeviceObjects()
 	field_10->OnLostDevice();
 }
 
+// R5: 0x1006B1C0
 void CFontRender::RestoreDeviceObjects()
 {
 	field_0->OnResetDevice();
@@ -103,6 +108,7 @@ void CFontRender::RestoreDeviceObjects()
 	field_10->OnResetDevice();
 }
 
+// R5: 0x1006B200
 SIZE CFontRender::MeasureText(char * szString, DWORD dwFormat)
 {
 	RECT rect;
@@ -119,6 +125,7 @@ SIZE CFontRender::MeasureText(char * szString, DWORD dwFormat)
 	return ret;
 }
 
+// R5: 0x1006B2B0
 SIZE CFontRender::MeasureText2(char * szString, DWORD dwFormat)
 {
 	RECT rect;

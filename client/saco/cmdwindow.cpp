@@ -9,6 +9,7 @@ extern CConfig		*pConfig;
 
 //----------------------------------------------------
 
+// R5: 0x100693D0
 CCmdWindow::CCmdWindow(IDirect3DDevice9 *pD3DDevice)
 {
 	m_bEnabled				= FALSE;
@@ -53,6 +54,7 @@ void CCmdWindow::ResetDialogControls(CDXUTDialog *pGameUI)
 
 //----------------------------------------------------
 
+// R5: 0x10069440
 void CCmdWindow::GetDialogSize(RECT *pRect)
 {
 	memset(pRect,0,sizeof(RECT));
@@ -65,6 +67,7 @@ void CCmdWindow::GetDialogSize(RECT *pRect)
 
 //----------------------------------------------------
 
+// R5: 0x10069480
 void CCmdWindow::Enable()
 {
     if(m_bEnabled) return;
@@ -86,6 +89,7 @@ void CCmdWindow::Enable()
 
 //----------------------------------------------------
 
+// R5: 0x10069580
 void CCmdWindow::Disable()
 {
 	if(!m_bEnabled) return;
@@ -107,6 +111,7 @@ void CCmdWindow::Disable()
 
 //----------------------------------------------------
 
+// R5: 0x100699D0
 void CCmdWindow::ProcessInput()
 {
 	PCHAR szCmdEndPos;
@@ -195,6 +200,7 @@ void CCmdWindow::ProcessInput()
 
 //----------------------------------------------------
 
+// R5: 0x10069710
 CMDPROC CCmdWindow::GetCmdHandler(PCHAR szCmdName)
 {
 	int x=0;
@@ -209,6 +215,7 @@ CMDPROC CCmdWindow::GetCmdHandler(PCHAR szCmdName)
 
 //----------------------------------------------------
 
+// R5: 0x10069760
 void CCmdWindow::AddDefaultCmdProc(CMDPROC cmdDefault)
 {
 	m_pDefaultCmd = cmdDefault;
@@ -216,6 +223,7 @@ void CCmdWindow::AddDefaultCmdProc(CMDPROC cmdDefault)
 
 //----------------------------------------------------
 
+// R5: 0x10069770
 void CCmdWindow::AddCmdProc(PCHAR szCmdName, CMDPROC cmdHandler)
 {
 	if(m_iCmdCount < MAX_CMDS && (strlen(szCmdName) < MAX_CMD_STRLEN)) {
@@ -238,6 +246,7 @@ void CCmdWindow::AddCmdProc(PCHAR szCmdName, CMDPROC cmdHandler)
 
 
 // Recall methods transferred from0.2.5 with existing R5 layout and GetTextA.
+// R5: 0x100695D0
 void CCmdWindow::AddToRecallBuffer(char *szCmdInput)
 {
 	// Move all the existing recalls up 1
@@ -252,6 +261,7 @@ void CCmdWindow::AddToRecallBuffer(char *szCmdInput)
 		m_iTotalRecalls++;
 	}
 }
+// R5: 0x10069630
 void CCmdWindow::RecallUp()
 {
 	if(m_iCurrentRecallAt >= (m_iTotalRecalls - 1)) return;
@@ -266,6 +276,7 @@ void CCmdWindow::RecallUp()
 	m_pEditControl->SetText(m_szRecallBuffer[m_iCurrentRecallAt]);
 	//pChatWindow->AddDebugMessage("RecallAt: %d",m_iCurrentRecallAt);	
 }
+// R5: 0x100696A0
 void CCmdWindow::RecallDown()
 {
 	m_iCurrentRecallAt--;
@@ -283,6 +294,7 @@ void CCmdWindow::RecallDown()
 
 typedef char complete_command_window_size[(sizeof(CCmdWindow)==0x1AFC)?1:-1];
 
+// R5: 0x10069900
 void CCmdWindow::SendToServer(char* szServerCommand)
 {
 	if(!pNetGame) return;
@@ -298,6 +310,7 @@ void CCmdWindow::SendToServer(char* szServerCommand)
 
 }
 
+// R5: 0x100697D0
 int CCmdWindow::MsgProc(UINT uMsg, DWORD wParam, DWORD lParam)
 {
 	if(m_bEnabled && m_pEditControl) {

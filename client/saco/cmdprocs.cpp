@@ -11,6 +11,7 @@ extern CConfig		 *pConfig;
 extern bool bShowDebugLabels;
 extern bool bHudScaleFix;
 
+// R5: 0x100684E0
 void cmdDefaultCmdProc(PCHAR szCmd)
 {
 	if(pNetGame) {
@@ -20,6 +21,7 @@ void cmdDefaultCmdProc(PCHAR szCmd)
 	}
 }
 
+// R5: 0x10068500
 void cmdTestDeathWindow(PCHAR szCmd)
 {
 	if(pDeathWindow) {
@@ -34,41 +36,49 @@ void cmdTestDeathWindow(PCHAR szCmd)
 	}
 }
 
+// R5: 0x100685E0
 void cmdCameraTargetDebug(PCHAR szCmd)
 {
 	// TODO: cmdCameraTargetDebug .text:100685E0
 }
 
+// R5: 0x100685F0
 void cmdPageSize(PCHAR szCmd)
 {
 	// TODO: cmdPageSize .text:100685F0
 }
 
+// R5: 0x10068670
 void cmdFontSize(PCHAR szCmd)
 {
 	// TODO: cmdFontSize .text:10068670
 }
 
+// R5: 0x10068720
 void cmdNameTagStatus(PCHAR szCmd)
 {
 	// TODO: cmdNameTagStatus .text:10068720
 }
 
+// R5: 0x10068730
 void cmdTimestamp(PCHAR szCmd)
 {
 	// TODO: cmdTimestamp .text:10068730
 }
 
+// R5: 0x10068790
 void cmdAudioMsg(PCHAR szCmd)
 {
 	// TODO: cmdAudioMsg .text:10068790
 }
 
+// R5: 0x10068800
 void cmdLogUrls(PCHAR szCmd)
 {
 	// TODO: cmdLogUrls .text:10068800
 }
 
+// R5: 0x10068870
 void cmdHudScaleFix(PCHAR szCmd)
 {
 	if(bHudScaleFix)
@@ -85,81 +95,97 @@ void cmdHudScaleFix(PCHAR szCmd)
 
 //----------------------------------------------------
 
+// R5: 0x100688B0
 void cmdMem(PCHAR szCmd)
 {
 	pChatWindow->AddDebugMessage("Memory: %u",*(DWORD *)0x8A5A80);
 }
 
+// R5: 0x100688D0
 void cmdSetFrameLimit(PCHAR szCmd)
 {
 	// TODO: cmdSetFrameLimit .text:100688D0
 }
 
+// R5: 0x10068960
 void cmdHeadMove(PCHAR szCmd)
 {
 	// TODO: cmdSetFrameLimit .text:10068960
 }
 
+// R5: 0x100689E0
 void cmdQuit(PCHAR szCmd)
 {
 	// TODO: cmdQuit .text:100689E0
 }
 
+// R5: 0x100689F0
 void cmdCmpStat(PCHAR szCmd)
 {
 	// TODO: cmdCmpStat .text:100689F0
 }
 
+// R5: 0x10068A00
 void cmdSavePos(PCHAR szCmd)
 {
 	// TODO: cmdSavePos .text:10068A00
 }
 
+// R5: 0x10068B80
 void cmdRawSavePos(PCHAR szCmd)
 {
 	// TODO: cmdRawSavePos .text:10068B80
 }
 
+// R5: 0x10068D00
 void cmdPlayerSkin(PCHAR szCmd)
 {
 	// TODO: cmdPlayerSkin .text:10068D00
 }
 
+// R5: 0x10068D70
 void cmdCreateVehicle(PCHAR szCmd)
 {
 	// TODO: cmdCreateVehicle .text:10068D70
 }
 
+// R5: 0x10068EB0
 void cmdSelectVehicle(PCHAR szCmd)
 {
 	// TODO: cmdSelectVehicle .text:10068EB0
 }
 
+// R5: 0x10068ED0
 void cmdSetWeather(PCHAR szCmd)
 {
 	// TODO: cmdSetWeather .text:10068ED0
 }
 
+// R5: 0x10068F20
 void cmdSetTime(PCHAR szCmd)
 {
 	// TODO: cmdSetTime .text:10068F20
 }
 
+// R5: 0x10068FD0
 void cmdShowInterior(PCHAR szCmd)
 {
 	// TODO: cmdShowInterior .text:10068FD0
 }
 
+// R5: 0x10069000
 void cmdToggleObjectLight(PCHAR szCmd)
 {
 	// TODO: cmdToggleObjectLight .text:10069000
 }
 
+// R5: 0x10069020
 void cmdDebugLabels(PCHAR szCmd)
 {
 	bShowDebugLabels = !bShowDebugLabels;
 }
 
+// R5: 0x10069030
 void cmdRcon(PCHAR szCmd)
 {
 	// TODO: cmdRcon .text:10069030
@@ -167,6 +193,7 @@ void cmdRcon(PCHAR szCmd)
 
 //----------------------------------------------------
 
+// R5: 0x10069110
 void SetupCommands()
 {
 	// RELEASE COMMANDS

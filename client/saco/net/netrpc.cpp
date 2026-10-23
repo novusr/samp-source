@@ -11,6 +11,7 @@ void SetCheckpoint(RPCParameters *rpcParams) {}
 void DisableCheckpoint(RPCParameters *rpcParams) {}
 void SetRaceCheckpoint(RPCParameters *rpcParams) {}
 void DisableRaceCheckpoint(RPCParameters *rpcParams) {}
+// R5: 0x100103E0
 void UpdateScoresPingsIPs(RPCParameters *rpcParams) {}
 void SvrStats(RPCParameters *rpcParams) {}
 void GameModeRestart(RPCParameters *rpcParams) {}
@@ -27,6 +28,7 @@ void ToggleClock(RPCParameters *rpcParams) {}
 void Unk3C(RPCParameters *rpcParams) {}
 void WorldPlayerAdd(RPCParameters *rpcParams) {}
 void WorldPlayerDeath(RPCParameters *rpcParams) {}
+// R5: 0x10010E00
 void WorldPlayerRemove(RPCParameters *rpcParams) {}
 void WorldVehicleAdd(RPCParameters *rpcParams) {}
 void WorldVehicleRemove(RPCParameters *rpcParams) {}

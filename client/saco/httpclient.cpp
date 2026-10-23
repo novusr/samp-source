@@ -18,6 +18,7 @@
 
 //----------------------------------------------------
 
+// R5: 0x100022E0
 CHttpClient::CHttpClient()
 {
 	memset(&m_Request,0,sizeof(HTTP_REQUEST));
@@ -36,6 +37,7 @@ CHttpClient::CHttpClient()
 
 //----------------------------------------------------
 
+// R5: 0x10002340
 CHttpClient::~CHttpClient()
 {
 	// Deallocate the request data memory
@@ -59,6 +61,7 @@ CHttpClient::~CHttpClient()
 
 //----------------------------------------------------
 
+// R5: 0x10002C40
 int CHttpClient::ProcessURL(int iType, char *szURL, char *szPostData, char *szReferer)
 {
 	printf("CHttpClient::ProcessURL %s\n",szURL);
@@ -72,6 +75,7 @@ int CHttpClient::ProcessURL(int iType, char *szURL, char *szPostData, char *szRe
 
 //----------------------------------------------------
 
+// R5: 0x100023B0
 bool CHttpClient::GetHeaderValue(char *szHeaderName,char *szReturnBuffer, int iBufSize)
 {
 	char *szHeaderStart;
@@ -102,6 +106,7 @@ bool CHttpClient::GetHeaderValue(char *szHeaderName,char *szReturnBuffer, int iB
 
 //----------------------------------------------------
 
+// R5: 0x100029A0
 bool CHttpClient::Connect(char *szHost, int iPort)
 {
 	struct sockaddr_in	sa;
@@ -136,6 +141,7 @@ bool CHttpClient::Connect(char *szHost, int iPort)
 
 //----------------------------------------------------
 
+// R5: 0x10002440
 inline void CHttpClient::CloseConnection()
 {
 #ifdef WIN32
@@ -147,6 +153,7 @@ inline void CHttpClient::CloseConnection()
 
 //----------------------------------------------------
 
+// R5: 0x10002450
 inline bool CHttpClient::Send(char *szData)
 {
 	if(send(m_iSocket,szData,strlen(szData),0) < 0) {
@@ -158,6 +165,7 @@ inline bool CHttpClient::Send(char *szData)
 
 //----------------------------------------------------
 
+// R5: 0x10002490
 inline int CHttpClient::Recv(char *szBuffer, int iBufferSize)
 {
 	return recv(m_iSocket,szBuffer,iBufferSize,0);
@@ -165,6 +173,7 @@ inline int CHttpClient::Recv(char *szBuffer, int iBufferSize)
 
 //----------------------------------------------------
 
+// R5: 0x100024B0
 void CHttpClient::InitRequest(int iType, char *szURL, char *szPostData, char *szReferer)
 {
 	char		 *port;			// port string
@@ -219,6 +228,7 @@ void CHttpClient::InitRequest(int iType, char *szURL, char *szPostData, char *sz
 
 //----------------------------------------------------
 
+// R5: 0x10002A60
 void CHttpClient::Process()
 {
 	int   header_len;
@@ -270,6 +280,7 @@ void CHttpClient::Process()
 
 #define RECV_BUFFER_SIZE 4096
 
+// R5: 0x10002680
 void CHttpClient::HandleEntity()
 {
 	int				bytes_total		= 0;

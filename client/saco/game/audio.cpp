@@ -3,6 +3,7 @@
 
 //-----------------------------------------------------------
 
+// R5: 0x100A21D0
 void CAudio::FUNC_100A21D0()
 {
 	if(field_0 && field_0 == 1)
@@ -17,6 +18,7 @@ void CAudio::FUNC_100A21D0()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2210
 int CAudio::GetRadioStation() 
 {
 	int iRadioStation = 0;
@@ -33,6 +35,7 @@ int CAudio::GetRadioStation()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2240
 void CAudio::StartRadio(int iStation)
 {
 	_asm push 0
@@ -44,6 +47,7 @@ void CAudio::StartRadio(int iStation)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2260
 void CAudio::StopRadio()
 {
 	_asm push 0
@@ -55,6 +59,7 @@ void CAudio::StopRadio()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2280
 float CAudio::GetRadioVolume()
 {
     return *(float*)0xB5FCC8;
@@ -62,6 +67,7 @@ float CAudio::GetRadioVolume()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2290
 void CAudio::StopOutdoorAmbienceTrack()
 {
 	_asm mov ecx, 0x8AC15C
@@ -71,6 +77,7 @@ void CAudio::StopOutdoorAmbienceTrack()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A22A0
 void CAudio::SetOutdoorAmbienceTrack(int iTrack)
 {
     _asm push iTrack

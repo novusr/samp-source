@@ -7,6 +7,7 @@ bool GLOBAL_1014FD8C;
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D740
 void CCamera::SetBehindPlayer()
 {
 	ScriptCommand(&lock_camera_position, 0);
@@ -18,6 +19,7 @@ void CCamera::SetBehindPlayer()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D780
 void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ)
 {
 	ScriptCommand(&restore_camera_to_user_defined);
@@ -27,6 +29,7 @@ void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float 
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D7E0
 void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
 {
 	ScriptCommand(&restore_camera_to_user_defined);
@@ -36,6 +39,7 @@ void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D830
 void CCamera::Restore()
 {
 	field_0 = NULL;
@@ -44,6 +48,7 @@ void CCamera::Restore()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D440
 void CCamera::Fade(int iInOut)
 {
 	ScriptCommand(&fade,500,iInOut);
@@ -51,6 +56,7 @@ void CCamera::Fade(int iInOut)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D460
 void CCamera::GetMatrix(PMATRIX4X4 Matrix)
 {
 	Matrix->right.X = m_matPos->right.X;
@@ -72,6 +78,7 @@ void CCamera::GetMatrix(PMATRIX4X4 Matrix)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D4E0
 void CCamera::SetMatrix(MATRIX4X4 Matrix)
 {
 	m_matPos->right.X = Matrix.right.X;
@@ -101,6 +108,7 @@ void __stdcall FUNC_1009D560(bool unk)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D570
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
 	_asm push 1
@@ -114,6 +122,7 @@ void CCamera::Attach(int unk1, int unk2, int unk3)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D590
 void CCamera::InterpolatePosition(VECTOR *vecFrom, VECTOR *vecTo, int iTime, BYTE byteCut)
 {
 	ScriptCommand(&restore_camera_to_user_defined);
@@ -123,6 +132,7 @@ void CCamera::InterpolatePosition(VECTOR *vecFrom, VECTOR *vecTo, int iTime, BYT
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D600
 void CCamera::InterpolateLookAt(VECTOR *vecFrom, VECTOR *vecTo, int iTime, BYTE byteCut)
 {
 	ScriptCommand(&lock_camera_target_point,1);
@@ -131,6 +141,7 @@ void CCamera::InterpolateLookAt(VECTOR *vecFrom, VECTOR *vecTo, int iTime, BYTE 
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D660
 void CCamera::FUNC_1009D660(CEntity *pEntity)
 {
 	field_0 = pEntity;
@@ -146,6 +157,7 @@ void CCamera::FUNC_1009D660(CEntity *pEntity)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D6B0
 void CCamera::FUNC_1009D6B0()
 {
 	if(!field_0 || !field_0->m_pEntity) return;
@@ -159,6 +171,7 @@ void CCamera::FUNC_1009D6B0()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009D700
 float CCamera::GetDistanceFromPoint(VECTOR *vecPos)
 {
 	float fSX,fSY,fSZ;

@@ -3,6 +3,7 @@
 
 //----------------------------------------------------
 
+// R5: 0x100016C0
 CActorPool::CActorPool()
 {
 	for(ACTORID ActorID = 0; ActorID < MAX_ACTORS; ActorID++) {
@@ -16,11 +17,13 @@ CActorPool::CActorPool()
 //----------------------------------------------------
 
 // Ordinary C++ reconstruction. Original full bodies are pinned in checkpoint32.
+// R5: 0x10001660
 void CActorPool::UpdateCount() {
  int last = 0;
  for(int i=0;i<MAX_ACTORS;++i) if(m_bSlotState[i]) last=i;
  field_0=last;
 }
+// R5: 0x100016F0
 BOOL CActorPool::Delete(ACTORID id) {
  if(id<MAX_ACTORS && m_bSlotState[id] && m_pActors[id]) {
   m_bSlotState[id]=FALSE;
@@ -32,6 +35,7 @@ BOOL CActorPool::Delete(ACTORID id) {
  }
  return FALSE;
 }
+// R5: 0x100018B0
 ACTORID CActorPool::FindIDFromGtaPtr(int gtaPtr) {
  int i=0;
  if(field_0>=0) {
@@ -39,6 +43,7 @@ ACTORID CActorPool::FindIDFromGtaPtr(int gtaPtr) {
  }
  return (ACTORID)0xFFFF;
 }
+// R5: 0x100018E0
 void CActorPool::DeleteAll() {
  int i=0;
  do {Delete((ACTORID)i);++i;} while((ACTORID)i<MAX_ACTORS);
@@ -46,6 +51,7 @@ void CActorPool::DeleteAll() {
 
 extern CChatWindow *pChatWindow;
 
+// R5: 0x10001900
 BOOL CActorPool::New(ACTOR_SPAWN_INFO *info)
 {
     if(m_pActors[info->id]) {

@@ -34,6 +34,7 @@ typedef void (*DrawZone_t)(float *fPos, DWORD *dwColor, BYTE byteMenu);
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF80
 CGame::CGame()
 {
 	m_pGameAudio = new CAudio();
@@ -80,6 +81,7 @@ void unnamed_100A0060(float a1)
   unnamed_10116718 = a1 * 3.0f;
 }
 
+// R5: 0x100A0090
 void CGame::sub_100A0090(int a1, int a2)
 {
 	if(a1 && a2 && a1 < 1000 / a2)
@@ -88,6 +90,7 @@ void CGame::sub_100A0090(int a1, int a2)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A00C0
 BYTE CGame::FindFirstFreePlayerPedSlot()
 {
 	BYTE x=2;
@@ -100,6 +103,7 @@ BYTE CGame::FindFirstFreePlayerPedSlot()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A00F0
 BYTE CGame::FUNC_100A00F0()
 {
 	BYTE count = 0;
@@ -115,6 +119,7 @@ BYTE CGame::FUNC_100A00F0()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A03D0
 int CGame::GetWeaponModelIDFromWeapon(int iWeaponID)
 {
 	return GameGetWeaponModelIDFromWeaponID(iWeaponID);
@@ -133,6 +138,7 @@ BOOL CGame::IsKeyPressed(int iKeyIdentifier)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0400
 float CGame::FindGroundZForCoord(float x, float y, float z)
 {
 	float fGroundZ;
@@ -164,6 +170,7 @@ void DIInitMouse()
 	pDirectInputMouse->Acquire();
 }
 
+// R5: 0x100A04B0
 void DIResetMouse()
 {
 	*(DWORD*)0xB73424 = 0;
@@ -173,12 +180,14 @@ void DIResetMouse()
 	_asm call edx
 }
 
+// R5: 0x100A04D0
 void UpdatePads()
 {
 	_asm mov edx, 0x541DD0
 	_asm call edx
 }
 
+// R5: 0x100A04E0
 void DisableMousePositionUpdate()
 {
 	memset((PVOID)0xB7340C,0,12);
@@ -191,6 +200,7 @@ void DisableMousePositionUpdate()
 	*(DWORD*)0x53F4B3 = (DWORD)&dwDummyActiveMouseState;
 }
 
+// R5: 0x100A0530
 void RestoreMousePositionUpdate()
 {
 	UnFuck(0x53F47A,4);
@@ -201,6 +211,7 @@ void RestoreMousePositionUpdate()
 	*(DWORD*)0x53F4B3 = 0xB7340C;
 }
 
+// R5: 0x100A0580
 void DisableMouseProcess()
 {
 	UnFuck(0x53F417,5);
@@ -219,6 +230,7 @@ BYTE byteGetKeyStateFunc[] = { 0xE8,0x46,0xF3,0xFE,0xFF };
 BYTE byteGetMouseStateCallEU10[] = { 0xE8,0x04,0x7B,0x20,0x00 };
 BYTE byteGetMouseStateCallUSA10[] = { 0xE8,0xB4,0x7A,0x20,0x00 };
 
+// R5: 0x100A05D0
 void CGame::ProcessInputDisabling()
 {
 	if(field_61 != 0) return;
@@ -261,6 +273,7 @@ void CGame::ProcessInputDisabling()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A06F0
 void CGame::ToggleKeyInputsDisabled(int a2, BOOL a3)
 {
 	if(a2 == 2)
@@ -330,6 +343,7 @@ void CGame::ToggleKeyInputsDisabled(int a2, BOOL a3)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0890
 void CGame::InitGame()
 {
 	// Create a buffer for game text.
@@ -444,6 +458,7 @@ void CGame::sub_100A1C10()
 //-----------------------------------------------------------
 // Return TRUE if the world has been loaded.
 
+// R5: 0x100A0930
 BOOL CGame::IsGameLoaded()
 {
 	if(!(*(PBYTE)ADDR_GAME_STARTED)) return TRUE;
@@ -452,6 +467,7 @@ BOOL CGame::IsGameLoaded()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0940
 void CGame::RequestModel(int iModelID, int iLoadingStream)
 {
 	ScriptCommand(&request_model,iModelID);
@@ -459,6 +475,7 @@ void CGame::RequestModel(int iModelID, int iLoadingStream)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0960
 void CGame::LoadRequestedModels()
 {
 	ScriptCommand(&load_requested_models);
@@ -466,6 +483,7 @@ void CGame::LoadRequestedModels()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0970
 BOOL CGame::IsModelLoaded(int iModelID)
 {
 	if(iModelID > 20000 || iModelID < 0) return TRUE;
@@ -515,6 +533,7 @@ BOOL CGame::SetModelDeletable(int iModelID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0AB0
 void CGame::SetWorldTime(int iHour, int iMinute)
 {
 	*(PBYTE)0xB70152 = (BYTE)iMinute;
@@ -525,6 +544,7 @@ void CGame::SetWorldTime(int iHour, int iMinute)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0AE0
 void CGame::GetWorldTime(BYTE* byteHour, BYTE* byteMinute)
 {
 	*byteMinute = *(PBYTE)0xB70152;
@@ -533,6 +553,7 @@ void CGame::GetWorldTime(BYTE* byteHour, BYTE* byteMinute)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0B00
 void CGame::ToggleThePassingOfTime(BYTE byteOnOff)
 {
 	UnFuck(0x52CF10,1);
@@ -562,6 +583,7 @@ void CGame::SetWorldWeather(int iWeatherID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0B60
 int CGame::GetWorldWeather()
 {
 	return *(int*)0xC81318;
@@ -569,6 +591,7 @@ int CGame::GetWorldWeather()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1DB0
 void CGame::DisplayHud(BOOL bDisp)
 {
 	if(bDisp) {
@@ -582,6 +605,7 @@ void CGame::DisplayHud(BOOL bDisp)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0B70
 BYTE CGame::IsHudEnabled()
 {
 	return *(BYTE*)ADDR_ENABLE_HUD;
@@ -596,6 +620,7 @@ void CGame::SetFrameLimiterOn(BOOL bLimiter)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0B90
 BOOL CGame::IsFrameLimiterEnabled()
 {
 	if(*(PBYTE)0xBA6794) return TRUE;
@@ -604,6 +629,7 @@ BOOL CGame::IsFrameLimiterEnabled()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0BA0
 void CGame::EnableFrameLimiter()
 {
 	*(BYTE*)0xBA6794 = 1;
@@ -611,6 +637,7 @@ void CGame::EnableFrameLimiter()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0BB0
 void CGame::SetFrameLimit(DWORD dwLimit)
 {
 	field_5D = dwLimit;
@@ -621,6 +648,7 @@ void CGame::SetFrameLimit(DWORD dwLimit)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0BE0
 void CGame::SetMaxStats()
 {
 	// driving stat
@@ -638,6 +666,7 @@ void CGame::SetMaxStats()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0C10
 void CGame::DisableTrainTraffic()
 {
 	ScriptCommand(&enable_train_traffic,0);
@@ -645,6 +674,7 @@ void CGame::DisableTrainTraffic()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0C20
 void CGame::RefreshStreamingAt(float x, float y)
 {
 	ScriptCommand(&refresh_streaming_at,x,y);
@@ -652,6 +682,7 @@ void CGame::RefreshStreamingAt(float x, float y)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0C50
 void CGame::RequestAnimation(char *szAnimFile)
 {
 	ScriptCommand(&request_animation, szAnimFile);
@@ -659,6 +690,7 @@ void CGame::RequestAnimation(char *szAnimFile)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0C70
 int CGame::IsAnimationLoaded(char *szAnimFile)
 {
 	return ScriptCommand(&is_animation_loaded,szAnimFile);
@@ -674,6 +706,7 @@ void CGame::ReleaseAnimation(char *szAnimFile)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0CC0
 void CGame::ToggleRadar(int iToggle)
 {
 	*(PBYTE)0xBAA3FB = (BYTE)!iToggle;
@@ -681,6 +714,7 @@ void CGame::ToggleRadar(int iToggle)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0CE0
 void CGame::DisplayGameText(char *szStr,int iTime,int iSize)
 {
 	if(iSize > 200) return;
@@ -708,6 +742,7 @@ void CGame::DisplayGameText(char *szStr,int iTime,int iSize)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1DE0
 void CGame::SetCheckpointInformation(VECTOR *pos, VECTOR *extent)
 {
 	memcpy(&m_vecCheckpointPos,pos,sizeof(VECTOR));
@@ -726,6 +761,7 @@ void CGame::SetCheckpointInformation(VECTOR *pos, VECTOR *extent)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A2100
 void CGame::SetRaceCheckpointInformation(BYTE byteType, VECTOR *pos, VECTOR *next, float fSize) //VECTOR *extent)
 {
 	memcpy(&m_vecRaceCheckpointPos,pos,sizeof(VECTOR));
@@ -748,6 +784,7 @@ void CGame::SetRaceCheckpointInformation(BYTE byteType, VECTOR *pos, VECTOR *nex
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1EA0
 void CGame::MakeRaceCheckpoint()
 {
 	DisableRaceCheckpoint();
@@ -762,6 +799,7 @@ void CGame::MakeRaceCheckpoint()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0D60
 void CGame::DisableRaceCheckpoint()
 {
 	if (m_dwRaceCheckpointHandle)
@@ -824,6 +862,7 @@ void CGame::UpdateCheckpoints()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0D90
 DWORD CGame::CreateRadarMarkerIcon(int iMarkerType, float fX, float fY, float fZ, DWORD dwColor, int iStyle)
 {
 	DWORD dwMarkerID=0;
@@ -854,6 +893,7 @@ DWORD CGame::CreateRadarMarkerIcon(int iMarkerType, float fX, float fY, float fZ
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0EC0
 void CGame::DisableMarker(DWORD dwMarkerID)
 {
 	ScriptCommand(&disable_marker, dwMarkerID);
@@ -862,6 +902,7 @@ void CGame::DisableMarker(DWORD dwMarkerID)
 //-----------------------------------------------------------
 // Get the current active interior
 
+// R5: 0x100A0EE0
 BYTE CGame::GetActiveInterior()
 {
 	DWORD dwRet;
@@ -895,6 +936,7 @@ void CGame::UpdateFarClippingPlane()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0F70
 void CGame::AddToLocalMoney(int iAmount)
 {
 	ScriptCommand(&add_to_player_money,0,iAmount);
@@ -902,6 +944,7 @@ void CGame::AddToLocalMoney(int iAmount)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A20C0
 void CGame::ResetLocalMoney()
 {
 	int iMoney = GetLocalMoney();
@@ -916,6 +959,7 @@ void CGame::ResetLocalMoney()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0F90
 int CGame::GetLocalMoney()
 {
 	return *(int *)0xB7CE50;
@@ -1021,6 +1065,7 @@ const PCHAR CGame::GetWeaponName(int iWeaponID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A12D0
 DWORD CGame::CreateWeaponPickup(int iModel, DWORD dwAmmo, float fX, float fY, float fZ)
 {
 	DWORD hnd;
@@ -1058,6 +1103,7 @@ DWORD CGame::GetD3DDevice()
 //-----------------------------------------------------------
 // DOESN'T CURRENTLY WORK
 
+// R5: 0x100A13B0
 void CGame::RestartEverything()
 {
 	//*(PBYTE)ADDR_MENU = 1;
@@ -1084,6 +1130,7 @@ void CGame::RestartEverything()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A13E0
 DWORD CGame::GetWeaponInfo(int iWeapon, int iUnk)
 {
 	DWORD dwRet;
@@ -1101,6 +1148,7 @@ DWORD CGame::GetWeaponInfo(int iWeapon, int iUnk)
 
 //----------------------------------------------------
 
+// R5: 0x100A1400
 void CGame::SetGravity(float fGravity)
 {
 	UnFuck(0x863984, 4);
@@ -1109,6 +1157,7 @@ void CGame::SetGravity(float fGravity)
 
 //---------------------------------------------------
 
+// R5: 0x100A1420
 void CGame::SetWantedLevel(BYTE byteLevel)
 {
 	*(BYTE*)0x58DB60 = byteLevel;
@@ -1116,6 +1165,7 @@ void CGame::SetWantedLevel(BYTE byteLevel)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1430
 void CGame::SetGameTextCount(WORD wCount)
 {
 	*(WORD*)0xA44B68 = wCount;
@@ -1123,6 +1173,7 @@ void CGame::SetGameTextCount(WORD wCount)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1440
 void CGame::DrawGangZone(float fPos[], DWORD dwColor)
 {
 	((DrawZone_t)0x5853D0)(fPos, &dwColor, *(BYTE*)ADDR_MENU);
@@ -1130,6 +1181,7 @@ void CGame::DrawGangZone(float fPos[], DWORD dwColor)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1460
 void CGame::EnableClock(BYTE byteClock)
 {
 	BYTE byteClockData[] = {'%', '0', '2', 'd', ':', '%', '0', '2', 'd', 0};
@@ -1148,6 +1200,7 @@ void CGame::EnableClock(BYTE byteClock)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1520
 void CGame::EnableZoneNames(BYTE byteEnable)
 {
 	ScriptCommand(&enable_zone_names, byteEnable);
@@ -1155,6 +1208,7 @@ void CGame::EnableZoneNames(BYTE byteEnable)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1540
 void CGame::EnableStuntBonus(bool bEnable)
 {
 	UnFuck(0xA4A474,4);
@@ -1163,6 +1217,7 @@ void CGame::EnableStuntBonus(bool bEnable)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1560
 void CGame::DisableEnterExits()
 {
 	DWORD pEnExPool = *(DWORD *)0x96A7D8;
@@ -1186,6 +1241,7 @@ void CGame::DisableEnterExits()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A15B0
 void CGame::LoadScene(char* szScene)
 {
 	_asm push szScene
@@ -1196,6 +1252,7 @@ void CGame::LoadScene(char* szScene)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A15D0
 int CGame::GetMemoryUsedForStreaming()
 {
 	return *(int*)0x8E4CB4;
@@ -1203,6 +1260,7 @@ int CGame::GetMemoryUsedForStreaming()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A15E0
 int CGame::GetMemoryAvailableForStreaming()
 {
 	return *(int*)0x8A5A80;
@@ -1210,6 +1268,7 @@ int CGame::GetMemoryAvailableForStreaming()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A15F0
 int CGame::GetLoadedVehicleModelCount()
 {
 	int iCount = 0;
@@ -1231,6 +1290,7 @@ int CGame::GetLoadedVehicleModelCount()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1750
 void CGame::SetTimeInMilliseconds(DWORD dwTimeInMs)
 {
 	if(!field_69) {
@@ -1241,6 +1301,7 @@ void CGame::SetTimeInMilliseconds(DWORD dwTimeInMs)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1770
 DWORD CGame::GetTimeInMilliseconds()
 {
 	return *(DWORD*)0xB7CB84;
@@ -1248,6 +1309,7 @@ DWORD CGame::GetTimeInMilliseconds()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1780
 int CGame::GetRwObjectsCount()
 {
 	return *(int*)0xB71804;
@@ -1298,6 +1360,7 @@ void CGame::RequestAnimationsAndModels()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1B80
 void CGame::LoadCollisionFile(char *szFileName)
 {
 	_asm push 0
@@ -1310,6 +1373,7 @@ void CGame::LoadCollisionFile(char *szFileName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1BA0
 void CGame::LoadCullZone(char *szLine)
 {
 	_asm push szLine
@@ -1320,6 +1384,7 @@ void CGame::LoadCullZone(char *szLine)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1BC0
 BOOL CGame::IsUsingController()
 {
 	if(*(BYTE*)0xBA6818) return TRUE;
@@ -1328,6 +1393,7 @@ BOOL CGame::IsUsingController()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A1BD0
 void CGame::DisableWeaponLockOnTarget()
 {
 	// CPlayerPed_FindWeaponLockOnTarget

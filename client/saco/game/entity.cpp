@@ -13,6 +13,7 @@ extern CChatWindow *pChatWindow;
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EB10
 void CEntity::GetMatrix(PMATRIX4X4 Matrix)
 {
 	if (!m_pEntity || !m_pEntity->mat) return;
@@ -36,6 +37,7 @@ void CEntity::GetMatrix(PMATRIX4X4 Matrix)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EBC0
 void CEntity::SetMatrix(MATRIX4X4 Matrix)
 {
 	if (!m_pEntity || !m_pEntity->mat) return;
@@ -59,6 +61,7 @@ void CEntity::SetMatrix(MATRIX4X4 Matrix)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EC80
 void CEntity::FUNC_1009EC80()
 {
 	if(!m_pEntity || m_pEntity->vtable == 0x863C40) return;
@@ -85,6 +88,7 @@ void CEntity::FUNC_1009EC80()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009ECE0
 void CEntity::GetMoveSpeedVector(PVECTOR Vector)
 {
 	Vector->X = m_pEntity->vecMoveSpeed.X;
@@ -94,6 +98,7 @@ void CEntity::GetMoveSpeedVector(PVECTOR Vector)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009ED10
 void CEntity::SetMoveSpeedVector(VECTOR Vector)
 {
 	m_pEntity->vecMoveSpeed.X = Vector.X;
@@ -127,6 +132,7 @@ void CEntity::FUNC_1009ED40(float fX, float fY, float fZ)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EE30
 void CEntity::GetTurnSpeedVector(PVECTOR Vector)
 {
 	Vector->X = m_pEntity->vecTurnSpeed.X;
@@ -136,6 +142,7 @@ void CEntity::GetTurnSpeedVector(PVECTOR Vector)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EE60
 void CEntity::SetTurnSpeedVector(VECTOR Vector)
 {
 	m_pEntity->vecTurnSpeed.X = Vector.X;
@@ -145,6 +152,7 @@ void CEntity::SetTurnSpeedVector(VECTOR Vector)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EE90
 void CEntity::ApplyTurnSpeed()
 {
 	DWORD dwEnt = (DWORD)m_pEntity;
@@ -157,6 +165,7 @@ void CEntity::ApplyTurnSpeed()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EEB0
 float CEntity::GetDistanceFromCentreOfMassToBaseOfModel()
 {
 	DWORD dwEnt = (DWORD)m_pEntity;
@@ -174,6 +183,7 @@ float CEntity::GetDistanceFromCentreOfMassToBaseOfModel()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EEF0
 void CEntity::GetBoundCentre(PVECTOR Vector)
 {
 	DWORD dwEnt = (DWORD)m_pEntity;
@@ -187,6 +197,7 @@ void CEntity::GetBoundCentre(PVECTOR Vector)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009EF20
 void CEntity::GetBoundRect(PFRECT Rect)
 {
 	DWORD dwEnt = (DWORD)m_pEntity;
@@ -200,6 +211,7 @@ void CEntity::GetBoundRect(PFRECT Rect)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F030
 UINT CEntity::GetModelIndex()
 {
 	return m_pEntity->nModelIndex;
@@ -207,6 +219,7 @@ UINT CEntity::GetModelIndex()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F040
 void CEntity::TeleportTo(float x, float y, float z)
 {
 	DWORD dwThisEntity = (DWORD)m_pEntity;
@@ -230,6 +243,7 @@ void CEntity::TeleportTo(float x, float y, float z)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F0C0
 float CEntity::GetDistanceFromLocalPlayerPed()
 {
 	MATRIX4X4	matFromPlayer;
@@ -263,6 +277,7 @@ float CEntity::GetDistanceFromLocalPlayerPed()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F190
 float CEntity::GetDistanceFromCamera()
 {
 	if(!m_pEntity || m_pEntity->vtable == 0x863C40) return 100000.0f;
@@ -280,6 +295,7 @@ float CEntity::GetDistanceFromCamera()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F1F0
 float CEntity::Get2DDistanceFromLocalPlayerPed()
 {
 	MATRIX4X4	matFromPlayer;
@@ -312,6 +328,7 @@ float CEntity::Get2DDistanceFromLocalPlayerPed()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F2B0
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 {
 	MATRIX4X4	matThis;
@@ -327,6 +344,7 @@ float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F300
 void CEntity::Add()
 {
 	// Check for CPlaceable messup
@@ -363,6 +381,7 @@ void CEntity::Add()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F3D0
 BOOL CEntity::IsAdded()
 {
 	// Check for CPlaceable messup
@@ -378,6 +397,7 @@ BOOL CEntity::IsAdded()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F400
 void CEntity::Remove()
 {
 	// Check for CPlaceable messup
@@ -403,6 +423,7 @@ void CEntity::Remove()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F420
 BOOL CEntity::EnforceWorldBoundries(float fPX, float fZX, float fPY, float fNY)
 {
 	MATRIX4X4 matWorld;
@@ -465,6 +486,7 @@ BOOL CEntity::EnforceWorldBoundries(float fPX, float fZX, float fPY, float fNY)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F5C0
 BOOL CEntity::HasExceededWorldBoundries(float fPX, float fZX, float fPY, float fNY)
 {
 	MATRIX4X4 matWorld;
@@ -490,6 +512,7 @@ BOOL CEntity::HasExceededWorldBoundries(float fPX, float fZX, float fPY, float f
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F630
 void CEntity::SetCollisionChecking(int iCheck)
 {
 	if(!m_pEntity) return;
@@ -504,6 +527,7 @@ void CEntity::SetCollisionChecking(int iCheck)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F660
 BOOL CEntity::IsCollisionCheckingEnabled()
 {
 	if(m_pEntity && m_pEntity->vtable != 0x863C40)
@@ -515,6 +539,7 @@ BOOL CEntity::IsCollisionCheckingEnabled()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F680
 void CEntity::SetGravityProcessing(int iState)
 {
 	if(!m_pEntity) return;
@@ -529,6 +554,7 @@ void CEntity::SetGravityProcessing(int iState)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F6C0
 void CEntity::SetWaitingForCollision(int iState)
 {
 	if(!m_pEntity) return;
@@ -544,6 +570,7 @@ void CEntity::SetWaitingForCollision(int iState)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F700
 void CEntity::DisableStreaming()
 {
 	if(!m_pEntity) return;
@@ -554,6 +581,7 @@ void CEntity::DisableStreaming()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F720
 void CEntity::EnableTunnelTransition()
 {
 	if(!m_pEntity) return;
@@ -564,6 +592,7 @@ void CEntity::EnableTunnelTransition()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F740
 void CEntity::SetApplySpeed(int iState)
 {
 	if(!m_pEntity) return;
@@ -586,6 +615,7 @@ void CEntity::SetApplySpeed(int iState)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F780
 void CEntity::MakeNonCollidable()
 {
 	if(m_pEntity) {
@@ -595,6 +625,7 @@ void CEntity::MakeNonCollidable()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F790
 void CEntity::SetClumpAlpha(int iAlpha)
 {
 	if(!m_pEntity || !m_pEntity->pdwRenderWare || m_pEntity->vtable == 0x863C40)
@@ -614,6 +645,7 @@ void CEntity::SetClumpAlpha(int iAlpha)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F7D0
 DWORD CEntity::GetWorldBoundRadius()
 {
 	if(m_pEntity && m_pEntity->pdwRenderWare && m_pEntity->vtable != 0x863C40)
@@ -625,6 +657,7 @@ DWORD CEntity::GetWorldBoundRadius()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009F7F0
 void CEntity::SetEulerAngles(float fX, float fY, float fZ)
 {
 	fX *= (PI/180.0f);
@@ -659,6 +692,7 @@ void CEntity::SetEulerAngles(float fX, float fY, float fZ)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FDE0
 BOOL CEntity::IsStationary()
 {
 	if (!IsAdded()) return FALSE; // movespeed vectors are invalid if its not added
@@ -695,6 +729,7 @@ void CEntity::GetEulerAngles(float *x, float *y, float *z)
 }
 
 // Symbolic GTA physical-force ABI bridge; full R5 body at 0x9F9D0.
+// R5: 0x1009F9D0
 void CEntity::ApplyForce(float x, float y, float z, float px, float py, float pz)
 {
  DWORD entity=(DWORD)m_pEntity;
@@ -711,6 +746,7 @@ void CEntity::ApplyForce(float x, float y, float z, float px, float py, float pz
 }
 
 // Native audio event bridge; exact target ABI includes the zero second argument.
+// R5: 0x1009FA00
 void CEntity::PlayAudio(int event)
 {
  DWORD entity=(DWORD)m_pEntity;
@@ -723,12 +759,14 @@ void CEntity::PlayAudio(int event)
  _asm call edx
 }
 
+// R5: 0x1009FA60
 PDWORD CEntity::GetRwObject()
 {
  if(!m_pEntity) return NULL;
  return m_pEntity->pdwRenderWare;
 }
 
+// R5: 0x1009FCE0
 BYTE CEntity::IsNativeTarget()
 {
  if(m_pEntity && m_pEntity == *(ENTITY_TYPE **)0xB7CD68) return 1;
@@ -736,6 +774,7 @@ BYTE CEntity::IsNativeTarget()
 }
 
 // Symbolic native virtual DeleteRwObject ABI bridge.
+// R5: 0x1009FBB0
 void CEntity::DeleteRwObject()
 {
  if(!m_pEntity || !m_pEntity->pdwRenderWare) return;
@@ -746,6 +785,7 @@ void CEntity::DeleteRwObject()
 }
 
 // Symbolic native virtual ProcessControl ABI bridge.
+// R5: 0x1009FBE0
 void CEntity::ProcessControl()
 {
  DWORD vtable=m_pEntity->vtable;
@@ -755,6 +795,7 @@ void CEntity::ProcessControl()
  _asm call dword ptr [eax+0x28]
 }
 
+// R5: 0x1009FD00
 void CEntity::SetMatrixAndUpdate(MATRIX4X4 matrix)
 {
  if(!m_pEntity || !m_pEntity->mat) return;
@@ -770,6 +811,7 @@ void CEntity::SetMatrixAndUpdate(MATRIX4X4 matrix)
  _asm call dword ptr [eax+0x08]
 }
 
+// R5: 0x1009FD60
 void CEntity::AdvancePosition()
 {
  if(!m_pEntity) return;
@@ -787,6 +829,7 @@ void CEntity::AdvancePosition()
 // The native virtual calls retain the reference symbolic inline assembly.
 extern int __stdcall ModelInfoLoaded(UINT model);
 extern CChatWindow *pChatWindow;
+// R5: 0x1009EF50
 BOOL CEntity::SetModelIndex(UINT uiModel)
 {
 	if(!m_pEntity) return FALSE;

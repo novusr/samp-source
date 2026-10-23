@@ -6,6 +6,7 @@
 
 //----------------------------------------------------------
 
+// R5: 0x100663E0
 CConfig::CConfig(char* szFileName)
 {
 	for(int i = 0; i != MAX_CONFIG_VARIABLES; i++)
@@ -26,6 +27,7 @@ CConfig::CConfig(char* szFileName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065C00
 CConfig::~CConfig()
 {
 	int i = 0;
@@ -44,6 +46,7 @@ CConfig::~CConfig()
 
 //----------------------------------------------------------
 
+// R5: 0x10065C40
 void CConfig::RecalcSize()
 {
 	int iNewIndex = 0;
@@ -68,6 +71,7 @@ void CConfig::RecalcSize()
 
 //----------------------------------------------------------
 
+// R5: 0x10065C90
 int CConfig::FindVariableIndex(char *szName)
 {
 	strlwr(szName);
@@ -89,6 +93,7 @@ int CConfig::FindVariableIndex(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065D30
 bool CConfig::IsVariableExist(char *szName)
 {
 	if(FindVariableIndex(szName) >= 0) return true;
@@ -97,6 +102,7 @@ bool CConfig::IsVariableExist(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065D50
 int CConfig::AddVariable(char *szName)
 {
 	int iIndex = 0;
@@ -144,6 +150,7 @@ int CConfig::AddVariable(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065E10
 int CConfig::GetIntVariable(char *szName)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -168,6 +175,7 @@ char *CConfig::GetStringVariable(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065E70
 float CConfig::GetFloatVariable(char *szName)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -180,6 +188,7 @@ float CConfig::GetFloatVariable(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065EA0
 BOOL CConfig::RemoveVariable(char *szName)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -199,6 +208,7 @@ BOOL CConfig::RemoveVariable(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065F00
 CONFIG_VARTYPE CConfig::GetVariableType(char *szName)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -224,6 +234,7 @@ ConfigVariable_s *CConfig::GetVariableAtIndex(int iIndex)
 
 //----------------------------------------------------------
 
+// R5: 0x10065F60
 CONFIG_VARTYPE CConfig::DetermineDataType(char *szData)
 {
 	if(!szData || !strlen(szData)) return CONFIG_VARTYPE_NONE;
@@ -238,6 +249,7 @@ CONFIG_VARTYPE CConfig::DetermineDataType(char *szData)
 
 //----------------------------------------------------------
 
+// R5: 0x10065FD0
 BOOL CConfig::WriteFile()
 {
 	FILE *fWriteFile = fopen(m_szConfigFileName, "w");
@@ -273,6 +285,7 @@ BOOL CConfig::WriteFile()
 
 //----------------------------------------------------------
 
+// R5: 0x10066080
 BOOL CConfig::SetIntVariable(char *szName, int iValue, BOOL bReadOnly)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -303,6 +316,7 @@ BOOL CConfig::SetIntVariable(char *szName, int iValue, BOOL bReadOnly)
 
 //----------------------------------------------------------
 
+// R5: 0x100660E0
 BOOL CConfig::SetStringVariable(char *szName, char *szValue, BOOL bReadOnly)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -336,6 +350,7 @@ BOOL CConfig::SetStringVariable(char *szName, char *szValue, BOOL bReadOnly)
 
 //----------------------------------------------------------
 
+// R5: 0x10066180
 BOOL CConfig::SetFloatVariable(char *szName, float fValue, BOOL bReadOnly)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -366,6 +381,7 @@ BOOL CConfig::SetFloatVariable(char *szName, float fValue, BOOL bReadOnly)
 
 //----------------------------------------------------------
 
+// R5: 0x100661E0
 void CConfig::AddConfigEntry(char *szName, char *szData)
 {
 	size_t len;
@@ -389,6 +405,7 @@ void CConfig::AddConfigEntry(char *szName, char *szData)
 
 //----------------------------------------------------------
 
+// R5: 0x10066270
 BOOL CConfig::ReadFile()
 {
 	char	szReadBuffer[MAX_CONFIG_STRSIZE+1];

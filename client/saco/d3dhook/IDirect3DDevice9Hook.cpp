@@ -243,6 +243,7 @@ HRESULT __stdcall IDirect3DDevice9Hook::Clear(DWORD Count, CONST D3DRECT* pRects
 	return pD3DDevice->Clear(Count, pRects, Flags, Color, Z, Stencil);
 }
 
+// R5: 0x10074880
 HRESULT __stdcall IDirect3DDevice9Hook::SetTransform(D3DTRANSFORMSTATETYPE State, CONST D3DMATRIX* mat)
 {
 	switch (State)

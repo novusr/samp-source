@@ -3,6 +3,7 @@
 
 extern CGame* pGame;
 
+// R5: 0x1006EA30
 CScoreBoard::CScoreBoard(IDirect3DDevice9 *pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;
@@ -33,6 +34,7 @@ CScoreBoard::CScoreBoard(IDirect3DDevice9 *pD3DDevice)
 	field_0 = 0;
 }
 
+// R5: 0x1006E930
 void CScoreBoard::FUNC_1006E930()
 {
 	RECT rect;

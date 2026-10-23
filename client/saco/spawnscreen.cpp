@@ -40,6 +40,7 @@ typedef struct _D3DTLVERTEX
 
 //----------------------------------------------------
 
+// R5: 0x10070EF0
 CSpawnScreen::CSpawnScreen(IDirect3DDevice9 *pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;
@@ -60,6 +61,7 @@ CSpawnScreen::CSpawnScreen(IDirect3DDevice9 *pD3DDevice)
 
 //----------------------------------------------------
 
+// R5: 0x10070F30
 CSpawnScreen::~CSpawnScreen()
 {
 	if (m_szSpawnText)
@@ -74,6 +76,7 @@ CSpawnScreen::~CSpawnScreen()
 
 //----------------------------------------------------
 
+// R5: 0x10070B90
 void CSpawnScreen::SetSpawnText(CHAR* szSpawnText)
 {
 	if (m_szSpawnText)
@@ -88,6 +91,7 @@ void CSpawnScreen::SetSpawnText(CHAR* szSpawnText)
 
 //----------------------------------------------------
 
+// R5: 0x10070F90
 void CSpawnScreen::Draw()
 {
 	if (m_pFont && m_szSpawnText)
@@ -148,6 +152,7 @@ void CSpawnScreen::Draw()
 
 //----------------------------------------------------
 
+// R5: 0x10070BF0
 void CSpawnScreen::RestoreDeviceObjects()
 {
 	if(m_pD3DDevice)
@@ -217,6 +222,7 @@ void CSpawnScreen::RestoreDeviceObjects()
 
 //----------------------------------------------------
 
+// R5: 0x10070EA0
 void CSpawnScreen::DeleteDeviceObjects()
 {
 	if(m_pTexture)

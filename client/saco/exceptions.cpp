@@ -239,6 +239,7 @@ LONG WINAPI exc_handler(_EXCEPTION_POINTERS* exc_inf)
 
 //----------------------------------------------------
 
+// R5: 0x100609B0
 int WINAPI exc_filter(unsigned int code, struct _EXCEPTION_POINTERS *ep, char *what)
 {
 	if(pChatWindow)

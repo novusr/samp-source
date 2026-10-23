@@ -56,6 +56,7 @@ CChatWindow::CChatWindow(IDirect3DDevice9 *pD3DDevice, CFontRender *pFontRender,
 
 //----------------------------------------------------
 
+// R5: 0x100681D0
 void CChatWindow::CreateFonts()
 {
 
@@ -81,6 +82,7 @@ void CChatWindow::ResetDialogControls(CDXUTDialog *pGameUI)
 //----------------------------------------------------
 //----------------------------------------------------
 
+// R5: 0x100680F0
 void CChatWindow::AddDebugMessage(CHAR * szFormat, ...)
 {
     // Complete C++ reconstruction of the R5 formatting and sanitizing path.
@@ -157,6 +159,7 @@ void CChatWindow::AddEntry(int type, CHAR *text, CHAR *prefix, DWORD textColor, 
     field_63DA = 1;
 }
 
+// R5: 0x100677D0
 void CChatWindow::Log(int type, CHAR *text, CHAR *prefix)
 {
     time_t now = time(NULL);
@@ -177,6 +180,7 @@ void CChatWindow::Log(int type, CHAR *text, CHAR *prefix)
     fclose(file);
 }
 
+// R5: 0x10067390
 void CChatWindow::ResetPage()
 {
     if(m_pScrollBar) m_pScrollBar->SetTrackPos(90);

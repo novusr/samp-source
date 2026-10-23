@@ -3,6 +3,7 @@
 
 //----------------------------------------------------
 
+// R5: 0x10013410
 CPickupPool::~CPickupPool()
 {
 	for(int i = 0; i < MAX_PICKUPS; i++)
@@ -20,6 +21,7 @@ CPickupPool::~CPickupPool()
 // Transferred from michael-fa0.2.5 using the verified R5 layout and4096
 // slots. Destroy additionally resets the R5 network-ID slot to-1.
 
+// R5: 0x10013320
 void CPickupPool::Destroy(int iPickup)
 {
 	if (m_iPickupCount <= 0 || iPickup < 0 || iPickup >= MAX_PICKUPS) return;
@@ -33,6 +35,7 @@ void CPickupPool::Destroy(int iPickup)
 	}
 }
 
+// R5: 0x10013380
 void CPickupPool::DestroyDropped(WORD fromPlayer)
 {
 	for (int i = 0; i < MAX_PICKUPS; i++)

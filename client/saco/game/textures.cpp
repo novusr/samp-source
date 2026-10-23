@@ -4,6 +4,7 @@
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3880
 int FindTextureSlot(char *szName)
 {
 	int iRetVal;
@@ -19,6 +20,7 @@ int FindTextureSlot(char *szName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B38A0
 int AddTextureSlot(char *szName)
 {
 	int iResult;
@@ -34,6 +36,7 @@ int AddTextureSlot(char *szName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B38C0
 int LoadTexture(int iIndex, char *szName)
 {
 	BYTE byteResult = 0;
@@ -52,6 +55,7 @@ int LoadTexture(int iIndex, char *szName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B38F0
 void AddTextureRef(int iIndex)
 {
 	_asm push iIndex
@@ -62,6 +66,7 @@ void AddTextureRef(int iIndex)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3900
 void RemoveTextureRef(int iIndex)
 {
 	_asm push iIndex
@@ -72,6 +77,7 @@ void RemoveTextureRef(int iIndex)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3910
 void PushCurrentTexture()
 {
 	_asm mov edx, 0x7316A0
@@ -80,6 +86,7 @@ void PushCurrentTexture()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3920
 void PopCurrentTexture()
 {
 	_asm mov edx, 0x7316B0
@@ -88,6 +95,7 @@ void PopCurrentTexture()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3930
 void SetCurrentTexture(int iIndex)
 {
 	_asm push iIndex
@@ -98,6 +106,7 @@ void SetCurrentTexture(int iIndex)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3940
 DWORD ReloadTexture(char *szName)
 {
 	DWORD dwThisTexture = 0;
@@ -112,6 +121,7 @@ DWORD ReloadTexture(char *szName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3960
 void DestroyTexture(DWORD dwTexture)
 {
 	_asm mov eax, dwTexture
@@ -123,6 +133,7 @@ void DestroyTexture(DWORD dwTexture)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B3980
 void RemoveTextureSlotByName(char *szName)
 {
 	int iIndex = FindTextureSlot(szName);
@@ -137,6 +148,7 @@ void RemoveTextureSlotByName(char *szName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B39B0
 void RemoveTexture(int iIndex)
 {
 	if(iIndex == -1) return;
@@ -149,6 +161,7 @@ void RemoveTexture(int iIndex)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B39D0
 void RemoveTextureSlot(int iIndex)
 {
 	if(iIndex == -1) return;
@@ -161,6 +174,7 @@ void RemoveTextureSlot(int iIndex)
 
 //-----------------------------------------------------------
 
+// R5: 0x100B39F0
 int GetTextureNumRefs(int iIndex)
 {
 	int iRetVal = -1;

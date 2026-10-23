@@ -3,6 +3,7 @@
 
 extern CHAR g_szMenuItems[MAX_MENU_ITEMS][MAX_COLUMNS][MAX_MENU_LINE+1];
 
+// R5: 0x100A7420
 CMenu::CMenu(float fX, float fY, BYTE byteColumns, float fCol1Width, float fCol2Width, MENU_INT *MenuInteraction)
 {
 	for (int i = 0; i < MAX_MENU_ITEMS; i++)
@@ -26,6 +27,7 @@ CMenu::CMenu(float fX, float fY, BYTE byteColumns, float fCol1Width, float fCol2
 	m_dwPanel = 0;
 }
 
+// R5: 0x100A7530
 void CMenu::SetTitle(PCHAR pTitle)
 {
 	if(strlen(pTitle) > MAX_MENU_LINE) return;
@@ -34,6 +36,7 @@ void CMenu::SetTitle(PCHAR pTitle)
 	strcpy(m_charTitle, pTitle);
 }
 
+// R5: 0x100A7580
 void CMenu::AddMenuItem(BYTE byteColumn, BYTE byteRow, PCHAR pText)
 {
 	if(strlen(pText) > MAX_MENU_LINE) return;
@@ -44,6 +47,7 @@ void CMenu::AddMenuItem(BYTE byteColumn, BYTE byteRow, PCHAR pText)
 	strcpy(m_charItems[byteRow][byteColumn], pText);
 }
 
+// R5: 0x100A7600
 void CMenu::SetColumnTitle(BYTE byteColumn, PCHAR pText)
 {
 	if(strlen(pText) > MAX_MENU_LINE) return;
@@ -54,6 +58,7 @@ void CMenu::SetColumnTitle(BYTE byteColumn, PCHAR pText)
 
 }
 
+// R5: 0x100A7740
 void CMenu::Show()
 {
 	ScriptCommand(&create_panel, m_charTitle[0] ? "SAMPHED" : "DUMMY", m_fXPos, m_fYPos, (m_fCol1Width + m_fCol2Width) / m_byteColumns, m_byteColumns, m_MenuInteraction.bMenu, 1, 1, &m_dwPanel);
@@ -78,32 +83,38 @@ void CMenu::Show()
 	}
 }
 
+// R5: 0x100A7670
 void CMenu::Hide()
 {
 	ScriptCommand(&remove_panel, m_dwPanel);
 }
 
+// R5: 0x100A7690
 PCHAR CMenu::GetMenuItem(BYTE byteColumn, BYTE byteRow)
 {
 	return m_charItems[byteRow][byteColumn];
 }
 
+// R5: 0x100A76B0
 PCHAR CMenu::GetMenuTitle()
 {
 	return m_charTitle;
 }
 
+// R5: 0x100A76C0
 PCHAR CMenu::GetMenuHeader(BYTE byteColumn)
 {
 	return m_charHeader[byteColumn];
 }
 
+// R5: 0x100A76E0
 PCHAR CMenu::MS(BYTE byteRow, BYTE byteColumn)
 {
 	if (m_charItems[byteRow][byteColumn][0]) return g_szMenuItems[byteRow][byteColumn];
 	return "DUMMY";
 }
 
+// R5: 0x100A7710
 BYTE CMenu::GetSelectedRow()
 {
 	if (!m_MenuInteraction.bMenu) return 0xFF;

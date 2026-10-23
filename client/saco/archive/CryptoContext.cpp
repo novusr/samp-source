@@ -53,6 +53,7 @@ CCryptoContext::~CCryptoContext(void)
 
 //------------------------------------
 
+// R5: 0x10065660
 HCRYPTPROV CCryptoContext::GetProvider()
 {
 	return m_hCryptProv;

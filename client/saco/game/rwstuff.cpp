@@ -6,6 +6,7 @@ extern int iGtaVersion;
 
 //----------------------------------------------------------
 
+// R5: 0x100B16D0
 RwRaster* RwRasterCreate(int width, int height, int depth, int flags)
 {
 	RwRaster* pRaster = NULL;
@@ -26,6 +27,7 @@ RwRaster* RwRasterCreate(int width, int height, int depth, int flags)
 	return pRaster;
 }
 
+// R5: 0x100B1720
 RwTexture* RwTextureCreate(RwRaster *raster)
 {
 	RwTexture* pTexture = NULL;
@@ -40,6 +42,7 @@ RwTexture* RwTextureCreate(RwRaster *raster)
 	return pTexture;
 }
 
+// R5: 0x100B1760
 void RwTextureDestroy(RwTexture *texture)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7F3860 : 0x7F3820;
@@ -50,6 +53,7 @@ void RwTextureDestroy(RwTexture *texture)
 	_asm pop edx
 }
 
+// R5: 0x100B1790
 RwFrame* RwFrameCreate()
 {
 	RwFrame* pFrame = NULL;
@@ -62,6 +66,7 @@ RwFrame* RwFrameCreate()
 	return pFrame;
 }
 
+// R5: 0x100B17D0
 void RwFrameDestroy(RwFrame *frame)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7F05E0 : 0x7F05A0;
@@ -72,6 +77,7 @@ void RwFrameDestroy(RwFrame *frame)
 	_asm pop edx
 }
 
+// R5: 0x100B1800
 void RpAtomicDestroy(RpAtomic *atomic)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x749E10 : 0x749DC0;
@@ -82,6 +88,7 @@ void RpAtomicDestroy(RpAtomic *atomic)
 	_asm pop edx
 }
 
+// R5: 0x100B1830
 RwCamera* RwCameraCreate()
 {
 	RwCamera* pCamera = NULL;
@@ -94,6 +101,7 @@ RwCamera* RwCameraCreate()
 	return pCamera;
 }
 
+// R5: 0x100B1870
 void RwRasterDestroy(RwRaster *raster)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7FB060 : 0x7FB020;
@@ -105,6 +113,7 @@ void RwRasterDestroy(RwRaster *raster)
 
 }
 
+// R5: 0x100B18A0
 void CShadowCamera_Create(int iRasterSize)
 {
 	_asm push iRasterSize
@@ -113,6 +122,7 @@ void CShadowCamera_Create(int iRasterSize)
 	_asm pop edx
 }
 
+// R5: 0x100B18B0
 void RpWorldAddCamera(RwCamera *camera)
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -128,6 +138,7 @@ void RpWorldAddCamera(RwCamera *camera)
 	_asm pop edx
 }
 
+// R5: 0x100B18F0
 void RwCameraClear(RwCamera *camera, RwRGBA *color, int clearMode)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7EE380 : 0x7EE340;
@@ -142,6 +153,7 @@ void RwCameraClear(RwCamera *camera, RwRGBA *color, int clearMode)
 	_asm pop edx
 }
 
+// R5: 0x100B1920
 void RwCameraBeginUpdate(RwCamera *camera)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7EE1D0 : 0x7EE190;
@@ -152,6 +164,7 @@ void RwCameraBeginUpdate(RwCamera *camera)
 	_asm pop edx
 }
 
+// R5: 0x100B1950
 void RwCameraEndUpdate(RwCamera *camera)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7EE1C0 : 0x7EE180;
@@ -162,6 +175,7 @@ void RwCameraEndUpdate(RwCamera *camera)
 	_asm pop edx
 }
 
+// R5: 0x100B1980
 void RwObjectHasFrameSetFrame(RwCamera *camera, RwFrame *frame)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x804F30 : 0x804EF0l;
@@ -174,6 +188,7 @@ void RwObjectHasFrameSetFrame(RwCamera *camera, RwFrame *frame)
 	_asm pop edx
 }
 
+// R5: 0x100B19B0
 void SetCameraFrameAndZBuffer(RwCamera *camera, RwRaster *frameBuffer, RwRaster *zBuffer)
 {
 	_asm mov ebx, camera
@@ -185,6 +200,7 @@ void SetCameraFrameAndZBuffer(RwCamera *camera, RwRaster *frameBuffer, RwRaster 
 	_asm mov [ebx+0x64], edx
 }
 
+// R5: 0x100B19D0
 void RpClumpRender(RpClump *clump)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x749B70 : 0x749B20;
@@ -195,6 +211,7 @@ void RpClumpRender(RpClump *clump)
 	_asm pop edx
 }
 
+// R5: 0x100B1A00
 void RpWorldAddClump(RpClump *clump)
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -208,6 +225,7 @@ void RpWorldAddClump(RpClump *clump)
 	_asm pop edx
 }
 
+// R5: 0x100B1A30
 void RpWorldRemoveClump(RpClump *clump)
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -221,6 +239,7 @@ void RpWorldRemoveClump(RpClump *clump)
 	_asm pop edx
 }
 
+// R5: 0x100B1A60
 void RpWorldRender()
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -232,6 +251,7 @@ void RpWorldRender()
 	_asm pop edx
 }
 
+// R5: 0x100B1A80
 void RwCameraSetClipPlane(RwCamera *camera, float farClip, float nearClip)
 {
 	DWORD dwRwCameraSetFarClipPlane;
@@ -263,6 +283,7 @@ void RwCameraSetClipPlane(RwCamera *camera, float farClip, float nearClip)
 	_asm pop edx
 }
 
+// R5: 0x100B1AD0
 void RwCameraSetViewWindow(RwCamera *camera, VECTOR2D *viewWindow)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7EE450 : 0x7EE410;
@@ -275,6 +296,7 @@ void RwCameraSetViewWindow(RwCamera *camera, VECTOR2D *viewWindow)
 	_asm pop edx
 }
 
+// R5: 0x100B1B00
 RpLight* RpLightCreate(int _type)
 {
 	RpLight* pLight = NULL;
@@ -289,6 +311,7 @@ RpLight* RpLightCreate(int _type)
 	return pLight;
 }
 
+// R5: 0x100B1B40
 void RpClumpAddLight(RpClump *clump, RpLight *light)
 {
 	RpClump* pResult = NULL;
@@ -303,6 +326,7 @@ void RpClumpAddLight(RpClump *clump, RpLight *light)
 	_asm mov pResult, eax
 }
 
+// R5: 0x100B1B70
 void RpLightSetColor(RpLight *light, RwRGBAReal *color)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x751AE0 : 0x751A90;
@@ -315,6 +339,7 @@ void RpLightSetColor(RpLight *light, RwRGBAReal *color)
 	_asm pop edx
 }
 
+// R5: 0x100B1BA0
 void RpLightSetRadius(RpLight *light, float radius)
 {
 	DWORD dwFunc = 0x751A70;
@@ -327,6 +352,7 @@ void RpLightSetRadius(RpLight *light, float radius)
 	_asm pop edx
 }
 
+// R5: 0x100B1BC0
 void RpWorldAddLight(RpLight *light)
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -342,6 +368,7 @@ void RpWorldAddLight(RpLight *light)
 	_asm pop edx
 }
 
+// R5: 0x100B1C00
 void RpWorldRemoveLight(RpLight *light)
 {
 	DWORD dwWorld = *(DWORD*)0xC17038;
@@ -357,6 +384,7 @@ void RpWorldRemoveLight(RpLight *light)
 	_asm pop edx
 }
 
+// R5: 0x100B1C40
 void CVisibilityPlugins_SetRenderWareCamera(RwCamera *camera)
 {
 	_asm push camera
@@ -365,6 +393,7 @@ void CVisibilityPlugins_SetRenderWareCamera(RwCamera *camera)
 	_asm pop edx
 }
 
+// R5: 0x100B1C50
 RpClump * RpClumpClone(RpClump *clump)
 {
 	RpClump *pResult = NULL;
@@ -380,6 +409,7 @@ RpClump * RpClumpClone(RpClump *clump)
 	return pResult;
 }
 
+// R5: 0x100B1C80
 int RpClumpDestroy(RpClump *clump)
 {
 	int bResult = 0;
@@ -394,6 +424,7 @@ int RpClumpDestroy(RpClump *clump)
 	return bResult;
 }
 
+// R5: 0x100B1CC0
 void RwCameraSetProjection(RwCamera *camera, int projection)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7EE3E0 : 0x7EE3A0;
@@ -406,6 +437,7 @@ void RwCameraSetProjection(RwCamera *camera, int projection)
 	_asm pop edx
 }
 
+// R5: 0x100B1CF0
 void RwFrameTranslate(RwFrame *frame, VECTOR *v, int combine)
 {
 	DWORD dwFunc = (iGtaVersion != GTASA_VERSION_USA10) ? 0x7F0E70 : 0x7F0E30;
@@ -426,6 +458,7 @@ VECTOR stru_10117384[3] = {
 	{0.0f, 0.0f, 1.0f},
 };
 
+// R5: 0x100B1D20
 void RwFrameRotate(RwFrame* frame, int axis, float angle)
 {
 	VECTOR* pAxis = &stru_10117384[axis];

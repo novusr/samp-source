@@ -62,20 +62,25 @@ dxguid.lib d3d9.lib d3dx9.lib comctl32.lib wsock32.lib winmm.lib bass.lib
 
 `/Zp1` wajib: banyak struct jaringan dan GTA:SA bergantung pada packing 1 byte.
 
-## 4. Build
+## 4. Build dengan `tools/build.py`
 
-> [!NOTE]
-> Skrip build DLL penuh belum dibuat. Tool lama (`tools/build_linux.py`,
-> `verify.py`, dll.) khusus byte matching dan sudah dihapus dari branch ini;
-> masih tersedia di branch `main`.
-
-Untuk mengecek satu file sementara waktu:
+`tools/build.py` secara otomatis membuat shim header di `build/psdk_shim/` agar
+header Windows dari Wine (`/usr/include/wine/windows`) kompatibel penuh dengan
+preprocessor MSVC 2003 (`cl.exe` 13.10.3077), serta menyimpan cache `.obj` di
+`build/obj/`:
 
 ```bash
-MSVC="$HOME/.wine/drive_c/Program Files (x86)/Microsoft Visual C++ Toolkit 2003"
-WINEDEBUG=-all wine "$MSVC/bin/cl.exe" /nologo /c /Ox /MT /Zp1 /EHsc \
-  /I "Z:$MSVC/include" /D WIN32 /D NDEBUG /D SAMPCLI \
-  client/saco/net/playerpool.cpp /Fobuild/
+# Kompilasi 1 unit
+python3 tools/build.py --unit net/playerpool
+
+# Kompilasi 1 modul (net, game, archive, d3dhook, root, d3d9, raknet)
+python3 tools/build.py --module net
+
+# Kompilasi seluruh client/saco/ secara paralel
+python3 tools/build.py --all -j 4
+
+# Lihat status kompilasi seluruh unit
+python3 tools/build.py --status
 ```
 
 ## Troubleshooting

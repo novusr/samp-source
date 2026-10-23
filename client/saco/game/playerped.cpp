@@ -67,6 +67,7 @@ CPlayerPed::CPlayerPed()
 // If the game has internally destroyed the ped
 // during this frame, the ped pointer should become 0
 
+// R5: 0x100ABBB0
 void CPlayerPed::ResetPointers()
 {
 	m_pPed = GamePool_Ped_GetAt(m_dwGTAId);
@@ -75,6 +76,7 @@ void CPlayerPed::ResetPointers()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABBD0
 void CPlayerPed::SetInitialState()
 {
 	DWORD dwPedPtr = (DWORD)m_pPed;
@@ -87,6 +89,7 @@ void CPlayerPed::SetInitialState()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AF340
 void CPlayerPed::SetKeys(WORD wKeys, WORD lrAnalog, WORD udAnalog)
 {
 	GTA_CONTROLSET *pPlayerKeys = GameGetPlayerKeys(m_bytePlayerNumber);
@@ -377,6 +380,7 @@ WORD CPlayerPed::GetKeys(WORD * lrAnalog, WORD * udAnalog)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABBF0
 BYTE CPlayerPed::GetSpecialKey()
 {
 	GTA_CONTROLSET *pInternalKeys = GameGetInternalKeys();
@@ -400,6 +404,7 @@ CAMERA_AIM * CPlayerPed::GetCurrentAim()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABC30
 void CPlayerPed::SetCurrentAim(CAMERA_AIM *pAim)
 {
 	GameStoreRemotePlayerAim(m_bytePlayerNumber, pAim);
@@ -407,6 +412,7 @@ void CPlayerPed::SetCurrentAim(CAMERA_AIM *pAim)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABC50
 BYTE CPlayerPed::GetCurrentWeapon()
 {
 	if(!m_pPed) return 0;
@@ -419,6 +425,7 @@ BYTE CPlayerPed::GetCurrentWeapon()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABC90
 int CPlayerPed::GetCurrentVehicleID()
 {
 	if(!m_pPed) return 0;
@@ -440,6 +447,7 @@ void CPlayerPed::ShowMarker(int iMarkerColorID)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABCB0
 void CPlayerPed::HideMarker()
 {
 	if (m_dwArrow) ScriptCommand(&disable_marker, m_dwArrow);
@@ -448,6 +456,7 @@ void CPlayerPed::HideMarker()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABCE0
 BOOL CPlayerPed::IsOnScreen()
 {
 	if(m_pPed) return GameIsEntityOnScreen((DWORD *)m_pPed);
@@ -456,6 +465,7 @@ BOOL CPlayerPed::IsOnScreen()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABD00
 void CPlayerPed::SetImmunities(BOOL bBullet, BOOL bFire, BOOL bExplosion, BOOL bDamage, BOOL bUnknown)
 {
 	if(!m_pPed) return;
@@ -466,6 +476,7 @@ void CPlayerPed::SetImmunities(BOOL bBullet, BOOL bFire, BOOL bExplosion, BOOL b
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABD50
 float CPlayerPed::GetHealth()
 {
 	if(!m_pPed) return 0.0f;
@@ -474,6 +485,7 @@ float CPlayerPed::GetHealth()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABD70
 void CPlayerPed::SetHealth(float fHealth)
 {
 	if(!m_pPed) return;
@@ -482,6 +494,7 @@ void CPlayerPed::SetHealth(float fHealth)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABD90
 float CPlayerPed::GetArmour()
 {
 	if(!m_pPed) return 0.0f;
@@ -490,6 +503,7 @@ float CPlayerPed::GetArmour()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABDB0
 void CPlayerPed::SetArmour(float fArmour)
 {
 	if(!m_pPed) return;
@@ -498,6 +512,7 @@ void CPlayerPed::SetArmour(float fArmour)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABDD0
 DWORD CPlayerPed::GetStateFlags()
 {
 	if(!m_pPed) return 0;
@@ -506,6 +521,7 @@ DWORD CPlayerPed::GetStateFlags()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABDF0
 void CPlayerPed::SetStateFlags(DWORD dwState)
 {
 	if(!m_pPed) return;
@@ -514,6 +530,7 @@ void CPlayerPed::SetStateFlags(DWORD dwState)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABE10
 BOOL CPlayerPed::IsDead()
 {
 	if(!m_pPed) return TRUE;
@@ -523,6 +540,7 @@ BOOL CPlayerPed::IsDead()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABE40
 BYTE CPlayerPed::GetActionTrigger()
 {
 	return (BYTE)m_pPed->dwAction;
@@ -530,6 +548,7 @@ BYTE CPlayerPed::GetActionTrigger()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABE50
 void CPlayerPed::SetActionTrigger(BYTE byteTrigger)
 {
 	if(!m_pPed) return;
@@ -539,6 +558,7 @@ void CPlayerPed::SetActionTrigger(BYTE byteTrigger)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABE70
 BOOL CPlayerPed::IsInVehicle()
 {
 	if(!m_pPed) return FALSE;
@@ -551,6 +571,7 @@ BOOL CPlayerPed::IsInVehicle()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABE90
 float CPlayerPed::GetTargetRotation()
 {
 	if(!m_pPed) return 0.0f;
@@ -570,6 +591,7 @@ float CPlayerPed::GetTargetRotation()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABF10
 void CPlayerPed::SetTargetRotation(float fRotation)
 {
 	if(!m_pPed) return;
@@ -594,6 +616,7 @@ void CPlayerPed::ForceTargetRotation(float fRotation)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ABFC0
 BOOL CPlayerPed::IsAPassenger()
 {
 	if( m_pPed->pVehicle && IN_VEHICLE(m_pPed) )
@@ -615,6 +638,7 @@ BOOL CPlayerPed::IsAPassenger()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC000
 VEHICLE_TYPE * CPlayerPed::GetGtaVehicle()
 {
 	return (VEHICLE_TYPE *)m_pPed->pVehicle;
@@ -622,6 +646,7 @@ VEHICLE_TYPE * CPlayerPed::GetGtaVehicle()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AF790
 void CPlayerPed::GiveWeapon(int iWeaponID, int iAmmo)
 {
 	if(!m_pPed) return;
@@ -661,6 +686,7 @@ void CPlayerPed::GiveWeapon(int iWeaponID, int iAmmo)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC010
 void CPlayerPed::ClearAllWeapons()
 {
 	DWORD dwPedPtr = (DWORD)m_pPed;
@@ -678,6 +704,7 @@ void CPlayerPed::ClearAllWeapons()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC060
 void CPlayerPed::SetArmedWeapon(int iWeaponType, bool bUnk)
 {
 	if(!m_pPed) return;
@@ -708,6 +735,7 @@ void CPlayerPed::SetArmedWeapon(int iWeaponType, bool bUnk)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC110
 void CPlayerPed::RemoveWeaponWhenEnteringVehicle()
 {
 	DWORD dwPedPtr = (DWORD)m_pPed;
@@ -722,6 +750,7 @@ void CPlayerPed::RemoveWeaponWhenEnteringVehicle()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC140
 WEAPON_SLOT_TYPE * CPlayerPed::GetCurrentWeaponSlot()
 {
 	if(m_pPed) {
@@ -750,6 +779,7 @@ BOOL CPlayerPed::HasAmmoForCurrentWeapon()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC1A0
 float CPlayerPed::GetDistanceFromVehicle(CVehicle *pVehicle)
 {
 	MATRIX4X4	matFromPlayer;
@@ -788,6 +818,7 @@ int CPlayerPed::GetVehicleSeatID()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC290
 void CPlayerPed::PutDirectlyInVehicle(int iVehicleID, int iSeat)
 {
 	if(!m_pPed) return;
@@ -807,6 +838,7 @@ void CPlayerPed::PutDirectlyInVehicle(int iVehicleID, int iSeat)
 	if (pVehicle->entity.vtable == 0x863C40) return;
 
 	if ((GetVehicleSubtypeFromVehiclePtr(pVehicle) == VEHICLE_SUBTYPE_CAR ||
+// R5: 0x100B61E0
 		GetVehicleSubtypeFromVehiclePtr(pVehicle) == VEHICLE_SUBTYPE_BIKE) &&
 		iSeat > pVehicle->byteMaxPassengers)
 	{
@@ -865,6 +897,7 @@ void CPlayerPed::EnterVehicle(int iVehicleID, BOOL bPassenger)
 //-----------------------------------------------------------
 // Graceful vehicle exit.
 
+// R5: 0x100AC4E0
 void CPlayerPed::ExitCurrentVehicle()
 {
 	if(!m_pPed) return;
@@ -886,6 +919,7 @@ void CPlayerPed::ExitCurrentVehicle()
 //-----------------------------------------------------------
 // Forceful removal
 
+// R5: 0x100AC570
 void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ)
 {
 	if(!GamePool_Ped_GetAt(m_dwGTAId)) return;
@@ -896,6 +930,7 @@ void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AC790
 void CPlayerPed::TogglePlayerControllable(int iControllable)
 {
 	MATRIX4X4 mat;
@@ -917,6 +952,7 @@ void CPlayerPed::TogglePlayerControllable(int iControllable)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACB10
 void CPlayerPed::HandsUp()
 {
 	if(!m_pPed || IN_VEHICLE(m_pPed)) return;
@@ -927,6 +963,7 @@ void CPlayerPed::HandsUp()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACB60
 BOOL CPlayerPed::HasHandsUp()
 {
 	if(!m_pPed || IN_VEHICLE(m_pPed)) return FALSE;
@@ -941,6 +978,7 @@ BOOL CPlayerPed::HasHandsUp()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACBC0
 void CPlayerPed::HoldItem(int iObject)
 {
 	if(!m_pPed) return;
@@ -957,6 +995,7 @@ void CPlayerPed::HoldItem(int iObject)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACC10
 BOOL CPlayerPed::IsJumping()
 {
 	if(m_pPed && !IN_VEHICLE(m_pPed) && m_pPed->Tasks->pdwJumpJetPack)
@@ -968,6 +1007,7 @@ BOOL CPlayerPed::IsJumping()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACC50
 BOOL CPlayerPed::IsFighting()
 {
 	if(m_pPed && !IN_VEHICLE(m_pPed) && m_pPed->Tasks->pdwFighting)
@@ -979,6 +1019,7 @@ BOOL CPlayerPed::IsFighting()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACC90
 BOOL CPlayerPed::IsFalling()
 {
 	if(m_pPed && !IN_VEHICLE(m_pPed) && m_pPed->Tasks->pdwDamage)
@@ -990,6 +1031,7 @@ BOOL CPlayerPed::IsFalling()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACCD0
 BOOL CPlayerPed::IsSwimming()
 {
 	if(m_pPed && !IN_VEHICLE(m_pPed) && m_pPed->Tasks->pdwSwimWasted)
@@ -1001,6 +1043,7 @@ BOOL CPlayerPed::IsSwimming()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACD10
 void CPlayerPed::StartJetpack()
 {
 	if(!m_pPed) return;
@@ -1018,6 +1061,7 @@ void CPlayerPed::StartJetpack()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACD60
 void CPlayerPed::StopJetpack()
 {
 	if(!m_pPed || IN_VEHICLE(m_pPed)) return;
@@ -1038,6 +1082,7 @@ void CPlayerPed::StopJetpack()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACDC0
 BOOL CPlayerPed::IsInJetpackMode()
 {
 	if(!m_pPed || IN_VEHICLE(m_pPed)) return FALSE;
@@ -1078,6 +1123,7 @@ void CPlayerPed::StopGoggles()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ACE00
 BOOL CPlayerPed::HasGoggles()
 {
 	if (!m_pPed) return FALSE;
@@ -1104,6 +1150,7 @@ WORD CPlayerPed::GetAmmo()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD190
 WEAPON_SLOT_TYPE * CPlayerPed::FindWeaponSlot(DWORD dwWeapon)
 {
 	if (m_pPed)
@@ -1119,6 +1166,7 @@ WEAPON_SLOT_TYPE * CPlayerPed::FindWeaponSlot(DWORD dwWeapon)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD1D0
 void CPlayerPed::SetAnimationSet(PCHAR szAnim)
 {
 	if(m_pPed) {
@@ -1128,6 +1176,7 @@ void CPlayerPed::SetAnimationSet(PCHAR szAnim)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD200
 void CPlayerPed::SetMoney(int iAmount)
 {
 	ScriptCommand(&set_actor_money,m_dwGTAId,0);
@@ -1136,6 +1185,7 @@ void CPlayerPed::SetMoney(int iAmount)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD230
 void CPlayerPed::ApplyAnimation( char *szAnimName, char *szAnimFile, float fT,
 								 int opt1, int opt2, int opt3, int opt4, int iUnk )
 {
@@ -1162,6 +1212,7 @@ void CPlayerPed::ApplyAnimation( char *szAnimName, char *szAnimFile, float fT,
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD300
 BOOL CPlayerPed::IsPerformingAnimation(char *szAnimName)
 {
 	if(m_pPed && ScriptCommand(&is_actor_performing_anim,m_dwGTAId,szAnimName)) {
@@ -1172,6 +1223,7 @@ BOOL CPlayerPed::IsPerformingAnimation(char *szAnimName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD8F0
 float CPlayerPed::GetAimZ()
 {
 	if(m_pPed) {
@@ -1189,6 +1241,7 @@ float CPlayerPed::GetAimZ()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD930
 void CPlayerPed::SetAimZ(float fAimZ)
 {
 	if(_isnan(fAimZ) || (fAimZ > 100.0f || fAimZ < -100.0f)) return;
@@ -1203,6 +1256,7 @@ void CPlayerPed::SetAimZ(float fAimZ)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD9A0
 ENTITY_TYPE* CPlayerPed::GetGtaContactEntity()
 {
 	return (ENTITY_TYPE*)m_pPed->pContactEntity;
@@ -1210,6 +1264,7 @@ ENTITY_TYPE* CPlayerPed::GetGtaContactEntity()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD9B0
 VEHICLE_TYPE* CPlayerPed::GetGtaContactVehicle()
 {
 	return (VEHICLE_TYPE*)m_pPed->pContactVehicle;
@@ -1220,6 +1275,7 @@ VEHICLE_TYPE* CPlayerPed::GetGtaContactVehicle()
 char DanceStyleLibs[4][16] = {"WOP","GFUNK","RUNNINGMAN","STRIP"};
 char DanceIdleLoops[4][16] = {"DANCE_LOOP","DANCE_LOOP","DANCE_LOOP","STR_Loop_B"};
 
+// R5: 0x100ADAD0
 void CPlayerPed::StartDancing(int iStyle)
 {
 	if(iStyle < 0 || iStyle > 3) return;
@@ -1234,6 +1290,7 @@ void CPlayerPed::StartDancing(int iStyle)
 
 //-----------------------------------------------------------
 
+// R5: 0x100ADB20
 void CPlayerPed::StopDancing()
 {
 	m_iDanceState = 0;
@@ -1244,6 +1301,7 @@ void CPlayerPed::StopDancing()
 
 //-----------------------------------------------------------
 
+// R5: 0x100ADB60
 BOOL CPlayerPed::IsDancing()
 {
 	if(m_iDanceState) return TRUE;
@@ -1259,6 +1317,7 @@ void CPlayerPed::ProcessMarkers(BOOL bMarkerStreamingEnabled, float fMarkerStrea
 
 //-----------------------------------------------------------
 
+// R5: 0x100ADFD0
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
 								  VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
@@ -1285,6 +1344,7 @@ void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
 
 DWORD dwExt4;
 
+// R5: 0x100AE020
 void CPlayerPed::DestroyFollowPedTask()
 {
 	if(!m_pPed) return;
@@ -1301,6 +1361,7 @@ void CPlayerPed::DestroyFollowPedTask()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE070
 void CPlayerPed::ToggleCellphone(int iOn)
 {
 	if(!m_pPed) return;
@@ -1310,6 +1371,7 @@ void CPlayerPed::ToggleCellphone(int iOn)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE0A0
 int CPlayerPed::IsCellphoneEnabled()
 {
     return m_iCellPhoneEnabled;
@@ -1317,6 +1379,7 @@ int CPlayerPed::IsCellphoneEnabled()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE0B0
 int CPlayerPed::GetFightingStyle()
 {
 	if (!m_pPed) return 0;
@@ -1325,6 +1388,7 @@ int CPlayerPed::GetFightingStyle()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE0D0
 void CPlayerPed::SetFightingStyle(int iStyle)
 {
 	if (!m_pPed) return;
@@ -1334,6 +1398,7 @@ void CPlayerPed::SetFightingStyle(int iStyle)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE270
 void CPlayerPed::ProcessVehicleHorn()
 {
 	if(!m_pPed) return;
@@ -1362,6 +1427,7 @@ void CPlayerPed::ProcessVehicleHorn()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE2E0
 PCHAR CPlayerPed::GetLoadedShopName()
 {
 	if(!m_pPed) return NULL;
@@ -1372,6 +1438,7 @@ PCHAR CPlayerPed::GetLoadedShopName()
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE300
 void CPlayerPed::LoadShoppingDataSubsection(PCHAR szSectionName)
 {
 	if(strlen(szSectionName) > 8) return;
@@ -1384,6 +1451,7 @@ void CPlayerPed::LoadShoppingDataSubsection(PCHAR szSectionName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE330
 PCHAR CPlayerPed::GetShopName()
 {
 	if(!m_pPed) return NULL;
@@ -1403,6 +1471,7 @@ PCHAR CPlayerPed::GetShopName()
 
 CHAR szShopName[32];
 
+// R5: 0x100AE380
 void CPlayerPed::SetShopName(char *szNewShopName)
 {
 	if(!m_pPed) return;
@@ -1431,6 +1500,7 @@ void CPlayerPed::SetShopName(char *szNewShopName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE450
 void CPlayerPed::SetWeaponSkillLevel(int iSkill, WORD wLevel)
 {
 	if(m_bytePlayerNumber == 0)
@@ -1441,6 +1511,7 @@ void CPlayerPed::SetWeaponSkillLevel(int iSkill, WORD wLevel)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE480
 VECTOR* CPlayerPed::GetBonePosition(int iBone, VECTOR *vecPos)
 {
 	if(!m_pPed) return NULL;
@@ -1462,6 +1533,7 @@ VECTOR* CPlayerPed::GetBonePosition(int iBone, VECTOR *vecPos)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AE4D0
 VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, VECTOR *vecOffset)
 {
 	if(!m_pPed) return NULL;
@@ -1485,6 +1557,7 @@ VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, VECTOR *vecOffset)
 
 // Transferred from michael-fa-samp dc9eb80, client/game/playerped.cpp.
 // SetWeaponModelIndex retains its original symbolic native-call assembly.
+// R5: 0x100B0080
 void CPlayerPed::SetAmmo(BYTE byteWeapon, WORD wordAmmo)
 {
 	if(m_pPed)
@@ -1497,6 +1570,7 @@ void CPlayerPed::SetAmmo(BYTE byteWeapon, WORD wordAmmo)
 	}
 }
 
+// R5: 0x100AD860
 BOOL CPlayerPed::IsOnGround()
 {
 	if(m_pPed) {
@@ -1507,6 +1581,7 @@ BOOL CPlayerPed::IsOnGround()
 	return FALSE;
 }
 
+// R5: 0x100AD8B0
 void CPlayerPed::SetWeaponModelIndex(int iWeapon)
 {
 	DWORD dwWeaponInfo;

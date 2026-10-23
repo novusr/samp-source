@@ -6,6 +6,7 @@
 
 //----------------------------------------------------------
 
+// R5: 0x1009FE40
 void Font_PrintString(float X, float Y, char *sz)
 {
 	_asm push sz
@@ -20,6 +21,7 @@ void Font_PrintString(float X, float Y, char *sz)
 
 //----------------------------------------------------------
 
+// R5: 0x1009FE60
 NUDE Font_SetColor(DWORD dwColor)
 {
 	_asm mov eax, 0x719430
@@ -28,6 +30,7 @@ NUDE Font_SetColor(DWORD dwColor)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FE70
 NUDE Font_SetDropColor(DWORD dwColor)
 {
 	_asm mov eax, 0x719510
@@ -36,6 +39,7 @@ NUDE Font_SetDropColor(DWORD dwColor)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FE80
 NUDE Font_SetOutline(int pos)
 {
 	_asm mov eax, 0x719590
@@ -44,6 +48,7 @@ NUDE Font_SetOutline(int pos)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FE90
 NUDE Font_Unk12(int unk)
 {
 	_asm mov eax, 0x719600
@@ -52,6 +57,7 @@ NUDE Font_Unk12(int unk)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FEA0
 NUDE Font_SetScale(float X, float Y)
 {
 	_asm mov eax, 0x719380
@@ -61,6 +67,7 @@ NUDE Font_SetScale(float X, float Y)
 //-----------------------------------------------------------
 // 0 center 1 left 2 right
 
+// R5: 0x1009FEB0
 NUDE Font_SetJustify(int just)
 {
 	_asm mov eax, 0x719610
@@ -69,6 +76,7 @@ NUDE Font_SetJustify(int just)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FEC0
 NUDE Font_SetFontStyle(int style)
 {
 	_asm mov eax, 0x719490
@@ -77,6 +85,7 @@ NUDE Font_SetFontStyle(int style)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FED0
 NUDE Font_SetProportional(int prop)
 {
 	_asm mov eax, 0x7195B0
@@ -85,6 +94,7 @@ NUDE Font_SetProportional(int prop)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FEE0
 NUDE Font_SetRightJustifyWrap(float wrap)
 {
 	_asm mov eax, 0x7194F0
@@ -93,6 +103,7 @@ NUDE Font_SetRightJustifyWrap(float wrap)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FEF0
 NUDE Font_UseBox(int use, int unk)
 {
 	_asm mov eax, 0x7195C0
@@ -101,6 +112,7 @@ NUDE Font_UseBox(int use, int unk)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF00
 NUDE Font_UseBoxColor(DWORD color)
 {
 	_asm mov eax, 0x7195E0
@@ -109,6 +121,7 @@ NUDE Font_UseBoxColor(DWORD color)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF10
 NUDE Font_SetLineWidth(float width)
 {
 	_asm mov eax, 0x7194D0
@@ -117,6 +130,7 @@ NUDE Font_SetLineWidth(float width)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF20
 NUDE Font_SetLineHeight(float height)
 {
 	_asm mov eax, 0x7194E0
@@ -125,6 +139,7 @@ NUDE Font_SetLineHeight(float height)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF30
 NUDE Font_SetShadow(int shadow)
 {
 	_asm mov eax, 0x719570
@@ -133,6 +148,7 @@ NUDE Font_SetShadow(int shadow)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF40
 NUDE Font_UnkConv(char *sz, int param1, int param2, int param3, int param4, int param5, int param6, char * buf)
 {
 	_asm mov eax, 0x69DE90
@@ -141,6 +157,7 @@ NUDE Font_UnkConv(char *sz, int param1, int param2, int param3, int param4, int 
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF50
 NUDE Font_UnkConv2(char *sz)
 {
 	_asm mov eax, 0x69E160

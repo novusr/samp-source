@@ -8,6 +8,7 @@ extern CGame *pGame;
 //-----------------------------------------------------------
 // This is the constructor for creating new player.
 
+// R5: 0x1009C2B0
 CActorPed::CActorPed(int iSkin, float fX, float fY,float fZ,float fRotation)
 {
 	m_pPed=0;
@@ -34,6 +35,7 @@ CActorPed::CActorPed(int iSkin, float fX, float fY,float fZ,float fRotation)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C750
 CActorPed::~CActorPed()
 {
 	Destroy();
@@ -41,6 +43,7 @@ CActorPed::~CActorPed()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C400
 void CActorPed::Destroy()
 {
 	DWORD dwPedPtr = (DWORD)m_pPed;
@@ -66,6 +69,7 @@ void CActorPed::Destroy()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C460
 void CActorPed::ApplyAnimation( char *szAnimName, char *szAnimFile, float fT,
 								int opt1, int opt2, int opt3, int opt4, int iUnk )
 {
@@ -105,6 +109,7 @@ BOOL __declspec(naked) FlushPedIntelligence()
 	_asm ret
 }
 
+// R5: 0x1009C550
 void CActorPed::ClearAnimations()
 {
 	dwActorPed = (DWORD)m_pPed;
@@ -115,6 +120,7 @@ void CActorPed::ClearAnimations()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C570
 void CActorPed::SetTargetRotation(float fRotation)
 {
 	if(!m_pPed) return;
@@ -125,6 +131,7 @@ void CActorPed::SetTargetRotation(float fRotation)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C5B0
 float CActorPed::GetHealth()
 {
 	if(!m_pPed) return 0.0f;
@@ -133,6 +140,7 @@ float CActorPed::GetHealth()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C5D0
 void CActorPed::SetHealth(float fHealth)
 {
 	if(!m_pPed) return;
@@ -145,6 +153,7 @@ void CActorPed::SetHealth(float fHealth)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C610
 float CActorPed::GetArmour()
 {
 	if(!m_pPed) return 0.0f;
@@ -153,6 +162,7 @@ float CActorPed::GetArmour()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C630
 void CActorPed::SetArmour(float fArmour)
 {
 	if(!m_pPed) return;
@@ -161,6 +171,7 @@ void CActorPed::SetArmour(float fArmour)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C650
 DWORD CActorPed::GetStateFlags()
 {
 	if(!m_pPed) return 0;
@@ -169,6 +180,7 @@ DWORD CActorPed::GetStateFlags()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C660
 void CActorPed::SetStateFlags(DWORD dwState)
 {
 	if(!m_pPed) return;
@@ -177,6 +189,7 @@ void CActorPed::SetStateFlags(DWORD dwState)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C680
 BOOL CActorPed::IsDead()
 {
 	if(!m_pPed) return TRUE;
@@ -186,6 +199,7 @@ BOOL CActorPed::IsDead()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C6B0
 BYTE CActorPed::GetActionTrigger()
 {
 	return (BYTE)m_pPed->dwAction;
@@ -193,6 +207,7 @@ BYTE CActorPed::GetActionTrigger()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C6C0
 void CActorPed::SetActionTrigger(BYTE byteTrigger)
 {
 	if(!m_pPed) return;
@@ -202,6 +217,7 @@ void CActorPed::SetActionTrigger(BYTE byteTrigger)
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C6E0
 BOOL CActorPed::IsInVehicle()
 {
 	if(!m_pPed) return FALSE;
@@ -214,6 +230,7 @@ BOOL CActorPed::IsInVehicle()
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C700
 void CActorPed::ToggleImmunity(BYTE byteEnable)
 {
 	if(!m_pPed) return;

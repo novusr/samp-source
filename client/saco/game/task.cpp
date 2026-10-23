@@ -31,6 +31,7 @@ CTask::CTask(BYTE *pTaskType)
 
 //----------------------------------------------------------
 
+// R5: 0x100B25A0
 CTask::~CTask()
 {
 }
@@ -62,6 +63,7 @@ void CTask::Create(BYTE *pTaskType)
 
 //----------------------------------------------------------
 
+// R5: 0x100B29B0
 CTask* CTask::CreateCopy()
 {
 	BYTE *pTaskType = m_pTaskType;
@@ -79,6 +81,7 @@ CTask* CTask::CreateCopy()
 
 //----------------------------------------------------------
 
+// R5: 0x100B2600
 void CTask::Destroy()
 {
 	if (!IsDestroyed())
@@ -137,6 +140,7 @@ void CTask::Destroy()
 	}
 }*/
 
+// R5: 0x100B2660
 void CTask::ApplyToPed(CPlayerPed *pPed)
 {
 	extern BYTE *pbyteCurrentPlayer;
@@ -226,6 +230,7 @@ skipExtended:
 
 //----------------------------------------------------------
 
+// R5: 0x100B26C0
 DWORD CTask::GetID()
 {
 	BYTE *pTaskType = m_pTaskType;
@@ -244,6 +249,7 @@ DWORD CTask::GetID()
 
 //----------------------------------------------------------
 
+// R5: 0x100B26E0
 BOOL CTask::IsDestroyed()
 {
 	if (m_pTaskType == NULL)
@@ -259,6 +265,7 @@ BOOL CTask::IsDestroyed()
 
 //----------------------------------------------------------
 
+// R5: 0x100B2700
 BOOL CTask::IsSimple()
 {
 	BYTE *pTaskType = m_pTaskType;
@@ -309,6 +316,7 @@ CTaskJetpack::CTaskJetpack(BYTE *pTaskType)
 
 //----------------------------------------------------------
 
+// R5: 0x100B27B0
 CTaskJetpack::~CTaskJetpack()
 {
 	if (m_pPlayerPed)
@@ -319,6 +327,7 @@ CTaskJetpack::~CTaskJetpack()
 //==========================================================
 // TAKE_DAMAGE_FALL TASK
 
+// R5: 0x100B2810
 CTaskTakeDamageFall::CTaskTakeDamageFall(DWORD dwFallType, DWORD dwNum)
 {
 	m_pPlayerPed = NULL;
@@ -340,6 +349,7 @@ CTaskTakeDamageFall::CTaskTakeDamageFall(DWORD dwFallType, DWORD dwNum)
 //==========================================================
 // ACTIVATE_GOGGLES
 
+// R5: 0x100B2860
 CTaskGoggles::CTaskGoggles()
 {
 	m_pPlayerPed = NULL;
@@ -355,6 +365,7 @@ CTaskGoggles::CTaskGoggles()
 
 //-----------------------------------------------------------
 
+// R5: 0x100B28A0
 CTaskGoToPoint::CTaskGoToPoint(int unk, VECTOR* vecPos, float unk2, int unk3, int unk4 )
 {
 	m_pPlayerPed = NULL;
@@ -376,6 +387,7 @@ CTaskGoToPoint::CTaskGoToPoint(int unk, VECTOR* vecPos, float unk2, int unk3, in
 
 //-----------------------------------------------------------
 
+// R5: 0x100B28F0
 CTaskKillPedOnFootArmed::CTaskKillPedOnFootArmed( int unk, int unk2, int unk3, int unk4, PED_TYPE* pToShoot )
 {
 	m_pPlayerPed = NULL;
