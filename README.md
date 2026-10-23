@@ -33,6 +33,17 @@ Accepted coverage includes parts of:
 
 The latest batch added **5,957 unique exact code bytes**. Its complete-region and relocation/target checks passed, together with **10 negative controls** and the existing ABI checks. See the linked acceptance evidence for scope and limitations.
 
+### Active Reconstruction Pipeline (Linux / Parallel Multi-Worker)
+
+The active workspace source tree (`src/`) is continuously verified by `tools/verify.py` and matched using `tools/r5_matcher.py`:
+
+- **Verified Functions in Active Manifest:** **157 / 157 functions PASS (5,776 unique code bytes)**
+- **Unit Distribution:**
+  - `game`: 68 functions matched (e.g. `CMenu::CMenu` [264B], `GetVehicleSubtypeFromVehiclePtr` [106B], `CEntity::ApplyTurnSpeed` [28B], `CEntity::GetBoundCentre` [33B])
+  - `pools`: 41 functions matched (e.g. `GamePool_Ped_GetAt` [35B], `CPlayerPed::GetHealth` [24B])
+  - `camera`: 38 functions matched (e.g. `CCamera::GetMatrix` [113B])
+  - `actors`: 10 functions matched (e.g. `CActorPed` lifecycle, immunity, and animations)
+
 The local 0.2.5 reference has contributed source and algorithms used in accepted reconstructions. The latest integration report records **22,342 cumulative directly attributed code bytes**; adapted implementations and shared source are tracked separately.
 
 | Milestone | Status |
