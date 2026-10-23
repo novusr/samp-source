@@ -54,3 +54,55 @@ void ActorPool::DeleteAll() {
         ++i;
     } while ((unsigned short)i < 1000);
 }
+
+struct _ACTOR_PED_TYPE {
+    char gap0[0x46c];
+    unsigned long dwStateFlags;    // 0x46c
+    char gap1[0xc0];               // 0x470 to 0x530
+    unsigned long dwActionTrigger; // 0x530
+    char gap2[0x14];               // 0x534 to 0x548
+    float fArmour;                 // 0x548
+};
+
+class CActorPed {
+public:
+    char gap[0x48];
+    _ACTOR_PED_TYPE* m_pPed;       // 0x48
+
+    unsigned char GetActionTrigger();
+    unsigned long GetStateFlags();
+    void SetArmour(float fArmour);
+    void SetStateFlags(unsigned long dwState);
+    void SetActionTrigger(unsigned char byteTrigger);
+    int IsInVehicle();
+};
+
+unsigned char CActorPed::GetActionTrigger() {
+    return (unsigned char)m_pPed->dwActionTrigger;
+}
+
+unsigned long CActorPed::GetStateFlags() {
+    if (!m_pPed) return 0;
+    return m_pPed->dwStateFlags;
+}
+
+void CActorPed::SetArmour(float fArmour) {
+    if (!m_pPed) return;
+    m_pPed->fArmour = fArmour;
+}
+
+void CActorPed::SetStateFlags(unsigned long dwState) {
+    if (!m_pPed) return;
+    m_pPed->dwStateFlags = dwState;
+}
+
+void CActorPed::SetActionTrigger(unsigned char byteTrigger) {
+    if (!m_pPed) return;
+    m_pPed->dwActionTrigger = byteTrigger;
+}
+
+int CActorPed::IsInVehicle() {
+    if (!m_pPed) return 0;
+    return (m_pPed->dwStateFlags >> 8) & 1;
+}
+

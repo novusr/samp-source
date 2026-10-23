@@ -512,6 +512,516 @@
         "leaf"
       ],
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.SetTrailer",
+      "symbol": "?SetTrailer@CVehicle@@QAEXPAV1@@Z",
+      "rva": 752768,
+      "size": 10,
+      "features": [
+        "leaf",
+        "pointer"
+      ],
+      "sha256": "fde7b389ab38b8362fc6d34289cc38373db36da8c3aa6b9e1a26128474e2e542",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.SetTankRot",
+      "symbol": "?SetTankRot@CVehicle@@QAEXMM@Z",
+      "rva": 751776,
+      "size": 29,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "309d29641f00deffff5bd15866e3f3e9dce86f1ae627f41417b37482ff8fc5e8",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.IsATrainPart",
+      "symbol": "?IsATrainPart@CVehicle@@QAEHXZ",
+      "rva": 750688,
+      "size": 55,
+      "features": [
+        "leaf",
+        "branching"
+      ],
+      "sha256": "7e4d43155393ea20fe246411bfc41d45391a22115ae951bf9121e4754ee30bee",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.SetEngineState",
+      "symbol": "?SetEngineState@CVehicle@@QAEXH@Z",
+      "rva": 750192,
+      "size": 46,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "b7674881318d52699c4e8e951557983469f836716d5cb195add505af885cef84",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.SetSirenOn",
+      "symbol": "?SetSirenOn@CVehicle@@QAEXE@Z",
+      "rva": 750912,
+      "size": 30,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "147715decc02daf9199b561f7d46b16a87a725683261099b87f69a656219d9c5",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CVehicle.IsSirenOn",
+      "symbol": "?IsSirenOn@CVehicle@@QAEHXZ",
+      "rva": 750944,
+      "size": 19,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "ec41cefc2c486d43174571531348b08835ce7a0f57a7fe1cd7df7a7fb36100cd",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.GetActionTrigger",
+      "symbol": "?GetActionTrigger@CActorPed@@QAEEXZ",
+      "rva": 640688,
+      "size": 10,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "5f6b7a022d17962395e7b15c93223880523d293b5d689c97c33c07b99eb25805",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.GetStateFlags",
+      "symbol": "?GetStateFlags@CActorPed@@QAEKXZ",
+      "rva": 640592,
+      "size": 15,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "df5d497dfb7ff1ae6f9e779b92e49d5c79c5d66fa912e6772f7fd42bf2152967",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.SetArmour",
+      "symbol": "?SetArmour@CActorPed@@QAEXM@Z",
+      "rva": 640560,
+      "size": 20,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "3306a80060d207880a36b09c35f74c6bc19495d43f6d19ef032abd3777288eef",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.SetStateFlags",
+      "symbol": "?SetStateFlags@CActorPed@@QAEXK@Z",
+      "rva": 640608,
+      "size": 20,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "16e4c2d881ff4e5d7f8e81fb685ffa77e40442ae10f0b5bea2e0f68b1367b5cc",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.SetActionTrigger",
+      "symbol": "?SetActionTrigger@CActorPed@@QAEXE@Z",
+      "rva": 640704,
+      "size": 21,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "2c5e2e212f76e9f78df71fdc2a3926de781bcbae9d859d26f691bd4bcf3a481f",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "actors",
+      "name": "CActorPed.IsInVehicle",
+      "symbol": "?IsInVehicle@CActorPed@@QAEHXZ",
+      "rva": 640736,
+      "size": 21,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "98af19a6e14c2294e9e2bb387b75116dafb36809637b3ca2bebc4824949095ad",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.SetActionTrigger",
+      "symbol": "?SetActionTrigger@CPlayerPed@@QAEXE@Z",
+      "rva": 704080,
+      "size": 24,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "464606fdedce080b8347d3e8e5711cab7bdf17c239aaa13d2d820f5e1136914e",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.IsInVehicle",
+      "symbol": "?IsInVehicle@CPlayerPed@@QAEHXZ",
+      "rva": 704112,
+      "size": 24,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "eb1aa0c1b1e0588525de4d2bf5abe10d1a40b1cb1638ccc87d5acd1e7413b264",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.IsOnGround",
+      "symbol": "?IsOnGround@CPlayerPed@@QAEHXZ",
+      "rva": 710752,
+      "size": 28,
+      "features": [
+        "leaf",
+        "bitwise"
+      ],
+      "sha256": "3103c3232a3d35e84957644709a0d097eba815f4aa62afa7b59beed68c05a31c",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.HasObjectAttached",
+      "symbol": "?HasObjectAttached@CPlayerPed@@QAEHXZ",
+      "rva": 716336,
+      "size": 28,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "bcaafb34771600a30bd2c515590505ee8b9fb4808b515c299f5ca85e223ff4ba",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.GetCurrentWeaponSlot",
+      "symbol": "?GetCurrentWeaponSlot@CPlayerPed@@QAEPAU_WEAPON_SLOT_TYPE@@XZ",
+      "rva": 704832,
+      "size": 31,
+      "features": [
+        "leaf",
+        "indirection"
+      ],
+      "sha256": "f317ae6a24fe923a0e7038b8ed2df4bcf9589a3091edd08e0be3119934fea479",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.HasGoggles",
+      "symbol": "?HasGoggles@CPlayerPed@@QAEHXZ",
+      "rva": 708096,
+      "size": 39,
+      "features": [
+        "leaf",
+        "branching"
+      ],
+      "sha256": "a67e3097501422ed574d559994b2e25e74f963d05e0e21b4b6e3dbeda0fb2871",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.IsAPassenger",
+      "symbol": "?IsAPassenger@CPlayerPed@@QAEHXZ",
+      "rva": 704448,
+      "size": 60,
+      "features": [
+        "leaf",
+        "branching"
+      ],
+      "sha256": "973e6f3f835c08f761faa9ee9264e39943b7a78587d3c7388da96b15071dc285",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPlayerPed.FindWeaponSlot",
+      "symbol": "?FindWeaponSlot@CPlayerPed@@QAEPAU_WEAPON_SLOT_TYPE@@K@Z",
+      "rva": 709008,
+      "size": 61,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "5ce844a926fca9b4595481291bee91ac968bb52b7fe28da461006b7447660048",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetWorldWeather",
+      "symbol": "?GetWorldWeather@CGame@@QAEHXZ",
+      "rva": 658272,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "329dfcd7b894b11b48dc4d2c14a9635593f78db5e9aa55bacc7b10c2ffbe2f22",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.IsHudEnabled",
+      "symbol": "?IsHudEnabled@CGame@@QAEEXZ",
+      "rva": 658288,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "9f52acacaafc2a703939b2e7bc452218aa187ba81a0156dcc34ff483b56f4087",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetLocalMoney",
+      "symbol": "?GetLocalMoney@CGame@@QAEHXZ",
+      "rva": 659344,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "5cf9cd7e027d0ddd3198664d2614e50935933de1d0229b5aa8dcf2ec00781c78",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetMemoryUsedForStreaming",
+      "symbol": "?GetMemoryUsedForStreaming@CGame@@QAEHXZ",
+      "rva": 660944,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "8be857847e0f51fe9c122ae81b834705cd71a4f078cab375f812a489c4a40134",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetMemoryAvailableForStreaming",
+      "symbol": "?GetMemoryAvailableForStreaming@CGame@@QAEHXZ",
+      "rva": 660960,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "3910b4b6d546947f6c572db1e0a6b37d1579b4c228d8a20540c33cdbaf3db7ae",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetTimeInMilliseconds",
+      "symbol": "?GetTimeInMilliseconds@CGame@@QAEKXZ",
+      "rva": 661360,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "411b5abb68b2f4a66c0f986831b8f450550c103543b9c43de1e9fad520de23b9",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.GetRwObjectsCount",
+      "symbol": "?GetRwObjectsCount@CGame@@QAEHXZ",
+      "rva": 661376,
+      "size": 6,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "38ef08bcb17e69c6a71f84bccac09f98f4c2564ef428345cdfd47d150aa13958",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.EnableFrameLimiter",
+      "symbol": "?EnableFrameLimiter@CGame@@QAEXXZ",
+      "rva": 658336,
+      "size": 8,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "aadaf4b59bfcbb7eb07e296916d4eef57be6956b1f87b3466b0180565f821897",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.IsGameLoaded",
+      "symbol": "?IsGameLoaded@CGame@@QAEHXZ",
+      "rva": 657712,
+      "size": 14,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "dd506002e307e7b4b5c624c166033dff2de982cc9c7168e70b62f100e116767e",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.IsFrameLimiterEnabled",
+      "symbol": "?IsFrameLimiterEnabled@CGame@@QAEHXZ",
+      "rva": 658320,
+      "size": 14,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "1fcd18d9d9ddea06daa9d120e50e1414b9e105e5f1a5b672c062ff5994cd5e49",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.ToggleRadar",
+      "symbol": "?ToggleRadar@CGame@@QAEXH@Z",
+      "rva": 658624,
+      "size": 17,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "b4109c44ccc0de4bebeb34766ca94cdf3de3f3162cdbd84033dc42bd263dc850",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CGame.DisplayHud",
+      "symbol": "?DisplayHud@CGame@@QAEXH@Z",
+      "rva": 662960,
+      "size": 40,
+      "features": [
+        "leaf",
+        "absolute-GTA-stores"
+      ],
+      "sha256": "d89ab1165b638f22bad52e6aa6735084f978160ac7d7f73cd677f7ebdf217763",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.FloatDifference",
+      "symbol": "?FloatDifference@@YAMMM@Z",
+      "rva": 739488,
+      "size": 9,
+      "features": [
+        "leaf",
+        "fpu"
+      ],
+      "sha256": "fdbab7e022420fb41666f4612987bc783a515ef62225ebb1b0d54175a1dcc3fb",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.FloatOffset",
+      "symbol": "?FloatOffset@@YAMMM@Z",
+      "rva": 739504,
+      "size": 33,
+      "features": [
+        "leaf",
+        "fpu",
+        "branching"
+      ],
+      "sha256": "447b0414e0bc8a72b6960aa78d451c23a84239ba08e81814a2994355feaaf967",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.SquaredDistanceBetweenHorizontalPoints",
+      "symbol": "?SquaredDistanceBetweenHorizontalPoints@@YGMMMMM@Z",
+      "rva": 739600,
+      "size": 33,
+      "features": [
+        "leaf",
+        "fpu"
+      ],
+      "sha256": "7f42650b0272ccd58cf7969c15126257fd5eb4d9befada7b13303ea28b70f00b",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.DistanceBetweenHorizontalPoints",
+      "symbol": "?DistanceBetweenHorizontalPoints@@YGMMMMM@Z",
+      "rva": 739648,
+      "size": 35,
+      "features": [
+        "leaf",
+        "fpu",
+        "intrinsic"
+      ],
+      "sha256": "8813aaa98b2190ba53fe931042115fbfc44626ca24ea7fdcc7d36cbba7c7a26d",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.DistanceBetweenPoints",
+      "symbol": "?DistanceBetweenPoints@@YGMMMMMMM@Z",
+      "rva": 739696,
+      "size": 51,
+      "features": [
+        "leaf",
+        "fpu",
+        "intrinsic"
+      ],
+      "sha256": "40d874cf913ad4f97720796f506bcbe24b7473740d79734e4fddbc51154fa270",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.SquaredDistanceBetweenPoints_floats",
+      "symbol": "?SquaredDistanceBetweenPoints@@YGMMMMMMM@Z",
+      "rva": 739760,
+      "size": 49,
+      "features": [
+        "leaf",
+        "fpu"
+      ],
+      "sha256": "281adc417508c19258b70ebd5b4dc933ef14185d95854f3f957e3c4b20ab4f86",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Math.SquaredDistanceBetweenPoints_vectors",
+      "symbol": "?SquaredDistanceBetweenPoints@@YGMPAU_VECTOR@@0@Z",
+      "rva": 739824,
+      "size": 49,
+      "features": [
+        "leaf",
+        "fpu"
+      ],
+      "sha256": "54a0454d02da1a1ef638913adfea6428b354226b529ee475332fe85cde587fd3",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {

@@ -46,3 +46,51 @@ float _atan2f(float y, float x) {
 }
 }
 
+#pragma pack(push, 1)
+struct _VECTOR {
+    float X, Y, Z;
+};
+#pragma pack(pop)
+
+float FloatDifference(float f1, float f2) {
+    return f1 - f2;
+}
+
+float FloatOffset(float f1, float f2) {
+    if (f1 >= f2) return f1 - f2;
+    else return f2 - f1;
+}
+
+float __stdcall SquaredDistanceBetweenHorizontalPoints(float x1, float y1, float x2, float y2) {
+    float fSX = (x1 - x2) * (x1 - x2);
+    float fSY = (y1 - y2) * (y1 - y2);
+    return fSX + fSY;
+}
+
+float __stdcall DistanceBetweenHorizontalPoints(float x1, float y1, float x2, float y2) {
+    float fSX = (x1 - x2) * (x1 - x2);
+    float fSY = (y1 - y2) * (y1 - y2);
+    return (float)sqrt((double)(fSX + fSY));
+}
+
+float __stdcall DistanceBetweenPoints(float x1, float y1, float z1, float x2, float y2, float z2) {
+    float fSX = (x1 - x2) * (x1 - x2);
+    float fSY = (y1 - y2) * (y1 - y2);
+    float fSZ = (z1 - z2) * (z1 - z2);
+    return (float)sqrt((double)(fSX + fSY + fSZ));
+}
+
+float __stdcall SquaredDistanceBetweenPoints(float x1, float y1, float z1, float x2, float y2, float z2) {
+    float fSX = (x1 - x2) * (x1 - x2);
+    float fSY = (y1 - y2) * (y1 - y2);
+    float fSZ = (z1 - z2) * (z1 - z2);
+    return fSX + fSY + fSZ;
+}
+
+float __stdcall SquaredDistanceBetweenPoints(_VECTOR* vec1, _VECTOR* vec2) {
+    float fDZ = vec1->Z - vec2->Z;
+    float fDY = vec1->Y - vec2->Y;
+    float fDX = vec1->X - vec2->X;
+    return (fDX * fDX) + (fDY * fDY) + (fDZ * fDZ);
+}
+
