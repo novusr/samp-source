@@ -101,12 +101,53 @@ def analyze_references():
     return records
 
 
+def find_fully_merged_files() -> list[tuple[str, int]]:
+    """Return `_reference/` files whose every function is already identical in client/saco/."""
+    from r5_common import ROOT, extract_source_functions
+
+    main_defs = scan_tree_functions(SACO_DIR, exclude_dirs={"_reference"})
+    main_norms: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for d in main_defs:
+        main_norms[(d.class_name, d.method_name)].add(normalize_code_for_compare(d.code))
+
+    result = []
+    for path in sorted(REF_DIR.rglob("*.cpp")):
+        defs = extract_source_functions(path)
+        if not defs:
+            continue
+        ok = True
+        for d in defs:
+            cls = d.class_name
+            if cls.startswith("Evaluation"):
+                cls = "C" + cls[len("Evaluation"):]
+            if normalize_code_for_compare(d.code) not in main_norms.get((cls, d.method_name), set()):
+                ok = False
+                break
+        if ok:
+            result.append((str(path.relative_to(ROOT)), len(defs)))
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--clean-identical", action="store_true",
+                        help="List _reference/ files whose functions are ALL identical in client/saco/ (add --apply to delete)")
+    parser.add_argument("--apply", action="store_true", help="With --clean-identical: actually delete the files")
     parser.add_argument("--target", "-t", help="Filter by target file in client/saco/ (e.g. chatwindow.cpp or game/actorped.cpp)")
     parser.add_argument("--diff", "-d", help="Show unified diff between _reference/ and client/saco/ for a function (e.g. CChatWindow::AddDebugMessage)")
     parser.add_argument("--state", choices=["MISSING_IN_MAIN", "DIFFERENT", "IDENTICAL"], help="Filter by comparison state")
     args = parser.parse_args()
+
+    if args.clean_identical:
+        from r5_common import ROOT
+        files = find_fully_merged_files()
+        print(f"=== {len(files)} _reference/ file(s) fully identical in client/saco/ ===")
+        for rel, n in files:
+            print(f"  {rel}  ({n} funcs)")
+            if args.apply:
+                (ROOT / rel).unlink()
+        print("Deleted." if args.apply else "Dry run. Re-run with --apply to delete.")
+        return 0
 
     records = analyze_references()
 
