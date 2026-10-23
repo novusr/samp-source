@@ -848,6 +848,19 @@
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
     {
+      "unit": "camera",
+      "name": "?GetMatrix@CCamera@@QAEXPAU_MATRIX4X4@@@Z",
+      "symbol": "?GetMatrix@CCamera@@QAEXPAU_MATRIX4X4@@@Z",
+      "rva": 644192,
+      "size": 113,
+      "sha256": "34fd127ed2ccaa20e1429790aced7165b9df83415c02bd12719ed827377ee4e2",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
       "unit": "game",
       "name": "CEntity.GetMatrix",
       "symbol": "?GetMatrix@CEntity@@QAEXPAU_MATRIX4X4@@@Z",

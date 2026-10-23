@@ -330,3 +330,45 @@ void BitStream::Write1() {
 }
 
 }
+
+
+// Matched ?GetMatrix@CCamera@@QAEXPAU_MATRIX4X4@@@Z (0x1009d460)
+struct _MATRIX4X4 {
+    _VECTOR right;
+    unsigned long flags;
+    _VECTOR up;
+    float pad_u;
+    _VECTOR at;
+    float pad_a;
+    _VECTOR pos;
+    float pad_p;
+};
+
+class CEntity;
+
+class CCamera {
+public:
+    CEntity* m_pEntity;
+    _MATRIX4X4* m_matPos;
+
+    void GetMatrix(_MATRIX4X4* pMatrix);
+};
+
+void CCamera::GetMatrix(_MATRIX4X4 *pMatrix)
+{
+    pMatrix->right.X = m_matPos->right.X;
+    pMatrix->right.Y = m_matPos->right.Y;
+    pMatrix->right.Z = m_matPos->right.Z;
+
+    pMatrix->up.X = m_matPos->up.X;
+    pMatrix->up.Y = m_matPos->up.Y;
+    pMatrix->up.Z = m_matPos->up.Z;
+
+    pMatrix->at.X = m_matPos->at.X;
+    pMatrix->at.Y = m_matPos->at.Y;
+    pMatrix->at.Z = m_matPos->at.Z;
+
+    pMatrix->pos.X = m_matPos->pos.X;
+    pMatrix->pos.Y = m_matPos->pos.Y;
+    pMatrix->pos.Z = m_matPos->pos.Z;
+}
