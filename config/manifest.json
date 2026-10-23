@@ -2212,6 +2212,46 @@
       ],
       "sha256": "fde7b389ab38b8362fc6d34289cc38373db36da8c3aa6b9e1a26128474e2e542",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CGangZonePool.CGangZonePool",
+      "symbol": "??0CGangZonePool@@QAE@XZ",
+      "rva": 8480,
+      "size": 40,
+      "features": [
+        "leaf",
+        "pointer",
+        "loop"
+      ],
+      "sha256": "8742d288027ae1ebdacbe17745a2305fe5a87cfb52bad312b6e17fafab9235b3",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CGangZonePool.Flash",
+      "symbol": "?Flash@CGangZonePool@@QAEXGK@Z",
+      "rva": 8704,
+      "size": 22,
+      "features": [
+        "leaf",
+        "pointer"
+      ],
+      "sha256": "88aa2d8cb432f39b2a8881ac76494e1cf93af71e661915133c5119ba8424204a",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CGangZonePool.StopFlash",
+      "symbol": "?StopFlash@CGangZonePool@@QAEXG@Z",
+      "rva": 8736,
+      "size": 25,
+      "features": [
+        "leaf",
+        "pointer"
+      ],
+      "sha256": "898c6171384298959b91c017da5436ad9b940e33d0bfc6a557872b9a5c3a4118",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {

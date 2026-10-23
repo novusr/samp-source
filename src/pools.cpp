@@ -520,7 +520,51 @@ void R5ChatPagingView::FilterInvalidChars(char* szString) {
     }
 }
 
+struct CGangZone {
+    char gap[0x10];
+    unsigned long color;
+    unsigned long flashColor;
+};
+
+class CGangZonePool {
+public:
+    CGangZone* m_pGangZone[1024];
+    int m_bSlotState[1024];
+
+    CGangZonePool();
+    void Flash(unsigned short id, unsigned long color);
+    void StopFlash(unsigned short id);
+};
+
 #pragma pack(pop)
+
+// Matched ??0CGangZonePool@@QAE@XZ (0x10002120)
+CGangZonePool::CGangZonePool() {
+    int i = 1024;
+    CGangZone** pZone = m_pGangZone;
+    int* pState = m_bSlotState;
+    do {
+        *pZone = 0;
+        *pState = 0;
+        pZone++;
+        pState++;
+        --i;
+    } while (i != 0);
+}
+
+// Matched ?Flash@CGangZonePool@@QAEXGK@Z (0x10002200)
+void CGangZonePool::Flash(unsigned short id, unsigned long color) {
+    if (m_pGangZone[id]) {
+        m_pGangZone[id]->flashColor = color;
+    }
+}
+
+// Matched ?StopFlash@CGangZonePool@@QAEXG@Z (0x10002220)
+void CGangZonePool::StopFlash(unsigned short id) {
+    if (m_pGangZone[id]) {
+        m_pGangZone[id]->flashColor = m_pGangZone[id]->color;
+    }
+}
 
 
 
