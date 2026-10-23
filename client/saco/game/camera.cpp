@@ -5,6 +5,13 @@
 
 bool GLOBAL_1014FD8C;
 
+// R5: 0x1009FF60
+CCamera::CCamera()
+{
+	m_matPos = (MATRIX4X4 *)ADDR_CAMERA;
+	field_0 = NULL;
+}
+
 //-----------------------------------------------------------
 
 // R5: 0x1009D740

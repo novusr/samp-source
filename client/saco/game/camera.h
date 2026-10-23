@@ -25,8 +25,5 @@ public:
 	void FUNC_1009D6B0();
 	float GetDistanceFromPoint(VECTOR *vecPos);
 
-	CCamera() {
-		m_matPos = (MATRIX4X4 *)ADDR_CAMERA;
-		field_0 = NULL;
-	}
+	CCamera();
 };

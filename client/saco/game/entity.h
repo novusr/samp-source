@@ -8,10 +8,8 @@
 class CEntity
 {
 public:
-	CEntity() {
-		memset(field_4, 0, sizeof(field_4));
-	};
-	virtual ~CEntity() {};
+	CEntity();
+	virtual ~CEntity();
 
 	void  GetMatrix(PMATRIX4X4 Matrix);
 	void  SetMatrix(MATRIX4X4 Matrix);

@@ -14,6 +14,21 @@ extern int __stdcall ModelInfoLoaded(UINT model);
 
 //-----------------------------------------------------------
 
+// R5: 0x1009C260
+CEntity::CEntity()
+{
+	memset(field_4, 0, sizeof(field_4));
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x1009C280
+CEntity::~CEntity()
+{
+}
+
+//-----------------------------------------------------------
+
 // R5: 0x1009EB10
 void CEntity::GetMatrix(PMATRIX4X4 Matrix)
 {
