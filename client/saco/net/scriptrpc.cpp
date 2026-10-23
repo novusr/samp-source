@@ -115,7 +115,21 @@ void ScrUnk0D(RPCParameters *rpcParams) {}
 void ScrPutPlayerInVehicle(RPCParameters *rpcParams) {}
 void ScrRemovePlayerFromVehicle(RPCParameters *rpcParams) {}
 void ScrDisplayGameText(RPCParameters *rpcParams) {}
-void ScrSetInterior(RPCParameters *rpcParams) {}
+
+// R5: 0x10019A00
+void ScrSetInterior(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData((unsigned char *)Data, (iBitLength/8)+1, false);
+
+	BYTE byteInterior;
+	bsData.Read(byteInterior);
+
+	pGame->FindPlayerPed()->SetInterior(byteInterior, TRUE);
+}
+
 void ScrUnk9F(RPCParameters *rpcParams) {}
 void ScrUnkA0(RPCParameters *rpcParams) {}
 void ScrUnkA1(RPCParameters *rpcParams) {}

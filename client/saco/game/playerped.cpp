@@ -1363,7 +1363,28 @@ BOOL CPlayerPed::IsPerformingAnimation(char *szAnimName)
 
 //-----------------------------------------------------------
 
+// R5: 0x100AD340
+void CPlayerPed::SetInterior(BYTE byteID, BOOL bRefresh)
+{
+	if(!m_pPed) return;
+
+	if(!m_bytePlayerNumber) {
+		ScriptCommand(&select_interior, byteID);
+		ScriptCommand(&link_actor_to_interior, m_dwGTAId, byteID);
+		if(bRefresh) {
+			MATRIX4X4 mat;
+			GetMatrix(&mat);
+			ScriptCommand(&refresh_streaming_at, mat.pos.X, mat.pos.Y);
+		}
+	} else {
+		ScriptCommand(&link_actor_to_interior, m_dwGTAId, byteID);
+	}
+}
+
+//-----------------------------------------------------------
+
 // R5: 0x100AD8F0
+
 float CPlayerPed::GetAimZ()
 {
 	if(m_pPed) {

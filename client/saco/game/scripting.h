@@ -93,6 +93,8 @@ const SCRIPT_COMMAND lock_car							= { 0x0519, "ii" };
 const SCRIPT_COMMAND put_train_at						= { 0x07c7, "ifff" };
 
 const SCRIPT_COMMAND get_active_interior				= { 0x077e, "v" };
+const SCRIPT_COMMAND select_interior					= { 0x04bb, "i" };
+const SCRIPT_COMMAND link_actor_to_interior				= { 0x0860, "ii" };
 const SCRIPT_COMMAND set_actor_z_angle					= { 0x0173, "if" };
 
 const SCRIPT_COMMAND lock_actor							= { 0x04d7, "ii" };

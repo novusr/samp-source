@@ -75,6 +75,7 @@ void SetWeaponModelIndex(int iWeapon);
 	void EnterVehicle(int iVehicleID, BOOL bPassenger);
 	void ExitCurrentVehicle();
 	void RemoveFromVehicleAndPutAt(float fX, float fY, float fZ);
+	void SetInterior(BYTE byteID, BOOL bRefresh = TRUE);
 
 	BOOL IsAPassenger();
 
