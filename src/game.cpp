@@ -466,3 +466,194 @@ unsigned long CEntity::GetWorldBoundRadius() {
 
 #pragma pack(pop)
 
+#pragma pack(push, 1)
+struct tagRECT {
+    long left;
+    long top;
+    long right;
+    long bottom;
+};
+typedef struct tagRECT RECT;
+
+class CDXUTScrollBar {
+public:
+    char gap0[0x4d];
+    bool m_bShowThumb;      // 0x4d
+    char gap1[0x20];        // 0x4e to 0x6e
+    RECT m_rcTrack;         // 0x6e
+    RECT m_rcThumb;         // 0x7e
+    int m_nPosition;        // 0x8e
+    int m_nPageSize;        // 0x92
+    int m_nStart;           // 0x96
+    int m_nEnd;             // 0x9a
+
+protected:
+    void Cap();
+    void UpdateThumbRect();
+    friend void CDXUTScrollBar_Anchor();
+};
+
+void CDXUTScrollBar::Cap() {
+    if (m_nPosition < m_nStart || m_nEnd - m_nStart <= m_nPageSize) {
+        m_nPosition = m_nStart;
+    } else if (m_nPosition + m_nPageSize > m_nEnd) {
+        m_nPosition = m_nEnd - m_nPageSize;
+    }
+}
+
+#define SCROLLBAR_MINTHUMBSIZE 8
+#define __max(a,b) (((a) > (b)) ? (a) : (b))
+static inline int RectHeight(RECT& rc) { return rc.bottom - rc.top; }
+
+void CDXUTScrollBar::UpdateThumbRect() {
+    if (m_nEnd - m_nStart > m_nPageSize) {
+        int nThumbHeight = __max(RectHeight(m_rcTrack) * m_nPageSize / (m_nEnd - m_nStart), SCROLLBAR_MINTHUMBSIZE);
+        int nMaxPosition = m_nEnd - m_nStart - m_nPageSize;
+        m_rcThumb.top = m_rcTrack.top + (m_nPosition - m_nStart) * (RectHeight(m_rcTrack) - nThumbHeight) / nMaxPosition;
+        m_rcThumb.bottom = m_rcThumb.top + nThumbHeight;
+        m_bShowThumb = true;
+    } else {
+        m_rcThumb.bottom = m_rcThumb.top;
+        m_bShowThumb = false;
+    }
+}
+
+void CDXUTScrollBar_Anchor() {
+    void (CDXUTScrollBar::*p1)() = &CDXUTScrollBar::Cap;
+    void (CDXUTScrollBar::*p2)() = &CDXUTScrollBar::UpdateThumbRect;
+}
+
+class R5ChatGameMenuView {
+public:
+    int IsMenuActive();
+};
+
+int R5ChatGameMenuView::IsMenuActive() {
+    return *(void**)0xba67a4 != 0;
+}
+
+#define MAX_CMD_INPUT 128
+#define MAX_CMDS 144
+#define MAX_CMD_STRLEN 32
+
+typedef void (__cdecl *CMDPROC)(char*);
+
+struct CDXUTDialog {
+    char gap[0x11e];
+    int m_width;    // 0x11e
+    int m_height;   // 0x122
+};
+
+struct CDXUTEditBox {
+    char gap[0x8];
+    void SetText(const char* szText, bool bSelected = false);
+    char* GetTextA();
+};
+
+extern "C" {
+void* __cdecl memset(void*, int, unsigned int);
+char* __cdecl strcpy(char*, const char*);
+char* __cdecl strncpy(char*, const char*, unsigned int);
+unsigned int __cdecl strlen(const char*);
+int __cdecl _stricmp(const char*, const char*);
+}
+#pragma intrinsic(memset, strcpy, strncpy, strlen)
+
+struct IDirect3DDevice9;
+
+class CCmdWindow {
+public:
+    IDirect3DDevice9* m_pD3DDevice;         // 0x0
+    CDXUTDialog* m_pGameUI;                 // 0x4
+    CDXUTEditBox* m_pEditControl;           // 0x8
+    CMDPROC m_pCmds[MAX_CMDS];              // 0xc
+    char m_szCmdNames[MAX_CMDS][MAX_CMD_STRLEN + 1]; // 0x24c
+    int m_iCmdCount;                        // 0x14dc
+    int m_bEnabled;                         // 0x14e0
+    char m_szInputBuffer[MAX_CMD_INPUT + 1]; // 0x14e4
+    char m_szRecallBuffer[10][MAX_CMD_INPUT + 1]; // 0x1565
+    char m_szCurBuffer[MAX_CMD_INPUT + 1];  // 0x1a6f
+    int m_iCurrentRecallAt;                 // 0x1af0
+    int m_iTotalRecalls;                    // 0x1af4
+    CMDPROC m_pDefaultCmd;                  // 0x1af8
+
+    CCmdWindow(IDirect3DDevice9* pD3DDevice);
+    void GetDialogSize(RECT* pRect);
+    void AddToRecallBuffer(char* szCmdInput);
+    void RecallUp();
+    void RecallDown();
+    void AddDefaultCmdProc(CMDPROC cmdDefault);
+    void AddCmdProc(char* szCmdName, CMDPROC cmdHandler);
+};
+
+CCmdWindow::CCmdWindow(IDirect3DDevice9* pD3DDevice) {
+    m_bEnabled = 0;
+    m_pD3DDevice = pD3DDevice;
+    m_iCmdCount = 0;
+    m_iTotalRecalls = 0;
+    m_pEditControl = 0;
+    m_iCurrentRecallAt = -1;
+
+    memset(&m_szRecallBuffer[0], 0, 1290);
+    memset(&m_szInputBuffer[0], 0, 129);
+    memset(&m_szCurBuffer[0], 0, 129);
+}
+
+void CCmdWindow::GetDialogSize(RECT* pRect) {
+    memset(pRect, 0, sizeof(RECT));
+    if (m_pGameUI) {
+        pRect->right = m_pGameUI->m_width;
+        pRect->bottom = m_pGameUI->m_height;
+    }
+}
+
+void CCmdWindow::AddToRecallBuffer(char* szCmdInput) {
+    int x = 10 - 1;
+    while (x) {
+        strcpy(m_szRecallBuffer[x], m_szRecallBuffer[x - 1]);
+        x--;
+    }
+    strcpy(m_szRecallBuffer[0], szCmdInput);
+    if (m_iTotalRecalls < 10) {
+        m_iTotalRecalls++;
+    }
+}
+
+void CCmdWindow::AddDefaultCmdProc(CMDPROC cmdDefault) {
+    m_pDefaultCmd = cmdDefault;
+}
+
+void CCmdWindow::AddCmdProc(char* szCmdName, CMDPROC cmdHandler) {
+    if (m_iCmdCount < MAX_CMDS && (strlen(szCmdName) < MAX_CMD_STRLEN)) {
+        m_pCmds[m_iCmdCount] = cmdHandler;
+        strcpy(m_szCmdNames[m_iCmdCount], szCmdName);
+        m_iCmdCount++;
+    }
+}
+
+void CCmdWindow::RecallDown() {
+    m_iCurrentRecallAt--;
+    if (m_iCurrentRecallAt >= 0) {
+        m_pEditControl->SetText(m_szRecallBuffer[m_iCurrentRecallAt]);
+    } else {
+        if (m_iCurrentRecallAt == -1) {
+            m_pEditControl->SetText(m_szCurBuffer);
+        }
+        m_iCurrentRecallAt = -1;
+    }
+}
+
+void CCmdWindow::RecallUp() {
+    if (m_iCurrentRecallAt >= (m_iTotalRecalls - 1)) return;
+
+    if (m_iCurrentRecallAt == -1) {
+        strncpy(m_szCurBuffer, m_pEditControl->GetTextA(), 128);
+        m_szCurBuffer[128] = '\0';
+    }
+
+    m_iCurrentRecallAt++;
+    m_pEditControl->SetText(m_szRecallBuffer[m_iCurrentRecallAt]);
+}
+
+#pragma pack(pop)
+

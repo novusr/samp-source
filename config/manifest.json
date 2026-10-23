@@ -1490,6 +1490,426 @@
         "leaf"
       ],
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.GetWriteOffset",
+      "symbol": "?GetWriteOffset@BitStream@RakNet@@QBEHXZ",
+      "rva": 128800,
+      "size": 3,
+      "sha256": "19d200194d49b34530548575f37a1bb4203ee60f18d42f0084e86b7a8c899faa",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.ctor",
+      "symbol": "??0BitStream@RakNet@@QAE@XZ",
+      "rva": 128816,
+      "size": 33,
+      "sha256": "087c6006fa583510eabf34cfdb5193a610ae8dd21ca77fda1d3d0f39fda59ff4",
+      "features": [
+        "constructor"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.SetNumberOfBitsAllocated",
+      "symbol": "?SetNumberOfBitsAllocated@BitStream@RakNet@@QAEXI@Z",
+      "rva": 129216,
+      "size": 10,
+      "sha256": "01caaa228fe4f4c7fe4269994a79702b290762107c5e6b67c17e8d8525fc7585",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.dtor",
+      "symbol": "??1BitStream@RakNet@@QAE@XZ",
+      "rva": 129232,
+      "size": 27,
+      "sha256": "95bf894c882e619afcc3273e44fabfa9e3aaf50c552bbc95040d4585d1efc8c8",
+      "features": [
+        "destructor"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.Reset",
+      "symbol": "?Reset@BitStream@RakNet@@QAEXXZ",
+      "rva": 129264,
+      "size": 14,
+      "sha256": "c2469b32952d7ab881fab620aed7d0656e059bbf11fb5675b6f651730034ae97",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.ResetReadPointer",
+      "symbol": "?ResetReadPointer@BitStream@RakNet@@QAEXXZ",
+      "rva": 129280,
+      "size": 8,
+      "sha256": "35647cd18c19f4482ebc2ce05d5e7caabe8ffc5b5c2147adc62a917b4a9fc6b1",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.ResetWritePointer",
+      "symbol": "?ResetWritePointer@BitStream@RakNet@@QAEXXZ",
+      "rva": 129296,
+      "size": 7,
+      "sha256": "92eb3b367d6ee91190fb0a8be2e0959e6ee590dca281c332dfc805ffe6f846d2",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.ReadBit",
+      "symbol": "?ReadBit@BitStream@RakNet@@QAE_NXZ",
+      "rva": 129312,
+      "size": 50,
+      "sha256": "c5ec61649c405846b1505f6dad7d065aefc62293266cb4bec946ef4376b75317",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.AlignWriteToByteBoundary",
+      "symbol": "?AlignWriteToByteBoundary@BitStream@RakNet@@QAEXXZ",
+      "rva": 129376,
+      "size": 20,
+      "sha256": "856f43e5f062a76836bb2b3b89c0f2dfa8b794c2d6906cc8b3247e20bfeaa549",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.AlignReadToByteBoundary",
+      "symbol": "?AlignReadToByteBoundary@BitStream@RakNet@@QAEXXZ",
+      "rva": 129408,
+      "size": 22,
+      "sha256": "46589b12ceb341d93e872841d0e0b1618ac9f4587fe90a29bbd50c1b0d61e1ae",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.SetData",
+      "symbol": "?SetData@BitStream@RakNet@@QAEXPAE@Z",
+      "rva": 129440,
+      "size": 14,
+      "sha256": "1c1a6bc75838455570d71b6fe67bae4276cf938225876315c3df9d16454e327b",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.IgnoreBits",
+      "symbol": "?IgnoreBits@BitStream@RakNet@@QAEXH@Z",
+      "rva": 130288,
+      "size": 15,
+      "sha256": "8efab15d5549b392902b3d5a91b04622d551a18900717b86a114c1e29a3a9272",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.SetWriteOffset",
+      "symbol": "?SetWriteOffset@BitStream@RakNet@@QAEXH@Z",
+      "rva": 130304,
+      "size": 9,
+      "sha256": "aa1d0523d277f6a14d7950c488982e29fa08fe5d88274b15a712c4427302720a",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.DoEndianSwap",
+      "symbol": "?DoEndianSwap@BitStream@RakNet@@ABE_NXZ",
+      "rva": 130464,
+      "size": 3,
+      "sha256": "01cb47d078b4841b8408ec4fe278efa83115c6f6e101972987507d2b2b57dcf0",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.AssertStreamEmpty",
+      "symbol": "?AssertStreamEmpty@BitStream@RakNet@@QAEXXZ",
+      "rva": 130048,
+      "size": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.Write0",
+      "symbol": "?Write0@BitStream@RakNet@@QAEXXZ",
+      "rva": 130832,
+      "size": 30,
+      "sha256": "c350802d8fda5b9a7935fc5d49b9d4a0dc32e18bf93bea0a5f95f0ca47302015",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "BitStream.Write1",
+      "symbol": "?Write1@BitStream@RakNet@@QAEXXZ",
+      "rva": 130864,
+      "size": 51,
+      "sha256": "081b3a9032c93ac7409dc613de610a4237d1bf74936f59a84cd08701ff25e87e",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CDXUTScrollBar.Cap",
+      "symbol": "?Cap@CDXUTScrollBar@@IAEXXZ",
+      "rva": 545792,
+      "size": 67,
+      "sha256": "11aa66f83eeb2a574a4c5b92bbf0c630658402e1e09db55bfb2cfef355968243",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CDXUTScrollBar.UpdateThumbRect",
+      "symbol": "?UpdateThumbRect@CDXUTScrollBar@@IAEXXZ",
+      "rva": 545568,
+      "size": 143,
+      "sha256": "dcf468eb880efe2422bbb56f3e3e1b7e5eab371b4933b6de0334d9a3cfd2dd34",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "R5ChatGameMenuView.IsMenuActive",
+      "symbol": "?IsMenuActive@R5ChatGameMenuView@@QAEHXZ",
+      "rva": 657696,
+      "size": 14,
+      "sha256": "736acc9b662800925b821e0e3fd0c374ead3ae6c47a67d8bcb343301a83826fc",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.ctor",
+      "symbol": "??0CCmdWindow@@QAE@PAUIDirect3DDevice9@@@Z",
+      "rva": 431056,
+      "size": 95,
+      "sha256": "cd10e3decb82c4374defc0d7dedca908e6b7a0237aef6f38b32bea8f6ca20536",
+      "features": [
+        "constructor"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.GetDialogSize",
+      "symbol": "?GetDialogSize@CCmdWindow@@QAEXPAUtagRECT@@@Z",
+      "rva": 431168,
+      "size": 52,
+      "sha256": "85ac84fdd1cbaeacaaa834071344d658ac1b94a415c430dc2290b73b1b983c77",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.AddToRecallBuffer",
+      "symbol": "?AddToRecallBuffer@CCmdWindow@@QAEXPAD@Z",
+      "rva": 431568,
+      "size": 90,
+      "sha256": "488a08b22296e4134c9eed14211332c2bab0101835fd94f1bf886bf1b7edf0f1",
+      "features": [
+        "loop"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.AddDefaultCmdProc",
+      "symbol": "?AddDefaultCmdProc@CCmdWindow@@QAEXP6AXPAD@Z@Z",
+      "rva": 431968,
+      "size": 13,
+      "sha256": "abcf6cbc5d69c1224d80f51fc2cf62a6f2dace0fb45f74e795560f6dbb730ec9",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.AddCmdProc",
+      "symbol": "?AddCmdProc@CCmdWindow@@QAEXPADP6AX0@Z@Z",
+      "rva": 431984,
+      "size": 92,
+      "sha256": "05a73d3d8e63c012690e0cb00f913943365549df46b60d0cdc81ecd60c1f6aac",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.RecallDown",
+      "symbol": "?RecallDown@CCmdWindow@@QAEXXZ",
+      "rva": 431776,
+      "size": 78,
+      "sha256": "bdafb165bca001f4df56c40d52c493985ff0c61e904d6f371a35a776521550c2",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CCmdWindow.RecallUp",
+      "symbol": "?RecallUp@CCmdWindow@@QAEXXZ",
+      "rva": 431664,
+      "size": 100,
+      "sha256": "23183c4e6c7156b265f99937ec604f1af7446051acd8f519f77fca3e5b566d74",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CPickupPoolMore.FindNetworkId",
+      "symbol": "?FindNetworkId@CPickupPoolMore@@QAEHH@Z",
+      "rva": 78816,
+      "size": 37,
+      "sha256": "4006afcc7cd54e8f1aafe41fbfc4ec055fdc05f630378d2160a0fa60a6f1f12a",
+      "features": [
+        "loop"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "RPCDeleteObjectPoolView.UpdateLargestID",
+      "symbol": "?UpdateLargestID@RPCDeleteObjectPoolView@@QAEXXZ",
+      "rva": 75680,
+      "size": 85,
+      "sha256": "a1bea3f5cb5f1ec3e62467a7348273e3dab1c997a3a2ea8e24bdc0a22aaa5e5a",
+      "features": [
+        "loop"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5TextDrawSelectionPoolView.GetAt",
+      "symbol": "?GetAt@R5TextDrawSelectionPoolView@@QAEPAVR5TextDrawSelectionView@@G@Z",
+      "rva": 97472,
+      "size": 35,
+      "sha256": "934ea9bc93e52df696506b03a12a63479c69441508404287ae592c7e3dbffadc",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5TextDrawSelectionView.GetSelectableRect",
+      "symbol": "?GetSelectableRect@R5TextDrawSelectionView@@QAEPAUtagRECT@@XZ",
+      "rva": 463472,
+      "size": 30,
+      "sha256": "c8b22324447f7ed52f77078bc906cca4bed4645bf6d27527a9358b84f16af763",
+      "features": [
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5TextDrawSelectorView.ClearAll",
+      "symbol": "?ClearAll@R5TextDrawSelectorView@@QAEXXZ",
+      "rva": 463536,
+      "size": 81,
+      "sha256": "2562ae1f11e8b7e40cffd08907259c7fa21c74c9a2fdc679ffd8b9f35ae8409f",
+      "features": [
+        "loop"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5TextDrawSelectorView.Enable",
+      "symbol": "?Enable@R5TextDrawSelectorView@@QAEXK@Z",
+      "rva": 463936,
+      "size": 60,
+      "sha256": "93f2303f4e8a47e16f6d388d6db8123ddf90801901a1b5f449e9155a44958fc0",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5ChatScrollBarNavigationView.R5SetTrackPos",
+      "symbol": "?R5SetTrackPos@R5ChatScrollBarNavigationView@@QAEXH@Z",
+      "rva": 422112,
+      "size": 29,
+      "sha256": "7c15efb8acdf4de4790be3994e4fa1209698c0ec24e57dbc96928408d5688dfc",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "R5ChatPagingView.FilterInvalidChars",
+      "symbol": "?FilterInvalidChars@R5ChatPagingView@@QAEXPAD@Z",
+      "rva": 422944,
+      "size": 41,
+      "sha256": "74c3a3d211354792431091df5e29e6dcf008a6482eca89e95e35de9f41aa3546",
+      "features": [
+        "loop"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {
@@ -1554,6 +1974,53 @@
       "kind": "unimplemented-function",
       "size": 1,
       "entry_sha256_16": "659a3247be86ca172e189cd4705603b4df87e602513e2b1cad2d59c636284fa5"
+    },
+    "_free": {
+      "rva": 813629,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "f299aa1ff59cb2d1297ccca5bf1bd5b6940b6730a80d0d4824fe69d051c64ce0"
+    },
+    "?AddBitsAndReallocate@BitStream@RakNet@@QAEXH@Z": {
+      "rva": 129904,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "64681055ee380efa1b40123130870bf50cfaecf5f06b6aeed3d079770b2eb128"
+    },
+    "?SetText@CDXUTEditBox@@QAEXPBD_N@Z": {
+      "rva": 546176,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "7e3d90a60d2a9c955b6d307445221d3f24988f7694f6ad4f71ebe5e6a6759ef4"
+    },
+    "?GetTextA@CDXUTEditBox@@QAEPADXZ": {
+      "rva": 546384,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "5348b1acb491a7520ab2302a21a0f141dcfa0dbbf48f5661dd755f95c559435f"
+    },
+    "_strncpy": {
+      "rva": 817136,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "b63927bbc1af9d1664a49200b898974797d932ebdf06df6fc1570b6c603aa767"
+    },
+    "_pNetGame": {
+      "rva": 2550676,
+      "kind": "bss",
+      "size": 4
+    },
+    "?Cap@CDXUTScrollBar@@QAEXXZ": {
+      "rva": 545792,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "da1bb8cf6ef45ec6a9089558166c7a055a7c7c7cefc986b66cfd2ddbcf8a55d0"
+    },
+    "?UpdateThumbRect@CDXUTScrollBar@@QAEXXZ": {
+      "rva": 545568,
+      "kind": "unimplemented-function",
+      "size": 1,
+      "entry_sha256_16": "88373dcb9c056b0ef1a9b115e653dc448098912bc818e334de3f34f765b7ef3f"
     }
   },
   "status_definition": "exact bodies after explicitly resolving COFF at reference layout; not complete linked DLL"

@@ -363,5 +363,159 @@ unsigned short RPCVehicleMotionPoolView::FindIDFromGtaPtr(_VEHICLE_TYPE* pVehicl
     return 0xffff;
 }
 
+class CPickupPoolMore {
+public:
+    int m_iPickupCount;
+    unsigned long m_dwHnd[4096];
+    int m_iNetworkIds[4096];
+
+    int FindNetworkId(int networkId);
+};
+
+int CPickupPoolMore::FindNetworkId(int networkId) {
+    for (int i = 0; i != 4096; i++) {
+        if (m_iNetworkIds[i] == networkId) return i;
+    }
+    return -1;
+}
+
+class RPCDeleteObjectPoolView {
+public:
+    int m_iLargestID;
+    int m_slots[1000];
+
+    void UpdateLargestID();
+};
+
+void RPCDeleteObjectPoolView::UpdateLargestID() {
+    int last = 0;
+    for (int i = 0; i < 1000; ++i) {
+        if (m_slots[i]) last = i;
+    }
+    m_iLargestID = last;
+}
+
+struct tagRECT {
+    long left;
+    long top;
+    long right;
+    long bottom;
+};
+typedef struct tagRECT RECT;
+
+class R5TextDrawSelectionView {
+public:
+    char gap0[0x9a7];
+    unsigned char selectable;    // 0x9a7
+    char gap1[0x17];             // 0x9a8
+    unsigned char drawn;         // 0x9bf
+    char gap2[1];                // 0x9c0
+    RECT bounds;                 // 0x9c1
+    unsigned char highlighted;   // 0x9d1
+    unsigned long highlightColor;// 0x9d2
+
+    RECT* GetSelectableRect();
+    inline void SetHighlight(bool value, unsigned long color) {
+        highlighted = value;
+        highlightColor = color;
+    }
+};
+
+RECT* R5TextDrawSelectionView::GetSelectableRect() {
+    if (selectable && drawn) return &bounds;
+    return 0;
+}
+
+class R5TextDrawSelectionPoolView {
+public:
+    int active[2304];
+    R5TextDrawSelectionView* items[2304];
+
+    inline R5TextDrawSelectionView* GetAt(unsigned short id) {
+        if (id >= 2304) return 0;
+        if (!active[id]) return 0;
+        return items[id];
+    }
+};
+
+struct R5TextDrawSelectionPoolsView {
+    char gap0[0x1c];
+    R5TextDrawSelectionPoolView* textdrawPool;
+};
+
+struct R5TextDrawSelectionNetView {
+    char gap0[0x3de];
+    R5TextDrawSelectionPoolsView* pools;
+};
+
+extern "C" void* pNetGame;
+
+class R5TextDrawSelectorView {
+public:
+    int enabled;
+    unsigned long highlightColor;
+    unsigned short selectedId;
+
+    void ClearAll();
+    void Enable(unsigned long color);
+};
+
+void R5TextDrawSelectorView::ClearAll() {
+    if (pNetGame) {
+        R5TextDrawSelectionPoolView* pool = ((R5TextDrawSelectionNetView*)pNetGame)->pools->textdrawPool;
+        if (pool) {
+            int x = 0;
+            while (x != 2304) {
+                R5TextDrawSelectionView* text = pool->GetAt((unsigned short)x);
+                if (text) text->SetHighlight(false, 0);
+                x++;
+            }
+        }
+    }
+}
+
+void R5TextDrawSelectorView::Enable(unsigned long color) {
+    unsigned long upper = (color >> 16) | (color & 0xff0000);
+    unsigned long lower = (color << 16) | (color & 0xff00);
+    unsigned long converted = (lower << 8) | (upper >> 8);
+    enabled = 1;
+    highlightColor = converted;
+    selectedId = 0xffff;
+}
+
+class CDXUTScrollBar {
+public:
+    char gap0[0x8e];
+    int m_nPosition;
+
+    void Cap();
+    void UpdateThumbRect();
+};
+
+class R5ChatScrollBarNavigationView : public CDXUTScrollBar {
+public:
+    void R5SetTrackPos(int position);
+};
+
+void R5ChatScrollBarNavigationView::R5SetTrackPos(int position) {
+    m_nPosition = position;
+    Cap();
+    UpdateThumbRect();
+}
+
+class R5ChatPagingView {
+public:
+    void FilterInvalidChars(char* szString);
+};
+
+void R5ChatPagingView::FilterInvalidChars(char* szString) {
+    while (*szString) {
+        if (*szString > 0 && *szString < ' ') {
+            *szString = ' ';
+        }
+        szString++;
+    }
+}
+
 #pragma pack(pop)
 
