@@ -94,6 +94,22 @@ float __stdcall SquaredDistanceBetweenPoints(_VECTOR* vec1, _VECTOR* vec2) {
     return (fDX * fDX) + (fDY * fDY) + (fDZ * fDZ);
 }
 
+int IsHexChar(char c)
+{
+	if (c >= '0' && c <= '9') return 1;
+	if (c >= 'A' && c <= 'F') return 1;
+	if (c >= 'a' && c <= 'f') return 1;
+	return 0;
+}
+
+int IsHexChar(unsigned short c)
+{
+	if (c >= '0' && c <= '9') return 1;
+	if (c >= 'A' && c <= 'F') return 1;
+	if (c >= 'a' && c <= 'f') return 1;
+	return 0;
+}
+
 inline char Util_toupper(char c) {
     return ((c > (char)0x60) && (c < (char)0x7b)) ? c - 0x20 : c;
 }

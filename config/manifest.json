@@ -1914,6 +1914,34 @@
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
     {
+      "unit": "camera",
+      "name": "?IsHexChar@@YAHD@Z",
+      "symbol": "?IsHexChar@@YAHD@Z",
+      "rva": 744976,
+      "size": 37,
+      "sha256": "dff8997fa8fd0b55597d181dbb4de4c12fbc513e84721f0d0e16c3254d016691",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "?IsHexChar@@YAHG@Z",
+      "symbol": "?IsHexChar@@YAHG@Z",
+      "rva": 745024,
+      "size": 50,
+      "sha256": "a3d7f7d0a8ff6243efab1476d8f43dcabfc7ef3e4ea6aede190dbf46b043714a",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
       "unit": "game",
       "name": "?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z",
       "symbol": "?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z",
