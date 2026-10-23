@@ -5,6 +5,46 @@ using namespace RakNet;
 extern CNetGame*	pNetGame;
 extern CGame * pGame;
 
+#define RPC_ScrPlaySound RPC_ScrUnk10
+#define RPC_ScrRespawnVehicle RPC_ScrUnk40
+#define RPC_ScrDestroyObject RPC_ScrUnk2F
+#define RPC_ScrSetVehiclePos RPC_ScrUnk9F
+#define RPC_ScrSetVehicleHealth RPC_ScrUnk93
+
+struct RPCSoundGameView {
+	CAudio *audio;
+	CAudio *GetAudio() { return audio; }
+};
+
+struct RPCObjectPoolView {
+	int lastId;
+	BOOL slots[MAX_OBJECTS];
+	CEntity *objects[MAX_OBJECTS];
+	CEntity *GetAt(WORD id) {
+		if (id > 1000) return NULL;
+		if (slots[id]) return objects[id];
+		return NULL;
+	}
+};
+
+struct RPCPlayerSurfingView {
+	BYTE gap[0x2DA];
+	CEntity *surfObject;
+	DWORD gap2DE;
+	DWORD surfMode;
+};
+
+struct RPCInitMenuPoolView {
+	CMenu *menus[MAX_MENUS];
+	BOOL slots[MAX_MENUS];
+	BOOL GetSlotState(BYTE id) {
+		if (id > 128) return FALSE;
+		return slots[id];
+	}
+};
+
+static char rpc_menu_text_buffer[257];
+
 //----------------------------------------------------
 
 // TODO: These script RPCs
@@ -25,13 +65,58 @@ void ScrSetGravity(RPCParameters *rpcParams)
 
 	pGame->SetGravity(fGravity);
 }
-void ScrUnk93(RPCParameters *rpcParams) {}
+// R5: 0x1001AD70
+void ScrSetVehicleHealth(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	WORD VehicleID;
+	float fVehicleHealth;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	bsData.Read(VehicleID);
+	bsData.Read(fVehicleHealth);
+
+	if (pNetGame && pNetGame->GetVehiclePool()) {
+		CVehiclePool *pVehiclePool = pNetGame->GetVehiclePool();
+		if (pVehiclePool->GetSlotState(VehicleID)) {
+			CVehicle *pVehicle = pVehiclePool->GetAt(VehicleID);
+			if (pVehicle) pVehicle->SetHealth(fVehicleHealth);
+		}
+	}
+}
 void ScrUnk94(RPCParameters *rpcParams) {}
 void ScrUnk95(RPCParameters *rpcParams) {}
 void ScrUnk2C(RPCParameters *rpcParams) {}
 void ScrUnk2D(RPCParameters *rpcParams) {}
 void ScrUnk2E(RPCParameters *rpcParams) {}
-void ScrUnk2F(RPCParameters *rpcParams) {}
+// R5: 0x1001BC20
+void ScrDestroyObject(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int bits = rpcParams->numberOfBitsOfData;
+	WORD objectId;
+	RakNet::BitStream stream(Data, (bits / 8) + 1, false);
+	stream.Read(objectId);
+
+	if (!pNetGame) return;
+	CObjectPool *pObjectPool = pNetGame->GetObjectPool();
+	CPlayerPool *pPlayerPool = pNetGame->GetPlayerPool();
+	if (!pObjectPool) return;
+
+	RPCObjectPoolView *pool = (RPCObjectPoolView *)pObjectPool;
+	RPCPlayerSurfingView *local = pPlayerPool ? (RPCPlayerSurfingView *)pPlayerPool->GetLocalPlayer() : NULL;
+	CEntity *object = pool->GetAt(objectId);
+	if (object) {
+		if (local && local->surfObject == object) {
+			local->surfObject = NULL;
+			local->surfMode = 0;
+		}
+		pObjectPool->Delete(objectId);
+	}
+}
 void ScrUnk4F(RPCParameters *rpcParams) {}
 void ScrUnk50(RPCParameters *rpcParams) {}
 void ScrUnk63(RPCParameters *rpcParams) {}
@@ -114,7 +199,25 @@ void ScrSetPlayerPos(RPCParameters *rpcParams) {}
 void ScrUnk0D(RPCParameters *rpcParams) {}
 void ScrPutPlayerInVehicle(RPCParameters *rpcParams) {}
 void ScrRemovePlayerFromVehicle(RPCParameters *rpcParams) {}
-void ScrDisplayGameText(RPCParameters *rpcParams) {}
+// R5: 0x1001A1C0
+// R5: 0x100198F0
+void ScrDisplayGameText(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int bits = rpcParams->numberOfBitsOfData;
+	RakNet::BitStream stream(Data, (bits / 8) + 1, false);
+	char message[256];
+	memset(message, 0, sizeof(message));
+	int type, time, length;
+	stream.Read(type);
+	stream.Read(time);
+	stream.Read(length);
+	if (length >= 1 && length <= 200) {
+		stream.Read(message, length);
+		message[length] = '\0';
+		pGame->DisplayGameText(message, time, type);
+	}
+}
 
 // R5: 0x10019A00
 void ScrSetInterior(RPCParameters *rpcParams)
@@ -130,11 +233,50 @@ void ScrSetInterior(RPCParameters *rpcParams)
 	pGame->FindPlayerPed()->SetInterior(byteInterior, TRUE);
 }
 
-void ScrUnk9F(RPCParameters *rpcParams) {}
+// R5: 0x10019C70
+void ScrSetVehiclePos(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	WORD VehicleId;
+	float fX, fY, fZ;
+	bsData.Read(VehicleId);
+	bsData.Read(fX);
+	bsData.Read(fY);
+	bsData.Read(fZ);
+
+	if (pNetGame && pNetGame->GetVehiclePool()) {
+		CVehiclePool *pVehiclePool = pNetGame->GetVehiclePool();
+		if (pVehiclePool->GetSlotState(VehicleId)) {
+			CVehicle *pVehicle = pVehiclePool->GetAt(VehicleId);
+			if (pVehicle) pVehicle->TeleportTo(fX, fY, fZ);
+		}
+	}
+}
 void ScrUnkA0(RPCParameters *rpcParams) {}
 void ScrUnkA1(RPCParameters *rpcParams) {}
 void ScrUnk0F(RPCParameters *rpcParams) {}
-void ScrUnk10(RPCParameters *rpcParams) {}
+// R5: 0x1001A330
+void ScrPlaySound(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+
+	int iSound;
+	float fX, fY, fZ;
+	bsData.Read(iSound);
+	bsData.Read(fX);
+	bsData.Read(fY);
+	bsData.Read(fZ);
+
+	((RPCSoundGameView *)pGame)->GetAudio()->PlaySound(iSound, fX, fY, fZ);
+}
 void ScrUnk11(RPCParameters *rpcParams) {}
 // R5: 0x1001A500
 void ScrUnk12(RPCParameters *rpcParams)
@@ -150,7 +292,17 @@ void ScrUnk12(RPCParameters *rpcParams)
 }
 void ScrSetPlayerFacingAngle(RPCParameters *rpcParams) {}
 void ScrUnk16(RPCParameters *rpcParams) {}
-void ScrUnk40(RPCParameters *rpcParams) {}
+// R5: 0x1001A700
+void ScrRespawnVehicle(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	VEHICLEID VehicleID;
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	bsData.Read(VehicleID);
+}
 void ScrUnk41(RPCParameters *rpcParams) {}
 void ScrUnk42(RPCParameters *rpcParams) {}
 void ScrUnk37(RPCParameters *rpcParams) {}
@@ -172,9 +324,118 @@ void ScrUnkAF(RPCParameters *rpcParams) {}
 void ScrUnkB0(RPCParameters *rpcParams) {}
 void ScrUnkB2(RPCParameters *rpcParams) {}
 void ScrUnk30(RPCParameters *rpcParams) {}
-void ScrInitMenu(RPCParameters *rpcParams) {}
-void ScrShowMenu(RPCParameters *rpcParams) {}
-void ScrHideMenu(RPCParameters *rpcParams) {}
+// R5: 0x1001C870
+void ScrInitMenu(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+
+	if (!pNetGame) return;
+	CMenuPool *pMenuPool = pNetGame->GetMenuPool();
+	if (!pMenuPool) return;
+
+	BYTE byteMenuID;
+	BOOL bColumns; // 0 = 1, 1 = 2
+
+	float fX;
+	float fY;
+	float fCol1;
+	float fCol2 = 0.0f;
+	MENU_INT MenuInteraction;
+
+	bsData.Read(byteMenuID);
+	bsData.Read(bColumns);
+	memset(rpc_menu_text_buffer, 0, sizeof(rpc_menu_text_buffer));
+	bsData.Read(rpc_menu_text_buffer, MAX_MENU_LINE);
+	bsData.Read(fX);
+	bsData.Read(fY);
+	bsData.Read(fCol1);
+	if (bColumns) bsData.Read(fCol2);
+	bsData.Read(MenuInteraction.bMenu);
+	for (BYTE i = 0; i < MAX_MENU_ITEMS; i++)
+	{
+		bsData.Read(MenuInteraction.bRow[i]);
+	}
+
+	CMenu *pMenu;
+
+	if (((RPCInitMenuPoolView *)pMenuPool)->GetSlotState(byteMenuID))
+	{
+		pMenuPool->Delete(byteMenuID);
+	}
+
+	pMenu = pMenuPool->New(byteMenuID, fX, fY, ((BYTE)bColumns) + 1, fCol1, fCol2, &MenuInteraction);
+
+	if (!pMenu) return;
+	pMenu->SetTitle(rpc_menu_text_buffer);
+
+	BYTE byteColCount;
+	memset(rpc_menu_text_buffer, 0, sizeof(rpc_menu_text_buffer));
+	bsData.Read(rpc_menu_text_buffer, MAX_MENU_LINE);
+	pMenu->SetColumnTitle(0, rpc_menu_text_buffer);
+
+	bsData.Read(byteColCount);
+	if (byteColCount > MAX_MENU_ITEMS) return;
+	for (BYTE i = 0; i < byteColCount; i++)
+	{
+		memset(rpc_menu_text_buffer, 0, sizeof(rpc_menu_text_buffer));
+		bsData.Read(rpc_menu_text_buffer, MAX_MENU_LINE);
+		pMenu->AddMenuItem(0, i, rpc_menu_text_buffer);
+	}
+
+	if (bColumns)
+	{
+		memset(rpc_menu_text_buffer, 0, sizeof(rpc_menu_text_buffer));
+		bsData.Read(rpc_menu_text_buffer, MAX_MENU_LINE);
+		pMenu->SetColumnTitle(1, rpc_menu_text_buffer);
+
+		bsData.Read(byteColCount);
+		if (byteColCount > MAX_MENU_ITEMS) return;
+		for (BYTE i = 0; i < byteColCount; i++)
+		{
+			memset(rpc_menu_text_buffer, 0, sizeof(rpc_menu_text_buffer));
+			bsData.Read(rpc_menu_text_buffer, MAX_MENU_LINE);
+			pMenu->AddMenuItem(1, i, rpc_menu_text_buffer);
+		}
+	}
+}
+
+// R5: 0x1001CB90
+void ScrShowMenu(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+
+	if (!pNetGame) return;
+	CMenuPool *pMenuPool = pNetGame->GetMenuPool();
+
+	BYTE byteMenuID;
+	bsData.Read(byteMenuID);
+	if (pMenuPool) pMenuPool->ShowMenu(byteMenuID);
+}
+
+// R5: 0x1001CC40
+void ScrHideMenu(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+
+	if (!pNetGame) return;
+	CMenuPool *pMenuPool = pNetGame->GetMenuPool();
+
+	BYTE byteMenuID;
+	bsData.Read(byteMenuID);
+	if (pMenuPool) pMenuPool->HideMenu(byteMenuID);
+}
 
 //----------------------------------------------------
 
@@ -393,13 +654,13 @@ void RegisterScriptRPCs(RakClientInterface* pRakClient)
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk90);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk91);
 	REGISTER_STATIC_RPC(pRakClient, ScrSetGravity);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk93);
+	REGISTER_STATIC_RPC(pRakClient, ScrSetVehicleHealth);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk94);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk95);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk2C);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk2D);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk2E);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk2F);
+	REGISTER_STATIC_RPC(pRakClient, ScrDestroyObject);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk4F);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk50);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk63);
@@ -446,19 +707,19 @@ void RegisterScriptRPCs(RakClientInterface* pRakClient)
 	REGISTER_STATIC_RPC(pRakClient, ScrSetInterior);
 	REGISTER_STATIC_RPC(pRakClient, ScrSetCameraPos);
 	REGISTER_STATIC_RPC(pRakClient, ScrSetCameraLookAt);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk9F);
+	REGISTER_STATIC_RPC(pRakClient, ScrSetVehiclePos);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnkA0);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnkA1);
 	REGISTER_STATIC_RPC(pRakClient, ScrSetCameraBehindPlayer);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk0F);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk10);
+	REGISTER_STATIC_RPC(pRakClient, ScrPlaySound);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk11);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk12);
 	REGISTER_STATIC_RPC(pRakClient, ScrSetPlayerFacingAngle);
 	REGISTER_STATIC_RPC(pRakClient, ScrResetMoney);
 	REGISTER_STATIC_RPC(pRakClient, ScrResetPlayerWeapons);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk16);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk40);
+	REGISTER_STATIC_RPC(pRakClient, ScrRespawnVehicle);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk41);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk42);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk37);
@@ -516,13 +777,13 @@ void UnRegisterScriptRPCs(RakClientInterface* pRakClient)
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk90);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk91);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetGravity);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk93);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrSetVehicleHealth);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk94);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk95);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk2C);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk2D);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk2E);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk2F);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrDestroyObject);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk4F);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk50);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk63);
@@ -554,19 +815,19 @@ void UnRegisterScriptRPCs(RakClientInterface* pRakClient)
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetInterior);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetCameraPos);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetCameraLookAt);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk9F);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrSetVehiclePos);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnkA0);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnkA1);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetCameraBehindPlayer);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk0F);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk10);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrPlaySound);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk11);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk12);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrSetPlayerFacingAngle);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrResetMoney);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrResetPlayerWeapons);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk16);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk40);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrRespawnVehicle);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk41);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk37);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk51);
