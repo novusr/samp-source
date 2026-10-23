@@ -1109,6 +1109,19 @@
     },
     {
       "unit": "game",
+      "name": "?Font_SetOutline@@YAXH@Z",
+      "symbol": "?Font_SetOutline@@YAXH@Z",
+      "rva": 654976,
+      "size": 198,
+      "sha256": "ccf907056e990b87f43d297ed69860dbbe388269c699cb7aaac97dc8a0a8701a",
+      "features": [
+        "leaf",
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "?Font_SetJustify@@YAXH@Z",
       "symbol": "?Font_SetJustify@@YAXH@Z",
       "rva": 655024,
