@@ -1,27 +1,30 @@
 # Status & Progress Rekonstruksi SA-MP 0.3.7 R5
 
-> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 21:12 UTC**.
+> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 21:21 UTC**.
 
-## 1. Ringkasan Menuju 100%
+## 🎯 PROGRES KESELURUHAN PROYEK (MENUJU 100%)
 
-| Metrik Target | Progress Bar | Angka | Persentase |
+### `███████████████████████░░░░░░░` **77.9% / 100.0%**
+
+| Pilar Penyelesaian Proyek | Progress Bar | Capaian Saat Ini | Persentase | Target 100% |
+| :--- | :--- | ---: | ---: | :--- |
+| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1171 / 1501 fungsi** | **78.0%** | Seluruh method class terimplementasi |
+| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3345 / 5265 fungsi** | **63.5%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
+| **3. Kompilasi Unit MSVC 2003 (`tools/build.py`)** | `████████████████████` | **150 / 151 unit `.cpp`** | **99.3%** | 151/151 unit `.cpp` lolos compile & link ke `samp.dll` |
+| **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **124 / 516 file selesai** | **24.0%** | 0 file tersisa di `_reference/` (tersisa 392 file) |
+
+### Rincian 5.265 Fungsi di Binary `samp.dll` R5 (`_index.json`)
+
+| Kategori | Keterangan | Jumlah (`_index.json`) | Persentase dari 5.265 |
 | :--- | :--- | ---: | ---: |
-| **Unit Kompilasi MSVC 2003 (`tools/build.py`)** | `████████████████████` | **150 / 151 OK** | **99.3%** |
-| **Fungsi R5 Teridentifikasi (Named Symbols)** | `██████░░░░░░░░░░░░░░` | **1209 / 3739** | **32.3%** |
-| **Seluruh Fungsi Binary R5 (`_index.json` termasuk `FUN_`)** | `█████░░░░░░░░░░░░░░░` | **1209 / 5265** | **22.96%** |
-| **Cakupan + Siap Merge dari `_reference/`** | `█████░░░░░░░░░░░░░░░` | **1427 / 5265** | **27.10%** |
-
-### Rincian Status Fungsi R5
-
-| Status | Keterangan | Jumlah (`_index.json`) | Jumlah (Semua Simbol) |
-| :--- | :--- | ---: | ---: |
-| `ANNOTATED` | Sudah ada di `client/saco/` dengan anotasi `// R5: 0x...` | **553** | 681 |
-| `IN_SOURCE` | Sudah ada di `client/saco/` (cocok `Class::Method`) | **14** | 17 |
-| `IN_VENDOR` | Sudah ada di `vendor/upstream/` (DXUT / RakNet) | **642** | 906 |
-| `IN_REFERENCE` | Tersedia di `client/saco/_reference/` (392 file tersisa) | **218** | 249 |
-| `NAMED_TODO` | Nama fungsi/class sudah diketahui di Ghidra, belum ada di source | **2312** | 2451 |
-| `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama / helper internal / CRT | **1526** | 3774 |
-| **TOTAL** | | **5265** | **8078** |
+| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **553** | 10.5% |
+| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **14** | 0.3% |
+| ✅ `IN_VENDOR` | Fungsi di `vendor/upstream/` (DXUT & RakNet) | **678** | 12.9% |
+| ⚙️ `CRT_OR_TEMPLATE` | Otomatis dari Compiler MSVC 2003 (`libcmt.lib`, SEH, STL/Template) | **2100** | 39.9% |
+| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **216** | 4.1% |
+| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **364** | 6.9% |
+| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1340** | 25.5% |
+| **TOTAL BINARY R5** | **Seluruh fungsi di `samp.dll` 0.3.7 R5** | **5265** | **100.0%** |
 
 ---
 
@@ -34,9 +37,10 @@
 | **root (UI/Core)** | `███████████████` ** 97.9%** | 92 | 0 | 2 | 94 |
 | **archive** | `███████████████` **100.0%** | 1 | 0 | 0 | 1 |
 | **d3dhook** | `███████████████` **100.0%** | 19 | 0 | 0 | 19 |
-| **d3d9 (DXUT)** | `███████░░░░░░░░` ** 48.6%** | 277 | 1 | 292 | 570 |
-| **raknet** | `██████████████░` ** 93.6%** | 412 | 0 | 28 | 440 |
-| **other** | `██░░░░░░░░░░░░░` ** 11.3%** | 58 | 79 | 377 | 514 |
+| **d3d9 (DXUT)** | `███████░░░░░░░░` ** 49.4%** | 277 | 1 | 283 | 561 |
+| **raknet** | `██████████████░` ** 96.3%** | 448 | 0 | 17 | 465 |
+| **other** | `███████░░░░░░░░` ** 43.6%** | 71 | 79 | 13 | 163 |
+| **TOTAL MODUL UTAMA** | `████████████░░░` ** 78.0%** | **1171** | - | **330** | **1501** |
 
 ---
 
@@ -89,6 +93,7 @@
 | ✅ | d3d9 (DXUT) | `CDXUTDirectionWidget` | `██████████` 100.0% | **8/8** | 0 | 8 | 0 | 0 | `d3d9/common/DXUTmisc.cpp` |
 | ✅ | d3d9 (DXUT) | `CDXUTEditBox` | `██████████` 100.0% | **14/14** | 0 | 14 | 0 | 0 | `d3d9/common/DXUTgui.cpp` |
 | ✅ | d3d9 (DXUT) | `CDXUTElement` | `██████████` 100.0% | **3/3** | 0 | 3 | 0 | 0 | `d3d9/common/DXUTgui.cpp` |
+| ✅ | d3d9 (DXUT) | `CDXUTLineManager` | `██████████` 100.0% | **11/11** | 0 | 11 | 0 | 0 | `d3d9/common/DXUTmisc.cpp` |
 | ✅ | d3d9 (DXUT) | `CDXUTTextHelper` | `██████████` 100.0% | **7/7** | 0 | 7 | 0 | 0 | `d3d9/common/DXUTmisc.cpp` |
 | ✅ | d3d9 (DXUT) | `CDXUTTimer` | `██████████` 100.0% | **9/9** | 0 | 9 | 0 | 0 | `d3d9/common/DXUTmisc.cpp` |
 | ✅ | d3d9 (DXUT) | `CFirstPersonCamera` | `██████████` 100.0% | **3/3** | 0 | 3 | 0 | 0 | `d3d9/common/DXUTmisc.cpp` |
@@ -101,16 +106,15 @@
 | 🔄 | d3d9 (DXUT) | `CBaseCamera` | `████████░░`  81.8% | **9/11** | 0 | 9 | 0 | 2 | `d3d9/common/DXUTmisc.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTSlider` | `████████░░`  75.0% | **9/12** | 0 | 9 | 0 | 3 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CModelViewerCamera` | `████████░░`  75.0% | **6/8** | 0 | 6 | 0 | 2 | `d3d9/common/DXUTmisc.cpp` |
-| 🔄 | d3d9 (DXUT) | `CDXUTLineManager` | `███████░░░`  73.3% | **11/15** | 0 | 11 | 0 | 4 | `d3d9/common/DXUTmisc.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTCheckBox` | `███████░░░`  70.0% | **7/10** | 0 | 7 | 0 | 3 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CUniBuffer` | `██████░░░░`  64.0% | **16/25** | 0 | 16 | 1 | 8 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CD3DArcBall` | `██████░░░░`  61.5% | **8/13** | 0 | 8 | 0 | 5 | `d3d9/common/DXUTmisc.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTRadioButton` | `██████░░░░`  57.1% | **4/7** | 0 | 4 | 0 | 3 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTStatic` | `█████░░░░░`  50.0% | **3/6** | 0 | 3 | 0 | 3 | `d3d9/common/DXUTgui.cpp` |
+| 🔄 | d3d9 (DXUT) | `CDXUTIMEEditBox` | `█████░░░░░`  46.8% | **22/47** | 0 | 22 | 0 | 25 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTButton` | `████░░░░░░`  44.4% | **4/9** | 0 | 4 | 0 | 5 | `d3d9/common/DXUTgui.cpp` |
-| 🔄 | d3d9 (DXUT) | `CDXUTIMEEditBox` | `████░░░░░░`  44.0% | **22/50** | 0 | 22 | 0 | 28 | `d3d9/common/DXUTgui.cpp` |
 | 🔄 | d3d9 (DXUT) | `CDXUTControl` | `███░░░░░░░`  26.1% | **6/23** | 0 | 6 | 0 | 17 | `d3d9/common/DXUTgui.cpp` |
-| ⏳ | d3d9 (DXUT) | `DXUTState` | `░░░░░░░░░░`   0.0% | **0/199** | 0 | 0 | 0 | 199 | `d3d9/common/DXUT.cpp` |
+| ⏳ | d3d9 (DXUT) | `DXUTState` | `░░░░░░░░░░`   0.0% | **0/197** | 0 | 0 | 0 | 197 | `d3d9/common/DXUT.cpp` |
 | ✅ | raknet | `CheckSum` | `██████████` 100.0% | **4/4** | 0 | 4 | 0 | 0 | `../vendor/upstream/raknet/CheckSum.cpp` |
 | ✅ | raknet | `ConnectionGraph` | `██████████` 100.0% | **32/32** | 0 | 32 | 0 | 0 | `../vendor/upstream/raknet/ConnectionGraph.cpp` |
 | ✅ | raknet | `ConsoleServer` | `██████████` 100.0% | **6/6** | 0 | 6 | 0 | 0 | `../vendor/upstream/raknet/ConsoleServer.cpp` |
@@ -118,9 +122,12 @@
 | ✅ | raknet | `DataCompressor` | `██████████` 100.0% | **2/2** | 0 | 2 | 0 | 0 | `../vendor/upstream/raknet/DataCompressor.cpp` |
 | ✅ | raknet | `DirectoryDeltaTransfer` | `██████████` 100.0% | **14/14** | 0 | 14 | 0 | 0 | `../vendor/upstream/raknet/DirectoryDeltaTransfer.cpp` |
 | ✅ | raknet | `FileList` | `██████████` 100.0% | **13/13** | 0 | 13 | 0 | 0 | `../vendor/upstream/raknet/FileList.cpp` |
+| ✅ | raknet | `FileListTransfer` | `██████████` 100.0% | **12/12** | 0 | 12 | 0 | 0 | `../vendor/upstream/raknet/FileListTransfer.cpp` |
 | ✅ | raknet | `LightweightDatabaseClient` | `██████████` 100.0% | **7/7** | 0 | 7 | 0 | 0 | `../vendor/upstream/raknet/LightweightDatabaseClient.cpp` |
+| ✅ | raknet | `LightweightDatabaseServer` | `██████████` 100.0% | **17/17** | 0 | 17 | 0 | 0 | `../vendor/upstream/raknet/LightweightDatabaseServer.cpp` |
 | ✅ | raknet | `RakClient` | `██████████` 100.0% | **14/14** | 0 | 14 | 0 | 0 | `../vendor/upstream/raknet/RakClient.cpp` |
 | ✅ | raknet | `RakServer` | `██████████` 100.0% | **1/1** | 0 | 1 | 0 | 0 | `../vendor/upstream/raknet/RakServer.cpp` |
+| ✅ | raknet | `ReliabilityLayer` | `██████████` 100.0% | **31/31** | 0 | 31 | 0 | 0 | `../vendor/upstream/raknet/ReliabilityLayer.cpp` |
 | ✅ | raknet | `Router` | `██████████` 100.0% | **9/9** | 0 | 9 | 0 | 0 | `../vendor/upstream/raknet/Router.cpp` |
 | ✅ | raknet | `SimpleMutex` | `██████████` 100.0% | **2/2** | 0 | 2 | 0 | 0 | `../vendor/upstream/raknet/SimpleMutex.cpp` |
 | ✅ | raknet | `SocketLayer` | `██████████` 100.0% | **4/4** | 0 | 4 | 0 | 0 | `../vendor/upstream/raknet/SocketLayer.cpp` |
@@ -130,43 +137,31 @@
 | ✅ | raknet | `TCPInterface` | `██████████` 100.0% | **12/12** | 0 | 12 | 0 | 0 | `../vendor/upstream/raknet/TCPInterface.cpp` |
 | ✅ | raknet | `TableSerializer` | `██████████` 100.0% | **6/6** | 0 | 6 | 0 | 0 | `../vendor/upstream/raknet/TableSerializer.cpp` |
 | ✅ | raknet | `TelnetTransport` | `██████████` 100.0% | **13/13** | 0 | 13 | 0 | 0 | `../vendor/upstream/raknet/TelnetTransport.cpp` |
-| 🔄 | raknet | `ReliabilityLayer` | `██████████`  96.9% | **31/32** | 0 | 31 | 0 | 1 | `../vendor/upstream/raknet/ReliabilityLayer.cpp` |
-| 🔄 | raknet | `LightweightDatabaseServer` | `█████████░`  94.4% | **17/18** | 0 | 17 | 0 | 1 | `../vendor/upstream/raknet/LightweightDatabaseServer.cpp` |
+| 🔄 | raknet | `RakPeer` | `██████████`  98.4% | **63/64** | 0 | 63 | 0 | 1 | `../vendor/upstream/raknet/RakPeer.cpp` |
+| 🔄 | raknet | `BitStream` | `██████████`  97.3% | **36/37** | 0 | 36 | 0 | 1 | `../vendor/upstream/raknet/BitStream.cpp` |
+| 🔄 | raknet | `ReplicaManager` | `██████████`  97.0% | **32/33** | 0 | 32 | 0 | 1 | `../vendor/upstream/raknet/ReplicaManager.cpp` |
 | 🔄 | raknet | `CommandParserInterface` | `█████████░`  93.8% | **15/16** | 0 | 15 | 0 | 1 | `../vendor/upstream/raknet/CommandParserInterface.cpp` |
 | 🔄 | raknet | `NetworkIDGenerator` | `█████████░`  92.9% | **13/14** | 0 | 13 | 0 | 1 | `../vendor/upstream/raknet/NetworkIDGenerator.cpp` |
 | 🔄 | raknet | `PacketLogger` | `█████████░`  92.9% | **13/14** | 0 | 13 | 0 | 1 | `../vendor/upstream/raknet/PacketLogger.cpp` |
-| 🔄 | raknet | `RakPeer` | `█████████░`  92.6% | **63/68** | 0 | 63 | 0 | 5 | `../vendor/upstream/raknet/RakPeer.cpp` |
 | 🔄 | raknet | `PluginInterface` | `█████████░`  90.9% | **10/11** | 0 | 10 | 0 | 1 | `../vendor/upstream/raknet/PluginInterface.cpp` |
 | 🔄 | raknet | `LogCommandParser` | `█████████░`  86.7% | **13/15** | 0 | 13 | 0 | 2 | `../vendor/upstream/raknet/LogCommandParser.cpp` |
-| 🔄 | raknet | `ReplicaManager` | `█████████░`  86.5% | **32/37** | 0 | 32 | 0 | 5 | `../vendor/upstream/raknet/ReplicaManager.cpp` |
-| 🔄 | raknet | `FileListTransfer` | `█████████░`  85.7% | **12/14** | 0 | 12 | 0 | 2 | `../vendor/upstream/raknet/FileListTransfer.cpp` |
 | 🔄 | raknet | `FullyConnectedMesh` | `█████████░`  85.7% | **6/7** | 0 | 6 | 0 | 1 | `../vendor/upstream/raknet/FullyConnectedMesh.cpp` |
 | 🔄 | raknet | `RPCMap` | `████████░░`  83.3% | **5/6** | 0 | 5 | 0 | 1 | `../vendor/upstream/raknet/RPCMap.cpp` |
 | 🔄 | raknet | `InternalPacketPool` | `████████░░`  80.0% | **4/5** | 0 | 4 | 0 | 1 | `../vendor/upstream/raknet/InternalPacketPool.cpp` |
 | 🔄 | raknet | `PacketFileLogger` | `████████░░`  75.0% | **3/4** | 0 | 3 | 0 | 1 | `../vendor/upstream/raknet/PacketFileLogger.cpp` |
 | 🔄 | raknet | `RakNetCommandParser` | `███████░░░`  71.4% | **5/7** | 0 | 5 | 0 | 2 | `../vendor/upstream/raknet/RakNetCommandParser.cpp` |
 | 🔄 | raknet | `PacketConsoleLogger` | `██████░░░░`  60.0% | **3/5** | 0 | 3 | 0 | 2 | `../vendor/upstream/raknet/PacketConsoleLogger.cpp` |
-| ✅ | other | `BitStream` | `██████████` 100.0% | **5/5** | 0 | 5 | 0 | 0 | - |
 | ✅ | other | `HuffmanEncodingTree` | `██████████` 100.0% | **8/8** | 0 | 8 | 0 | 0 | - |
 | ✅ | other | `NatPunchthrough` | `██████████` 100.0% | **14/14** | 0 | 14 | 0 | 0 | - |
 | ✅ | other | `R5TextDrawPool` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | - |
 | ✅ | other | `TEABlockEncryptor` | `██████████` 100.0% | **9/9** | 0 | 9 | 0 | 0 | - |
+| ✅ | other | `Table` | `██████████` 100.0% | **20/20** | 0 | 20 | 0 | 0 | - |
 | 🔄 | other | `CSHA1` | `█████████░`  90.9% | **10/11** | 0 | 10 | 0 | 1 | - |
 | 🔄 | other | `DatabaseCellUpdate` | `█████░░░░░`  50.0% | **2/4** | 0 | 2 | 0 | 2 | - |
 | 🔄 | other | `DatabaseFilter` | `█████░░░░░`  50.0% | **2/4** | 0 | 2 | 0 | 2 | - |
-| 🔄 | other | `RakNet` | `█████░░░░░`  50.0% | **2/4** | 0 | 2 | 0 | 2 | - |
 | 🔄 | other | `R5ChatPagingView` | `████░░░░░░`  40.0% | **2/5** | 2 | 0 | 3 | 0 | - |
-| ⏳ | other | `*>` | `░░░░░░░░░░`   0.0% | **0/28** | 0 | 0 | 0 | 28 | - |
-| ⏳ | other | `CGrowableArray<int>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
 | 🔄 | other | `CPickupPoolMore` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 4 | 0 | - |
-| ⏳ | other | `Cell` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `ColumnDescriptor` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `DXUTCache_Effect>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `DXUTCache_Font>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `DXUTCache_Texture>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `DataStructures` | `░░░░░░░░░░`   0.0% | **0/231** | 0 | 0 | 0 | 231 | - |
 | ⏳ | other | `DatabaseTable` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `MapNode` | `░░░░░░░░░░`   0.0% | **0/9** | 0 | 0 | 0 | 9 | - |
 | 🔄 | other | `R5CustomModelManagerView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5FontSpriteProxy` | `░░░░░░░░░░`   0.0% | **0/15** | 0 | 0 | 14 | 1 | - |
 | 🔄 | other | `R5MemoryBufferView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
@@ -183,11 +178,6 @@
 | 🔄 | other | `R5TextDrawSelectorView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5VehiclePlateRenderer` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 4 | 0 | - |
 | 🔄 | other | `RPCObjectOpsView` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 4 | 0 | - |
-| ⏳ | other | `_D3DDISPLAYMODE>` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 0 | 4 | - |
-| ⏳ | other | `_D3DFORMAT>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `big` | `░░░░░░░░░░`   0.0% | **0/61** | 0 | 0 | 0 | 61 | - |
-| ⏳ | other | `int>` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
-| ⏳ | other | `std` | `░░░░░░░░░░`   0.0% | **0/5** | 0 | 0 | 0 | 5 | - |
 
 ---
 

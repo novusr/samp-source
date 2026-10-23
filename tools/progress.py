@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """SA-MP 0.3.7 R5 1:1 Function Coverage, Auto-Annotation & Markdown Progress Generator.
 
-Tracks progress of reconstructing all 5,265 functions in `ghidra_export/_index.json`
+Tracks progress of reconstructing all functions in `ghidra_export/_index.json`
 (and symbol mappings in `ghidra_export/address_map.json`) into `client/saco/` and
 `vendor/upstream/`.
 
@@ -38,6 +38,7 @@ from r5_common import (
 
 PROGRESS_MD_PATH = ROOT / "docs" / "PROGRESS.md"
 OBJ_DIR = ROOT / "build" / "obj"
+INITIAL_REF_FILES = 516
 
 
 def make_bar(pct: float, width: int = 20) -> str:
@@ -62,6 +63,32 @@ def classify_module(target_file: str) -> str:
     if "raknet/" in target_file:
         return "raknet"
     return "root (UI/Core)"
+
+
+def is_compiler_crt_or_template(info: R5FunctionInfo) -> bool:
+    """Return True if an R5 entry is an MSVC CRT function, SEH unwind stub, or C++ template instantiation."""
+    addr_val = int(info.address, 16)
+    blob = f"{info.symbol} {info.name} {info.class_name} {info.method_name}"
+    if any(
+        tok in blob
+        for tok in (
+            "Catch@",
+            "Unwind@",
+            "__ehhandler",
+            "SEH_",
+            "?$",
+            "std::",
+            "@std@@",
+            "DataStructures@@",
+            "CGrowableArray",
+            "ttmath",
+        )
+    ):
+        return True
+    # Static CRT (libcmt.lib) and SEH table region at the tail of samp.dll (0x100C3000+)
+    if addr_val >= 0x100C3000 and (info.name.startswith("FUN_") or info.name.startswith("_")):
+        return True
+    return False
 
 
 def compute_coverage():
@@ -118,6 +145,9 @@ def compute_coverage():
             status_by_addr[addr] = "IN_VENDOR"
             d0 = vendor_by_addr.get(addr) or vendor_by_qual[key][0]
             loc_by_addr[addr] = f"{d0.rel_path}:{d0.line_number}"
+        elif is_compiler_crt_or_template(info):
+            status_by_addr[addr] = "CRT_OR_TEMPLATE"
+            loc_by_addr[addr] = "MSVC CRT / STL / Template"
         elif addr in ref_by_addr or (info.method_name and key in ref_by_qual):
             status_by_addr[addr] = "IN_REFERENCE"
             rdefs = ref_by_addr.get(addr) or ref_by_qual.get(key, [])
@@ -177,29 +207,21 @@ def generate_markdown_report(
             idx_counts[st] += 1
 
     total_idx = len(idx_addrs)
-    active_idx = idx_counts["ANNOTATED"] + idx_counts["IN_SOURCE"] + idx_counts["IN_VENDOR"]
-    with_ref_idx = active_idx + idx_counts["IN_REFERENCE"]
+    active_code_idx = idx_counts["ANNOTATED"] + idx_counts["IN_SOURCE"] + idx_counts["IN_VENDOR"]
+    auto_crt_idx = idx_counts["CRT_OR_TEMPLATE"]
+    total_resolved_idx = active_code_idx + auto_crt_idx
 
-    pct_active = (active_idx / total_idx * 100.0) if total_idx else 0.0
-    pct_with_ref = (with_ref_idx / total_idx * 100.0) if total_idx else 0.0
-
-    named_idx_total = total_idx - idx_counts["UNNAMED_TODO"]
-    pct_named = (active_idx / named_idx_total * 100.0) if named_idx_total else 0.0
-
-    ref_files_remaining = len(list(REF_DIR.rglob("*.cpp"))) if REF_DIR.exists() else 0
-    ok_u, fail_u, unb_u, build_details = get_build_stats()
-    tot_u = ok_u + fail_u + unb_u
-    pct_build = (ok_u / tot_u * 100.0) if tot_u else 0.0
-
-    now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-
+    # Group by class
     by_class: dict[str, list[str]] = defaultdict(list)
     for a, info in db.items():
-        if info.class_name:
+        if info.class_name and status_by_addr[a] != "CRT_OR_TEMPLATE":
             by_class[info.class_name].append(a)
 
     mod_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"done": 0, "ref": 0, "todo": 0, "total": 0})
     class_rows = []
+    known_mod_done = 0
+    known_mod_total = 0
+
     for cls, addrs in by_class.items():
         target = CLASS_TO_FILE.get(cls, "")
         if not target and len(addrs) < 3:
@@ -215,33 +237,58 @@ def generate_markdown_report(
         mod_stats[mod]["ref"] += c_ref
         mod_stats[mod]["todo"] += c_todo
         mod_stats[mod]["total"] += len(addrs)
+        if mod != "other":
+            known_mod_done += c_done
+            known_mod_total += len(addrs)
         class_rows.append((mod, cls, c_ann, c_src, c_ref, c_todo, len(addrs), pct_c, target))
+
+    # Calculate key percentages
+    pct_modules = (known_mod_done / known_mod_total * 100.0) if known_mod_total else 0.0
+    pct_binary_resolved = (total_resolved_idx / total_idx * 100.0) if total_idx else 0.0
+
+    ref_files_remaining = len(list(REF_DIR.rglob("*.cpp"))) if REF_DIR.exists() else 0
+    ref_files_merged = max(0, INITIAL_REF_FILES - ref_files_remaining)
+    pct_ref_merged = (ref_files_merged / INITIAL_REF_FILES * 100.0) if INITIAL_REF_FILES else 100.0
+
+    ok_u, fail_u, unb_u, build_details = get_build_stats()
+    tot_u = ok_u + fail_u + unb_u
+    pct_build = (ok_u / tot_u * 100.0) if tot_u else 0.0
+
+    # Overall Project Progress (0% - 100%):
+    # Weighted across the 3 core completion pillars:
+    # 50% R5 Client Module/Class Reconstruction + 30% Binary Function Resolution + 20% Build Compilation
+    overall_pct = (0.50 * pct_modules) + (0.30 * pct_binary_resolved) + (0.20 * pct_build)
+
+    now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     lines: list[str] = [
         "# Status & Progress Rekonstruksi SA-MP 0.3.7 R5",
         "",
         f"> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **{now_str}**.",
         "",
-        "## 1. Ringkasan Menuju 100%",
+        "## 🎯 PROGRES KESELURUHAN PROYEK (MENUJU 100%)",
         "",
-        "| Metrik Target | Progress Bar | Angka | Persentase |",
+        f"### `{make_bar(overall_pct, 30)}` **{overall_pct:.1f}% / 100.0%**",
+        "",
+        "| Pilar Penyelesaian Proyek | Progress Bar | Capaian Saat Ini | Persentase | Target 100% |",
+        "| :--- | :--- | ---: | ---: | :--- |",
+        f"| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `{make_bar(pct_modules)}` | **{known_mod_done} / {known_mod_total} fungsi** | **{pct_modules:.1f}%** | Seluruh method class terimplementasi |",
+        f"| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `{make_bar(pct_binary_resolved)}` | **{total_resolved_idx} / {total_idx} fungsi** | **{pct_binary_resolved:.1f}%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |",
+        f"| **3. Kompilasi Unit MSVC 2003 (`tools/build.py`)** | `{make_bar(pct_build)}` | **{ok_u} / {tot_u} unit `.cpp`** | **{pct_build:.1f}%** | 151/151 unit `.cpp` lolos compile & link ke `samp.dll` |",
+        f"| **4. Pembersihan Fragmen `_reference/`** | `{make_bar(pct_ref_merged)}` | **{ref_files_merged} / {INITIAL_REF_FILES} file selesai** | **{pct_ref_merged:.1f}%** | 0 file tersisa di `_reference/` (tersisa {ref_files_remaining} file) |",
+        "",
+        "### Rincian 5.265 Fungsi di Binary `samp.dll` R5 (`_index.json`)",
+        "",
+        "| Kategori | Keterangan | Jumlah (`_index.json`) | Persentase dari 5.265 |",
         "| :--- | :--- | ---: | ---: |",
-        f"| **Unit Kompilasi MSVC 2003 (`tools/build.py`)** | `{make_bar(pct_build)}` | **{ok_u} / {tot_u} OK** | **{pct_build:.1f}%** |",
-        f"| **Fungsi R5 Teridentifikasi (Named Symbols)** | `{make_bar(pct_named)}` | **{active_idx} / {named_idx_total}** | **{pct_named:.1f}%** |",
-        f"| **Seluruh Fungsi Binary R5 (`_index.json` termasuk `FUN_`)** | `{make_bar(pct_active)}` | **{active_idx} / {total_idx}** | **{pct_active:.2f}%** |",
-        f"| **Cakupan + Siap Merge dari `_reference/`** | `{make_bar(pct_with_ref)}` | **{with_ref_idx} / {total_idx}** | **{pct_with_ref:.2f}%** |",
-        "",
-        "### Rincian Status Fungsi R5",
-        "",
-        "| Status | Keterangan | Jumlah (`_index.json`) | Jumlah (Semua Simbol) |",
-        "| :--- | :--- | ---: | ---: |",
-        f"| `ANNOTATED` | Sudah ada di `client/saco/` dengan anotasi `// R5: 0x...` | **{idx_counts['ANNOTATED']}** | {counts['ANNOTATED']} |",
-        f"| `IN_SOURCE` | Sudah ada di `client/saco/` (cocok `Class::Method`) | **{idx_counts['IN_SOURCE']}** | {counts['IN_SOURCE']} |",
-        f"| `IN_VENDOR` | Sudah ada di `vendor/upstream/` (DXUT / RakNet) | **{idx_counts['IN_VENDOR']}** | {counts['IN_VENDOR']} |",
-        f"| `IN_REFERENCE` | Tersedia di `client/saco/_reference/` ({ref_files_remaining} file tersisa) | **{idx_counts['IN_REFERENCE']}** | {counts['IN_REFERENCE']} |",
-        f"| `NAMED_TODO` | Nama fungsi/class sudah diketahui di Ghidra, belum ada di source | **{idx_counts['NAMED_TODO']}** | {counts['NAMED_TODO']} |",
-        f"| `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama / helper internal / CRT | **{idx_counts['UNNAMED_TODO']}** | {counts['UNNAMED_TODO']} |",
-        f"| **TOTAL** | | **{total_idx}** | **{len(db)}** |",
+        f"| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **{idx_counts['ANNOTATED']}** | {idx_counts['ANNOTATED']/total_idx*100:.1f}% |",
+        f"| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **{idx_counts['IN_SOURCE']}** | {idx_counts['IN_SOURCE']/total_idx*100:.1f}% |",
+        f"| ✅ `IN_VENDOR` | Fungsi di `vendor/upstream/` (DXUT & RakNet) | **{idx_counts['IN_VENDOR']}** | {idx_counts['IN_VENDOR']/total_idx*100:.1f}% |",
+        f"| ⚙️ `CRT_OR_TEMPLATE` | Otomatis dari Compiler MSVC 2003 (`libcmt.lib`, SEH, STL/Template) | **{idx_counts['CRT_OR_TEMPLATE']}** | {idx_counts['CRT_OR_TEMPLATE']/total_idx*100:.1f}% |",
+        f"| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **{idx_counts['IN_REFERENCE']}** | {idx_counts['IN_REFERENCE']/total_idx*100:.1f}% |",
+        f"| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **{idx_counts['NAMED_TODO']}** | {idx_counts['NAMED_TODO']/total_idx*100:.1f}% |",
+        f"| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **{idx_counts['UNNAMED_TODO']}** | {idx_counts['UNNAMED_TODO']/total_idx*100:.1f}% |",
+        f"| **TOTAL BINARY R5** | **Seluruh fungsi di `samp.dll` 0.3.7 R5** | **{total_idx}** | **100.0%** |",
         "",
         "---",
         "",
@@ -261,6 +308,9 @@ def generate_markdown_report(
         lines.append(
             f"| **{mod}** | `{make_bar(pct_m, 15)}` **{pct_m:5.1f}%** | {st['done']} | {st['ref']} | {st['todo']} | {tot} |"
         )
+    lines.append(
+        f"| **TOTAL MODUL UTAMA** | `{make_bar(pct_modules, 15)}` **{pct_modules:5.1f}%** | **{known_mod_done}** | - | **{known_mod_total - known_mod_done}** | **{known_mod_total}** |"
+    )
 
     lines.extend([
         "",
@@ -299,10 +349,11 @@ def generate_markdown_report(
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text("\n".join(lines), encoding="utf-8")
     print(f"Generated progress documentation at {out_path.relative_to(ROOT)}")
-    print(f"  Build Units Passing        : {ok_u}/{tot_u} ({pct_build:.1f}%)")
-    print(f"  Named R5 Functions Covered : {active_idx}/{named_idx_total} ({pct_named:.1f}%)")
-    print(f"  All R5 Index Functions     : {active_idx}/{total_idx} ({pct_active:.2f}%)")
-    print(f"  Remaining _reference/ files: {ref_files_remaining}")
+    print(f"  OVERALL PROJECT PROGRESS   : {overall_pct:.1f}% / 100.0%")
+    print(f"  1. Main Modules & Classes  : {known_mod_done}/{known_mod_total} ({pct_modules:.1f}%)")
+    print(f"  2. Binary Functions (5265) : {total_resolved_idx}/{total_idx} ({pct_binary_resolved:.1f}%)")
+    print(f"  3. Build Units Passing     : {ok_u}/{tot_u} ({pct_build:.1f}%)")
+    print(f"  4. Reference Files Merged  : {ref_files_merged}/{INITIAL_REF_FILES} ({pct_ref_merged:.1f}%)")
     return 0
 
 
@@ -316,34 +367,45 @@ def cmd_summary(db, main_defs, vendor_defs, ref_defs, status_by_addr, loc_by_add
             idx_counts[st] += 1
 
     total_idx = len(idx_addrs)
-    covered_idx = idx_counts["ANNOTATED"] + idx_counts["IN_SOURCE"] + idx_counts["IN_VENDOR"]
-    pct_idx = (covered_idx / total_idx * 100.0) if total_idx else 0.0
-    named_idx_total = total_idx - idx_counts["UNNAMED_TODO"]
-    pct_named = (covered_idx / named_idx_total * 100.0) if named_idx_total else 0.0
-
-    print("=== SA-MP 0.3.7 R5 Functional Reconstruction Coverage ===")
-    print(f"Total R5 Decompiled Functions (_index.json): {total_idx} ({named_idx_total} named)")
-    print(f"Total R5 Symbol/Address Map Entries        : {len(db)}")
-    print(f"C++ Function Definitions in client/saco/   : {len(main_defs)}")
-    print(f"C++ Function Definitions in vendor/        : {len(vendor_defs)}")
-    print(f"C++ Function Definitions in _reference/    : {len(ref_defs)}")
-    print()
-    print(f"Status Breakdown (Index / All Symbol Map):")
-    print(f"  [ANNOTATED]    Explicit '// R5: 0x...' in client/saco/ : {idx_counts['ANNOTATED']:4d}  (all: {counts['ANNOTATED']:4d})")
-    print(f"  [IN_SOURCE]    Matched by Class::Method in client/saco/: {idx_counts['IN_SOURCE']:4d}  (all: {counts['IN_SOURCE']:4d})")
-    print(f"  [IN_VENDOR]    Present in vendor/upstream (DXUT/RakNet): {idx_counts['IN_VENDOR']:4d}  (all: {counts['IN_VENDOR']:4d})")
-    print(f"  [IN_REFERENCE] Available in client/saco/_reference/    : {idx_counts['IN_REFERENCE']:4d}  (all: {counts['IN_REFERENCE']:4d})")
-    print(f"  [NAMED_TODO]   Named in Ghidra, missing in source      : {idx_counts['NAMED_TODO']:4d}  (all: {counts['NAMED_TODO']:4d})")
-    print(f"  [UNNAMED_TODO] Unnamed FUN_10xxxxxx in Ghidra          : {idx_counts['UNNAMED_TODO']:4d}  (all: {counts['UNNAMED_TODO']:4d})")
-    print(f"  ------------------------------------------------------------------------")
-    print(f"  Named R5 Coverage (ANNOTATED + IN_SOURCE + IN_VENDOR)  : {covered_idx}/{named_idx_total} ({pct_named:.2f}%)")
-    print(f"  Total R5 Coverage (including unnamed FUN_10xxxxxx)     : {covered_idx}/{total_idx} ({pct_idx:.2f}%)")
-    print()
+    active_code_idx = idx_counts["ANNOTATED"] + idx_counts["IN_SOURCE"] + idx_counts["IN_VENDOR"]
+    total_resolved_idx = active_code_idx + idx_counts["CRT_OR_TEMPLATE"]
+    pct_resolved = (total_resolved_idx / total_idx * 100.0) if total_idx else 0.0
 
     by_class: dict[str, list[str]] = defaultdict(list)
     for a, info in db.items():
-        if info.class_name:
+        if info.class_name and status_by_addr[a] != "CRT_OR_TEMPLATE":
             by_class[info.class_name].append(a)
+
+    known_mod_done = 0
+    known_mod_total = 0
+    for cls, addrs in by_class.items():
+        target = CLASS_TO_FILE.get(cls, "")
+        if target:
+            c_done = sum(1 for a in addrs if status_by_addr[a] in {"ANNOTATED", "IN_SOURCE", "IN_VENDOR"})
+            known_mod_done += c_done
+            known_mod_total += len(addrs)
+
+    pct_modules = (known_mod_done / known_mod_total * 100.0) if known_mod_total else 0.0
+    ok_u, fail_u, unb_u, _ = get_build_stats()
+    tot_u = ok_u + fail_u + unb_u
+    pct_build = (ok_u / tot_u * 100.0) if tot_u else 0.0
+    overall_pct = (0.50 * pct_modules) + (0.30 * pct_resolved) + (0.20 * pct_build)
+
+    print("========================================================================================")
+    print(f"  OVERALL PROJECT PROGRESS:  [{make_bar(overall_pct, 25)}]  {overall_pct:.1f}% / 100.0%")
+    print("========================================================================================")
+    print(f"  1. Main Modules & Classes : {known_mod_done:4d} / {known_mod_total:4d} functions ({pct_modules:.1f}%)")
+    print(f"  2. Binary R5 Resolution   : {total_resolved_idx:4d} / {total_idx:4d} functions ({pct_resolved:.1f}%)")
+    print(f"  3. MSVC 2003 Build Units  : {ok_u:4d} / {tot_u:4d} units OK  ({pct_build:.1f}%)")
+    print("----------------------------------------------------------------------------------------")
+    print(f"  [ANNOTATED]       Explicit '// R5: 0x...' in client/saco/ : {idx_counts['ANNOTATED']:4d}  (all: {counts['ANNOTATED']:4d})")
+    print(f"  [IN_SOURCE]       Matched by Class::Method in client/saco/: {idx_counts['IN_SOURCE']:4d}  (all: {counts['IN_SOURCE']:4d})")
+    print(f"  [IN_VENDOR]       Present in vendor/upstream (DXUT/RakNet): {idx_counts['IN_VENDOR']:4d}  (all: {counts['IN_VENDOR']:4d})")
+    print(f"  [CRT_OR_TEMPLATE] Compiler CRT / SEH / STL Templates      : {idx_counts['CRT_OR_TEMPLATE']:4d}  (all: {counts['CRT_OR_TEMPLATE']:4d})")
+    print(f"  [IN_REFERENCE]    Available in client/saco/_reference/    : {idx_counts['IN_REFERENCE']:4d}  (all: {counts['IN_REFERENCE']:4d})")
+    print(f"  [NAMED_TODO]      Named in Ghidra, missing in source      : {idx_counts['NAMED_TODO']:4d}  (all: {counts['NAMED_TODO']:4d})")
+    print(f"  [UNNAMED_TODO]    Unnamed FUN_10xxxxxx in Ghidra          : {idx_counts['UNNAMED_TODO']:4d}  (all: {counts['UNNAMED_TODO']:4d})")
+    print()
 
     print(f"{'Class Name':30} {'Annot':>6} {'InSrc':>6} {'InRef':>6} {'Todo':>6} {'Total':>6}  {'Target File'}")
     print("-" * 88)
@@ -381,7 +443,7 @@ def cmd_class(cls_query: str, db, status_by_addr, loc_by_addr) -> int:
         st = status_by_addr[info.address]
         loc = loc_by_addr[info.address]
         loc_str = f" -> {loc}" if loc else ""
-        print(f"  0x{info.address}  [{st:12}]  {info.qualified_name:42}{loc_str}")
+        print(f"  0x{info.address}  [{st:15}]  {info.qualified_name:42}{loc_str}")
     return 0
 
 

@@ -182,6 +182,7 @@ CLASS_TO_FILE: dict[str, str] = {
     "LightweightDatabaseClient": "../vendor/upstream/raknet/LightweightDatabaseClient.cpp",
     "LightweightDatabaseCommon": "../vendor/upstream/raknet/LightweightDatabaseCommon.cpp",
     "LightweightDatabaseServer": "../vendor/upstream/raknet/LightweightDatabaseServer.cpp",
+    "BitStream": "../vendor/upstream/raknet/BitStream.cpp",
 }
 
 
@@ -207,6 +208,8 @@ def normalize_class(cls: str) -> str:
     if not cls:
         return ""
     clean = cls.strip().split()[-1]
+    if "::" in clean:
+        clean = clean.split("::")[-1]
     return CLASS_ALIASES.get(clean, clean)
 
 
@@ -215,7 +218,7 @@ def demangle_msvc_symbol(sym: str, full_name: str = "", raw_class: str = "", raw
     sym = (sym or "").strip()
     full_name = (full_name or "").strip()
 
-    # 1. Constructor: ??0ClassName@@...
+    # 1. Constructor: ??0ClassName@@... or ??0ClassName@Namespace@@...
     if sym.startswith("??0"):
         m = re.match(r"^\?\?0([A-Za-z0-9_]+)@", sym)
         if m:
@@ -233,9 +236,14 @@ def demangle_msvc_symbol(sym: str, full_name: str = "", raw_class: str = "", raw
         if m:
             cls = normalize_class(m.group(1))
             return cls, f"~{cls}_deleting"
-    # 4. Regular C++ method or global: ?Method@Class@@... or ?Func@@Y...
+    # 4. Template method: ??$Method@...@@ClassName@...@@
+    if sym.startswith("??$"):
+        m = re.match(r"^\?\?\$([A-Za-z0-9_]+)@[^@]+@([A-Za-z0-9_]+)@", sym)
+        if m:
+            return normalize_class(m.group(2)), m.group(1)
+    # 5. Regular C++ method or global: ?Method@Class@@... or ?Method@Class@Namespace@@... or ?Func@@Y...
     if sym.startswith("?"):
-        m = re.match(r"^\?([A-Za-z0-9_]+)@([A-Za-z0-9_]+)@@", sym)
+        m = re.match(r"^\?([A-Za-z0-9_]+)@([A-Za-z0-9_]+)(?:@[A-Za-z0-9_]+)*@@", sym)
         if m:
             return normalize_class(m.group(2)), m.group(1)
         m2 = re.match(r"^\?([A-Za-z0-9_]+)@@", sym)
