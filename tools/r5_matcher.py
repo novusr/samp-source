@@ -132,6 +132,9 @@ def get_unreversed_targets(
     existing_rvas = {fn["rva"] for fn in manifest.get("functions", [])}
     targets: list[TargetFunction] = []
 
+    all_rvas = sorted([int(k, 16) - IMAGE_BASE for k in addr_map.keys() if k and int(k, 16) >= IMAGE_BASE])
+    rva_to_next = {all_rvas[i]: all_rvas[i + 1] for i in range(len(all_rvas) - 1)}
+
     for addr_hex, info in addr_map.items():
         try:
             addr_int = int(addr_hex, 16)
@@ -173,8 +176,10 @@ def get_unreversed_targets(
         if not export_file.exists():
             continue
 
-        # Find boundary
-        boundary = find_function_boundary(pe, rva)
+        # Find boundary with max_len constrained by next function RVA
+        next_rva = rva_to_next.get(rva)
+        max_scan = min(4096, next_rva - rva) if next_rva else 4096
+        boundary = find_function_boundary(pe, rva, max_len=max_scan)
         if not boundary:
             continue
         size, code_sha, features = boundary
@@ -406,7 +411,8 @@ def inject_method_declaration_if_needed(source_content: str, class_name: str, ca
         return source_content
 
     cls_body = cls_match.group(1)
-    if method_name in cls_body:
+    inside_body = cls_body[cls_body.find("{") + 1:]
+    if method_name in inside_body:
         return source_content
 
     new_cls = cls_body + f"    {decl}\n" + cls_match.group(2)
