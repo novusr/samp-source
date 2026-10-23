@@ -675,3 +675,22 @@ void CEntity::GetBoundCentre(_VECTOR *pVector)
 		}
 	}
 }
+
+
+// Matched ?GamePool_Ped_GetAt@@YGPAU_PED_TYPE@@H@Z (0x100b3b70)
+struct _PED_TYPE;
+
+_PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex)
+{
+	_PED_TYPE* pPed;
+	__asm
+	{
+		mov ebx, 0xB74490
+		mov ecx, [ebx]
+		push nPedIndex
+		mov ebx, 0x404910
+		call ebx
+		mov pPed, eax
+	}
+	return pPed;
+}

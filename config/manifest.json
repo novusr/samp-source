@@ -1690,6 +1690,18 @@
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
     {
+      "unit": "game",
+      "name": "?GamePool_Ped_GetAt@@YGPAU_PED_TYPE@@H@Z",
+      "symbol": "?GamePool_Ped_GetAt@@YGPAU_PED_TYPE@@H@Z",
+      "rva": 736112,
+      "size": 35,
+      "sha256": "08b031236c3f53176a59ac12ae58318a63f7910e9649b9b8955e9cd4d64ed61b",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
       "unit": "camera",
       "name": "Math.FloatDifference",
       "symbol": "?FloatDifference@@YAMMM@Z",
