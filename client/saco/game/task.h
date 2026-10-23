@@ -46,6 +46,7 @@ class CTaskTakeDamageFall :
 {
 public:
 	CTaskTakeDamageFall(DWORD dwFallType, DWORD dwNum);
+	virtual ~CTaskTakeDamageFall();
 };
 
 class CTaskGoggles :
@@ -53,6 +54,7 @@ class CTaskGoggles :
 {
 public:
 	CTaskGoggles();
+	virtual ~CTaskGoggles();
 };
 
 class CTaskGoToPoint :
@@ -60,6 +62,7 @@ class CTaskGoToPoint :
 {
 public:
 	CTaskGoToPoint(int unk, VECTOR* vecPos, float unk2, int unk3, int unk4 );
+	virtual ~CTaskGoToPoint();
 };
 
 class CTaskKillPedOnFootArmed :
@@ -67,4 +70,5 @@ class CTaskKillPedOnFootArmed :
 {
 public:
 	CTaskKillPedOnFootArmed( int unk, int unk2, int unk3, int unk4, PED_TYPE* pToShoot );
+	virtual ~CTaskKillPedOnFootArmed();
 };

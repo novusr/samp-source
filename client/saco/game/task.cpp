@@ -5,6 +5,7 @@
 //==========================================================
 // GENERIC TASK
 
+// R5: 0x100B2580
 CTask::CTask()
 {
 	m_pTaskType = NULL;
@@ -13,6 +14,7 @@ CTask::CTask()
 
 //----------------------------------------------------------
 
+// R5: 0x100B2960
 CTask::CTask(DWORD dwSize)
 {
 	m_pTaskType = NULL;
@@ -22,6 +24,7 @@ CTask::CTask(DWORD dwSize)
 
 //----------------------------------------------------------
 
+// R5: 0x100B2990
 CTask::CTask(BYTE *pTaskType)
 {
 	m_pTaskType = NULL;
@@ -38,6 +41,7 @@ CTask::~CTask()
 
 //----------------------------------------------------------
 
+// R5: 0x100B25B0
 void CTask::Create(DWORD dwSize)
 {
 	BYTE *pTaskType;
@@ -55,6 +59,7 @@ void CTask::Create(DWORD dwSize)
 
 //----------------------------------------------------------
 
+// R5: 0x100B25E0
 void CTask::Create(BYTE *pTaskType)
 {
 	m_bSelfCreated = FALSE;
@@ -286,6 +291,7 @@ BOOL CTask::IsSimple()
 //==========================================================
 // JETPACK TASK
 
+// R5: 0x100B2730
 CTaskJetpack::CTaskJetpack()
 {
 	m_pPlayerPed = NULL;
@@ -307,6 +313,7 @@ CTaskJetpack::CTaskJetpack()
 
 //----------------------------------------------------------
 
+// R5: 0x100B2780
 CTaskJetpack::CTaskJetpack(BYTE *pTaskType)
 {
 	m_pPlayerPed = NULL;
@@ -346,6 +353,13 @@ CTaskTakeDamageFall::CTaskTakeDamageFall(DWORD dwFallType, DWORD dwNum)
 	}
 }
 
+//----------------------------------------------------------
+
+// R5: 0x100B2A30
+CTaskTakeDamageFall::~CTaskTakeDamageFall()
+{
+}
+
 //==========================================================
 // ACTIVATE_GOGGLES
 
@@ -361,6 +375,13 @@ CTaskGoggles::CTaskGoggles()
 	_asm mov eax, 0x634EF0
 	_asm call eax
 	_asm pop ecx
+}
+
+//----------------------------------------------------------
+
+// R5: 0x100B2A60
+CTaskGoggles::~CTaskGoggles()
+{
 }
 
 //-----------------------------------------------------------
@@ -385,6 +406,13 @@ CTaskGoToPoint::CTaskGoToPoint(int unk, VECTOR* vecPos, float unk2, int unk3, in
 	}	
 }
 
+//----------------------------------------------------------
+
+// R5: 0x100B2A90
+CTaskGoToPoint::~CTaskGoToPoint()
+{
+}
+
 //-----------------------------------------------------------
 
 // R5: 0x100B28F0
@@ -405,6 +433,13 @@ CTaskKillPedOnFootArmed::CTaskKillPedOnFootArmed( int unk, int unk2, int unk3, i
 		mov eax, 0x00621190
 		call eax
 	}
+}
+
+//----------------------------------------------------------
+
+// R5: 0x100B2AC0
+CTaskKillPedOnFootArmed::~CTaskKillPedOnFootArmed()
+{
 }
 
 //==========================================================
