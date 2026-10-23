@@ -346,6 +346,8 @@ public:
     void GetMoveSpeedVector(_VECTOR* pVec);
     void GetTurnSpeedVector(_VECTOR* pVec);
     unsigned long GetWorldBoundRadius();    void GetBoundCentre(_VECTOR *pVector);    void ApplyTurnSpeed();
+    void GetBoundRect(struct _FRECT *pRect);
+    float GetDistanceFromCentreOfMassToBaseOfModel();
 
 
 };
@@ -697,6 +699,38 @@ void CEntity::GetBoundCentre(_VECTOR *pVector)
 			call edx
 		}
 	}
+}
+
+// Matched void CEntity::GetBoundRect (0x1009ef20)
+void CEntity::GetBoundRect(struct _FRECT *pRect)
+{
+	void *pEntity = m_pEntity;
+	if (pEntity)
+	{
+		__asm
+		{
+			push pRect
+			mov ecx, pEntity
+			mov edx, 0x534120
+			call edx
+		}
+	}
+}
+
+// Matched float CEntity::GetDistanceFromCentreOfMassToBaseOfModel (0x1009eeb0)
+float CEntity::GetDistanceFromCentreOfMassToBaseOfModel()
+{
+	void *pEntity = m_pEntity;
+	float fDist = 0.0f;
+	if (!pEntity) return 0.0f;
+	__asm
+	{
+		mov ecx, pEntity
+		mov edx, 0x536BE0
+		call edx
+		mov fDist, eax
+	}
+	return fDist;
 }
 
 

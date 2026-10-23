@@ -953,11 +953,37 @@
     },
     {
       "unit": "game",
+      "name": "CEntity.GetDistanceFromCentreOfMassToBaseOfModel",
+      "symbol": "?GetDistanceFromCentreOfMassToBaseOfModel@CEntity@@QAEMXZ",
+      "rva": 650928,
+      "size": 53,
+      "sha256": "a862bd6a1d2157fd3d2f30259b2b3f3f952f33174f4554b974cd07d636f75339",
+      "features": [
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "void CEntity::GetBoundCentre",
       "symbol": "?GetBoundCentre@CEntity@@QAEXPAU_VECTOR@@@Z",
       "rva": 650992,
       "size": 33,
       "sha256": "c15d11c4fce65a9335ccaa0640cae2268e241da1c70a5ad238dc52485bfd0ecd",
+      "features": [
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CEntity.GetBoundRect",
+      "symbol": "?GetBoundRect@CEntity@@QAEXPAU_FRECT@@@Z",
+      "rva": 651040,
+      "size": 33,
+      "sha256": "c220912888b5fef50f4e36205dcd310e991ddea612f7456f9c6de4181ed34630",
       "features": [
         "branching",
         "bounds"
