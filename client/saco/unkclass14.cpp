@@ -16,12 +16,14 @@ CUnkClass14::~CUnkClass14()
 	DeleteDeviceObjects();
 }
 
+// R5: 0x10070830
 void CUnkClass14::DeleteDeviceObjects()
 {
 	SAFE_RELEASE(m_pD3DSprite2);
 	SAFE_RELEASE(m_pD3DSprite1);
 }
 
+// R5: 0x10070860
 void CUnkClass14::RestoreDeviceObjects()
 {
 	D3DXCreateSprite(m_pD3DDevice, &m_pD3DSprite1);

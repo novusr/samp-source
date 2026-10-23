@@ -1,29 +1,29 @@
 # Status & Progress Rekonstruksi SA-MP 0.3.7 R5
 
-> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 22:36 UTC**.
+> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 23:34 UTC**.
 
 ## 🎯 PROGRES KESELURUHAN PROYEK (MENUJU 100%)
 
-### `████████████████████████░░░░░░` **79.0% / 100.0%**
+### `████████████████████████░░░░░░` **79.2% / 100.0%**
 
 | Pilar Penyelesaian Proyek | Progress Bar | Capaian Saat Ini | Persentase | Target 100% |
 | :--- | :--- | ---: | ---: | :--- |
-| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1196 / 1503 fungsi** | **79.6%** | Seluruh method class terimplementasi |
-| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3390 / 5265 fungsi** | **64.4%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
+| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1198 / 1503 fungsi** | **79.7%** | Seluruh method class terimplementasi |
+| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3416 / 5265 fungsi** | **64.9%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
 | **3. Kompilasi Unit MSVC 2003 (`tools/build.py`)** | `████████████████████` | **150 / 151 unit `.cpp`** | **99.3%** | 151/151 unit `.cpp` lolos compile & link ke `samp.dll` |
-| **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **125 / 516 file selesai** | **24.2%** | 0 file tersisa di `_reference/` (tersisa 391 file) |
+| **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **131 / 516 file selesai** | **25.4%** | 0 file tersisa di `_reference/` (tersisa 385 file) |
 
 ### Rincian 5.265 Fungsi di Binary `samp.dll` R5 (`_index.json`)
 
 | Kategori | Keterangan | Jumlah (`_index.json`) | Persentase dari 5.265 |
 | :--- | :--- | ---: | ---: |
-| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **600** | 11.4% |
-| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **7** | 0.1% |
+| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **627** | 11.9% |
+| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **6** | 0.1% |
 | ✅ `IN_VENDOR` | Fungsi di `vendor/upstream/` (DXUT & RakNet) | **684** | 13.0% |
 | ⚙️ `CRT_OR_TEMPLATE` | Otomatis dari Compiler MSVC 2003 (`libcmt.lib`, SEH, STL/Template) | **2099** | 39.9% |
-| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **212** | 4.0% |
-| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **331** | 6.3% |
-| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1332** | 25.3% |
+| 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **191** | 3.6% |
+| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **330** | 6.3% |
+| ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1328** | 25.2% |
 | **TOTAL BINARY R5** | **Seluruh fungsi di `samp.dll` 0.3.7 R5** | **5265** | **100.0%** |
 
 ---
@@ -32,15 +32,15 @@
 
 | Modul | Progress | Selesai (`Done`) | Di `_reference/` | Belum (`Todo`) | Total Fungsi Class |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| **game** | `██████████████░` ** 96.1%** | 298 | 0 | 12 | 310 |
+| **game** | `███████████████` ** 96.8%** | 300 | 0 | 10 | 310 |
 | **net** | `███████████████` **100.0%** | 51 | 0 | 0 | 51 |
 | **root (UI/Core)** | `███████████████` **100.0%** | 94 | 0 | 0 | 94 |
 | **archive** | `███████████████` **100.0%** | 1 | 0 | 0 | 1 |
 | **d3dhook** | `███████████████` **100.0%** | 19 | 0 | 0 | 19 |
 | **d3d9 (DXUT)** | `███████░░░░░░░░` ** 49.6%** | 278 | 1 | 282 | 561 |
 | **raknet** | `███████████████` ** 97.4%** | 455 | 0 | 12 | 467 |
-| **other** | `███████░░░░░░░░` ** 44.2%** | 72 | 78 | 13 | 163 |
-| **TOTAL MODUL UTAMA** | `████████████░░░` ** 79.6%** | **1196** | - | **307** | **1503** |
+| **other** | `█████████░░░░░░` ** 57.7%** | 94 | 56 | 13 | 163 |
+| **TOTAL MODUL UTAMA** | `████████████░░░` ** 79.7%** | **1198** | - | **305** | **1503** |
 
 ---
 
@@ -48,15 +48,15 @@
 
 | Status | Modul | Class | Progress | Done / Total | Annot | InSrc | InRef | Todo | File Target |
 | :---: | :--- | :--- | :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| ✅ | game | `CAudio` | `██████████` 100.0% | **9/9** | 9 | 0 | 0 | 0 | `game/audio.cpp` |
 | ✅ | game | `CCamera` | `██████████` 100.0% | **14/14** | 14 | 0 | 0 | 0 | `game/camera.cpp` |
 | ✅ | game | `CGame` | `██████████` 100.0% | **66/66** | 66 | 0 | 0 | 0 | `game/game.cpp` |
 | ✅ | game | `CMenu` | `██████████` 100.0% | **11/11** | 11 | 0 | 0 | 0 | `game/menu.cpp` |
-| 🔄 | game | `CPlayerPed` | `██████████`  98.8% | **82/83** | 81 | 1 | 0 | 1 | `game/playerped.cpp` |
+| 🔄 | game | `CPlayerPed` | `██████████`  98.8% | **82/83** | 82 | 0 | 0 | 1 | `game/playerped.cpp` |
 | 🔄 | game | `CEntity` | `██████████`  97.8% | **45/46** | 45 | 0 | 0 | 1 | `game/entity.cpp` |
 | 🔄 | game | `CVehicle` | `██████████`  97.1% | **33/34** | 33 | 0 | 0 | 1 | `game/vehicle.cpp` |
 | 🔄 | game | `CActorPed` | `█████████░`  94.4% | **17/18** | 17 | 0 | 0 | 1 | `game/actorped.cpp` |
 | 🔄 | game | `CTask` | `█████████░`  92.3% | **12/13** | 12 | 0 | 0 | 1 | `game/task.cpp` |
-| 🔄 | game | `CAudio` | `████████░░`  77.8% | **7/9** | 7 | 0 | 0 | 2 | `game/audio.cpp` |
 | 🔄 | game | `CTaskJetpack` | `████████░░`  75.0% | **3/4** | 3 | 0 | 0 | 1 | `game/task.cpp` |
 | 🔄 | game | `CTaskGoToPoint` | `███████░░░`  66.7% | **2/3** | 2 | 0 | 0 | 1 | `game/task.cpp` |
 | 🔄 | game | `CTaskGoggles` | `███████░░░`  66.7% | **2/3** | 2 | 0 | 0 | 1 | `game/task.cpp` |
@@ -151,17 +151,20 @@
 | 🔄 | raknet | `InternalPacketPool` | `████████░░`  80.0% | **4/5** | 0 | 4 | 0 | 1 | `../vendor/upstream/raknet/InternalPacketPool.cpp` |
 | 🔄 | raknet | `PacketFileLogger` | `████████░░`  75.0% | **3/4** | 0 | 3 | 0 | 1 | `../vendor/upstream/raknet/PacketFileLogger.cpp` |
 | 🔄 | raknet | `PacketConsoleLogger` | `██████░░░░`  60.0% | **3/5** | 0 | 3 | 0 | 2 | `../vendor/upstream/raknet/PacketConsoleLogger.cpp` |
+| ✅ | other | `CPickupPoolMore` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | - |
 | ✅ | other | `HuffmanEncodingTree` | `██████████` 100.0% | **8/8** | 0 | 8 | 0 | 0 | - |
 | ✅ | other | `NatPunchthrough` | `██████████` 100.0% | **14/14** | 0 | 14 | 0 | 0 | - |
+| ✅ | other | `R5ScoreboardActionsView` | `██████████` 100.0% | **3/3** | 3 | 0 | 0 | 0 | - |
+| ✅ | other | `R5ScoreboardPlayerQueriesView` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | - |
+| ✅ | other | `R5SpatialLabelRenderer` | `██████████` 100.0% | **8/8** | 8 | 0 | 0 | 0 | - |
 | ✅ | other | `R5TextDrawPool` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | - |
+| ✅ | other | `R5VehiclePlateRenderer` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | - |
 | ✅ | other | `TEABlockEncryptor` | `██████████` 100.0% | **9/9** | 0 | 9 | 0 | 0 | - |
 | ✅ | other | `Table` | `██████████` 100.0% | **20/20** | 0 | 20 | 0 | 0 | - |
 | 🔄 | other | `CSHA1` | `█████████░`  90.9% | **10/11** | 0 | 10 | 0 | 1 | - |
 | 🔄 | other | `DatabaseCellUpdate` | `█████░░░░░`  50.0% | **2/4** | 0 | 2 | 0 | 2 | - |
 | 🔄 | other | `DatabaseFilter` | `█████░░░░░`  50.0% | **2/4** | 0 | 2 | 0 | 2 | - |
 | 🔄 | other | `R5ChatPagingView` | `████░░░░░░`  40.0% | **2/5** | 2 | 0 | 3 | 0 | - |
-| 🔄 | other | `R5VehiclePlateRenderer` | `██░░░░░░░░`  25.0% | **1/4** | 1 | 0 | 3 | 0 | - |
-| 🔄 | other | `CPickupPoolMore` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 4 | 0 | - |
 | ⏳ | other | `DatabaseTable` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 0 | 3 | - |
 | 🔄 | other | `R5CustomModelManagerView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5FontSpriteProxy` | `░░░░░░░░░░`   0.0% | **0/15** | 0 | 0 | 14 | 1 | - |
@@ -171,9 +174,6 @@
 | 🔄 | other | `R5ObjectEditorView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5RwClumpDispatchView` | `░░░░░░░░░░`   0.0% | **0/6** | 0 | 0 | 6 | 0 | - |
 | 🔄 | other | `R5RwFrameParserView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 1 | 2 | - |
-| 🔄 | other | `R5ScoreboardActionsView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
-| 🔄 | other | `R5ScoreboardPlayerQueriesView` | `░░░░░░░░░░`   0.0% | **0/4** | 0 | 0 | 4 | 0 | - |
-| 🔄 | other | `R5SpatialLabelRenderer` | `░░░░░░░░░░`   0.0% | **0/8** | 0 | 0 | 8 | 0 | - |
 | 🔄 | other | `R5TextDrawClickView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5TextDrawConstructionView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |
 | 🔄 | other | `R5TextDrawSelectorView` | `░░░░░░░░░░`   0.0% | **0/3** | 0 | 0 | 3 | 0 | - |

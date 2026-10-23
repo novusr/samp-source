@@ -17,4 +17,5 @@ public:
 
 	void DeleteDeviceObjects();
 	void RestoreDeviceObjects();
+	IDirect3DTexture9 *RenderTexture(char *plateText);
 };
