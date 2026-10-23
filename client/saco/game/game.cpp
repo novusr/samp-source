@@ -131,6 +131,17 @@ BYTE CGame::FUNC_100A00F0()
 
 //-----------------------------------------------------------
 
+// R5: 0x10001010
+CPlayerPed* CGame::FindPlayerPed()
+{
+	if (!m_pGamePlayer)
+		m_pGamePlayer = new CPlayerPed();
+
+	return m_pGamePlayer;
+}
+
+//-----------------------------------------------------------
+
 // R5: 0x100A0210
 BOOL CGame::DeletePlayerPed(CPlayerPed *pPlayerPed)
 {
@@ -607,14 +618,13 @@ void CGame::ToggleThePassingOfTime(BYTE byteOnOff)
 
 //-----------------------------------------------------------
 
-void CGame::SetWorldWeather(int iWeatherID)
+// R5: 0x100A0B40
+void CGame::SetWeather(int iWeatherID)
 {
-	if(field_69) {
-		*(DWORD*)(0xC81318) = iWeatherID;
-	} else {
-		*(DWORD*)(0xC81318) = iWeatherID;
-		*(DWORD*)(0xC8131C) = iWeatherID;
-		*(DWORD*)(0xC81320) = iWeatherID;
+	*(DWORD*)0xC81318 = iWeatherID;
+	if (!field_69) {
+		*(DWORD*)0xC8131C = iWeatherID;
+		*(DWORD*)0xC81320 = iWeatherID;
 	}
 }
 
@@ -1445,3 +1455,18 @@ void CGame::DisableWeaponLockOnTarget()
 
 //-----------------------------------------------------------
 
+// R5: 0x10060D30
+int CGame::GetScreenWidth()
+{
+	return *(int*)0xC17044;
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x10066460
+int CGame::GetScreenHeight()
+{
+	return *(int*)0xC17048;
+}
+
+//-----------------------------------------------------------

@@ -68,7 +68,8 @@ public:
 	void	SetWorldTime(int iHour, int iMinute);
 	void	GetWorldTime(BYTE* byteHour, BYTE* byteMinute);
 	void	ToggleThePassingOfTime(BYTE byteOnOff);
-	void	SetWorldWeather(int iWeatherID);
+	void	SetWeather(int iWeatherID);
+	void	SetWorldWeather(int iWeatherID) { SetWeather(iWeatherID); }
 	int		GetWorldWeather();
 	void	DisplayHud(BOOL bDisp);
 	BYTE	IsHudEnabled();
@@ -126,17 +127,14 @@ public:
 
 	void FUNC_10062570() { field_55++; };
 
-	CPlayerPed  *FindPlayerPed() {
-		if(m_pGamePlayer==NULL)	m_pGamePlayer = new CPlayerPed();
-		return m_pGamePlayer;
-	};
+	CPlayerPed  *FindPlayerPed();
 
 	const PCHAR GetWeaponName(int iWeaponID);
 
 	DWORD CreateWeaponPickup(int iModel, DWORD dwAmmo, float fX, float fY, float fZ);
 
-	int GetScreenWidth() { return *(int*)0xC17044; };
-	int GetScreenHeight() { return *(int*)0xC17048; };
+	int GetScreenWidth();
+	int GetScreenHeight();
 
 	DWORD GetWeaponInfo(int iWeapon, int iUnk);
 	void DisableEnterExits();
