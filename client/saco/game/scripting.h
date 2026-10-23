@@ -155,7 +155,8 @@ const SCRIPT_COMMAND play_wav = { 0x3D1, "i" };
 const SCRIPT_COMMAND unload_wav = { 0x40D, "i" };
 const SCRIPT_COMMAND set_wav_at_location = { 0x3D7, "ifff" };
 
-
-
-
-
+const SCRIPT_COMMAND create_player						= { 0x0053, "vfffv" };
+const SCRIPT_COMMAND create_actor_from_player			= { 0x01F5, "vv" };
+const SCRIPT_COMMAND disassociate_object				= { 0x0682, "ifffi" };
+const SCRIPT_COMMAND destroy_object_with_fade			= { 0x09a2, "i" };
+const SCRIPT_COMMAND carry_object						= { 0x070a, "iifffiissi" };

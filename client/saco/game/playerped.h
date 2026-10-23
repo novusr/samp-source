@@ -37,7 +37,6 @@ void SetWeaponModelIndex(int iWeapon);
 			return GameGetPlayerCameraMode(m_bytePlayerNumber);
 	};
 
-	void  ShowMarker(int iMarkerColorID);
 	void  HideMarker();
 	BYTE  GetCurrentWeapon();
 	int   GetCurrentVehicleID();
@@ -120,6 +119,7 @@ void SetWeaponModelIndex(int iWeapon);
 	BOOL		HasHandsUp();
 	void		HoldItem(int iObject);
 
+	int			GetPissingState();
 	void		ProcessMarkers(BOOL bMarkerStreamingEnabled, float fMarkerStreamRadius, BOOL bVisible);
 
 	void		ApplyCommandTask(char *szTaskName, int p1, int p2, int p3, 

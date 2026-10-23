@@ -20,6 +20,7 @@ extern BYTE	*pbyteCurrentPlayer;
 //-----------------------------------------------------------
 // Used for instancing the local player.
 
+// R5: 0x100B14B0
 CPlayerPed::CPlayerPed()
 {
 	m_dwGTAId = 1; // 0x001
@@ -35,7 +36,7 @@ CPlayerPed::CPlayerPed()
 	field_2AC = 1;
 	m_dwArrow = 0;
 	field_2B9 = 0;
-	m_iPissingState = 0;
+	field_2F2 = 0;
 	m_iDanceState = 0;
 	field_2DE = 0;
 	field_2E2 = 0;
@@ -61,9 +62,159 @@ CPlayerPed::CPlayerPed()
 
 //-----------------------------------------------------------
 
-
+// R5: 0x100B0CE0
+CPlayerPed::CPlayerPed(BYTE playerNumber, int skin, float x, float y, float z, float rotation)
+{
+	DWORD actorId = 0;
+	int playerSlot = playerNumber;
+	m_pPed = 0;
+	m_dwGTAId = 0;
+	ScriptCommand(&create_player, &playerSlot, x, y, z, &actorId);
+	ScriptCommand(&create_actor_from_player, &playerSlot, &actorId);
+	m_dwGTAId = actorId;
+	m_pPed = GamePool_Ped_GetAt(m_dwGTAId);
+	m_pEntity = (ENTITY_TYPE*)m_pPed;
+	m_bytePlayerNumber = playerNumber;
+	SetPlayerPedPtrRecord(m_bytePlayerNumber, (DWORD)m_pPed);
+	ScriptCommand(&set_actor_weapon_droppable, m_dwGTAId, 1);
+	ScriptCommand(&set_actor_immunities, m_dwGTAId, 0, 0, 1, 0, 0);
+	ScriptCommand(&set_actor_can_be_decapitated, m_dwGTAId, 0);
+	if (pNetGame && pNetGame->GetSettings()) {
+		int money = pNetGame->GetSettings()->field_1;
+		ScriptCommand(&set_actor_money, m_dwGTAId, 0);
+		ScriptCommand(&set_actor_money, m_dwGTAId, money);
+	}
+	field_2A8 = 1;
+	field_2AC = 1;
+	m_dwArrow = 0;
+	field_2B9 = 0;
+	m_iCellPhoneEnabled = 0;
+	m_bGoggleState = FALSE;
+	m_iDanceState = 0;
+	field_2F2 = 0;
+	field_2DE = 0;
+	field_2E2 = 0;
+	SetModelIndex(skin);
+	if (m_pPed && GamePool_Ped_GetAt(m_dwGTAId)) {
+		m_pPed->fRotation2 = DegToRad(rotation);
+		m_pPed->fRotation1 = DegToRad(rotation);
+	}
+	GameResetPlayerKeys(m_bytePlayerNumber);
+	field_2C1 = 0;
+	field_2C5 = 0;
+	field_2C9 = 0;
+	field_2F6 = 0;
+	field_2F7 = 0;
+	field_2F8 = 0;
+	*(DWORD*)(_gap2FD + 44) = 0;
+	memset(_gap2FD, 0, 44);
+	MATRIX4X4 matrix;
+	GetMatrix(&matrix);
+	matrix.pos.X = x;
+	matrix.pos.Y = y;
+	matrix.pos.Z = z + 0.15f;
+	SetMatrix(matrix);
+	int index = 0;
+	while (index != 10) {
+		field_4C[index] = 0;
+		field_27C[index] = 0;
+		memset(&field_74[index], 0, sizeof(struc_97));
+		index++;
+	}
+	field_2F9 = 0;
+	*(DWORD*)(_gap2FD + 44) = 0;
+	memset(_gap2FD, 0, 44);
+}
 
 //-----------------------------------------------------------
+
+// R5: 0x100B12A0
+CPlayerPed::~CPlayerPed()
+{
+	Destroy();
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100B0FA0
+void CPlayerPed::Destroy()
+{
+	DWORD dwPedPtr = (DWORD)m_pPed;
+	GameResetPlayerKeys(m_bytePlayerNumber);
+	SetPlayerPedPtrRecord(m_bytePlayerNumber, 0UL);
+	if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || m_pPed->entity.vtable == 0x863C40) {
+		m_pPed = NULL;
+		m_pEntity = NULL;
+		m_dwGTAId = 0;
+		return;
+	}
+	if (field_2B9) {
+		ScriptCommand(&disassociate_object, field_2B9, 0.0f, 0.0f, 0.0f, 0);
+		ScriptCommand(&destroy_object_with_fade, field_2B9);
+		field_2B9 = 0;
+	}
+	if (HasObjectAttached()) RemoveAllAttachedObjects();
+	if (field_2C1) StopCarrying();
+	if (IN_VEHICLE(m_pPed)) RemoveFromVehicleAndPutAt(100.0f, 100.0f, 10.0f);
+	_asm mov esi, dwPedPtr
+	_asm mov eax, [esi+1152]
+	_asm mov dword ptr [eax+76], 0
+	_asm mov ecx, dwPedPtr
+	_asm mov ebx, [ecx]
+	_asm push 1
+	_asm call [ebx]
+	m_pPed = NULL;
+	m_pEntity = NULL;
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100AEE30
+int CPlayerPed::HasObjectAttached()
+{
+	for (int i = 0; i < 10; i++) {
+		if (field_4C[i] == 1) return 1;
+	}
+	return 0;
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100ADC00
+void CPlayerPed::StopCarrying()
+{
+	if (field_2C5) {
+		ScriptCommand(&carry_object, m_dwGTAId, field_2C5, 0.0f, 0.0f, 0.0f, 6, 16, "NULL", "NULL", 0);
+		field_2C5 = 0;
+	}
+	MATRIX4X4 mat;
+	GetMatrix(&mat);
+	TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
+	field_2C1 = 0;
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100B0AB0
+void CPlayerPed::RemoveAllAttachedObjects()
+{
+	for (int i = 0; i < 10; i++) {
+		if (field_4C[i] == 1) {
+			if (field_27C[i]) {
+				DWORD dwObj = (DWORD)field_27C[i];
+				_asm {
+					mov ecx, dwObj
+					mov eax, [ecx]
+					push 1
+					call dword ptr [eax]
+				}
+				field_27C[i] = 0;
+			}
+			memset(&field_74[i], 0, sizeof(struc_97));
+			field_4C[i] = 0;
+		}
+	}
+}//-----------------------------------------------------------
 // If the game has internally destroyed the ped
 // during this frame, the ped pointer should become 0
 
@@ -432,17 +583,6 @@ int CPlayerPed::GetCurrentVehicleID()
 
 	VEHICLE_TYPE *pVehicle = (VEHICLE_TYPE *)m_pPed->pVehicle;
 	return GamePool_Vehicle_GetIndex(pVehicle);
-}
-
-//-----------------------------------------------------------
-// Shows the normal marker
-
-void CPlayerPed::ShowMarker(int iMarkerColorID)
-{
-	if (m_dwArrow) HideMarker();
-	ScriptCommand(&create_arrow_above_actor, m_dwGTAId, &m_dwArrow);
-	ScriptCommand(&set_marker_color, m_dwArrow, iMarkerColorID);
-	ScriptCommand(&show_on_radar2, m_dwArrow, 2);
 }
 
 //-----------------------------------------------------------
@@ -826,7 +966,7 @@ void CPlayerPed::PutDirectlyInVehicle(int iVehicleID, int iSeat)
 	if(!GamePool_Ped_GetAt(m_dwGTAId)) return;
 
 	if(GetCurrentWeapon() == WEAPON_PARACHUTE) {
-		SetArmedWeapon(0);
+		SetArmedWeapon(0, false);
 	}
 
 	VEHICLE_TYPE *pVehicle = GamePool_Vehicle_GetAt(iVehicleID);
@@ -880,7 +1020,7 @@ void CPlayerPed::EnterVehicle(int iVehicleID, BOOL bPassenger)
 	bIgnoreNextEntry = TRUE;
 
 	if(GetCurrentWeapon() == WEAPON_PARACHUTE) {
-		SetArmedWeapon(0);
+		SetArmedWeapon(0, false);
 	}
 
 	if(bPassenger) {
@@ -1394,6 +1534,14 @@ void CPlayerPed::SetFightingStyle(int iStyle)
 	if (!m_pPed) return;
 
 	ScriptCommand( &set_fighting_style, m_dwGTAId, iStyle, 6 );
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100AE260
+int CPlayerPed::GetPissingState()
+{
+	return field_2F2;
 }
 
 //-----------------------------------------------------------
