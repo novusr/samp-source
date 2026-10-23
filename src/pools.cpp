@@ -115,7 +115,8 @@ public:
     int HasGoggles();
     int IsAPassenger();
     _WEAPON_SLOT_TYPE* FindWeaponSlot(unsigned long dwWeapon);
-    int IsInJetpackMode();
+    int IsInJetpackMode();    float GetHealth();
+
 };
 
 int CPlayerPed::IsCellphoneEnabled() {
@@ -519,3 +520,15 @@ void R5ChatPagingView::FilterInvalidChars(char* szString) {
 
 #pragma pack(pop)
 
+
+
+// Matched ?GetHealth@CPlayerPed@@QAEMXZ (0x100abd50)
+float CPlayerPed::GetHealth()
+{
+	if (!m_pPed)
+	{
+		return 0.0f;
+	}
+
+	return m_pPed->fHealth;
+}
