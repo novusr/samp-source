@@ -40,16 +40,16 @@ private:
 	int field_63B2;
 	ID3DXRenderToSurface *field_63B6;
 	IDirect3DTexture9* field_63BA;
-	int field_63BE;
+	IDirect3DSurface9* field_63BE;
 	D3DDISPLAYMODE field_63C2;
 	DWORD field_63D2;
 	int field_63D6;
 	int field_63DA;
 	int field_63DE;
 	int field_63E2;
-	char _gap63E6[4];
+	int field_63E6;
 
-
+	void MeasureDimensions();
 	void CreateFonts();
 	friend void cmdFontSize(PCHAR szCmd);
 

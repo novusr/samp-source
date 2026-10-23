@@ -2,6 +2,8 @@
 
 #include "main.h"
 
+extern CConfig *pConfig;
+
 //----------------------------------------------------
 
 CChatWindow::CChatWindow(IDirect3DDevice9 *pD3DDevice, CFontRender *pFontRender, CHAR *szChatLogFile)
@@ -42,7 +44,7 @@ CChatWindow::CChatWindow(IDirect3DDevice9 *pD3DDevice, CFontRender *pFontRender,
 		}
 	}
 
-	field_63BE = 0;
+	field_63BE = NULL;
 	field_63BA = NULL;
 	field_63B6 = NULL;
 	field_63D2 = GetTickCount();
@@ -56,11 +58,58 @@ CChatWindow::CChatWindow(IDirect3DDevice9 *pD3DDevice, CFontRender *pFontRender,
 
 //----------------------------------------------------
 
+// R5: 0x10067120
+void CChatWindow::MeasureDimensions()
+{
+	RECT rect;
+	m_pFontRender->field_0->DrawTextA(NULL, "Y", -1, &rect, DT_CALCRECT | DT_SINGLELINE, 0xFF000000);
+	field_63E2 = rect.bottom - rect.top;
+	m_pFontRender->field_0->DrawTextA(NULL, "[19:58:34]", -1, &rect, DT_CALCRECT | DT_SINGLELINE, 0xFF000000);
+	field_63E6 = rect.right - rect.left;
+}
+
+//----------------------------------------------------
+
 // R5: 0x100681D0
 void CChatWindow::CreateFonts()
 {
-
-	// TODO: CChatWindow::CreateFonts .text:100681D0
+	field_63B2 = 1;
+	SAFE_RELEASE(field_63BE);
+	SAFE_RELEASE(field_63BA);
+	SAFE_RELEASE(field_63B6);
+	m_pD3DDevice->GetDisplayMode(0, &field_63C2);
+	if (pConfig && pConfig->GetIntVariable("directmode"))
+	{
+		AddDebugMessage("ChatWindow: Using direct drawing mode.");
+		MeasureDimensions();
+		field_63B2 = 0;
+		return;
+	}
+	HRESULT result;
+	if (field_63C2.Width <= 1024)
+		result = D3DXCreateTexture(m_pD3DDevice, 1024, 512, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &field_63BA);
+	else
+		result = D3DXCreateTexture(m_pD3DDevice, 2048, 1024, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &field_63BA);
+	if (FAILED(result))
+	{
+		AddDebugMessage("ChatWindow: Can't create a render surface texture. Will use direct mode.");
+		field_63B2 = 0;
+		return;
+	}
+	field_63BA->GetSurfaceLevel(0, &field_63BE);
+	D3DSURFACE_DESC description;
+	field_63BE->GetDesc(&description);
+	result = D3DXCreateRenderToSurface(m_pD3DDevice, description.Width, description.Height, description.Format, TRUE, D3DFMT_D16, &field_63B6);
+	if (FAILED(result))
+	{
+		AddDebugMessage("ChatWindow: Can't create a render to surface. Will use direct mode.");
+		MeasureDimensions();
+		field_63B2 = 0;
+		return;
+	}
+	MeasureDimensions();
+	field_63D6 = 0;
+	field_63DA = 1;
 }
 
 //----------------------------------------------------
