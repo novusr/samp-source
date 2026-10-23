@@ -142,6 +142,7 @@ SIZE CFontRender::MeasureText2(char * szString, DWORD dwFormat)
 	return ret;
 }
 
+// R5: 0x1006B360
 void CFontRender::RenderText(ID3DXSprite *pSprite, char * sz, RECT rect, DWORD dwColor, BOOL bShadowed)
 {
 	if(sz == NULL || sz[0] == '\0') return;
@@ -177,6 +178,7 @@ void CFontRender::RenderText(ID3DXSprite *pSprite, char * sz, RECT rect, DWORD d
 		pSprite->End();
 }
 
+// R5: 0x1006B4E0
 void CFontRender::RenderText(ID3DXSprite *pSprite, char * sz, RECT rect, DWORD dwFormat, DWORD dwColor, BOOL bShadowed)
 {
 	if(sz == NULL || sz[0] == '\0') return;
@@ -213,6 +215,7 @@ void CFontRender::RenderText(ID3DXSprite *pSprite, char * sz, RECT rect, DWORD d
 		pSprite->End();
 }
 
+// R5: 0x1006B650
 void CFontRender::RenderText(char *sz, RECT rect, DWORD dwColor)
 {
 	if(sz == NULL || sz[0] == '\0') return;

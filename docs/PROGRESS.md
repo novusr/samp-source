@@ -1,15 +1,15 @@
 # Status & Progress Rekonstruksi SA-MP 0.3.7 R5
 
-> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 21:21 UTC**.
+> Di-generate otomatis oleh `python3 tools/progress.py --markdown` pada **2026-10-23 21:55 UTC**.
 
 ## 🎯 PROGRES KESELURUHAN PROYEK (MENUJU 100%)
 
-### `███████████████████████░░░░░░░` **77.9% / 100.0%**
+### `███████████████████████░░░░░░░` **78.2% / 100.0%**
 
 | Pilar Penyelesaian Proyek | Progress Bar | Capaian Saat Ini | Persentase | Target 100% |
 | :--- | :--- | ---: | ---: | :--- |
-| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1171 / 1501 fungsi** | **78.0%** | Seluruh method class terimplementasi |
-| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3345 / 5265 fungsi** | **63.5%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
+| **1. Rekonstruksi Class & Modul Utama (`saco` + `raknet` + `d3d9`)** | `████████████████░░░░` | **1178 / 1501 fungsi** | **78.5%** | Seluruh method class terimplementasi |
+| **2. Cakupan Seluruh Fungsi Binary R5 (`_index.json` 5.265 fungsi)** | `█████████████░░░░░░░` | **3350 / 5265 fungsi** | **63.6%** | Seluruh fungsi R5 (termasuk helper/`FUN_`) terpetakan |
 | **3. Kompilasi Unit MSVC 2003 (`tools/build.py`)** | `████████████████████` | **150 / 151 unit `.cpp`** | **99.3%** | 151/151 unit `.cpp` lolos compile & link ke `samp.dll` |
 | **4. Pembersihan Fragmen `_reference/`** | `█████░░░░░░░░░░░░░░░` | **124 / 516 file selesai** | **24.0%** | 0 file tersisa di `_reference/` (tersisa 392 file) |
 
@@ -17,12 +17,12 @@
 
 | Kategori | Keterangan | Jumlah (`_index.json`) | Persentase dari 5.265 |
 | :--- | :--- | ---: | ---: |
-| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **553** | 10.5% |
-| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **14** | 0.3% |
+| ✅ `ANNOTATED` | Fungsi di `client/saco/` dengan anotasi `// R5: 0x...` | **561** | 10.7% |
+| ✅ `IN_SOURCE` | Fungsi di `client/saco/` (cocok `Class::Method`) | **11** | 0.2% |
 | ✅ `IN_VENDOR` | Fungsi di `vendor/upstream/` (DXUT & RakNet) | **678** | 12.9% |
 | ⚙️ `CRT_OR_TEMPLATE` | Otomatis dari Compiler MSVC 2003 (`libcmt.lib`, SEH, STL/Template) | **2100** | 39.9% |
 | 📦 `IN_REFERENCE` | Sudah ada di `client/saco/_reference/`, tinggal digabung | **216** | 4.1% |
-| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **364** | 6.9% |
+| ⏳ `NAMED_TODO` | Fungsi bernama di Ghidra yang belum masuk source utama | **359** | 6.8% |
 | ⏳ `UNNAMED_TODO` | Fungsi `FUN_10xxxxxx` belum bernama di Ghidra | **1340** | 25.5% |
 | **TOTAL BINARY R5** | **Seluruh fungsi di `samp.dll` 0.3.7 R5** | **5265** | **100.0%** |
 
@@ -32,15 +32,15 @@
 
 | Modul | Progress | Selesai (`Done`) | Di `_reference/` | Belum (`Todo`) | Total Fungsi Class |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| **game** | `██████████████░` ** 92.3%** | 286 | 0 | 24 | 310 |
-| **net** | `██████████████░` ** 94.1%** | 48 | 0 | 3 | 51 |
+| **game** | `██████████████░` ** 93.5%** | 290 | 0 | 20 | 310 |
+| **net** | `███████████████` **100.0%** | 51 | 0 | 0 | 51 |
 | **root (UI/Core)** | `███████████████` ** 97.9%** | 92 | 0 | 2 | 94 |
 | **archive** | `███████████████` **100.0%** | 1 | 0 | 0 | 1 |
 | **d3dhook** | `███████████████` **100.0%** | 19 | 0 | 0 | 19 |
 | **d3d9 (DXUT)** | `███████░░░░░░░░` ** 49.4%** | 277 | 1 | 283 | 561 |
 | **raknet** | `██████████████░` ** 96.3%** | 448 | 0 | 17 | 465 |
 | **other** | `███████░░░░░░░░` ** 43.6%** | 71 | 79 | 13 | 163 |
-| **TOTAL MODUL UTAMA** | `████████████░░░` ** 78.0%** | **1171** | - | **330** | **1501** |
+| **TOTAL MODUL UTAMA** | `████████████░░░` ** 78.5%** | **1178** | - | **323** | **1501** |
 
 ---
 
@@ -48,11 +48,11 @@
 
 | Status | Modul | Class | Progress | Done / Total | Annot | InSrc | InRef | Todo | File Target |
 | :---: | :--- | :--- | :--- | ---: | ---: | ---: | ---: | ---: | :--- |
+| ✅ | game | `CGame` | `██████████` 100.0% | **66/66** | 66 | 0 | 0 | 0 | `game/game.cpp` |
 | ✅ | game | `CMenu` | `██████████` 100.0% | **11/11** | 11 | 0 | 0 | 0 | `game/menu.cpp` |
 | 🔄 | game | `CPlayerPed` | `██████████`  98.8% | **82/83** | 81 | 1 | 0 | 1 | `game/playerped.cpp` |
 | 🔄 | game | `CActorPed` | `█████████░`  94.4% | **17/18** | 17 | 0 | 0 | 1 | `game/actorped.cpp` |
 | 🔄 | game | `CVehicle` | `█████████░`  94.1% | **32/34** | 32 | 0 | 0 | 2 | `game/vehicle.cpp` |
-| 🔄 | game | `CGame` | `█████████░`  93.9% | **62/66** | 62 | 0 | 0 | 4 | `game/game.cpp` |
 | 🔄 | game | `CEntity` | `█████████░`  93.5% | **43/46** | 43 | 0 | 0 | 3 | `game/entity.cpp` |
 | 🔄 | game | `CCamera` | `█████████░`  92.9% | **13/14** | 13 | 0 | 0 | 1 | `game/camera.cpp` |
 | 🔄 | game | `CTask` | `█████████░`  92.3% | **12/13** | 7 | 5 | 0 | 1 | `game/task.cpp` |
@@ -65,18 +65,18 @@
 | ✅ | net | `CActorPool` | `██████████` 100.0% | **6/6** | 6 | 0 | 0 | 0 | `net/actorpool.cpp` |
 | ✅ | net | `CGangZonePool` | `██████████` 100.0% | **7/7** | 7 | 0 | 0 | 0 | `net/gangzonepool.cpp` |
 | ✅ | net | `CLabelPool` | `██████████` 100.0% | **3/3** | 3 | 0 | 0 | 0 | `net/labelpool.cpp` |
+| ✅ | net | `CLocalPlayer` | `██████████` 100.0% | **6/6** | 6 | 0 | 0 | 0 | `net/localplayer.cpp` |
 | ✅ | net | `CMenuPool` | `██████████` 100.0% | **8/8** | 8 | 0 | 0 | 0 | `net/menupool.cpp` |
 | ✅ | net | `CNetGame` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | `net/netgame.cpp` |
 | ✅ | net | `CNetPlayer` | `██████████` 100.0% | **2/2** | 2 | 0 | 0 | 0 | `net/netplayer.cpp` |
 | ✅ | net | `CObjectPool` | `██████████` 100.0% | **3/3** | 3 | 0 | 0 | 0 | `net/objectpool.cpp` |
 | ✅ | net | `CPickupPool` | `██████████` 100.0% | **3/3** | 3 | 0 | 0 | 0 | `net/pickuppool.cpp` |
+| ✅ | net | `CPlayerPool` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | `net/playerpool.cpp` |
 | ✅ | net | `CRemotePlayer` | `██████████` 100.0% | **5/5** | 5 | 0 | 0 | 0 | `net/remoteplayer.cpp` |
-| 🔄 | net | `CLocalPlayer` | `████████░░`  83.3% | **5/6** | 5 | 0 | 0 | 1 | `net/localplayer.cpp` |
-| 🔄 | net | `CPlayerPool` | `█████░░░░░`  50.0% | **2/4** | 2 | 0 | 0 | 2 | `net/playerpool.cpp` |
 | ✅ | root (UI/Core) | `CChatWindow` | `██████████` 100.0% | **4/4** | 4 | 0 | 0 | 0 | `chatwindow.cpp` |
 | ✅ | root (UI/Core) | `CCmdWindow` | `██████████` 100.0% | **13/13** | 13 | 0 | 0 | 0 | `cmdwindow.cpp` |
 | ✅ | root (UI/Core) | `CDeathWindow` | `██████████` 100.0% | **12/12** | 12 | 0 | 0 | 0 | `deathwindow.cpp` |
-| ✅ | root (UI/Core) | `CFontRender` | `██████████` 100.0% | **10/10** | 7 | 3 | 0 | 0 | `fontrender.cpp` |
+| ✅ | root (UI/Core) | `CFontRender` | `██████████` 100.0% | **10/10** | 10 | 0 | 0 | 0 | `fontrender.cpp` |
 | ✅ | root (UI/Core) | `CHttpClient` | `██████████` 100.0% | **11/11** | 11 | 0 | 0 | 0 | `httpclient.cpp` |
 | ✅ | root (UI/Core) | `CNewPlayerTags` | `██████████` 100.0% | **7/7** | 7 | 0 | 0 | 0 | `newplayertags.cpp` |
 | ✅ | root (UI/Core) | `CPlayerTags` | `██████████` 100.0% | **8/8** | 8 | 0 | 0 | 0 | `playertags.cpp` |

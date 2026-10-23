@@ -163,6 +163,7 @@ int CConfig::GetIntVariable(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065E40
 char *CConfig::GetStringVariable(char *szName)
 {
 	int iIndex = FindVariableIndex(szName);
@@ -220,6 +221,7 @@ CONFIG_VARTYPE CConfig::GetVariableType(char *szName)
 
 //----------------------------------------------------------
 
+// R5: 0x10065F30
 ConfigVariable_s *CConfig::GetVariableAtIndex(int iIndex)
 {
 	if(iIndex >= 0 && iIndex < MAX_CONFIG_VARIABLES)
