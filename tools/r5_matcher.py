@@ -149,6 +149,8 @@ def get_unreversed_targets(
 
         cls_raw = info.get("class") or info.get("name", "").split(".")[0] or "Global"
         cls_name = cls_raw.split()[-1] if cls_raw else "Global"
+        if cls_name.startswith("?") or "@" in cls_name:
+            cls_name = "Global"
         if class_filter and class_filter.lower() not in cls_name.lower():
             continue
 
