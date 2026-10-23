@@ -927,6 +927,19 @@
     },
     {
       "unit": "game",
+      "name": "void CEntity::GetBoundCentre",
+      "symbol": "?GetBoundCentre@CEntity@@QAEXPAU_VECTOR@@@Z",
+      "rva": 650992,
+      "size": 33,
+      "sha256": "c15d11c4fce65a9335ccaa0640cae2268e241da1c70a5ad238dc52485bfd0ecd",
+      "features": [
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "CEntity.GetModelIndex",
       "symbol": "?GetModelIndex@CEntity@@QAEIXZ",
       "rva": 651312,

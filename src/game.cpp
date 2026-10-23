@@ -323,7 +323,8 @@ public:
     void SetTurnSpeedVector(_VECTOR vec);
     void GetMoveSpeedVector(_VECTOR* pVec);
     void GetTurnSpeedVector(_VECTOR* pVec);
-    unsigned long GetWorldBoundRadius();
+    unsigned long GetWorldBoundRadius();    void GetBoundCentre(_VECTOR *pVector);
+
 };
 
 void CEntity::GetMatrix(_MATRIX4X4* pMatrix) {
@@ -657,3 +658,20 @@ void CCmdWindow::RecallUp() {
 
 #pragma pack(pop)
 
+
+
+// Matched void CEntity::GetBoundCentre (0x1009eef0)
+void CEntity::GetBoundCentre(_VECTOR *pVector)
+{
+	void *pEntity = m_pEntity;
+	if (pEntity)
+	{
+		__asm
+		{
+			push pVector
+			mov ecx, pEntity
+			mov edx, 0x534250
+			call edx
+		}
+	}
+}
