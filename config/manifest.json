@@ -2546,6 +2546,42 @@
       ],
       "sha256": "8a58840b003bbff6d2900b71c00617b59200d7a26ab0f7da734a19f03df28525",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "fhicl.SHA1.Reset",
+      "symbol": "?Reset@SHA1@fhicl@@QAEXXZ",
+      "rva": 408288,
+      "size": 53,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "92b678aaa9b18f26355a3c01216e4f01fe3fad28d298e2612fb8d10e0e328cca",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "fhicl.SHA1.CircularShift",
+      "symbol": "?CircularShift@SHA1@fhicl@@AAEIHI@Z",
+      "rva": 408352,
+      "size": 30,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "082dfcfb0d656cbe4b185be348c49de2680cc8436db99e9ac18d3a31f3e853bc",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "fhicl.SHA1.ProcessMessageBlock",
+      "symbol": "?ProcessMessageBlock@SHA1@fhicl@@AAEXXZ",
+      "rva": 408432,
+      "size": 1571,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "93ddb6ef751ac07cacf7d72c6701fe0e5840f4c365c71e60fe310045e583c418",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {
