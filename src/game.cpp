@@ -935,11 +935,53 @@ public:
     bool IsStopped();
 };
 
+struct D3DXMATRIX {
+    float m[4][4];
+};
+
+struct D3DXQUATERNION {
+    float x, y, z, w;
+};
+
+struct D3DXVECTOR2 {
+    float x, y;
+};
+
+struct POINT {
+    long x, y;
+};
+
+inline D3DXQUATERNION* D3DXQuaternionIdentity(D3DXQUATERNION *pOut) {
+    pOut->x = pOut->y = pOut->z = 0.0f;
+    pOut->w = 1.0f;
+    return pOut;
+}
+
+inline D3DXMATRIX* D3DXMatrixIdentity(D3DXMATRIX *pOut) {
+    pOut->m[0][1] = pOut->m[0][2] = pOut->m[0][3] =
+    pOut->m[1][0] = pOut->m[1][2] = pOut->m[1][3] =
+    pOut->m[2][0] = pOut->m[2][1] = pOut->m[2][3] =
+    pOut->m[3][0] = pOut->m[3][1] = pOut->m[3][2] = 0.0f;
+    pOut->m[0][0] = pOut->m[1][1] = pOut->m[2][2] = pOut->m[3][3] = 1.0f;
+    return pOut;
+}
+
 class CD3DArcBall {
 public:
-    char gap[0x100];
+    D3DXMATRIX m_mRotation;
+    D3DXMATRIX m_mTranslation;
+    D3DXMATRIX m_mTranslationDelta;
+    POINT m_Offset;
+    int m_nWidth;
+    int m_nHeight;
+    D3DXVECTOR2 m_vCenter;
+    float m_fRadius;
+    float m_fRadiusTranslation;
+    D3DXQUATERNION m_qDown;
+    D3DXQUATERNION m_qNow;
     bool m_bDrag;
 
+    void Reset();
     void OnEnd();
 };
 
@@ -964,6 +1006,18 @@ protected:
 // Matched ?IsStopped@CDXUTTimer@@QAE_NXZ (0x10093800)
 bool CDXUTTimer::IsStopped() {
     return m_bTimerStopped;
+}
+
+// Matched ?Reset@CD3DArcBall@@QAEXXZ (0x10093840)
+void CD3DArcBall::Reset() {
+    D3DXQuaternionIdentity(&m_qDown);
+    D3DXQuaternionIdentity(&m_qNow);
+    D3DXMatrixIdentity(&m_mRotation);
+    D3DXMatrixIdentity(&m_mTranslation);
+    D3DXMatrixIdentity(&m_mTranslationDelta);
+    m_bDrag = false;
+    m_fRadiusTranslation = 1.0f;
+    m_fRadius = 1.0f;
 }
 
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)

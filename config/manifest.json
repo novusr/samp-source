@@ -2364,6 +2364,164 @@
       ],
       "sha256": "9223af84e0af4925cbc8ec68f5985ef4ed4cfc4e4a9eef1dc20decf84423883c",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetPlayerPool",
+      "symbol": "?GetPlayerPool@CNetGame@@QAEPAVCPlayerPool@@XZ",
+      "rva": 4464,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "3e648f8ced471f84903ed1b7e428b569ebeae33b3189958941f4066d92798151",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetVehiclePool",
+      "symbol": "?GetVehiclePool@CNetGame@@QAEPAVCVehiclePool@@XZ",
+      "rva": 4480,
+      "size": 9,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "d6af7e41f41044e4a0083c634e0779b3924fbe69b580735be4ec1662d079876c",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CObjectPool.GetAt",
+      "symbol": "?GetAt@CObjectPool@@QAEPAVCObject@@G@Z",
+      "rva": 11744,
+      "size": 37,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "cf406c95f60b56bef30f5cdedb53d8db3120034fa15861ea8686d535c392f693",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetObjectPool",
+      "symbol": "?GetObjectPool@CNetGame@@QAEPAVCObjectPool@@XZ",
+      "rva": 11792,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "1f1b9de0c15f90f9b42b8cba31ffa34b05875cc0ca2586d9d02881aaa9ec0d02",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetActorPool",
+      "symbol": "?GetActorPool@CNetGame@@QAEPAVCActorPool@@XZ",
+      "rva": 11808,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "dffee70bd1191566d5447f704a9885bafff7228c13f5d31f4b9c93501ffe5e8d",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetPickupPool",
+      "symbol": "?GetPickupPool@CNetGame@@QAEPAVCPickupPool@@XZ",
+      "rva": 34016,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "8de3ad407789cfb868ea4f25d04e7deedcd289b03638dcac3f448e40ddeaa5a5",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetMenuPool",
+      "symbol": "?GetMenuPool@CNetGame@@QAEPAVCMenuPool@@XZ",
+      "rva": 34032,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "7e123328b61685b92aa600b930dba852cb989c274b6e0f8e2d775cce2980621e",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetLabelPool",
+      "symbol": "?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ",
+      "rva": 58704,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "be144b40cd96afbf1ad628c9b887754a6de16c3054f079ebc45811806f6fbae1",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetTextDrawPool",
+      "symbol": "?GetTextDrawPool@CNetGame@@QAEPAVCTextDrawPool@@XZ",
+      "rva": 97520,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "80803b88aa120f5e5b9e372bda7de7d6be699d3b16dcc0f2a1df6b05039fd1db",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CNetGame.GetGangZonePool",
+      "symbol": "?GetGangZonePool@CNetGame@@QAEPAVCGangZonePool@@XZ",
+      "rva": 97536,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "f3632cf0e003c166134e6dfbdfde43cde456067024b28283f00536791cdba0fa",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CD3DArcBall.Reset",
+      "symbol": "?Reset@CD3DArcBall@@QAEXXZ",
+      "rva": 604224,
+      "size": 265,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "9720151fd7a9a890fb3b29e188192c812fbded4ad4fa00553d6111761c85287b",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Util.IsNumeric",
+      "symbol": "?IsNumeric@@YA_NPBD@Z",
+      "rva": 744096,
+      "size": 38,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "c3f61e656f2c99ddff159eaab2d138ff3c50f294089c9b239f6443d97593a938",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Util.FilterInvalidChars",
+      "symbol": "?FilterInvalidChars@@YAXPAD@Z",
+      "rva": 744928,
+      "size": 40,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "d0c34f8d555d8b54db6e1e10eac51711cf6635fd49901665d1782bb48297becb",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {

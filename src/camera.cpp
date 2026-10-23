@@ -110,6 +110,28 @@ int IsHexChar(unsigned short c)
 	return 0;
 }
 
+// Matched ?IsNumeric@@YA_NPBD@Z (0x100b5aa0)
+bool IsNumeric(const char* szString) {
+    while (*szString) {
+        if (*szString < '0' || *szString > '9') return false;
+        szString++;
+    }
+    return true;
+}
+
+// Matched ?FilterInvalidChars@@YAXPAD@Z (0x100b5de0)
+void FilterInvalidChars(char* szString) {
+    if (*szString != 0) {
+        do {
+            unsigned char c = (unsigned char)*szString;
+            if (c > 0x7f || c < 0x20) {
+                *szString = 0x20;
+            }
+            szString++;
+        } while (*szString);
+    }
+}
+
 inline char Util_toupper(char c) {
     return ((c > (char)0x60) && (c < (char)0x7b)) ? c - 0x20 : c;
 }

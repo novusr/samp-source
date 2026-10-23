@@ -254,6 +254,7 @@ public:
 
     CObjectPool();
     int FindIDFromGtaPtr(_ENTITY_TYPE* pGtaEntity);
+    CObject* GetAt(unsigned short id);
 };
 
 CObjectPool::CObjectPool() {
@@ -266,6 +267,12 @@ CObjectPool::CObjectPool() {
         ++p;
     } while (i != 0);
     lastActive = 0;
+}
+
+// Matched ?GetAt@CObjectPool@@QAEPAVCObject@@G@Z (0x10002de0)
+CObject* CObjectPool::GetAt(unsigned short id) {
+    if (id > 1000 || !slots[id]) return 0;
+    return objects[id];
 }
 
 int CObjectPool::FindIDFromGtaPtr(_ENTITY_TYPE* pGtaEntity) {
@@ -562,7 +569,68 @@ public:
     void StopFlash(unsigned short id);
 };
 
+class CVehiclePool;
+class CPlayerPool;
+class CPickupPool;
+class CActorPool;
+class CLabelPool;
+
+struct Pools {
+    CVehiclePool* m_pVehicle;   // 0x00
+    CPlayerPool* m_pPlayer;     // 0x04
+    CPickupPool* m_pPickup;     // 0x08
+    CObjectPool* m_pObject;     // 0x0C
+    CActorPool* m_pActor;       // 0x10
+    CGangZonePool* m_pGangZone; // 0x14
+    CLabelPool* m_pLabel;       // 0x18
+    CTextDrawPool* m_pTextDraw; // 0x1C
+    CMenuPool* m_pMenu;         // 0x20
+};
+
+class CNetGame {
+public:
+    char gap[0x3de];
+    Pools* m_pPools;
+
+    CVehiclePool* GetVehiclePool();
+    CPlayerPool* GetPlayerPool();
+    CPickupPool* GetPickupPool();
+    CObjectPool* GetObjectPool();
+    CActorPool* GetActorPool();
+    CGangZonePool* GetGangZonePool();
+    CLabelPool* GetLabelPool();
+    CTextDrawPool* GetTextDrawPool();
+    CMenuPool* GetMenuPool();
+};
+
 #pragma pack(pop)
+
+// Matched ?GetVehiclePool@CNetGame@@QAEPAVCVehiclePool@@XZ (0x10001180)
+CVehiclePool* CNetGame::GetVehiclePool() { return m_pPools->m_pVehicle; }
+
+// Matched ?GetPlayerPool@CNetGame@@QAEPAVCPlayerPool@@XZ (0x10001170)
+CPlayerPool* CNetGame::GetPlayerPool() { return m_pPools->m_pPlayer; }
+
+// Matched ?GetPickupPool@CNetGame@@QAEPAVCPickupPool@@XZ (0x100084e0)
+CPickupPool* CNetGame::GetPickupPool() { return m_pPools->m_pPickup; }
+
+// Matched ?GetObjectPool@CNetGame@@QAEPAVCObjectPool@@XZ (0x10002e10)
+CObjectPool* CNetGame::GetObjectPool() { return m_pPools->m_pObject; }
+
+// Matched ?GetActorPool@CNetGame@@QAEPAVCActorPool@@XZ (0x10002e20)
+CActorPool* CNetGame::GetActorPool() { return m_pPools->m_pActor; }
+
+// Matched ?GetGangZonePool@CNetGame@@QAEPAVCGangZonePool@@XZ (0x10017d00)
+CGangZonePool* CNetGame::GetGangZonePool() { return m_pPools->m_pGangZone; }
+
+// Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
+CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
+
+// Matched ?GetTextDrawPool@CNetGame@@QAEPAVCTextDrawPool@@XZ (0x10017cf0)
+CTextDrawPool* CNetGame::GetTextDrawPool() { return m_pPools->m_pTextDraw; }
+
+// Matched ?GetMenuPool@CNetGame@@QAEPAVCMenuPool@@XZ (0x100084f0)
+CMenuPool* CNetGame::GetMenuPool() { return m_pPools->m_pMenu; }
 
 // Matched ??0CGangZonePool@@QAE@XZ (0x10002120)
 CGangZonePool::CGangZonePool() {
