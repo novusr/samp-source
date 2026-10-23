@@ -299,6 +299,56 @@ void CGame::GetWorldTime(unsigned char* pHour, unsigned char* pMinute) {
     *pHour = *(unsigned char*)0xb70153;
 }
 
+class CAudio {
+public:
+    void StartRadio(int nStation);
+    void StopRadio();
+    float GetRadioVolume();
+    void StopOutdoorAmbienceTrack();
+    void SetOutdoorAmbienceTrack(int nTrack);
+};
+
+void CAudio::StartRadio(int nStation) {
+	__asm {
+		push 0
+		push nStation
+		mov ecx, 0xB6BC90
+		mov edx, 0x507DC0
+		call edx
+	}
+}
+
+void CAudio::StopRadio() {
+	__asm {
+		push 0
+		push 0
+		mov ecx, 0xB6BC90
+		mov edx, 0x506F70
+		call edx
+	}
+}
+
+float CAudio::GetRadioVolume() {
+	return *(float*)0xB5FCC8;
+}
+
+void CAudio::StopOutdoorAmbienceTrack() {
+	__asm {
+		mov ecx, 0x8AC15C
+		mov edx, 0x4D6D60
+		call edx
+	}
+}
+
+void CAudio::SetOutdoorAmbienceTrack(int nTrack) {
+	__asm {
+		push nTrack
+		mov ecx, 0x8AC15C
+		mov edx, 0x4D6D50
+		call edx
+	}
+}
+
 struct _VECTOR {
     float X, Y, Z;
 };

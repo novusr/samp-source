@@ -1394,6 +1394,67 @@
     },
     {
       "unit": "game",
+      "name": "?StartRadio@CAudio@@QAEXH@Z",
+      "symbol": "?StartRadio@CAudio@@QAEXH@Z",
+      "rva": 664128,
+      "size": 24,
+      "sha256": "070d1897e70bf3a2a902f6972754c4120ab41296dc3975f384f79c29a9ee9a6a",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?StopRadio@CAudio@@QAEXXZ",
+      "symbol": "?StopRadio@CAudio@@QAEXXZ",
+      "rva": 664160,
+      "size": 17,
+      "sha256": "ad43a20e73dec053059673b6099d2d7b0ad21ac1fc2b8131112786e70eaa90cc",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?GetRadioVolume@CAudio@@QAEMXZ",
+      "symbol": "?GetRadioVolume@CAudio@@QAEMXZ",
+      "rva": 664192,
+      "size": 7,
+      "sha256": "b95686efa743cf57c02de3e1ac02c01250624f71cc74e3758b5b7ab0d5a47dd7",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?StopOutdoorAmbienceTrack@CAudio@@QAEXXZ",
+      "symbol": "?StopOutdoorAmbienceTrack@CAudio@@QAEXXZ",
+      "rva": 664208,
+      "size": 13,
+      "sha256": "ad41838306b5edae7d79b67cf404cc1912adad40124e8514cc0899a8880b73be",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?SetOutdoorAmbienceTrack@CAudio@@QAEXH@Z",
+      "symbol": "?SetOutdoorAmbienceTrack@CAudio@@QAEXH@Z",
+      "rva": 664224,
+      "size": 22,
+      "sha256": "3657cad5dfd3a3736da4a1e8add3e1bc5c225627fc90adeead8c4dbfdfe6f7e4",
+      "features": [
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z",
       "symbol": "??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z",
       "rva": 685088,
