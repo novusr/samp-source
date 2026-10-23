@@ -12,7 +12,19 @@ void ScrUnkA7(RPCParameters *rpcParams) {}
 void ScrUnk38(RPCParameters *rpcParams) {}
 void ScrUnk90(RPCParameters *rpcParams) {}
 void ScrUnk91(RPCParameters *rpcParams) {}
-void ScrSetGravity(RPCParameters *rpcParams) {}
+// R5: 0x1001ACD0
+void ScrSetGravity(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	float fGravity;
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	bsData.Read(fGravity);
+
+	pGame->SetGravity(fGravity);
+}
 void ScrUnk93(RPCParameters *rpcParams) {}
 void ScrUnk94(RPCParameters *rpcParams) {}
 void ScrUnk95(RPCParameters *rpcParams) {}
@@ -110,7 +122,18 @@ void ScrUnkA1(RPCParameters *rpcParams) {}
 void ScrUnk0F(RPCParameters *rpcParams) {}
 void ScrUnk10(RPCParameters *rpcParams) {}
 void ScrUnk11(RPCParameters *rpcParams) {}
-void ScrUnk12(RPCParameters *rpcParams) {}
+// R5: 0x1001A500
+void ScrUnk12(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	int iAmount;
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	bsData.Read(iAmount);
+	pGame->AddToLocalMoney(iAmount);
+}
 void ScrSetPlayerFacingAngle(RPCParameters *rpcParams) {}
 void ScrUnk16(RPCParameters *rpcParams) {}
 void ScrUnk40(RPCParameters *rpcParams) {}
@@ -217,6 +240,7 @@ void ScrSetPlayerColor(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x10019AA0
 void ScrSetCameraPos(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
@@ -233,6 +257,7 @@ void ScrSetCameraPos(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x10019B70
 void ScrSetCameraLookAt(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
@@ -254,6 +279,7 @@ void ScrSetCameraLookAt(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x10018080
 void ScrSetCameraBehindPlayer(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
@@ -265,6 +291,7 @@ void ScrSetCameraBehindPlayer(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x10018090
 void ScrResetMoney(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
@@ -276,6 +303,7 @@ void ScrResetMoney(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x100180A0
 void ScrResetPlayerWeapons(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
@@ -288,6 +316,7 @@ void ScrResetPlayerWeapons(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x100180D0
 void ScrForceSpawnSelection(RPCParameters *rpcParams)
 {
 	pNetGame->GetPlayerPool()->GetLocalPlayer()->ReturnToClassSelection();
@@ -295,6 +324,7 @@ void ScrForceSpawnSelection(RPCParameters *rpcParams)
 
 //----------------------------------------------------
 
+// R5: 0x10017D50
 void ScrEnableStuntBonus(RPCParameters *rpcParams)
 {
 	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);

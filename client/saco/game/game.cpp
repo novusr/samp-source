@@ -785,7 +785,7 @@ void CGame::SetCheckpointInformation(VECTOR *pos, VECTOR *extent)
 	memcpy(&m_vecCheckpointPos,pos,sizeof(VECTOR));
 	memcpy(&m_vecCheckpointExtent,extent,sizeof(VECTOR));
 	if(m_dwCheckpointMarker) {
-		DisableMarker(m_dwCheckpointMarker);
+		ScriptCommand(&disable_marker, m_dwCheckpointMarker);
 		m_dwCheckpointMarker = NULL;
 
 		DWORD dwMarkerID = 0;
@@ -807,7 +807,7 @@ void CGame::SetRaceCheckpointInformation(BYTE byteType, VECTOR *pos, VECTOR *nex
 	m_byteRaceType = byteType;
 	if(m_dwRaceCheckpointMarker)
 	{
-		DisableMarker(m_dwRaceCheckpointMarker);
+		ScriptCommand(&disable_marker, m_dwRaceCheckpointMarker);
 		m_dwRaceCheckpointMarker = NULL;
 
 		DWORD dwMarkerID = 0;
@@ -824,7 +824,11 @@ void CGame::SetRaceCheckpointInformation(BYTE byteType, VECTOR *pos, VECTOR *nex
 // R5: 0x100A1EA0
 void CGame::MakeRaceCheckpoint()
 {
-	DisableRaceCheckpoint();
+	if(m_dwRaceCheckpointHandle) {
+		ScriptCommand(&destroy_racing_checkpoint, m_dwRaceCheckpointHandle);
+		m_dwRaceCheckpointHandle = NULL;
+	}
+	m_bRaceCheckpointsEnabled = false;
 
 	ScriptCommand(&create_racing_checkpoint, (int)m_byteRaceType,
 				m_vecRaceCheckpointPos.X, m_vecRaceCheckpointPos.Y, m_vecRaceCheckpointPos.Z,
@@ -984,14 +988,10 @@ void CGame::AddToLocalMoney(int iAmount)
 // R5: 0x100A20C0
 void CGame::ResetLocalMoney()
 {
-	int iMoney = GetLocalMoney();
+	int iMoney = *(int*)0xB7CE50;
 	if(!iMoney) return;
-
-	if(iMoney < 0) {
-		AddToLocalMoney(abs(iMoney));
-	} else {
-		AddToLocalMoney(-(iMoney));
-	}
+	if(iMoney < 0) ScriptCommand(&add_to_player_money, 0, abs(iMoney));
+	else ScriptCommand(&add_to_player_money, 0, -iMoney);
 }
 
 //-----------------------------------------------------------
@@ -1106,13 +1106,11 @@ const PCHAR CGame::GetWeaponName(int iWeaponID)
 DWORD CGame::CreateWeaponPickup(int iModel, DWORD dwAmmo, float fX, float fY, float fZ)
 {
 	DWORD hnd;
-
-	if(!IsModelLoaded(iModel)) {
-		RequestModel(iModel);
-		LoadRequestedModels();
-		while(!IsModelLoaded(iModel)) Sleep(5);
+	if(iModel <= 20000 && iModel >= 0 && !ScriptCommand(&is_model_available, iModel)) {
+		ScriptCommand(&request_model, iModel);
+		ScriptCommand(&load_requested_models);
+		while(iModel <= 20000 && iModel >= 0 && !ScriptCommand(&is_model_available, iModel)) Sleep(5);
 	}
-
 	ScriptCommand(&create_pickup_with_ammo, iModel, 4, dwAmmo, fX, fY, fZ, &hnd);
 	return hnd;
 }
@@ -1221,17 +1219,18 @@ void CGame::DrawGangZone(float fPos[], DWORD dwColor)
 // R5: 0x100A1460
 void CGame::EnableClock(BYTE byteClock)
 {
-	BYTE byteClockData[] = {'%', '0', '2', 'd', ':', '%', '0', '2', 'd', 0};
+	BYTE byteClockData[] = {'%','0','2','d',':','%','0','2','d',0};
 	UnFuck(0x859A6C,10);
-	if (byteClock)
-	{
-		ToggleThePassingOfTime(1);
+	if(byteClock) {
+		UnFuck(0x52CF10,1);
+		*(PBYTE)0x52CF10 = 0x56;
+		field_69 = TRUE;
 		memcpy((PVOID)0x859A6C, byteClockData, 10);
-	}
-	else
-	{
-		ToggleThePassingOfTime(0);
-		memset((PVOID)0x859A6C,0,10);
+	} else {
+		UnFuck(0x52CF10,1);
+		*(PBYTE)0x52CF10 = 0xC3;
+		field_69 = FALSE;
+		memset((PVOID)0x859A6C, 0, 10);
 	}
 }
 

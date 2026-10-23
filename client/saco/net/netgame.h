@@ -74,6 +74,7 @@ public:
 	DWORD GetTime();
 	int GetGameState() { return m_iGameState; };
 	BOOL GetWalkStyle() { return field_3D5->bUseCJWalk; };
+	struc_41 *GetSettings() { return field_3D5; };
 
 	CVehiclePool * GetVehiclePool() { return m_pPools ? m_pPools->pVehiclePool : NULL; }
 	CPlayerPool * GetPlayerPool() { return m_pPools ? m_pPools->pPlayerPool : NULL; }

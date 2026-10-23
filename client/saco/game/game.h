@@ -98,6 +98,8 @@ public:
 	void	MakeRaceCheckpoint();
 	void	DisableRaceCheckpoint();
 	void   SetRaceCheckpointInformation(BYTE byteType, VECTOR *pos, VECTOR *next, float fSize);
+	void   SetCheckpointsEnabled(BOOL b) { m_bCheckpointsEnabled = b; }
+	void   SetRaceCheckpointsEnabled(BOOL b) { m_bRaceCheckpointsEnabled = b; }
 
 	DWORD	CreateRadarMarkerIcon(int iMarkerType, float fX, float fY, float fZ, DWORD dwColor, int iStyle);
 	void	DisableMarker(DWORD dwMarkerID);

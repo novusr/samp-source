@@ -3,6 +3,8 @@
 
 extern CNetGame *pNetGame;
 extern CScoreBoard *pScoreBoard;
+extern CGame *pGame;
+extern RakNetStatisticsStruct RakServerStats;
 
 // TODO: these RPCs
 void Unk22(RPCParameters *rpcParams) {}
@@ -10,10 +12,68 @@ void Unk24(RPCParameters *rpcParams) {}
 void Unk3A(RPCParameters *rpcParams) {}
 void Unk3B(RPCParameters *rpcParams) {}
 void Unk3D(RPCParameters *rpcParams) {}
-void SetCheckpoint(RPCParameters *rpcParams) {}
-void DisableCheckpoint(RPCParameters *rpcParams) {}
-void SetRaceCheckpoint(RPCParameters *rpcParams) {}
-void DisableRaceCheckpoint(RPCParameters *rpcParams) {}
+
+// R5: 0x10010170
+void SetCheckpoint(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	float fX, fY, fZ, fSize;
+
+	bsData.Read(fX);
+	bsData.Read(fY);
+	bsData.Read(fZ);
+	bsData.Read(fSize);
+
+	VECTOR Pos, Extent;
+	Pos.X = fX; Pos.Y = fY; Pos.Z = fZ;
+	Extent.X = fSize; Extent.Y = fSize; Extent.Z = fSize;
+
+	if (pGame) {
+		pGame->SetCheckpointInformation(&Pos, &Extent);
+		pGame->SetCheckpointsEnabled(TRUE);
+	}
+}
+
+// R5: 0x1000E5A0
+void DisableCheckpoint(RPCParameters *rpcParams)
+{
+	if (pGame) pGame->SetCheckpointsEnabled(FALSE);
+}
+
+// R5: 0x10010280
+void SetRaceCheckpoint(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	float fX, fY, fZ;
+	BYTE byteType;
+	VECTOR Pos, Next;
+
+	bsData.Read(byteType);
+	bsData.Read(fX); bsData.Read(fY); bsData.Read(fZ);
+	Pos.X = fX; Pos.Y = fY; Pos.Z = fZ;
+
+	bsData.Read(fX); bsData.Read(fY); bsData.Read(fZ);
+	Next.X = fX; Next.Y = fY; Next.Z = fZ;
+
+	bsData.Read(fX);
+
+	if (pGame) {
+		pGame->SetRaceCheckpointInformation(byteType, &Pos, &Next, fX);
+		pGame->SetRaceCheckpointsEnabled(TRUE);
+	}
+}
+
+// R5: 0x1000E5B0
+void DisableRaceCheckpoint(RPCParameters *rpcParams)
+{
+	if (pGame) pGame->SetRaceCheckpointsEnabled(FALSE);
+}
 
 // R5: 0x100103E0
 void UpdateScoresPingsIPs(RPCParameters *rpcParams)
@@ -41,18 +101,98 @@ void UpdateScoresPingsIPs(RPCParameters *rpcParams)
 	}
 }
 
-void SvrStats(RPCParameters *rpcParams) {}
+// R5: 0x1000E5C0
+void SvrStats(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	bsData.Read((char *)&RakServerStats, sizeof(RakNetStatisticsStruct));
+}
+
 void GameModeRestart(RPCParameters *rpcParams) {}
 void ConnectionRejected(RPCParameters *rpcParams) {}
 void ClientMessage(RPCParameters *rpcParams) {}
-void WorldTime(RPCParameters *rpcParams) {}
+
+// R5: 0x1000EEF0
+void WorldTime(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	BYTE byteWorldTime;
+	bsData.Read(byteWorldTime);
+	if (pNetGame && pNetGame->GetSettings()) {
+		pNetGame->GetSettings()->field_2C = byteWorldTime;
+	}
+}
+
 void Pickup(RPCParameters *rpcParams) {}
 void DestroyPickup(RPCParameters *rpcParams) {}
 void DestroyWeaponPickup(RPCParameters *rpcParams) {}
 void ScmEvent(RPCParameters *rpcParams) {}
-void Weather(RPCParameters *rpcParams) {}
-void SetTimeEx(RPCParameters *rpcParams) {}
-void ToggleClock(RPCParameters *rpcParams) {}
+
+// R5: 0x1000F370
+void Weather(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	BYTE byteWeather;
+	bsData.Read(byteWeather);
+	if (pNetGame && pNetGame->GetSettings()) {
+		pNetGame->GetSettings()->field_2E = byteWeather;
+	}
+	if (pGame) {
+		pGame->SetWorldWeather(byteWeather);
+	}
+}
+
+// R5: 0x1000F420
+void SetTimeEx(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	BYTE byteHour;
+	BYTE byteMinute;
+	bsData.Read(byteHour);
+	bsData.Read(byteMinute);
+
+	if (pGame) {
+		pGame->SetWorldTime(byteHour, byteMinute);
+	}
+	if (pNetGame && pNetGame->GetSettings()) {
+		pNetGame->GetSettings()->field_2C = byteHour;
+		pNetGame->GetSettings()->field_2D = byteMinute;
+	}
+}
+
+// R5: 0x1000F500
+void ToggleClock(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+
+	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
+	BYTE byteClock;
+	bsData.Read(byteClock);
+	if (pGame) pGame->EnableClock(byteClock);
+	if (pNetGame && pNetGame->GetSettings()) {
+		if (byteClock) {
+			pNetGame->GetSettings()->field_1F = 0;
+		}
+		else {
+			pNetGame->GetSettings()->field_1F = 1;
+			if (pGame) {
+				pGame->GetWorldTime((BYTE*)&pNetGame->GetSettings()->field_2C, (BYTE*)&pNetGame->GetSettings()->field_2D);
+			}
+		}
+	}
+}
 void Unk3C(RPCParameters *rpcParams) {}
 void WorldPlayerAdd(RPCParameters *rpcParams) {}
 void WorldPlayerDeath(RPCParameters *rpcParams) {}
