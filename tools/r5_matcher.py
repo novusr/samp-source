@@ -342,6 +342,34 @@ def format_asm_diff(candidate_code: bytes, expected_code: bytes, base_address: i
     return "\n".join(lines)
 
 
+def inject_method_declaration_if_needed(source_content: str, class_name: str, candidate_cpp: str) -> str:
+    """Inject member function declaration into class definition if missing."""
+    if not class_name or class_name == "Global":
+        return source_content
+
+    pattern = rf"(\b[\w\*\s&]+?)\s+{re.escape(class_name)}::(\w+)\s*\(([^)]*)\)"
+    match = re.search(pattern, candidate_cpp)
+    if not match:
+        return source_content
+
+    ret_type = match.group(1).strip()
+    method_name = match.group(2).strip()
+    args = match.group(3).strip()
+    decl = f"{ret_type} {method_name}({args});"
+
+    cls_pattern = rf"(class\s+{re.escape(class_name)}\s*\{{[^}}]*?)(\n\s*\}};)"
+    cls_match = re.search(cls_pattern, source_content, re.DOTALL)
+    if not cls_match:
+        return source_content
+
+    cls_body = cls_match.group(1)
+    if method_name in cls_body:
+        return source_content
+
+    new_cls = cls_body + f"    {decl}\n" + cls_match.group(2)
+    return source_content[:cls_match.start()] + new_cls + source_content[cls_match.end():]
+
+
 def verify_candidate_in_staging(
     candidate_cpp: str,
     target: TargetFunction,
@@ -363,7 +391,8 @@ def verify_candidate_in_staging(
 
     # Create staging source with candidate appended
     orig_content = orig_src_file.read_text(encoding="utf-8") if orig_src_file.exists() else '#include "foundation/layouts.h"\n'
-    staged_content = orig_content + "\n\n// Candidate matching implementation\n" + candidate_cpp + "\n"
+    base_content = inject_method_declaration_if_needed(orig_content, target.class_name, candidate_cpp)
+    staged_content = base_content + "\n\n// Candidate matching implementation\n" + candidate_cpp + "\n"
     staging_src.write_text(staged_content, encoding="utf-8")
 
     # Compile
@@ -466,7 +495,8 @@ def run_target_reversal(
                 # 1. Append code to target source file
                 target_src = ROOT / "src" / f"{target.unit}.cpp"
                 current_src = target_src.read_text(encoding="utf-8") if target_src.exists() else '#include "foundation/layouts.h"\n'
-                new_src = current_src + f"\n\n// Matched {target.name} (0x{target.address_hex})\n" + candidate_cpp + "\n"
+                base_src = inject_method_declaration_if_needed(current_src, target.class_name, candidate_cpp)
+                new_src = base_src + f"\n\n// Matched {target.name} (0x{target.address_hex})\n" + candidate_cpp + "\n"
                 target_src.write_text(new_src, encoding="utf-8")
 
                 # 2. Add entry to manifest.json
