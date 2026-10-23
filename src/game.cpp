@@ -119,6 +119,7 @@ public:
     void SetEngineState(int bState);
     void SetSirenOn(unsigned char byteState);
     int IsSirenOn();
+    float GetHealth();
 };
 
 float CVehicle::GetTankRotX() {
@@ -142,6 +143,11 @@ void CVehicle::SetHydraThrusters(unsigned long dwDirection) {
 void CVehicle::SetHealth(float fHealth) {
     if (!m_pVehicle) return;
     m_pVehicle->fHealth = fHealth;
+}
+
+float CVehicle::GetHealth() {
+    if (m_pVehicle) return m_pVehicle->fHealth;
+    return 0.0f;
 }
 
 void CVehicle::SetAlarmState(unsigned short wState) {

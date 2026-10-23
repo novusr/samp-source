@@ -1499,6 +1499,20 @@
     },
     {
       "unit": "pools",
+      "name": "?GetArmour@CPlayerPed@@QAEMXZ",
+      "symbol": "?GetArmour@CPlayerPed@@QAEMXZ",
+      "rva": 703888,
+      "size": 24,
+      "sha256": "25f76ab9bab08d6d96339fa6e8a02585053bc3fc83add1e7e879164cd926df65",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
       "name": "CPlayerPed.SetArmour",
       "symbol": "?SetArmour@CPlayerPed@@QAEXM@Z",
       "rva": 703920,
@@ -1533,6 +1547,20 @@
       "features": [
         "leaf",
         "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "?IsDead@CPlayerPed@@QAEHXZ",
+      "symbol": "?IsDead@CPlayerPed@@QAEHXZ",
+      "rva": 704016,
+      "size": 38,
+      "sha256": "592ef24ff90eaf205ac719cf36f95d7abfdb8586b161d8bbaedb7e1a799b6d4c",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
       ],
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
@@ -1966,6 +1994,20 @@
         "bitwise"
       ],
       "sha256": "b7674881318d52699c4e8e951557983469f836716d5cb195add505af885cef84",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?GetHealth@CVehicle@@QAEMXZ",
+      "symbol": "?GetHealth@CVehicle@@QAEMXZ",
+      "rva": 750240,
+      "size": 21,
+      "sha256": "d0efb5bf7da89429363e1df9eb028c2cb27b711afccab782357e68c316ea7d0a",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
     {

@@ -116,6 +116,8 @@ public:
     int IsAPassenger();
     _WEAPON_SLOT_TYPE* FindWeaponSlot(unsigned long dwWeapon);
     int IsInJetpackMode();    float GetHealth();
+    float GetArmour();
+    int IsDead();
 
 };
 
@@ -531,4 +533,26 @@ float CPlayerPed::GetHealth()
 	}
 
 	return m_pPed->fHealth;
+}
+
+// Matched ?GetArmour@CPlayerPed@@QAEMXZ (0x100abd90)
+float CPlayerPed::GetArmour()
+{
+	if (!m_pPed)
+	{
+		return 0.0f;
+	}
+
+	return m_pPed->fArmour;
+}
+
+// Matched ?IsDead@CPlayerPed@@QAEHXZ (0x100abe10)
+int CPlayerPed::IsDead()
+{
+	if (m_pPed && m_pPed->fHealth > 0.0f)
+	{
+		return 0;
+	}
+
+	return 1;
 }
