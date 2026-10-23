@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+// R5: 0x10070880
 CUnkClass14::CUnkClass14(IDirect3DDevice9 *pD3DDevice)
 {
 	m_pD3DDevice = pD3DDevice;

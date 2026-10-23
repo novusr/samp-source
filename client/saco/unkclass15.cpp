@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+// R5: 0x1006CCC0
 CUnkClass15::CUnkClass15()
 {
 	m_pCamera = NULL;
@@ -12,6 +13,7 @@ CUnkClass15::CUnkClass15()
 	FUNC_1006BE40();
 }
 
+// R5: 0x1006BE40
 bool CUnkClass15::FUNC_1006BE40()
 {
 	RwRGBAReal color;

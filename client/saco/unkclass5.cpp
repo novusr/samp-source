@@ -1,6 +1,7 @@
 
 #include "main.h"
 
+// R5: 0x1006AFD0
 CUnkClass5::CUnkClass5(IDirect3DDevice9 *pD3DDevice)
 {
 	field_0 = 0;
