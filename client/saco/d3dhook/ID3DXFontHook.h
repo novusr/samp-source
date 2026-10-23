@@ -31,4 +31,46 @@ public:
 	ID3DXFont *m_pD3DFont;
 };
 
+// Global font and color embed state
+extern DWORD r5FontEmbeddedColor;
+extern int r5FontCharacterIndex;
+extern wchar_t r5FontWideText[20000];
+extern char *r5FontOriginalText;
+extern char *r5FontStrippedText;
+extern ID3DXSprite *r5FontActualSprite;
+
+// R5: 0x100739A0
+void R5FontConvertAnsiToWide(char *source, wchar_t *destination, int capacity);
+
+// R5: 0x10073A10
+void R5FontConsumeAnsiColorEmbeds();
+
+// R5: 0x10073AE0
+void R5FontConsumeWideColorEmbeds();
+
+class R5FontSpriteProxy : public ID3DXSprite
+{
+public:
+	R5FontSpriteProxy();
+
+	HRESULT __stdcall QueryInterface(REFIID iid, void **ppv);
+	ULONG __stdcall AddRef();
+	ULONG __stdcall Release();
+	HRESULT __stdcall GetDevice(IDirect3DDevice9 **device);
+	HRESULT __stdcall GetTransform(D3DXMATRIX *transform);
+	HRESULT __stdcall SetTransform(const D3DXMATRIX *transform);
+	HRESULT __stdcall SetWorldViewRH(const D3DXMATRIX *world, const D3DXMATRIX *view);
+	HRESULT __stdcall SetWorldViewLH(const D3DXMATRIX *world, const D3DXMATRIX *view);
+	HRESULT __stdcall Begin(DWORD flags);
+	HRESULT __stdcall Draw(IDirect3DTexture9 *texture, const RECT *rect,
+	                       const D3DXVECTOR3 *center, const D3DXVECTOR3 *position,
+	                       D3DCOLOR color);
+	HRESULT __stdcall Flush();
+	HRESULT __stdcall End();
+	HRESULT __stdcall OnLostDevice();
+	HRESULT __stdcall OnResetDevice();
+};
+
+extern R5FontSpriteProxy r5FontSpriteProxy;
+
 #endif
