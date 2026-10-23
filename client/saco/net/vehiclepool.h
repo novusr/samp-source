@@ -25,14 +25,8 @@ public:
 
 	CVehiclePool();
 
-	CVehicle *GetAt(VEHICLEID id) {
-		if (id >= MAX_VEHICLES || !m_bVehicleSlotState[id]) return NULL;
-		return m_pVehicles[id];
-	}
-	BOOL GetSlotState(VEHICLEID id) {
-		if (id >= MAX_VEHICLES) return FALSE;
-		return m_bVehicleSlotState[id];
-	}
+	CVehicle *GetAt(VEHICLEID id);
+	BOOL GetSlotState(VEHICLEID id);
 	int FindGtaIDFromID(int id);
 	VEHICLEID FindIDFromGtaPtr(VEHICLE_TYPE *pGtaVehicle);
 };

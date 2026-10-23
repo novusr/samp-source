@@ -11,7 +11,8 @@ private:
 	CObject *m_pObjects[MAX_OBJECTS];
 public:
 	CObjectPool();
+	void UpdateLargestID();
 	CObject *GetObjFromGtaPtr(ENTITY_TYPE *pGtaObject);
 	int FindIDFromGtaPtr(ENTITY_TYPE *pGtaObject);
-
+	BOOL Delete(WORD id);
 };

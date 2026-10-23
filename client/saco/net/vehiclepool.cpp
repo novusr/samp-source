@@ -4,6 +4,24 @@
 
 //----------------------------------------------------
 
+// R5: 0x10001120
+CVehicle *CVehiclePool::GetAt(VEHICLEID id)
+{
+	if (id >= MAX_VEHICLES || !m_bVehicleSlotState[id]) return NULL;
+	return m_pVehicles[id];
+}
+
+//----------------------------------------------------
+
+// R5: 0x10001150
+BOOL CVehiclePool::GetSlotState(VEHICLEID id)
+{
+	if (id >= MAX_VEHICLES) return FALSE;
+	return m_bVehicleSlotState[id];
+}
+
+//----------------------------------------------------
+
 // R5: 0x1001EA10
 CVehiclePool::CVehiclePool()
 {

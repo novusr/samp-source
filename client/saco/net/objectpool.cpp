@@ -1,6 +1,18 @@
 
 #include "../main.h"
 
+extern CGame *pGame;
+
+// R5: 0x100127A0
+void CObjectPool::UpdateLargestID()
+{
+	int last = 0;
+	for (int i = 0; i < MAX_OBJECTS; i++) {
+		if (m_bObjectSlotState[i]) last = i;
+	}
+	m_iLastObjectId = last;
+}
+
 // R5: 0x10012800
 CObjectPool::CObjectPool()
 {
@@ -11,6 +23,19 @@ CObjectPool::CObjectPool()
 	}
 	m_iLastObjectId = 0;
 };
+
+// R5: 0x10012850
+BOOL CObjectPool::Delete(WORD id)
+{
+	if (id >= MAX_OBJECTS || !m_bObjectSlotState[id] || !m_pObjects[id]) return FALSE;
+	CCamera *camera = pGame->GetCamera();
+	if (camera && camera->field_0 == (CEntity *)m_pObjects[id]) camera->FUNC_1009D660(NULL);
+	m_bObjectSlotState[id] = FALSE;
+	delete m_pObjects[id];
+	m_pObjects[id] = NULL;
+	UpdateLargestID();
+	return TRUE;
+}
 
 // Transferred from michael-fa0.2.5; R5 uses its inclusive last-object ID
 // and invalid ID65535. CObject remains incomplete; only its verified Entity
