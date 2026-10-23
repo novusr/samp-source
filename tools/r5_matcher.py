@@ -274,8 +274,8 @@ COMPLETION_GUARD = (
 
 def invoke_agy(
     prompt: str,
-    model: str = "gemini-3.8-flash-high",
-    effort: str = "high",
+    model: str = "gemini-3.8-flash-medium",
+    effort: str = "medium",
     conversation_id: str | None = None,
     timeout_s: int = 300,
 ) -> tuple[str, str | None, float]:
@@ -617,8 +617,8 @@ def main():
     parser.add_argument("--workers", type=int, default=3, help="Number of parallel workers (default: 3)")
     parser.add_argument("--max-size", type=int, default=None, help="Maximum function size in bytes")
     parser.add_argument("--min-size", type=int, default=1, help="Minimum function size in bytes (default: 1)")
-    parser.add_argument("--model", default="gemini-3.8-flash-high", help="LLM model for agy (default: gemini-3.8-flash-high)")
-    parser.add_argument("--effort", default="high", help="Reasoning effort level (low|medium|high|xhigh|max)")
+    parser.add_argument("--model", default="gemini-3.8-flash-medium", help="LLM model for agy (default: gemini-3.8-flash-medium)")
+    parser.add_argument("--effort", default="medium", help="Reasoning effort level (low|medium|high|xhigh|max)")
     parser.add_argument("--max-attempts", type=int, default=3, help="Max self-correction attempts per function (default: 3)")
     parser.add_argument("--commit", action="store_true", help="Automatically git commit successful matches")
     parser.add_argument("--verbose", action="store_true", help="Print verbose diagnostic details")
