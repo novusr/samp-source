@@ -38,7 +38,12 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR):
     bin_dir = find_toolchain(msvc_dir)
     toolchain_config = json.loads((ROOT / "config/toolchain.json").read_text())
     options = toolchain_config["options"]
-    units = ["pools", "actors", "camera", "game"]
+    manifest_path = ROOT / "config/manifest.json"
+    if manifest_path.exists():
+        manifest_data = json.loads(manifest_path.read_text())
+        units = sorted({fn["unit"] for fn in manifest_data.get("functions", [])})
+    else:
+        units = ["pools", "actors", "camera", "game"]
 
     out_dir = ROOT / "build" / run
     out_src_dir = out_dir / "src"
