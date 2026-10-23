@@ -1,5 +1,6 @@
-
 #pragma once
+
+#include <windows.h>
 
 class CAudioStream // size=1
 {
@@ -12,7 +13,7 @@ public:
 		field_0 = 0;
 	}
 
-	void Reset();
+	BOOL Reset();
 	void Stop();
 	void ConstructInfo();
 	void SyncProc();

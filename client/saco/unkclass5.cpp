@@ -1,5 +1,6 @@
-
 #include "main.h"
+
+extern CFontRender *pDefaultFont;
 
 // R5: 0x1006AFD0
 CUnkClass5::CUnkClass5(IDirect3DDevice9 *pD3DDevice)
@@ -44,5 +45,23 @@ void CUnkClass5::ResetDialogControls(CDXUTDialog *pDialog)
 		m_pListBox->field_4D = 2;
 		m_pListBox->field_51 = field_23C;
 		m_pListBox->field_55 = field_240;
+	}
+}
+
+// R5: 0x1006A760
+void CUnkClass5::UpdateLayout()
+{
+	if (!m_pDialog) return;
+	m_pDialog->SetSize(field_14, field_18);
+	RECT client;
+	GetClientRect(*(HWND*)0xC97C1C, &client);
+	field_C = client.right / 2 - field_14 / 2;
+	field_10 = client.bottom / 2 - field_18 / 2;
+	m_pDialog->SetLocation(field_C, field_10);
+	field_24 = field_18 - m_pDialog->GetCaptionHeight();
+	SIZE text = pDefaultFont->MeasureText2("Y");
+	if (m_pListBox) {
+		m_pListBox->SetLocation(2, text.cy + 2);
+		m_pListBox->SetSize(field_14 - 4, field_24 - text.cy - 4);
 	}
 }
