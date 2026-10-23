@@ -736,3 +736,112 @@ unsigned int GetVehicleSubtypeFromVehiclePtr(_VEHICLE_TYPE *pVehicle)
 
     return 0;
 }
+
+
+// Matched ?Font_SetJustify@@YAXH@Z (0x1009feb0)
+__declspec(naked) void Font_SetJustify(int on)
+{
+    __asm {
+        mov eax, 0x719610
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x719490
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7195b0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7194f0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7195c0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7195e0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7194d0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x7194e0
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x719570
+        jmp eax
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        int 3
+        mov eax, 0x69de90
+        ret
+    }
+}

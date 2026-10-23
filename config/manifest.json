@@ -1109,6 +1109,19 @@
     },
     {
       "unit": "game",
+      "name": "?Font_SetJustify@@YAXH@Z",
+      "symbol": "?Font_SetJustify@@YAXH@Z",
+      "rva": 655024,
+      "size": 150,
+      "sha256": "044eabfa791ba5752ee70f010c684731829acdd5b06d20ba3871e026b74d18dd",
+      "features": [
+        "leaf",
+        "branching"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "R5ChatGameMenuView.IsMenuActive",
       "symbol": "?IsMenuActive@R5ChatGameMenuView@@QAEHXZ",
       "rva": 657696,
