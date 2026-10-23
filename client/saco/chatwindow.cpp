@@ -3,6 +3,26 @@
 #include "main.h"
 
 extern CConfig *pConfig;
+extern CGame *pGame;
+extern CCmdWindow *pCmdWindow;
+extern void RemoveColorEmbedsFromString(char *text);
+
+class R5ChatGameMenuView { public: BOOL IsMenuActive(); };
+class R5ChatInputQueryView { public: IDirect3DDevice9 *device; CDXUTDialog *dialog; CDXUTIMEEditBox *edit; bool IsImeInteractionActive(); };
+
+class R5ChatScrollBarNavigationView : public CDXUTScrollBar
+{
+public:
+	void R5SetTrackPos(int position);
+};
+
+// R5: 0x100670E0
+void R5ChatScrollBarNavigationView::R5SetTrackPos(int position)
+{
+	m_nPosition = position;
+	Cap();
+	UpdateThumbRect();
+}
 
 //----------------------------------------------------
 
@@ -66,6 +86,16 @@ void CChatWindow::MeasureDimensions()
 	field_63E2 = rect.bottom - rect.top;
 	m_pFontRender->field_0->DrawTextA(NULL, "[19:58:34]", -1, &rect, DT_CALCRECT | DT_SINGLELINE, 0xFF000000);
 	field_63E6 = rect.right - rect.left;
+}
+
+//----------------------------------------------------
+
+// R5: 0x100671A0
+void CChatWindow::ReleaseSurfaces()
+{
+	SAFE_RELEASE(field_63BE);
+	SAFE_RELEASE(field_63BA);
+	SAFE_RELEASE(field_63B6);
 }
 
 //----------------------------------------------------
@@ -184,6 +214,34 @@ void CChatWindow::SetPageSize(int nValue)
 	}
 }
 
+//----------------------------------------------------
+
+// R5: 0x100672D0
+void CChatWindow::PageUp()
+{
+	if(!field_8 || !m_pScrollBar) return;
+	if(((R5ChatGameMenuView*)pGame)->IsMenuActive()) return;
+	if(((R5ChatInputQueryView*)pCmdWindow)->IsImeInteractionActive()) return;
+	int position = m_pScrollBar->GetTrackPos() - field_0;
+	if(position < 1) position = 1;
+	((R5ChatScrollBarNavigationView*)m_pScrollBar)->R5SetTrackPos(position);
+}
+
+//----------------------------------------------------
+
+// R5: 0x10067330
+void CChatWindow::PageDown()
+{
+	if(!field_8 || !m_pScrollBar) return;
+	if(((R5ChatGameMenuView*)pGame)->IsMenuActive()) return;
+	if(((R5ChatInputQueryView*)pCmdWindow)->IsImeInteractionActive()) return;
+	int position = m_pScrollBar->GetTrackPos();
+	if(position == 1) position = field_0;
+	else position += field_0;
+	if(position > 100) position = 100;
+	((R5ChatScrollBarNavigationView*)m_pScrollBar)->R5SetTrackPos(position);
+}
+
 
 inline void CChatWindow::PushBack()
 {
@@ -259,4 +317,92 @@ void CChatWindow::Log(int type, CHAR *text, CHAR *prefix)
 void CChatWindow::ResetPage()
 {
     if(m_pScrollBar) m_pScrollBar->SetTrackPos(90);
+}
+
+//----------------------------------------------------
+
+// R5: 0x100673C0
+void CChatWindow::ScrollWheel(int delta)
+{
+	if(field_8 && m_pScrollBar) {
+		UINT lines;
+		SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &lines, 0);
+		m_pScrollBar->Scroll(-(delta * (int)lines));
+	}
+}
+
+//----------------------------------------------------
+
+// R5: 0x10067420
+void CChatWindow::FilterInvalidChars(char *text)
+{
+	while(*text) {
+		if(*text > 0 && *text < ' ') {
+			*text = ' ';
+		}
+		text++;
+	}
+}
+
+//----------------------------------------------------
+
+// R5: 0x10067470
+void CChatWindow::RenderText(char *text, RECT rect, DWORD color)
+{
+	ID3DXFont *shadowFont = m_pFontRender->field_8;
+	ID3DXFontHook *textFont = m_pFontRender->field_0;
+	int textLength = strlen(text);
+
+	if (field_8 == 2)
+	{
+		char stripped[512] = {0};
+		strncpy(stripped, text, 511);
+		RemoveColorEmbedsFromString(stripped);
+		int shadowLength = strlen(stripped);
+		const DWORD NativeScreenWidth = 0xC17044;
+
+		if (*(int*)NativeScreenWidth > 1280)
+		{
+			rect.top -= 2; rect.bottom -= 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.top += 1; rect.bottom += 1;
+			rect.left -= 1; rect.right -= 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left += 1; rect.right += 1;
+			rect.left += 1; rect.right += 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left -= 1; rect.right -= 1;
+			rect.top += 1; rect.bottom += 1;
+			rect.top += 2; rect.bottom += 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.top -= 1; rect.bottom -= 1;
+			rect.left -= 1; rect.right -= 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left += 1; rect.right += 1;
+			rect.left += 1; rect.right += 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left -= 1; rect.right -= 1;
+			rect.top -= 1; rect.bottom -= 1;
+			rect.left -= 2; rect.right -= 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left += 2; rect.right += 2;
+			rect.left += 2; rect.right += 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left -= 2; rect.right -= 2;
+		}
+		else
+		{
+			rect.top -= 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.top += 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.top -= 1; rect.left -= 1;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left += 2;
+			shadowFont->DrawTextA(field_63A6, stripped, shadowLength, &rect, DT_NOCLIP | DT_SINGLELINE, 0xFF000000);
+			rect.left -= 1;
+		}
+	}
+
+	textFont->DrawTextA(field_63A6, text, textLength, &rect, DT_NOCLIP | DT_SINGLELINE, color | 0xFF000000);
 }

@@ -70,4 +70,11 @@ public:
 	void ResetDialogControls(CDXUTDialog *pGameUI);
 
 	CChatWindow(IDirect3DDevice9 *pD3DDevice, CFontRender *pFontRender, CHAR *szChatLogFile);
+
+	void ReleaseSurfaces();
+	void PageUp();
+	void PageDown();
+	void ScrollWheel(int delta);
+	void FilterInvalidChars(char *text);
+	void RenderText(char *text, RECT rect, DWORD color);
 };
