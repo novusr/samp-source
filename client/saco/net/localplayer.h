@@ -12,8 +12,14 @@ private:
 	//BYTE field_3C[3];
 	BYTE field_3F[31];
 	BYTE field_5E[54];
-	//WORD field_92;
-	BYTE field_94[68];
+	union {
+		BYTE field_94[68];
+		struct {
+			WORD wLRAnalog;
+			WORD wUDAnalog;
+			WORD wKeys;
+		};
+	};
 	BYTE field_D8[24];
 	DWORD field_F0;
 	DWORD field_F4;
@@ -105,6 +111,7 @@ public:
 
 	void ReturnToClassSelection() { m_bWantsAnotherClass = TRUE; };
 
+	BOOL AreKeysChanged(WORD keys, WORD ud, WORD lr);
 	BOOL IsInRCMode() { return m_bInRCMode; };
 };
 

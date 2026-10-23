@@ -35,14 +35,8 @@ public:
 		pPlayer->m_PlayerName = szName;
 	}
 
-	CLocalPlayer * GetLocalPlayer() { return m_pLocalPlayer; };
-
-	CRemotePlayer* GetAt(PLAYERID playerId) {
-		if(playerId > MAX_PLAYERS) { return NULL; }
-		CNetPlayer *pNetPlayer = m_pPlayers[playerId];
-		if(pNetPlayer) return pNetPlayer->m_pRemotePlayer;
-		return NULL;
-	};
+	CLocalPlayer * GetLocalPlayer();
+	CRemotePlayer* GetAt(PLAYERID playerId);
 
 	PLAYERID GetLocalPlayerID() { return m_LocalPlayerID; };
 

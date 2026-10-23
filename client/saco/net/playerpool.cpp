@@ -31,6 +31,25 @@ BOOL CPlayerPool::GetSlotState(PLAYERID playerId)
 
 //----------------------------------------------------
 
+// R5: 0x100010F0
+CRemotePlayer* CPlayerPool::GetAt(PLAYERID playerId)
+{
+	if (playerId > MAX_PLAYERS) { return NULL; }
+	CNetPlayer *pNetPlayer = m_pPlayers[playerId];
+	if (pNetPlayer) return pNetPlayer->m_pRemotePlayer;
+	return NULL;
+}
+
+//----------------------------------------------------
+
+// R5: 0x10001A40
+CLocalPlayer* CPlayerPool::GetLocalPlayer()
+{
+	return m_pLocalPlayer;
+}
+
+//----------------------------------------------------
+
 // R5: 0x10013750
 void CPlayerPool::UpdateLargestId()
 {

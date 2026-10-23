@@ -118,3 +118,13 @@ DWORD CLocalPlayer::GetPlayerColorAsARGB()
 
 //----------------------------------------------------
 
+// R5: 0x10004300
+BOOL CLocalPlayer::AreKeysChanged(WORD keys, WORD ud, WORD lr)
+{
+	if (keys == wKeys && ud == wUDAnalog && lr == wLRAnalog) {
+		return FALSE;
+	}
+	return TRUE;
+}
+
+//----------------------------------------------------
