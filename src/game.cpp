@@ -38,8 +38,9 @@ unsigned long CCryptoContext::GetProvider() {
 extern "C" {
 void* __cdecl memset(void*, int, unsigned int);
 void* __cdecl memcpy(void*, const void*, unsigned int);
+double __cdecl sqrt(double);
 }
-#pragma intrinsic(memset, memcpy)
+#pragma intrinsic(memset, memcpy, sqrt)
 
 #pragma pack(push, 1)
 struct MENU_INT {
@@ -750,6 +751,57 @@ _PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex)
 		mov pPed, eax
 	}
 	return pPed;
+}
+
+// Matched ?GamePool_FindPlayerPed@@YGPAU_PED_TYPE@@XZ (0x100b3c60)
+_PED_TYPE* __stdcall GamePool_FindPlayerPed()
+{
+	return *(_PED_TYPE**)0xB7CD98;
+}
+
+// Matched ?GamePool_GetBuilding@@YAPAU_BUILDING_TYPE@@XZ (0x100b3c70)
+struct _BUILDING_TYPE;
+_BUILDING_TYPE* GamePool_GetBuilding()
+{
+	_BUILDING_TYPE* pBuilding;
+	__asm
+	{
+		mov eax, 0xB74498
+		mov edx, [eax]
+		mov eax, [edx]
+		mov pBuilding, eax
+	}
+	return pBuilding;
+}
+
+// Matched ?GamePool_GetDummy@@YAPAU_DUMMY_TYPE@@XZ (0x100b3c90)
+struct _DUMMY_TYPE;
+_DUMMY_TYPE* GamePool_GetDummy()
+{
+	_DUMMY_TYPE* pDummy;
+	__asm
+	{
+		mov eax, 0xB744A0
+		mov edx, [eax]
+		mov eax, [edx]
+		mov pDummy, eax
+	}
+	return pDummy;
+}
+
+// Matched ?GamePool_GetObject@@YAPAU_OBJECT_TYPE@@XZ (0x100b3cb0)
+struct _OBJECT_TYPE;
+_OBJECT_TYPE* GamePool_GetObject()
+{
+	_OBJECT_TYPE* pObject;
+	__asm
+	{
+		mov eax, 0xB7449C
+		mov edx, [eax]
+		mov eax, [edx]
+		mov pObject, eax
+	}
+	return pObject;
 }
 
 

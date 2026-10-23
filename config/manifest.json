@@ -1768,6 +1768,58 @@
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     },
     {
+      "unit": "game",
+      "name": "?GamePool_FindPlayerPed@@YGPAU_PED_TYPE@@XZ",
+      "symbol": "?GamePool_FindPlayerPed@@YGPAU_PED_TYPE@@XZ",
+      "rva": 736352,
+      "size": 6,
+      "sha256": "a80c200c1569f52abe70b43975322baa08db1d1cd6d0f05f29ba7a90acadce00",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?GamePool_GetBuilding@@YAPAU_BUILDING_TYPE@@XZ",
+      "symbol": "?GamePool_GetBuilding@@YAPAU_BUILDING_TYPE@@XZ",
+      "rva": 736368,
+      "size": 18,
+      "sha256": "a57971f6a89c622b3c5953a781923e22321a54f48d8ce6a1f1058bfb4b3916ad",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?GamePool_GetDummy@@YAPAU_DUMMY_TYPE@@XZ",
+      "symbol": "?GamePool_GetDummy@@YAPAU_DUMMY_TYPE@@XZ",
+      "rva": 736400,
+      "size": 18,
+      "sha256": "818b533e1c76f4c271f4acbc9b49f63be4e3c3c82affd61626de28e41ba0d643",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "?GamePool_GetObject@@YAPAU_OBJECT_TYPE@@XZ",
+      "symbol": "?GamePool_GetObject@@YAPAU_OBJECT_TYPE@@XZ",
+      "rva": 736432,
+      "size": 18,
+      "sha256": "d7c68820a7e0e0d96af73093ed3195dde7e65dbbc4f11f46b153573e0f8de383",
+      "features": [
+        "leaf",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
       "unit": "camera",
       "name": "Math.FloatDifference",
       "symbol": "?FloatDifference@@YAMMM@Z",
