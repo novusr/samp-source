@@ -1,6 +1,9 @@
 
 #include "../main.h"
 
+extern CNetGame *pNetGame;
+extern CScoreBoard *pScoreBoard;
+
 // TODO: these RPCs
 void Unk22(RPCParameters *rpcParams) {}
 void Unk24(RPCParameters *rpcParams) {}
@@ -11,8 +14,33 @@ void SetCheckpoint(RPCParameters *rpcParams) {}
 void DisableCheckpoint(RPCParameters *rpcParams) {}
 void SetRaceCheckpoint(RPCParameters *rpcParams) {}
 void DisableRaceCheckpoint(RPCParameters *rpcParams) {}
+
 // R5: 0x100103E0
-void UpdateScoresPingsIPs(RPCParameters *rpcParams) {}
+void UpdateScoresPingsIPs(RPCParameters *rpcParams)
+{
+	PCHAR Data = (PCHAR)rpcParams->input;
+	int bitLength = rpcParams->numberOfBitsOfData;
+	unsigned bytes = bitLength / 8;
+	RakNet::BitStream bsData(Data, bytes + 1, false);
+	if (bytes) {
+		unsigned recordCount = bytes / 10;
+		CPlayerPool *pool = pNetGame ? pNetGame->GetPlayerPool() : NULL;
+		PLAYERID playerId;
+		int score;
+		DWORD ping;
+		for (PLAYERID i = 0; i < recordCount; ++i) {
+			bsData.Read(playerId);
+			bsData.Read(score);
+			bsData.Read(ping);
+			if (pool && playerId < MAX_PLAYERS) {
+				pool->UpdateScore(playerId, score);
+				pool->UpdatePing(playerId, ping);
+			}
+		}
+		if (pScoreBoard) pScoreBoard->UpdatePlayers();
+	}
+}
+
 void SvrStats(RPCParameters *rpcParams) {}
 void GameModeRestart(RPCParameters *rpcParams) {}
 void ConnectionRejected(RPCParameters *rpcParams) {}
@@ -28,15 +56,62 @@ void ToggleClock(RPCParameters *rpcParams) {}
 void Unk3C(RPCParameters *rpcParams) {}
 void WorldPlayerAdd(RPCParameters *rpcParams) {}
 void WorldPlayerDeath(RPCParameters *rpcParams) {}
+
 // R5: 0x10010E00
-void WorldPlayerRemove(RPCParameters *rpcParams) {}
+void WorldPlayerRemove(RPCParameters *rpcParams)
+{
+	PCHAR Data = (PCHAR)rpcParams->input;
+	int bitLength = rpcParams->numberOfBitsOfData;
+	RakNet::BitStream bsData(Data, bitLength / 8 + 1, false);
+	PLAYERID playerId = 0;
+	CPlayerPool *pool = pNetGame ? pNetGame->GetPlayerPool() : NULL;
+	bsData.Read(playerId);
+	if (pool) {
+		CRemotePlayer *remote = pool->GetAt(playerId);
+		if (remote) remote->Remove();
+	}
+}
+
 void WorldVehicleAdd(RPCParameters *rpcParams) {}
 void WorldVehicleRemove(RPCParameters *rpcParams) {}
 void DamageVehicle(RPCParameters *rpcParams) {}
 void Unk18(RPCParameters *rpcParams) {}
 void EnterVehicle(RPCParameters *rpcParams) {}
 void ExitVehicle(RPCParameters *rpcParams) {}
-void ServerJoin(RPCParameters *rpcParams) {}
+
+// R5: 0x1000FCE0
+void ServerJoin(RPCParameters *rpcParams)
+{
+	PCHAR Data = (PCHAR)rpcParams->input;
+	int bitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+	CHAR playerName[256];
+	PLAYERID playerId;
+	BYTE nameLength;
+	BYTE npc;
+	BOOL isNPC;
+	DWORD playerColor;
+	RakNet::BitStream bsData(Data, bitLength / 8 + 1, false);
+	CPlayerPool *pool = pNetGame ? pNetGame->GetPlayerPool() : NULL;
+	memset(playerName, 0, sizeof(playerName));
+	nameLength = 0;
+	npc = 0;
+	isNPC = FALSE;
+	bsData.Read(playerId);
+	bsData.Read(playerColor);
+	bsData.Read(npc);
+	bsData.Read(nameLength);
+	bsData.Read(playerName, nameLength);
+	playerName[nameLength] = 0;
+	if (strlen(playerName) <= 24 && pool) {
+		if (npc) isNPC = TRUE;
+		pool->New(playerId, playerName, isNPC);
+		if (playerColor && pool->GetSlotState(playerId)) {
+			CRemotePlayer *pPlayer = pool->GetAt(playerId);
+			if (pPlayer) pPlayer->SetPlayerColor(playerColor);
+		}
+	}
+}
 void ServerQuit(RPCParameters *rpcParams) {}
 void InitGame(RPCParameters *rpcParams) {}
 void Chat(RPCParameters *rpcParams) {}

@@ -44,8 +44,50 @@ void ScrAddGangZone(RPCParameters *rpcParams) {}
 void ScrRemoveGangZone(RPCParameters *rpcParams) {}
 void ScrFlashGangZone(RPCParameters *rpcParams) {}
 void ScrStopFlashGangZone(RPCParameters *rpcParams) {}
-void ScrUnk56(RPCParameters *rpcParams) {}
-void ScrUnk57(RPCParameters *rpcParams) {}
+#define RPC_ScrSetMapIconTransfer RPC_ScrUnk56
+#define RPC_ScrDisableMapIconTransfer RPC_ScrUnk57
+
+// R5: 0x1001A790
+void ScrSetMapIconTransfer(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data,(iBitLength/8)+1,false);
+
+	BYTE byteStyle;
+	BYTE byteIndex;
+	BYTE byteIcon;
+	DWORD byteColor;
+	float fPos[3];
+
+	bsData.Read(byteIndex);
+	bsData.Read(fPos[0]);
+	bsData.Read(fPos[1]);
+	bsData.Read(fPos[2]);
+	bsData.Read(byteIcon);
+	bsData.Read(byteColor);
+	bsData.Read(byteStyle);
+
+	pNetGame->SetMapIcon(byteIndex, fPos[0], fPos[1], fPos[2], byteIcon, byteColor, byteStyle);
+}
+
+// R5: 0x1001A8B0
+void ScrDisableMapIconTransfer(RPCParameters *rpcParams)
+{
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	PlayerID sender = rpcParams->sender;
+
+	RakNet::BitStream bsData(Data,(iBitLength/8)+1,false);
+
+	BYTE byteIndex;
+
+	bsData.Read(byteIndex);
+
+	pNetGame->DisableMapIcon(byteIndex);
+}
 void ScrUnk58(RPCParameters *rpcParams) {}
 void ScrUnk59(RPCParameters *rpcParams) {}
 void ScrUnk5A(RPCParameters *rpcParams) {}
@@ -334,8 +376,8 @@ void RegisterScriptRPCs(RakClientInterface* pRakClient)
 	REGISTER_STATIC_RPC(pRakClient, ScrRemoveGangZone);
 	REGISTER_STATIC_RPC(pRakClient, ScrFlashGangZone);
 	REGISTER_STATIC_RPC(pRakClient, ScrStopFlashGangZone);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk56);
-	REGISTER_STATIC_RPC(pRakClient, ScrUnk57);
+	REGISTER_STATIC_RPC(pRakClient, ScrSetMapIconTransfer);
+	REGISTER_STATIC_RPC(pRakClient, ScrDisableMapIconTransfer);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk58);
 	REGISTER_STATIC_RPC(pRakClient, ScrEnableStuntBonus);
 	REGISTER_STATIC_RPC(pRakClient, ScrUnk59);
@@ -414,8 +456,8 @@ void UnRegisterScriptRPCs(RakClientInterface* pRakClient)
 	UNREGISTER_STATIC_RPC(pRakClient, ScrRemoveGangZone);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrFlashGangZone);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrStopFlashGangZone);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk56);
-	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk57);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrSetMapIconTransfer);
+	UNREGISTER_STATIC_RPC(pRakClient, ScrDisableMapIconTransfer);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk58);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrEnableStuntBonus);
 	UNREGISTER_STATIC_RPC(pRakClient, ScrUnk59);

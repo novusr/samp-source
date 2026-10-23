@@ -11,9 +11,9 @@ public:
 	char _gap4[4000];
 
 	char field_FA4[400];
-	int field_1134[MAX_VEHICLES];
-	int field_3074[MAX_VEHICLES];
-	int field_4FB4[MAX_VEHICLES];
+	CVehicle *m_pVehicles[MAX_VEHICLES];
+	BOOL m_bVehicleSlotState[MAX_VEHICLES];
+	VEHICLE_TYPE *m_pGTAVehicles[MAX_VEHICLES];
 
 	char _gap6EF4[12000];
 
@@ -24,6 +24,16 @@ public:
 	int field_17894;
 
 	CVehiclePool();
+
+	CVehicle *GetAt(VEHICLEID id) {
+		if (id >= MAX_VEHICLES || !m_bVehicleSlotState[id]) return NULL;
+		return m_pVehicles[id];
+	}
+	BOOL GetSlotState(VEHICLEID id) {
+		if (id >= MAX_VEHICLES) return FALSE;
+		return m_bVehicleSlotState[id];
+	}
+	int FindGtaIDFromID(int id);
 };
 
 //----------------------------------------------------

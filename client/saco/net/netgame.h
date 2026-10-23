@@ -29,14 +29,14 @@ struct struc_41
 
 typedef struct _NETGAME_POOLS {
 	CVehiclePool	*pVehiclePool;
-	CPlayerPool		*pPlayerPool;
-	CPickupPool		*pPickupPool;
 	CObjectPool		*pObjectPool;
-	CActorPool		*pActorPool;
-	CGangZonePool	*pGangZonePool;
-	CLabelPool		*pLabelPool;
-	CTextDrawPool	*pTextDrawPool;
+	CPickupPool		*pPickupPool;
 	CMenuPool		*pMenuPool;
+	CLabelPool		*pLabelPool;
+	CGangZonePool	*pGangZonePool;
+	CPlayerPool		*pPlayerPool;
+	CTextDrawPool	*pTextDrawPool;
+	CActorPool		*pActorPool;
 } NETGAME_POOLS;
 
 class CNetGame // size: 994
@@ -75,8 +75,15 @@ public:
 	int GetGameState() { return m_iGameState; };
 	BOOL GetWalkStyle() { return field_3D5->bUseCJWalk; };
 
-	CPlayerPool * GetPlayerPool() { return m_pPools->pPlayerPool; };
-	CGangZonePool * GetGangZonePool() { return m_pPools->pGangZonePool; };
+	CVehiclePool * GetVehiclePool() { return m_pPools ? m_pPools->pVehiclePool : NULL; }
+	CPlayerPool * GetPlayerPool() { return m_pPools ? m_pPools->pPlayerPool : NULL; }
+	CPickupPool * GetPickupPool() { return m_pPools ? m_pPools->pPickupPool : NULL; }
+	CObjectPool * GetObjectPool() { return m_pPools ? m_pPools->pObjectPool : NULL; }
+	CActorPool * GetActorPool() { return m_pPools ? m_pPools->pActorPool : NULL; }
+	CGangZonePool * GetGangZonePool() { return m_pPools ? m_pPools->pGangZonePool : NULL; }
+	CLabelPool * GetLabelPool() { return m_pPools ? m_pPools->pLabelPool : NULL; }
+	CTextDrawPool * GetTextDrawPool() { return m_pPools ? m_pPools->pTextDrawPool : NULL; }
+	CMenuPool * GetMenuPool() { return m_pPools ? m_pPools->pMenuPool : NULL; }
 	RakClientInterface * GetRakClient() { return m_pRakClient; };
 
 	void  ResetMapIcons();

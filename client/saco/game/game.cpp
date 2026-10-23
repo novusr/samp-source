@@ -119,6 +119,20 @@ BYTE CGame::FUNC_100A00F0()
 
 //-----------------------------------------------------------
 
+// R5: 0x100A0210
+BOOL CGame::DeletePlayerPed(CPlayerPed *pPlayerPed)
+{
+	if (pPlayerPed) {
+		BYTE playerNumber = pPlayerPed->m_bytePlayerNumber;
+		delete pPlayerPed;
+		bUsedPlayerSlots[playerNumber] = FALSE;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//-----------------------------------------------------------
+
 // R5: 0x100A03D0
 int CGame::GetWeaponModelIDFromWeapon(int iWeaponID)
 {

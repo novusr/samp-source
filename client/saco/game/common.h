@@ -21,6 +21,9 @@ typedef unsigned short VEHICLEID;
 typedef unsigned short ACTORID;
 typedef unsigned short PLAYERID;
 
+#define INVALID_VEHICLE_ID	0xFFFF
+#define INVALID_PLAYER_ID	0xFFFF
+
 #define PI 3.1415926f
 
 #pragma pack(1)

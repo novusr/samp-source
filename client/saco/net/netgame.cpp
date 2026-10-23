@@ -1,6 +1,14 @@
 
 #include "../main.h"
-#include "../../raknet/SocketDataEncryptor.h"
+#include "SocketDataEncryptor.h"
+
+WORD g_wPacketKey = 0;
+
+// R5: 0x1001F710
+void SocketDataEncryptor::SetKey(WORD wKey)
+{
+	g_wPacketKey = wKey ^ 0xCCCC;
+}
 
 extern CGame		 *pGame;
 extern CChatWindow   *pChatWindow;
@@ -86,19 +94,20 @@ void CNetGame::UpdateNetwork()
 	// TODO: CNetGame::UpdateNetwork()
 }
 
+// R5: 0x10008540
 void CNetGame::InitPools()
 {
 	m_pPools = (NETGAME_POOLS *)calloc(1, sizeof(NETGAME_POOLS));
 
-	m_pPools->pObjectPool	= new CObjectPool();
 	m_pPools->pMenuPool		= new CMenuPool();
-	m_pPools->pLabelPool	= new CLabelPool();
+	m_pPools->pActorPool	= new CActorPool();
+	m_pPools->pPlayerPool	= new CPlayerPool();
 	m_pPools->pTextDrawPool	= new CTextDrawPool();
 	m_pPools->pGangZonePool	= new CGangZonePool();
-	m_pPools->pPlayerPool	= new CPlayerPool();
+	m_pPools->pObjectPool	= new CObjectPool();
 	m_pPools->pVehiclePool	= new CVehiclePool();
 	m_pPools->pPickupPool	= new CPickupPool();
-	m_pPools->pActorPool	= new CActorPool();
+	m_pPools->pLabelPool	= new CLabelPool();
 }
 
 // R5: 0x100088E0
@@ -114,8 +123,10 @@ DWORD CNetGame::GetTime()
 void CNetGame::SetMapIcon(BYTE byteIndex, float fX, float fY, float fZ, BYTE byteIcon, DWORD dwColor, int iStyle)
 {
 	if (byteIndex >= 100) return;
-	if (m_dwMapIcon[byteIndex] != NULL) DisableMapIcon(byteIndex);
-	//ScriptCommand(&create_radar_marker_without_sphere, fX, fY, fZ, byteIcon, &m_dwMapIcon);
+	if (m_dwMapIcon[byteIndex] != NULL) {
+		ScriptCommand(&disable_marker, m_dwMapIcon[byteIndex]);
+		m_dwMapIcon[byteIndex] = NULL;
+	}
 	m_dwMapIcon[byteIndex] = pGame->CreateRadarMarkerIcon(byteIcon, fX, fY, fZ, dwColor, iStyle);
 }
 
@@ -138,7 +149,10 @@ void CNetGame::ResetMapIcons()
 	BYTE i;
 	for (i = 0; i < 100; i++)
 	{
-		if (m_dwMapIcon[i] != NULL) DisableMapIcon(i);
+		if (m_dwMapIcon[i] != NULL && i < 100) {
+			ScriptCommand(&disable_marker, m_dwMapIcon[i]);
+			m_dwMapIcon[i] = NULL;
+		}
 	}
 }
 

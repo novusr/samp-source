@@ -46,6 +46,26 @@ public:
 
 	PLAYERID GetLocalPlayerID() { return m_LocalPlayerID; };
 
+	BOOL GetSlotState(PLAYERID playerId);
+	void UpdateLargestId();
+	BOOL New(PLAYERID id, PCHAR name, BOOL isNPC);
+	void UpdateScore(PLAYERID id, int score) {
+		if (id == m_LocalPlayerID) field_0 = score;
+		else {
+			if (id >= MAX_PLAYERS) return;
+			CNetPlayer *p = m_pPlayers[id];
+			if (p) p->field_4 = score;
+		}
+	}
+	void UpdatePing(PLAYERID id, DWORD ping) {
+		if (id == m_LocalPlayerID) field_22 = ping;
+		else {
+			if (id >= MAX_PLAYERS) return;
+			CNetPlayer *p = m_pPlayers[id];
+			if (p) p->field_C = ping;
+		}
+	}
+
 	CPlayerPool();
 };
 

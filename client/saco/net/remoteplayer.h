@@ -64,6 +64,10 @@ public:
 
 	void EnterVehicle(VEHICLEID VehicleID, BOOL bPassenger);
 	void ExitVehicle();
+
+	void Remove();
+	void SetPlayerID(PLAYERID playerId) { m_PlayerID = playerId; }
+	void SetNPC(BOOL bIsNPC) { field_10C = bIsNPC; }
 };
 
 //----------------------------------------------------

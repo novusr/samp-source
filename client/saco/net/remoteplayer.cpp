@@ -33,6 +33,36 @@ CRemotePlayer::CRemotePlayer()
 
 //----------------------------------------------------
 
+// R5: 0x10016660
+CRemotePlayer::~CRemotePlayer()
+{
+	if (field_1F9) {
+		pGame->DisableMarker(field_1F9);
+		field_1F9 = 0;
+	}
+	field_1E9 = 0;
+	if (m_pPlayerPed) {
+		pGame->DeletePlayerPed(m_pPlayerPed);
+		m_pPlayerPed = NULL;
+	}
+}
+
+//----------------------------------------------------
+
+// R5: 0x10017530
+void CRemotePlayer::Remove()
+{
+	if (m_pPlayerPed) {
+		ResetAllSyncAttributes();
+		pGame->DeletePlayerPed(m_pPlayerPed);
+		m_pPlayerPed = NULL;
+	}
+	field_10A = 0;
+	field_4 = 1;
+}
+
+//----------------------------------------------------
+
 // R5: 0x10015FA0
 void CRemotePlayer::ResetAllSyncAttributes()
 {
