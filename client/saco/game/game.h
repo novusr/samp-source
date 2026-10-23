@@ -35,7 +35,7 @@ private:
 	BOOL			m_bCheckpointsEnabled;
 	DWORD			m_dwCheckpointMarker;
 	int field_55;
-	int field_59;
+	BOOL			m_bHeadMove;
 	DWORD field_5D;
 	int field_61;
 	int field_65;
@@ -43,11 +43,14 @@ private:
 	char field_6D;
 	char field_6E[212];
 
+	friend void cmdHeadMove(PCHAR szCmd);
+
 public:
 
 	BYTE FindFirstFreePlayerPedSlot();
 	BOOL DeletePlayerPed(CPlayerPed *pPlayerPed);
 	BYTE FUNC_100A00F0();
+	CVehicle *NewVehicle(int iModel, float fX, float fY, float fZ, float fRotation, int iCreationFlag = 0);
 
 	int		GetWeaponModelIDFromWeapon(int iWeaponID);
 	BOOL	IsKeyPressed(int iKeyIdentifier);
@@ -163,5 +166,9 @@ public:
 	BOOL IsUsingController();
 	void DisableWeaponLockOnTarget();
 };
+
+extern int iGameDebugType;
+extern DWORD dwDebugEntity1, dwDebugEntity2;
+void GameDebugEntity(DWORD dwEnt1, DWORD dwEnt2, int type);
 
 //-----------------------------------------------------------

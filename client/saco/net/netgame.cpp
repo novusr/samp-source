@@ -12,6 +12,7 @@ void SocketDataEncryptor::SetKey(WORD wKey)
 
 extern CGame		 *pGame;
 extern CChatWindow   *pChatWindow;
+extern CConfig       *pConfig;
 
 //----------------------------------------------------
 
@@ -157,3 +158,20 @@ void CNetGame::ResetMapIcons()
 }
 
 //----------------------------------------------------
+
+// R5: 0x10008E90
+void CNetGame::TogglePlayerStatus()
+{
+	if (!field_234) {
+		pChatWindow->AddInfoMessage("NameTag Player Status: ON");
+		if (pConfig) pConfig->SetIntVariable("nonametagstatus", 0);
+		field_234 = 1;
+	} else {
+		pChatWindow->AddInfoMessage("NameTag Player Status: OFF");
+		if (pConfig) pConfig->SetIntVariable("nonametagstatus", 1);
+		field_234 = 0;
+	}
+}
+
+//----------------------------------------------------
+

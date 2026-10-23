@@ -146,7 +146,23 @@ void CChatWindow::AddDebugMessage(CHAR * szFormat, ...)
     }
     AddEntry(8, buffer, NULL, m_dwChatDebugColor, 0);
 }
-// MATCH
+
+// R5: 0x10068070
+void CChatWindow::AddInfoMessage(CHAR * szFormat, ...)
+{
+    char buffer[512];
+    memset(buffer, 0, sizeof(buffer));
+    va_list args;
+    va_start(args, szFormat);
+    vsprintf(buffer, szFormat, args);
+    va_end(args);
+    for(char *p = buffer; *p; ++p) {
+        if(*p > 0 && *p < 32) *p = ' ';
+    }
+    AddEntry(4, buffer, NULL, m_dwChatInfoColor, 0);
+}
+
+// R5: 0x10067200
 void CChatWindow::FUNC_10067200()
 {
 	if(m_pScrollBar) {
@@ -155,6 +171,16 @@ void CChatWindow::FUNC_10067200()
 		m_pScrollBar->SetTrackRange(1,MAX_MESSAGES);
 		m_pScrollBar->SetPageSize(field_0);
 		m_pScrollBar->SetTrackPos(MAX_MESSAGES-field_0);
+	}
+}
+
+// R5: 0x100672A0
+void CChatWindow::SetPageSize(int nValue)
+{
+	if(nValue >= 10 && nValue <= 100) {
+		field_0 = nValue;
+		FUNC_10067200();
+		field_63DA = 1;
 	}
 }
 

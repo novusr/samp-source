@@ -52,12 +52,15 @@ private:
 	void MeasureDimensions();
 	void CreateFonts();
 	friend void cmdFontSize(PCHAR szCmd);
+	friend void cmdTimestamp(PCHAR szCmd);
 
 	void FUNC_10067200();
 
 public:
 
 	void AddDebugMessage(CHAR *szFormat, ...);
+	void AddInfoMessage(CHAR *szFormat, ...);
+	void SetPageSize(int nValue);
 	void AddEntry(int type, CHAR *text, CHAR *prefix, DWORD textColor, DWORD prefixColor);
 	void Log(int type, CHAR *text, CHAR *prefix);
 	void PushBack();

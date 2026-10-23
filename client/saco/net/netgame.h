@@ -89,4 +89,5 @@ public:
 	void  ResetMapIcons();
 	void  SetMapIcon(BYTE byteIndex, float fX, float fY, float fZ, BYTE byteIcon, DWORD dwColor, int iStyle);
 	void  DisableMapIcon(BYTE byteIndex);
+	void  TogglePlayerStatus();
 };

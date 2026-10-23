@@ -32,6 +32,18 @@ bool GLOBAL_101506A4;
 
 typedef void (*DrawZone_t)(float *fPos, DWORD *dwColor, BYTE byteMenu);
 
+int iGameDebugType = 0;
+DWORD dwDebugEntity1 = 0;
+DWORD dwDebugEntity2 = 0;
+
+// R5: 0x1009E0A0
+void GameDebugEntity(DWORD dwEnt1, DWORD dwEnt2, int type)
+{
+	iGameDebugType = type;
+	dwDebugEntity1 = dwEnt1;
+	dwDebugEntity2 = dwEnt2;
+}
+
 //-----------------------------------------------------------
 
 // R5: 0x1009FF80
@@ -50,7 +62,7 @@ CGame::CGame()
 	memset(bUsedPlayerSlots, 0, sizeof(bUsedPlayerSlots));
 	memset(field_6E, 0, sizeof(field_6E));
 	field_55 = 0;
-	field_59 = 1;
+	m_bHeadMove = TRUE;
 	field_5D = 90;
 }
 
@@ -129,6 +141,17 @@ BOOL CGame::DeletePlayerPed(CPlayerPed *pPlayerPed)
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//-----------------------------------------------------------
+
+// R5: 0x100A0250
+CVehicle *CGame::NewVehicle(int iModel, float fX, float fY, float fZ, float fRotation, int iCreationFlag)
+{
+	BOOL bKeepModel = FALSE;
+	if (field_6E[iModel - 400]) bKeepModel = TRUE;
+	CVehicle *pVehicle = new CVehicle(iModel, fX, fY, fZ, fRotation, bKeepModel, iCreationFlag);
+	return pVehicle->m_pVehicle ? pVehicle : NULL;
 }
 
 //-----------------------------------------------------------
