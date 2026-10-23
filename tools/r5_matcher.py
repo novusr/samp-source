@@ -362,21 +362,44 @@ def format_asm_diff(candidate_code: bytes, expected_code: bytes, base_address: i
     return "\n".join(lines)
 
 
-def inject_method_declaration_if_needed(source_content: str, class_name: str, candidate_cpp: str) -> str:
+def inject_method_declaration_if_needed(source_content: str, class_name: str, candidate_cpp: str, is_virtual: bool = False) -> str:
     """Inject member function declaration into class definition if missing."""
     if not class_name or class_name == "Global":
         return source_content
 
-    pattern = rf"(\b[\w\*\s&]+?)\s+{re.escape(class_name)}::(\w+)\s*\(([^)]*)\)"
-    match = re.search(pattern, candidate_cpp)
-    if not match:
+    decl = None
+    method_name = None
+
+    # Destructor check: [virtual] [ClassName]::~[ClassName](...)
+    dtor_match = re.search(rf"(?:virtual\s+)?(?:{re.escape(class_name)}::)?~{re.escape(class_name)}\s*\(([^)]*)\)", candidate_cpp)
+    if dtor_match:
+        args = dtor_match.group(1).strip()
+        method_name = f"~{class_name}"
+        virt = "virtual " if is_virtual or "virtual" in candidate_cpp else ""
+        decl = f"{virt}~{class_name}({args});"
+    else:
+        # Constructor check: [ClassName]::[ClassName](...)
+        ctor_match = re.search(rf"\b{re.escape(class_name)}::{re.escape(class_name)}\s*\(([^)]*)\)", candidate_cpp)
+        if ctor_match:
+            args = ctor_match.group(1).strip()
+            method_name = class_name
+            decl = f"{class_name}({args});"
+        else:
+            # Regular method: ReturnType [ClassName]::MethodName(...)
+            pattern = rf"(\b[\w\*\s&]+?)\s+{re.escape(class_name)}::(\w+)\s*\(([^)]*)\)"
+            match = re.search(pattern, candidate_cpp)
+            if match:
+                ret_type = match.group(1).strip()
+                method_name = match.group(2).strip()
+                args = match.group(3).strip()
+                virt = "virtual " if is_virtual or "virtual" in ret_type else ""
+                clean_ret = ret_type.replace("virtual", "").strip()
+                decl = f"{virt}{clean_ret} {method_name}({args});"
+
+    if not decl or not method_name:
         return source_content
 
-    ret_type = match.group(1).strip()
-    method_name = match.group(2).strip()
-    args = match.group(3).strip()
-    decl = f"{ret_type} {method_name}({args});"
-
+    # Find the class definition
     cls_pattern = rf"(class\s+{re.escape(class_name)}\s*\{{[^}}]*?)(\n\s*\}};)"
     cls_match = re.search(cls_pattern, source_content, re.DOTALL)
     if not cls_match:
@@ -410,8 +433,9 @@ def verify_candidate_in_staging(
         staging_obj.unlink()
 
     # Create staging source with candidate appended
+    is_virtual = "virtual" in target.name.lower()
     orig_content = orig_src_file.read_text(encoding="utf-8") if orig_src_file.exists() else '#include "foundation/layouts.h"\n'
-    base_content = inject_method_declaration_if_needed(orig_content, target.class_name, candidate_cpp)
+    base_content = inject_method_declaration_if_needed(orig_content, target.class_name, candidate_cpp, is_virtual=is_virtual)
     staged_content = base_content + "\n\n// Candidate matching implementation\n" + candidate_cpp + "\n"
     staging_src.write_text(staged_content, encoding="utf-8")
 
@@ -489,15 +513,12 @@ def run_target_reversal(
         print(f"[Worker {worker_id}] {target.name}: Attempt {attempt}/{max_attempts} calling {model}...")
 
         try:
-            if attempt == 1:
-                resp, cid, dur = invoke_agy(prompt, model=model, effort=effort)
-            else:
-                resp, cid, dur = invoke_agy(prompt, model=model, effort=effort, conversation_id=cid)
+            resp, cid, dur = invoke_agy(prompt, model=model, effort=effort)
         except Exception as e:
             print(f"[Worker {worker_id}] agy invocation failed: {e}")
             break
 
-        print(f"[Worker {worker_id}] Received response ({dur:.1f}s, CID: {cid})")
+        print(f"[Worker {worker_id}] Received response ({dur:.1f}s)")
         candidate_cpp = extract_cpp_code(resp)
 
         if verbose:
@@ -516,7 +537,8 @@ def run_target_reversal(
                 # 1. Append code to target source file
                 target_src = ROOT / "src" / f"{target.unit}.cpp"
                 current_src = target_src.read_text(encoding="utf-8") if target_src.exists() else '#include "foundation/layouts.h"\n'
-                base_src = inject_method_declaration_if_needed(current_src, target.class_name, candidate_cpp)
+                is_virtual = "virtual" in target.name.lower()
+                base_src = inject_method_declaration_if_needed(current_src, target.class_name, candidate_cpp, is_virtual=is_virtual)
                 new_src = base_src + f"\n\n// Matched {target.name} (0x{target.address_hex})\n" + candidate_cpp + "\n"
                 target_src.write_text(new_src, encoding="utf-8")
 
@@ -548,10 +570,11 @@ def run_target_reversal(
             return True
         else:
             print(f"[Worker {worker_id}] {target.name} failed verification: {message.splitlines()[0]}")
-            # Prepare feedback prompt for next turn
+            # Prepare stateless feedback prompt for next turn
             prompt = (
-                f"Your previous attempt did not match the reference binary. Error report:\n"
-                f"{message}\n\n"
+                f"Your previous attempt did not match the reference binary.\n\n"
+                f"### PREVIOUS ATTEMPT:\n```cpp\n{candidate_cpp}\n```\n\n"
+                f"### COMPILER / VERIFICATION REPORT:\n{message}\n\n"
                 f"Please inspect the differences, adjust the C++ code to generate the exact machine code instructions, and return ONLY the corrected C++ code inside ```cpp ... ```."
             )
 
