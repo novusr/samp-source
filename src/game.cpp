@@ -35,18 +35,40 @@ unsigned long CCryptoContext::GetProvider() {
     return m_dwProvider;
 }
 
+extern "C" {
+void* __cdecl memset(void*, int, unsigned int);
+void* __cdecl memcpy(void*, const void*, unsigned int);
+}
+#pragma intrinsic(memset, memcpy)
+
 #pragma pack(push, 1)
+struct MENU_INT {
+    int bMenu;
+    int bRow[12];
+    int bPadding[3];
+};
+
 class CMenu {
 public:
     unsigned char m_byteMenuID;
     char m_charTitle[33];
     char m_charItems[12][2][33];
     char m_charHeader[2][33];
+    float m_fXPos;
+    float m_fYPos;
+    float m_fCol1Width;
+    float m_fCol2Width;
+    unsigned char m_byteColumns;
+    MENU_INT m_MenuInteraction;
+    unsigned char m_byteColCount[2];
+    unsigned long m_dwPanel;
 
+    CMenu(float fX, float fY, unsigned char byteColumns, float fCol1Width, float fCol2Width, MENU_INT *MenuInteraction);
     char* GetMenuTitle();
     char* GetMenuItem(unsigned char byteColumn, unsigned char byteRow);
     char* GetMenuHeader(unsigned char byteColumn);
 };
+#pragma pack(pop)
 
 char* CMenu::GetMenuTitle() {
     return m_charTitle;
@@ -986,4 +1008,29 @@ __declspec(naked) void Font_SetOutline(int pos)
         mov eax, 0x69de90
         ret
     }
+}
+
+
+// Matched ??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z (0x100a7420)
+CMenu::CMenu(float fX, float fY, unsigned char byteColumns, float fCol1Width, float fCol2Width, MENU_INT *MenuInteraction)
+{
+	for (int i = 0; i < 12; i++)
+	{
+		memset(m_charItems[i][0], 0, sizeof(m_charItems[i][0]));
+		memset(m_charItems[i][1], 0, sizeof(m_charItems[i][1]));
+	}
+	memset(m_charHeader[0], 0, sizeof(m_charHeader[0]));
+	memset(m_charHeader[1], 0, sizeof(m_charHeader[1]));
+	memset(m_charTitle, 0, sizeof(m_charTitle));
+
+	m_fXPos = fX;
+	m_fYPos = fY;
+	m_fCol1Width = fCol1Width;
+	m_fCol2Width = fCol2Width;
+
+	if (byteColumns == 2) m_byteColumns = 2;
+	else m_byteColumns = 1;
+	memcpy(&m_MenuInteraction, MenuInteraction, sizeof(MENU_INT));
+
+	m_dwPanel = 0;
 }

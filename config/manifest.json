@@ -1394,6 +1394,20 @@
     },
     {
       "unit": "game",
+      "name": "??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z",
+      "symbol": "??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z",
+      "rva": 685088,
+      "size": 264,
+      "sha256": "df66b7198cc99ef48eb08e786788de4ca2d4ffb7f0f671a2e445056f2c6026fa",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "CMenu.GetMenuItem",
       "symbol": "?GetMenuItem@CMenu@@QAEPADEE@Z",
       "rva": 685712,
