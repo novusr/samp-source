@@ -147,10 +147,20 @@ def get_unreversed_targets(
             if addr_hex.lower() != norm_filter:
                 continue
 
-        cls_raw = info.get("class") or info.get("name", "").split(".")[0] or "Global"
-        cls_name = cls_raw.split()[-1] if cls_raw else "Global"
-        if cls_name.startswith("?") or "@" in cls_name:
-            cls_name = "Global"
+        sym = info.get("symbol", "")
+        if "@" in sym:
+            parts = sym.split("@")
+            if len(parts) >= 2 and parts[1]:
+                cls_name = parts[1]
+            elif parts[0].startswith("??0") or parts[0].startswith("??1"):
+                cls_name = parts[0][3:]
+            else:
+                cls_name = "Global"
+        else:
+            cls_raw = info.get("class") or info.get("name", "").split(".")[0] or "Global"
+            cls_name = cls_raw.split()[-1] if cls_raw else "Global"
+            if cls_name.startswith("?") or "@" in cls_name:
+                cls_name = "Global"
         if class_filter and class_filter.lower() not in cls_name.lower():
             continue
 
@@ -255,17 +265,25 @@ def extract_cpp_code(response_text: str) -> str:
     return response_text.strip()
 
 
+COMPLETION_GUARD = (
+    "IMPORTANT SYSTEM DIRECTIVE: You are an offline code-completion engine for an automated reverse engineering pipeline. "
+    "DO NOT invoke any tools, execute shell commands, or access the filesystem. "
+    "Respond immediately and strictly with the requested code completion text only.\n\n"
+)
+
+
 def invoke_agy(
     prompt: str,
     model: str = "gemini-3.8-flash-high",
     effort: str = "high",
     conversation_id: str | None = None,
-    timeout_s: int = 120,
+    timeout_s: int = 300,
 ) -> tuple[str, str | None, float]:
     """Execute agy in non-interactive print mode with JSON output."""
+    guarded_prompt = COMPLETION_GUARD + prompt
     cmd = [
         "agy",
-        "-p", prompt,
+        "-p", guarded_prompt,
         "--disable-slash-commands",
         "--dangerously-skip-permissions",
         "--output-format", "json",
@@ -464,6 +482,7 @@ def run_target_reversal(
     prompt = build_matching_prompt(target)
     cid = None
     attempt = 0
+    message = "No attempts completed."
 
     while attempt < max_attempts:
         attempt += 1
