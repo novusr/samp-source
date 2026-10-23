@@ -39,6 +39,7 @@ bermain di server R5.
 
 ## Dokumentasi
 
+- **[Status & Progress Menuju 100%](docs/PROGRESS.md)** — laporan otomatis cakupan fungsi R5, modul, dan kompilasi per class.
 - [Alur kerja rekonstruksi](docs/workflow.md) — cara mendekompilasi, menggabungkan `_reference/`, & menulis ulang fungsi.
 - [Setup Linux (Wine + MSVC 2003)](docs/linux-setup.md) — penggunaan `tools/build.py`.
 - [Panduan Ghidra Bridge](GHIDRA_BRIDGE_GUIDE.md) — query hasil ekspor Ghidra secara offline.
