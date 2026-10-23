@@ -83,3 +83,6 @@ DWORD * GetNextTaskFromTask(DWORD *task);
 int GetTaskTypeFromTask(DWORD *task);
 const char* GetTaskNameFromTask(DWORD *task);
 
+BYTE * __stdcall GetModelInfo(int model);
+WORD __stdcall GetModelReferenceCount(int model);
+

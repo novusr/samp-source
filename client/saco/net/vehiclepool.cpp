@@ -21,6 +21,17 @@ CVehiclePool::CVehiclePool()
 
 //----------------------------------------------------
 
+// R5: 0x1001EB90
+VEHICLEID CVehiclePool::FindIDFromGtaPtr(VEHICLE_TYPE *pGtaVehicle)
+{
+	for(int i = 1; i <= field_0; i++) {
+		if(pGtaVehicle == m_pGTAVehicles[i]) return (VEHICLEID)i;
+	}
+	return 0xFFFF;
+}
+
+//----------------------------------------------------
+
 // R5: 0x1001EBC0
 int CVehiclePool::FindGtaIDFromID(int id)
 {
@@ -31,3 +42,4 @@ int CVehiclePool::FindGtaIDFromID(int id)
 }
 
 //----------------------------------------------------
+

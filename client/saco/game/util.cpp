@@ -1066,5 +1066,10 @@ UINT GetVehicleSubtypeFromVehiclePtr(VEHICLE_TYPE *pVehicle)
 	return 0;
 }
 
-
-
+// R5: 0x100B4700
+WORD __stdcall GetModelReferenceCount(int model)
+{
+	BYTE *pModelInfo = GetModelInfo(model);
+	if (!pModelInfo) return 0;
+	return *(WORD *)(pModelInfo + 8);
+}

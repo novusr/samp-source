@@ -34,6 +34,7 @@ public:
 		return m_bVehicleSlotState[id];
 	}
 	int FindGtaIDFromID(int id);
+	VEHICLEID FindIDFromGtaPtr(VEHICLE_TYPE *pGtaVehicle);
 };
 
 //----------------------------------------------------
