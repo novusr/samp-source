@@ -79,3 +79,16 @@ BOOL CPlayerPool::New(PLAYERID id, PCHAR name, BOOL isNPC)
 }
 
 //----------------------------------------------------
+
+// R5: 0x100175C0
+PCHAR CPlayerPool::GetPlayerName(PLAYERID playerId)
+{
+	if (playerId == m_LocalPlayerID) return (PCHAR)field_6.c_str();
+	if (playerId > MAX_PLAYERS) return NULL;
+	CNetPlayer *player = m_pPlayers[playerId];
+	if (!player) return NULL;
+	return (PCHAR)player->m_PlayerName.c_str();
+}
+
+//----------------------------------------------------
+

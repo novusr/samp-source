@@ -34,6 +34,7 @@ public:
 		if(!pPlayer) return;
 		pPlayer->m_PlayerName = szName;
 	}
+	PCHAR GetPlayerName(PLAYERID playerId);
 
 	CLocalPlayer * GetLocalPlayer();
 	CRemotePlayer* GetAt(PLAYERID playerId);
