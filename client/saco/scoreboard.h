@@ -4,23 +4,23 @@
 class CScoreBoard
 {
 private:
-	int field_0;
-	int field_4;
-	float field_8;
-	float field_C;
-	float field_10;
-	float field_14;
-	float field_18;
-	float field_1C;
-	int field_20;
-	float field_24;
-	float field_28;
-	float field_2C;
-	IDirect3DDevice9 *m_pD3DDevice;
-	CDXUTDialog *m_pDialog;
-	CDXUTListBox *m_pListBox;
-	int field_3C;
-	int field_40;
+	BOOL enabled;
+	int reserved4;
+	float left;
+	float top;
+	float scale;
+	float width;
+	float height;
+	float headerHeight;
+	int reserved20;
+	float column1;
+	float column2;
+	float column3;
+	IDirect3DDevice9 *device;
+	CDXUTDialog *dialog;
+	CDXUTListBox *listbox;
+	int reserved3C;
+	int reserved40;
 
 public:
 	CScoreBoard(IDirect3DDevice9 *pD3DDevice);
@@ -28,4 +28,12 @@ public:
 	void FUNC_1006E930();
 	void ResetDialogControls(CDXUTDialog *pDialog);
 	void UpdatePlayers();
+
+	void GetRect(RECT *rect);
+	void Hide(bool restoreInputs);
+	void ClickSelected();
+	BOOL IsNPC(WORD playerId);
+	int GetCount(BOOL includeNPC = FALSE);
+	int GetScore(WORD playerId);
+	int GetPing(WORD playerId);
 };
