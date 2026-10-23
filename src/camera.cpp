@@ -132,9 +132,31 @@ void FilterInvalidChars(char* szString) {
     }
 }
 
+void Util_UrlUnencode(char *enc)
+{
+	char *write_pos = enc;
+
+	while(*enc)
+	{
+		if(*enc=='%')
+		{
+			*write_pos = (*++enc>'/'&&*enc<':')?((*enc-('0'))<<4):((*enc-('7'))<<4);
+			*write_pos |= (*++enc>'/'&&*enc<':')?(*enc-'0'):(*enc-'7');
+		}
+		else if (*enc=='+')
+			*write_pos= ' ';
+		else
+			*write_pos= *enc;
+
+		write_pos++; enc++;
+	}
+	*write_pos='\0';
+}
+
 inline char Util_toupper(char c) {
     return ((c > (char)0x60) && (c < (char)0x7b)) ? c - 0x20 : c;
 }
+
 
 char* Util_stristr(const char* String, const char* Pattern) {
     char *pptri, *sptri, *starti;

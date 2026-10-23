@@ -2582,6 +2582,18 @@
       ],
       "sha256": "93ddb6ef751ac07cacf7d72c6701fe0e5840f4c365c71e60fe310045e583c418",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "camera",
+      "name": "Util.UrlUnencode",
+      "symbol": "?Util_UrlUnencode@@YAXPAD@Z",
+      "rva": 96208,
+      "size": 113,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "b046698e0bacee5c68c39067db8c4ee4b31101b781006f014316c090dd6970bb",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {
