@@ -1810,6 +1810,20 @@
     },
     {
       "unit": "game",
+      "name": "?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z",
+      "symbol": "?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z",
+      "rva": 745952,
+      "size": 106,
+      "sha256": "6336b4690b5aa3ca2f8a4199dbbfda5a1d0dd435caec9cadec7b77de74166e33",
+      "features": [
+        "leaf",
+        "branching",
+        "bounds"
+      ],
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
       "name": "CVehicle.SetEngineState",
       "symbol": "?SetEngineState@CVehicle@@QAEXH@Z",
       "rva": 750192,

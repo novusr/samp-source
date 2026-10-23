@@ -707,3 +707,32 @@ void CEntity::ApplyTurnSpeed()
 	_asm mov eax, 0x542E20
 	_asm call eax
 }
+
+
+// Matched ?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z (0x100b61e0)
+struct _VEHICLE_TYPE;
+
+unsigned int GetVehicleSubtypeFromVehiclePtr(_VEHICLE_TYPE *pVehicle)
+{
+    if (!pVehicle)
+        return 0;
+
+    unsigned int vtable = *(unsigned int *)pVehicle;
+
+    if (vtable == 0x871120)
+        return 1;
+    if (vtable == 0x8721A0)
+        return 4;
+    if (vtable == 0x871360)
+        return 2;
+    if (vtable == 0x871948)
+        return 5;
+    if (vtable == 0x871680)
+        return 3;
+    if (vtable == 0x871528)
+        return 6;
+    if (vtable == 0x872370)
+        return 7;
+
+    return 0;
+}
