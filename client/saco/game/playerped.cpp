@@ -20,7 +20,7 @@ extern BYTE	*pbyteCurrentPlayer;
 //-----------------------------------------------------------
 // Used for instancing the local player.
 
-// R5: 0x100B14B0
+// R5: 0x100ABA70
 CPlayerPed::CPlayerPed()
 {
 	m_dwGTAId = 1; // 0x001

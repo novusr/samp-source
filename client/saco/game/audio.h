@@ -10,10 +10,7 @@ private:
 	bool field_4;
 
 public:
-	CAudio() {
-		field_0 = 0;
-		field_4 = false;
-	}
+	CAudio();
 
 	void FUNC_100A21D0();
 	int GetRadioStation();

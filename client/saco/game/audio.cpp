@@ -3,6 +3,15 @@
 
 //-----------------------------------------------------------
 
+// R5: 0x1009FF70
+CAudio::CAudio()
+{
+	field_0 = 0;
+	field_4 = false;
+}
+
+//-----------------------------------------------------------
+
 // R5: 0x100A21D0
 void CAudio::FUNC_100A21D0()
 {
@@ -88,6 +97,7 @@ void CAudio::SetOutdoorAmbienceTrack(int iTrack)
 
 //-----------------------------------------------------------
 
+// R5: 0x100A22C0
 void CAudio::PlaySound(int iSound, float fX, float fY, float fZ) 
 {
 	if(iSound == 0)
