@@ -520,6 +520,32 @@ void R5ChatPagingView::FilterInvalidChars(char* szString) {
     }
 }
 
+extern "C" void* __cdecl memset(void*, int, unsigned int);
+#pragma intrinsic(memset)
+
+struct CTextDrawItem {
+    char data[29];
+};
+
+class CTextDrawPool {
+public:
+    CTextDrawItem m_items[2048];
+    void* m_pObjects[2048];
+
+    CTextDrawPool();
+};
+
+class CMenu;
+class CMenuPool {
+public:
+    CMenu* m_pObject[128];
+    int m_bNotEmpty[128];
+    unsigned char m_nCurrent;
+    char m_bCanceled;
+
+    CMenuPool();
+};
+
 struct CGangZone {
     char gap[0x10];
     unsigned long color;
@@ -557,6 +583,35 @@ void CGangZonePool::Flash(unsigned short id, unsigned long color) {
     if (m_pGangZone[id]) {
         m_pGangZone[id]->flashColor = color;
     }
+}
+
+// Matched ??0CTextDrawPool@@QAE@XZ (0x10001190)
+CTextDrawPool::CTextDrawPool() {
+    int i = 2048;
+    CTextDrawItem* pItem = m_items;
+    void** pObj = m_pObjects;
+    do {
+        memset(pItem, 0, sizeof(CTextDrawItem));
+        *pObj = 0;
+        pObj++;
+        pItem++;
+        --i;
+    } while (i != 0);
+}
+
+// Matched ??0CMenuPool@@QAE@XZ (0x10007e60)
+CMenuPool::CMenuPool() {
+    int i = 128;
+    CMenu** pMenu = m_pObject;
+    int* pState = m_bNotEmpty;
+    do {
+        *pState = 0;
+        *pMenu = 0;
+        pMenu++;
+        pState++;
+        --i;
+    } while (i != 0);
+    m_nCurrent = 0x80;
 }
 
 // Matched ?StopFlash@CGangZonePool@@QAEXG@Z (0x10002220)

@@ -2252,6 +2252,118 @@
       ],
       "sha256": "898c6171384298959b91c017da5436ad9b940e33d0bfc6a557872b9a5c3a4118",
       "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CTextDrawPool.CTextDrawPool",
+      "symbol": "??0CTextDrawPool@@QAE@XZ",
+      "rva": 4496,
+      "size": 60,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "affa13ca8e806e564d9b1e83a4d3a871f6c9fa896dd3f9fc26e61b9952b016f6",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "pools",
+      "name": "CMenuPool.CMenuPool",
+      "symbol": "??0CMenuPool@@QAE@XZ",
+      "rva": 32352,
+      "size": 39,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "380f0060ff8f2cd5de03c4c22fc15c2be47ea8175b7b2fb26f0d62481b4b2410",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CDXUTTimer.IsStopped",
+      "symbol": "?IsStopped@CDXUTTimer@@QAE_NXZ",
+      "rva": 604160,
+      "size": 4,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "e9630712bcfeba8c4eeacb45dffada2089ef52f9a0e53c082f870f989907a205",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "CD3DArcBall.OnEnd",
+      "symbol": "?OnEnd@CD3DArcBall@@QAEXXZ",
+      "rva": 605168,
+      "size": 8,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "854e2a13be848caa0065ded990068e338233a46e720cd527f28216179b51466d",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "TEABlockEncryptor.IsKeySet",
+      "symbol": "?IsKeySet@TEABlockEncryptor@@QBE_NXZ",
+      "rva": 354704,
+      "size": 7,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "8faafd26d2a14bea0309d0baf45bb0ca56e43681db85b6a079f1190bd8ee2629",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "TEABlockEncryptor.SetKey",
+      "symbol": "?SetKey@TEABlockEncryptor@@QAEXQBE@Z",
+      "rva": 354720,
+      "size": 10,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "ee894cc2d29954f6edf2754f22176844b2ef4a426bf5ed8606ac5f0d73b81990",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "TEABlockEncryptor.UnsetKey",
+      "symbol": "?UnsetKey@TEABlockEncryptor@@QAEXXZ",
+      "rva": 354736,
+      "size": 8,
+      "features": [
+        "leaf"
+      ],
+      "sha256": "f902e11336befc55750331de5ddec5cc99bdb051e7394cfbd0018f6ba63a4a36",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "TEABlockEncryptor.EncryptBlock",
+      "symbol": "?EncryptBlock@TEABlockEncryptor@@IAEXAAI0@Z",
+      "rva": 354752,
+      "size": 380,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "c01b0d87bf95df36db70361b8efcc7136b3d20e835137026f6764c9b2ee6c988",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
+    },
+    {
+      "unit": "game",
+      "name": "TEABlockEncryptor.DecryptBlock",
+      "symbol": "?DecryptBlock@TEABlockEncryptor@@IAEXAAI0@Z",
+      "rva": 355136,
+      "size": 389,
+      "features": [
+        "leaf",
+        "loop"
+      ],
+      "sha256": "9223af84e0af4925cbc8ec68f5985ef4ed4cfc4e4a9eef1dc20decf84423883c",
+      "boundary": "manually inspected full x86 body through final return; following byte is INT3"
     }
   ],
   "symbols": {

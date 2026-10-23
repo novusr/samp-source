@@ -925,3 +925,113 @@ CMenu::CMenu(float fX, float fY, unsigned char byteColumns, float fCol1Width, fl
 
 	m_dwPanel = 0;
 }
+
+#pragma pack(push, 1)
+class CDXUTTimer {
+public:
+    bool m_bUsingQPF;
+    bool m_bTimerStopped;
+
+    bool IsStopped();
+};
+
+class CD3DArcBall {
+public:
+    char gap[0x100];
+    bool m_bDrag;
+
+    void OnEnd();
+};
+
+class TEABlockEncryptor {
+public:
+    char gap0[0x249];
+    bool m_bKeySet;                // 0x249
+    unsigned char m_key[4];        // 0x24a
+    char gap1[0xc];                // 0x24e to 0x25a
+    unsigned int m_sumInit;        // 0x25a
+    unsigned int m_delta;          // 0x25e
+
+    bool IsKeySet() const;
+    void SetKey(const unsigned char* const pKey);
+    void UnsetKey();
+protected:
+    void EncryptBlock(unsigned int &v0, unsigned int &v1);
+    void DecryptBlock(unsigned int &v0, unsigned int &v1);
+};
+#pragma pack(pop)
+
+// Matched ?IsStopped@CDXUTTimer@@QAE_NXZ (0x10093800)
+bool CDXUTTimer::IsStopped() {
+    return m_bTimerStopped;
+}
+
+// Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
+void CD3DArcBall::OnEnd() {
+    m_bDrag = false;
+}
+
+// Matched ?IsKeySet@TEABlockEncryptor@@QBE_NXZ (0x10056990)
+bool TEABlockEncryptor::IsKeySet() const {
+    return m_bKeySet;
+}
+
+// Matched ?SetKey@TEABlockEncryptor@@QAEXQBE@Z (0x100569a0)
+void TEABlockEncryptor::SetKey(const unsigned char* const pKey) {
+    m_bKeySet = true;
+}
+
+// Matched ?UnsetKey@TEABlockEncryptor@@QAEXXZ (0x100569b0)
+void TEABlockEncryptor::UnsetKey() {
+    m_bKeySet = false;
+}
+
+// Matched ?EncryptBlock@TEABlockEncryptor@@IAEXAAI0@Z (0x100569c0)
+void TEABlockEncryptor::EncryptBlock(unsigned int &v0, unsigned int &v1) {
+    unsigned int sum = 0;
+    int rounds = 8;
+    do {
+        v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+        sum += m_delta;
+        v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+
+        v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+        sum += m_delta;
+        v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+
+        v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+        sum += m_delta;
+        v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+
+        v0 += (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+        sum += m_delta;
+        v1 += (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+
+        --rounds;
+    } while (rounds != 0);
+}
+
+// Matched ?DecryptBlock@TEABlockEncryptor@@IAEXAAI0@Z (0x10056b40)
+void TEABlockEncryptor::DecryptBlock(unsigned int &v0, unsigned int &v1) {
+    unsigned int sum = m_sumInit;
+    int rounds = 8;
+    do {
+        v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+        sum -= m_delta;
+        v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+
+        v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+        sum -= m_delta;
+        v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+
+        v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+        sum -= m_delta;
+        v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+
+        v1 -= (((v0 << 4) ^ (v0 >> 5)) + v0) ^ (sum + m_key[(sum >> 11) & 3]);
+        sum -= m_delta;
+        v0 -= (((v1 << 4) ^ (v1 >> 5)) + v1) ^ (sum + m_key[sum & 3]);
+
+        --rounds;
+    } while (rounds != 0);
+}
