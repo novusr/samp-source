@@ -83,6 +83,7 @@ DWORD * GetNextTaskFromTask(DWORD *task);
 int GetTaskTypeFromTask(DWORD *task);
 const char* GetTaskNameFromTask(DWORD *task);
 
+BOOL __stdcall IsPickupModelValid(int model);
 BYTE * __stdcall GetModelInfo(int model);
 WORD __stdcall GetModelReferenceCount(int model);
 

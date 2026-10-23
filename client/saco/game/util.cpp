@@ -1066,6 +1066,14 @@ UINT GetVehicleSubtypeFromVehiclePtr(VEHICLE_TYPE *pVehicle)
 	return 0;
 }
 
+// R5: 0x100B4570
+BOOL __stdcall IsPickupModelValid(int model)
+{
+	BYTE *info = GetModelInfo(model);
+	if (info && (*(DWORD *)info + 0x14)) return TRUE;
+	return FALSE;
+}
+
 // R5: 0x100B4700
 WORD __stdcall GetModelReferenceCount(int model)
 {
