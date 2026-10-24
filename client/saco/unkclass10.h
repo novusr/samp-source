@@ -1,4 +1,3 @@
-
 #pragma once
 
 class CUnkClass10
@@ -10,7 +9,9 @@ private:
 	int field_80;
 	int field_84;
 	WORD field_88;
-	char _gap8A[20];
+	int field_8A;
+	BOOL field_8E;
+	VECTOR field_92;
 	DWORD field_9E;
 	char field_A2;
 	char field_A3;
@@ -26,5 +27,8 @@ private:
 
 public:
 	CUnkClass10(IDirect3DDevice9 *pD3DDevice);
+	void SendObjectEdit(int response);
+	void SendAttachedEdit(int response);
+	void Close(BOOL accept);
 
 };

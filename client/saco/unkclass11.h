@@ -1,4 +1,3 @@
-
 #pragma once
 
 class CUnkClass11
@@ -9,5 +8,6 @@ private:
 
 public:
 	CUnkClass11();
+	void Toggle(BOOL enable);
 
 };
