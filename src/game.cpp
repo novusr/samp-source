@@ -1132,13 +1132,13 @@ void CGame::RequestAnimation(char *szAnimFile)
 struct CPedIntelligence;
 int FlushPedIntelligence(void)
 {
+    struct CActorPedEntity { char gap[0x47c]; CPedIntelligence* p; };
     union {
         void (CPedIntelligence::*fn)(int);
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    unsigned long ped = dwActorPed;
-    CPedIntelligence* p = *(CPedIntelligence**)(ped + 0x47c);
+    CPedIntelligence* p = ((CActorPedEntity*)dwActorPed)->p;
     (p->*u.fn)(1);
     return 1;
 }
@@ -1177,6 +1177,8 @@ void CEntity::SetClumpAlpha(int iAlpha)
 	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, (int)iAlpha);
 }
 #pragma optimize("", on)
+// Straight-line distance from this entity's world position to the point
+// (X, Y, Z).
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 {
 	_MATRIX4X4	matThis;
