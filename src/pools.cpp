@@ -123,6 +123,18 @@ struct SCRIPT_COMMAND {
 };
 int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 extern "C" const SCRIPT_COMMAND get_actor_armed_weapon;
+extern "C" const SCRIPT_COMMAND disable_marker;
+extern "C" const SCRIPT_COMMAND set_actor_immunities;
+unsigned long __stdcall GamePool_Vehicle_GetIndex(_VEHICLE_TYPE *pVehicle);
+
+class LocalPlayerRPCResetView {
+public:
+    char unknown[0x2da];
+    int field_2DA;
+    int field_2DE;
+    int field_2E2;
+    void SetStatePair(int first, int second);
+};
 
 class CPlayerPed {
 public:
@@ -135,12 +147,18 @@ public:
     PED_TYPE *m_pPed;               // 0x2a4
     char gap_dance[8];              // 0x2a8 to 0x2b0
     unsigned char m_bytePlayerNumber;// 0x2b0
-    char gap_dance2[0x21];          // 0x2b1 to 0x2d2
+    char gap_dance2[0x1c];          // 0x2b1 to 0x2cd
+    unsigned long m_dwArrow;        // 0x2cd
+    char gap_dance3[1];             // 0x2d1
     int m_iDanceState;              // 0x2d2
     char gap_thermal[0x10];         // 0x2d6 to 0x2e6
     int m_bHasThermalGoggles;       // 0x2e6
     char gap_piss[8];               // 0x2ea to 0x2f2
     int m_iPissingState;            // 0x2f2
+
+    int GetCurrentVehicleID();
+    void HideMarker();
+    void SetImmunities(int bBullet, int bFire, int bExplosion, int bDamage, int bUnknown);
 
     int IsCellphoneEnabled();
     int GetPissingState();
