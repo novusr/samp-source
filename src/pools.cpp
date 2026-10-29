@@ -1226,6 +1226,16 @@ void CPlayerPed::SetMoney(int iAmount) {
     ScriptCommand(&set_actor_money, m_dwGTAId, 0);
     ScriptCommand(&set_actor_money, m_dwGTAId, iAmount);
 }
+
+#pragma optimize("y", on)
+float CPlayerPed::GetAimZ() {
+    if (m_pPed) {
+        return *(float*)(*(char**)((char*)m_pPed + 0x480) + 0x54);
+    }
+    return 0.0f;
+}
+#pragma optimize("", on)
+
 #pragma optimize("", on)
 void CPlayerPed::StartDancing(int iStyle)
 {
@@ -1252,8 +1262,8 @@ void CPlayerPed::StopDancing()
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
+    if (!m_pPed) return;
     unsigned long dwPed = (unsigned long)m_pPed;
-    if (!dwPed) return;
 
     typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, int, int, int, int);
     union {
@@ -1343,6 +1353,17 @@ CGangZonePool::~CGangZonePool() {
     } while (i != 0);
 }
 
+void CPickupPool::Destroy(int iPickup) {
+    if (m_iPickupCount <= 0 || iPickup < 0 || iPickup >= 4096) return;
+    if (m_dwHnd[iPickup] != 0) {
+        ScriptCommand(&destroy_pickup, m_dwHnd[iPickup]);
+        m_dwHnd[iPickup] = 0;
+        m_iTimer[iPickup] = 0;
+        m_iNetworkIds[iPickup] = -1;
+        m_iPickupCount--;
+    }
+}
+
 CPlayerTags::~CPlayerTags() {
     if (m_pTexture) m_pTexture->Release();
     if (m_pVB) m_pVB->Release();
@@ -1374,6 +1395,16 @@ void CPlayerTags::End() {
             return;
     }
     m_pOldStates->Apply();
+}
+
+void R5TextDrawPool::ReleasePreviewTextures() {
+    int i = 0;
+    do {
+        if (m_bSlotState[i]) {
+            m_pTextDraw[i]->ReleasePreviewTexture();
+        }
+        i++;
+    } while (i < 2304);
 }
 
 #pragma optimize("y", on)
