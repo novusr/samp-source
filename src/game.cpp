@@ -1324,6 +1324,18 @@ void CEntity::ProcessControl(void)
 {
 }
 
+void CEntity::AdvancePosition(void)
+{
+    if (!m_pEntity) return;
+    float step = *(float*)0xB7CB5C;
+    _MATRIX4X4 matrix;
+    GetMatrix(&matrix);
+    matrix.pos.X += step * m_pEntity->vecMoveSpeed.X;
+    matrix.pos.Y += step * m_pEntity->vecMoveSpeed.Y;
+    matrix.pos.Z += step * m_pEntity->vecMoveSpeed.Z;
+    SetMatrixAndUpdate(matrix);
+}
+
 int __cdecl GetInvalidModelInfoCount(void)
 {
     int count = 0;
