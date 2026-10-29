@@ -386,9 +386,71 @@ struct ID3DXSprite {
     virtual void Dummy10();
     virtual long __stdcall End();
     virtual long __stdcall OnLostDevice();
+    virtual long __stdcall OnResetDevice();
 };
 
-struct IDirect3DDevice9;
+struct IDirect3DDevice9 {
+    virtual void Dummy0();
+    virtual void Dummy1();
+    virtual void Dummy2();
+    virtual void Dummy3();
+    virtual void Dummy4();
+    virtual void Dummy5();
+    virtual void Dummy6();
+    virtual void Dummy7();
+    virtual void Dummy8();
+    virtual void Dummy9();
+    virtual void Dummy10();
+    virtual void Dummy11();
+    virtual void Dummy12();
+    virtual void Dummy13();
+    virtual void Dummy14();
+    virtual void Dummy15();
+    virtual void Dummy16();
+    virtual void Dummy17();
+    virtual void Dummy18();
+    virtual void Dummy19();
+    virtual void Dummy20();
+    virtual void Dummy21();
+    virtual void Dummy22();
+    virtual void Dummy23();
+    virtual void Dummy24();
+    virtual void Dummy25();
+    virtual void Dummy26();
+    virtual void Dummy27();
+    virtual void Dummy28();
+    virtual void Dummy29();
+    virtual void Dummy30();
+    virtual void Dummy31();
+    virtual void Dummy32();
+    virtual void Dummy33();
+    virtual void Dummy34();
+    virtual void Dummy35();
+    virtual void Dummy36();
+    virtual void Dummy37();
+    virtual void Dummy38();
+    virtual void Dummy39();
+    virtual void Dummy40();
+    virtual void Dummy41();
+    virtual void Dummy42();
+    virtual void Dummy43();
+    virtual void Dummy44();
+    virtual void Dummy45();
+    virtual void Dummy46();
+    virtual void Dummy47();
+    virtual void Dummy48();
+    virtual void Dummy49();
+    virtual void Dummy50();
+    virtual void Dummy51();
+    virtual void Dummy52();
+    virtual void Dummy53();
+    virtual void Dummy54();
+    virtual void Dummy55();
+    virtual void Dummy56();
+    virtual void Dummy57();
+    virtual void Dummy58();
+    virtual long __stdcall CreateStateBlock(int Type, IDirect3DStateBlock9** ppSB);
+};
 extern "C" long __stdcall D3DXCreateSprite(IDirect3DDevice9* pDevice, ID3DXSprite** ppSprite);
 
 class CNewPlayerTags {
@@ -401,6 +463,7 @@ public:
     ~CNewPlayerTags();
     void End();
     void DeleteDeviceObjects();
+    void RestoreDeviceObjects();
 };
 
 #pragma pack(push, 1)
