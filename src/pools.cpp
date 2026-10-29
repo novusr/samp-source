@@ -330,12 +330,16 @@ struct ID3DXSprite {
     virtual long __stdcall OnLostDevice();
 };
 
+struct IDirect3DDevice9;
+extern "C" long __stdcall D3DXCreateSprite(IDirect3DDevice9* pDevice, ID3DXSprite** ppSprite);
+
 class CNewPlayerTags {
 public:
-    void* m_pDevice;
+    IDirect3DDevice9* m_pDevice;
     IDirect3DStateBlock9* m_pStates;
     ID3DXSprite* m_pSprite;
 
+    CNewPlayerTags(IDirect3DDevice9* pDevice);
     void End();
     void DeleteDeviceObjects();
 };
