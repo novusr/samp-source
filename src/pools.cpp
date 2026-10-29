@@ -1306,6 +1306,24 @@ void CPlayerPed::SetFightingStyle(int iStyle)
     ScriptCommand(&set_fighting_style, m_dwGTAId, iStyle, 6);
 }
 
+void CPlayerPed::ProcessVehicleHorn()
+{
+    if (!m_pPed) return;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
+
+    GTA_CONTROLSET* pPlayerControls;
+    if (!m_bytePlayerNumber) {
+        pPlayerControls = GameGetInternalKeys();
+    } else {
+        pPlayerControls = GameGetPlayerKeys(m_bytePlayerNumber);
+    }
+
+    _VEHICLE_TYPE* pGtaVehicle = m_pPed->pVehicle;
+    if (pGtaVehicle && (m_pPed->dwStateFlags & 0x100) && pGtaVehicle->pDriver == m_pPed) {
+        pGtaVehicle->byteHorn2 = (pPlayerControls->wKeys1[18] != 0);
+    }
+}
+
 char* CPlayerPed::GetShopName() {
     if (!m_pPed) return 0;
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
