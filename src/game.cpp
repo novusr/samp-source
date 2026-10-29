@@ -198,8 +198,19 @@ extern "C" const SCRIPT_COMMAND load_requested_models;
 extern "C" const SCRIPT_COMMAND request_model;
 extern "C" const SCRIPT_COMMAND request_animation;
 extern "C" const SCRIPT_COMMAND is_animation_loaded;
+extern "C" const SCRIPT_COMMAND is_model_available;
 void __stdcall WorldAddEntity(unsigned long *pEntity);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity);
+
+struct GAME_SCRIPT_THREAD {
+    char pad[0xe0];
+};
+extern unsigned long dwActorPed;
+extern GAME_SCRIPT_THREAD* gst;
+extern int bScmLocalDebug;
+extern unsigned char ScriptBuf[255];
+extern void* ProcessOneCommand;
+void* __cdecl operator new(unsigned int);
 
 class CGame {
 public:
@@ -1045,17 +1056,24 @@ void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
 
-#pragma optimize("y", off)
+#pragma optimize("sy", off)
+#pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
 }
+
+void CGame::RequestModel(int iModelID, int iLoadingStream)
+{
+	ScriptCommand(&request_model, iModelID);
+}
+
 #pragma optimize("", on)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
 	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
 		return;
 
-	unsigned long dwEntity = (unsigned long)m_pEntity;
+	volatile unsigned long dwEntity = (unsigned long)m_pEntity;
 	typedef void (__cdecl *Func)(void*, int);
 	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
 }
