@@ -356,6 +356,7 @@ public:
     ID3DXSprite* m_pSprite;
 
     CNewPlayerTags(IDirect3DDevice9* pDevice);
+    ~CNewPlayerTags();
     void End();
     void DeleteDeviceObjects();
 };
@@ -1411,6 +1412,20 @@ void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
         if (pSlot) {
             pSlot->dwAmmo = wAmmo;
         }
+    }
+}
+
+void CPlayerPed::SetWeaponModelIndex(int iWeapon) {
+    if (m_pPed) {
+        PED_TYPE* dwPed = m_pPed;
+        unsigned long* dwWeaponInfo = (unsigned long*)pGame->GetWeaponInfo(iWeapon, 1);
+        typedef void (CGtaPedWeapon::*GtaFn)(int);
+        union {
+            void* p;
+            GtaFn fn;
+        } u;
+        u.p = (void*)0x5E3990;
+        (((CGtaPedWeapon*)dwPed)->*u.fn)(dwWeaponInfo[3]);
     }
 }
 
