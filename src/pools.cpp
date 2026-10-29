@@ -910,6 +910,18 @@ void CPlayerPed::ClearAllWeapons()
     *pbyteCurrentPlayer = 0;
 }
 
+#pragma optimize("y", off)
+void CPlayerPed::RemoveWeaponWhenEnteringVehicle() {
+    void* dwPedPtr = m_pPed;
+    if (dwPedPtr) {
+        typedef void (CGtaPedWeapon::*ClearWeaponFn)(int);
+        union { void* p; ClearWeaponFn fn; } u;
+        u.p = (void*)0x5E6370;
+        (((CGtaPedWeapon*)dwPedPtr)->*u.fn)(0);
+    }
+}
+#pragma optimize("", on)
+
 #pragma optimize("y", on)
 float CPlayerPed::GetDistanceFromVehicle(CVehicle* pVehicle) {
     _MATRIX4X4 matFromPlayer;
@@ -927,13 +939,14 @@ float CPlayerPed::GetDistanceFromVehicle(CVehicle* pVehicle) {
 }
 #pragma optimize("", on)
 
+#pragma optimize("y", on)
 void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ) {
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
     if (m_pPed && (m_pPed->dwStateFlags & 0x100)) {
         ScriptCommand(&remove_actor_from_car_and_put_at, m_dwGTAId, fX, fY, fZ);
     }
 }
-
+#pragma optimize("", on)
 void CPlayerPed::HandsUp() {
     if (!m_pPed || (m_pPed->dwStateFlags & 0x100)) return;
     if (!IsAdded()) return;
