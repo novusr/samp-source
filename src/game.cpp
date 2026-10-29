@@ -189,6 +189,15 @@ int CVehicle::IsSirenOn() {
     return (m_pVehicle->byteSiren & 0x80) == 0x80;
 }
 
+struct SCRIPT_COMMAND {
+    unsigned short OpCode;
+    char Params[16];
+};
+int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
+extern "C" const SCRIPT_COMMAND load_requested_models;
+void __stdcall WorldAddEntity(unsigned long *pEntity);
+void __stdcall WorldRemoveEntity(unsigned long *pEntity);
+
 class CGame {
 public:
     int GetWorldWeather();
@@ -210,6 +219,8 @@ public:
     int IsUsingController();
     int GetLoadedVehicleModelCount();
     void GetWorldTime(unsigned char* pHour, unsigned char* pMinute);
+    void LoadRequestedModels();
+    void LoadScene(char* szScene);
 };
 
 int CGame::GetWorldWeather() {
