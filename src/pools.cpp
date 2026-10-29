@@ -1528,6 +1528,14 @@ void CGangZonePool::New(unsigned short id, float fMinX, float fMinY, float fMaxX
     }
 }
 
+void R5ChatPagingView::SetPageSize(int lines) {
+    if (lines >= 10 && lines <= 100) {
+        pageSize = lines;
+        ConfigureScrollBar();
+        cacheDirty = 1;
+    }
+}
+
 void CGangZonePool::Draw() {
     static int iLastTick = 0;
     static unsigned char alt = 0;
