@@ -993,6 +993,20 @@ int CPlayerPed::IsJumping(void)
     return 0;
 }
 
+int CPlayerPed::IsFalling(void)
+{
+    if (m_pPed && !(m_pPed->dwStateFlags & 0x100))
+    {
+        void* pTaskManager = *(void**)((char*)m_pPed + 0x47c);
+        unsigned long* pTask = *(unsigned long**)((char*)pTaskManager + 0x4);
+        if (pTask)
+        {
+            return GetTaskTypeFromTask(pTask) == 208;
+        }
+    }
+    return 0;
+}
+
 void CPlayerTags::End() {
     if (!m_pOldStates) {
         RestoreDeviceObjects();
