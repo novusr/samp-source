@@ -933,6 +933,31 @@ void CPlayerPed::ClearAllWeapons()
     *pbyteCurrentPlayer = 0;
 }
 
+void CPlayerPed::SetArmedWeapon(int iWeaponType, bool bUnk) {
+    if (!m_pPed) return;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
+
+    *pbyteCurrentPlayer = m_bytePlayerNumber;
+
+    GameStoreLocalPlayerWeaponSkills();
+    GameSetRemotePlayerWeaponSkills(m_bytePlayerNumber);
+
+    if ((!m_pPed || !(m_pPed->dwStateFlags & 0x100)) && !bUnk) {
+        ScriptCommand(&set_actor_armed_weapon, m_dwGTAId, iWeaponType);
+    } else {
+        void* dwPedPtr = m_pPed;
+        if (dwPedPtr) {
+            typedef void (CGtaPedWeapon::*SetArmedFn)(int);
+            union { void* p; SetArmedFn fn; } u;
+            u.p = (void*)0x5E6280;
+            (((CGtaPedWeapon*)dwPedPtr)->*u.fn)(iWeaponType);
+        }
+    }
+
+    GameSetLocalPlayerWeaponSkills();
+    *pbyteCurrentPlayer = 0;
+}
+
 #pragma optimize("", off)
 void CPlayerPed::RemoveWeaponWhenEnteringVehicle() {
     void* dwPedPtr = m_pPed;
@@ -1013,6 +1038,13 @@ int CPlayerPed::IsFalling(void)
         {
             return GetTaskTypeFromTask(pTask) == 208;
         }
+    }
+    return 0;
+}
+
+int CPlayerPed::IsSwimming() {
+    if (m_pPed && !(m_pPed->dwStateFlags & 0x100) && m_pPed->Tasks->pdwSwimWasted) {
+        return GetTaskTypeFromTask(m_pPed->Tasks->pdwSwimWasted) == 268;
     }
     return 0;
 }
