@@ -1018,8 +1018,17 @@ public:
     void ReleasePreviewTextures();
 };
 
+class CCamera {
+public:
+    CEntity* field_0;
+    void FUNC_1009D660(CEntity* pEntity);
+};
+
 class CGame {
 public:
+    char gap[4];
+    CCamera* m_pGameCamera;
+    CCamera* GetCamera() { return m_pGameCamera; }
     unsigned long GetWeaponInfo(int iWeapon, int iUnk);
     void DrawGangZone(float* fPos, unsigned long dwColor);
     void DeletePlayerPed(void* ped);
@@ -1615,10 +1624,13 @@ _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
 _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
+    volatile PED_TYPE* pPed = m_pPed;
+    volatile _VECTOR* pResult = 0;
     typedef _VECTOR* (PED_TYPE::*BoneFn)(_VECTOR*, int, int);
     union { void* p; BoneFn fn; } u;
     u.p = (void*)0x5E01C0;
-    return (m_pPed->*u.fn)(pVec, iBone, 0);
+    pResult = (((PED_TYPE*)pPed)->*u.fn)(pVec, iBone, 0);
+    return (_VECTOR*)pResult;
 }
 #pragma optimize("", on)
 void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
