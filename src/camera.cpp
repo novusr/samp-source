@@ -460,6 +460,10 @@ void RakNet::BitStream::Reset() {
     readOffset = 0;
 }
 
+void CBaseCamera::Reset() {
+    SetViewParams(&m_vDefaultEye, &m_vDefaultLookAt);
+}
+
 CFirstPersonCamera::CFirstPersonCamera() :
     m_nActiveButtonMask(0x07)
 {
