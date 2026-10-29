@@ -53,17 +53,20 @@ struct _VEHICLE_TYPE {
 };
 struct _ENTITY_TYPE {
     void* vtable;
-    char gap0[0x14];
+    char gap0[0x10];
+    struct _MATRIX4X4* mat;
     void* pRwObject;
 };
 
 struct PED_TASKS_TYPE {
-    char gap[0x10];
-    unsigned long* pdwJumpJetPack;
+    char gap[0xc];
+    unsigned long* pdwSwimWasted;  // 0x0c
+    unsigned long* pdwJumpJetPack; // 0x10
 };
 
 struct PED_TYPE {
-    char gap0[0x46c];
+    _ENTITY_TYPE entity;
+    char gap0[0x450];
     unsigned long dwStateFlags;     // 0x46c
     char gap_task[0xc];             // 0x470 to 0x47c
     PED_TASKS_TYPE* Tasks;          // 0x47c
