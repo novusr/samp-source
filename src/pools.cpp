@@ -197,6 +197,10 @@ public:
     void SetInitialState();
     unsigned char GetSpecialKey();
     unsigned char GetCurrentWeapon();
+    float GetTargetRotation();
+    void SetTargetRotation(float fRotation);
+    void ClearAllWeapons();
+    void GetMatrix(_MATRIX4X4* pMatrix);
 
 };
 
