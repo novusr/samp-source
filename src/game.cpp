@@ -1061,6 +1061,7 @@ void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
 
+#pragma optimize("s", on)
 #pragma optimize("y", off)
 void CGame::LoadCullZone(char *szLine)
 {
@@ -1072,20 +1073,20 @@ void CGame::LoadCullZone(char *szLine)
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    void (* const fn)(unsigned long*) = (void (*)(unsigned long*))0x563220;
-    fn(pEntity);
+    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
 }
 
 extern "C" void __cdecl func_563280(unsigned long*);
-#pragma optimize("y", off)
+#pragma optimize("s", on)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
+    register void (*fn)(unsigned long*) = (void (*)(unsigned long*))0x563280;
+    fn(pEntity);
 }
 #pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
 {
-    typedef void (__cdecl *Func)(char*);
-    ((Func)0x5b8700)(szScene);
+    register void (__cdecl *Func)(char*) = (void (__cdecl *)(char*))0x5B8700;
+    Func(szScene);
 }
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
@@ -1101,6 +1102,18 @@ int CGame::IsAnimationLoaded(char *szAnimFile)
 void CGame::RequestAnimation(char *szAnimFile)
 {
 	ScriptCommand(&request_animation, szAnimFile);
+}
+
+int FlushPedIntelligence(void)
+{
+    union {
+        void (CPedIntelligence::*fn)(int);
+        void* addr;
+    } u;
+    u.addr = (void*)0x601640;
+    CPedIntelligence* p = *(CPedIntelligence**)(dwActorPed + 0x47c);
+    (p->*u.fn)(1);
+    return 1;
 }
 
 void InitScripting(void)
@@ -1129,11 +1142,11 @@ int ExecuteScriptBuf(void)
 #pragma optimize("y", off)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
-	ENTITY_TYPE* pEntity = m_pEntity;
-	if (pEntity == 0 || pEntity->pRwObject == 0 || *(void**)pEntity == (void*)0x863C40)
-		return;
+	if (!m_pEntity) return;
+	if (!m_pEntity->pRwObject) return;
+	if (*(void**)m_pEntity == (void*)0x863C40) return;
 
-	volatile unsigned long dwEntity = (unsigned long)pEntity;
+	volatile unsigned long dwEntity = (unsigned long)m_pEntity;
 	typedef void (__cdecl *Func)(void*, int);
 	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
 }
