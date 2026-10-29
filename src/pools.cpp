@@ -1240,12 +1240,16 @@ void CMenuPool::HideMenu(unsigned char byteMenuID) {
 }
 
 CGangZonePool::~CGangZonePool() {
-    for (int i = 0; i < 1024; i++) {
-        if (m_pGangZone[i]) {
-            delete m_pGangZone[i];
-            m_pGangZone[i] = 0;
+    int i = 1024;
+    CGangZone** pZone = m_pGangZone;
+    do {
+        if (*pZone) {
+            delete *pZone;
+            *pZone = 0;
         }
-    }
+        pZone++;
+        --i;
+    } while (i != 0);
 }
 
 CPlayerTags::~CPlayerTags() {
