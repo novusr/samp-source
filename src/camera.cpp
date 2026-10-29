@@ -478,6 +478,14 @@ void CCamera::SetBehindPlayer()
     ScriptCommand(&restore_camera_jumpcut);
 }
 
+float CCamera::GetDistanceFromPoint(_VECTOR *vecPos)
+{
+    float fSZ = vecPos->Z - *(float*)0xB6F9D4;
+    float fSY = vecPos->Y - *(float*)0xB6F9D0;
+    float fSX = vecPos->X - *(float*)0xB6F9CC;
+    return (float)sqrt((double)(fSX * fSX + fSY * fSY + fSZ * fSZ));
+}
+
 void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ) {
     ScriptCommand(&restore_camera_to_user_defined);
     m_pEntity = 0;
