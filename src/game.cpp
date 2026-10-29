@@ -709,6 +709,8 @@ public:
     void AddCmdProc(char* szCmdName, CMDPROC cmdHandler);
 };
 
+// Builds a console command window: clears the command list, recall history and
+// input buffers, leaving the recall cursor at "no entry".
 CCmdWindow::CCmdWindow(IDirect3DDevice9* pD3DDevice) {
     m_bEnabled = 0;
     m_pD3DDevice = pD3DDevice;
