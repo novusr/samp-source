@@ -169,6 +169,8 @@ CActorPed::~CActorPed() {
     Destroy();
 }
 
+// Turns the actor's scripted immunity on or off; the flag is cached on the
+// wrapper and the six immunity sub-flags are pushed to the game script.
 void CActorPed::ToggleImmunity(unsigned char byteEnable) {
     if (!m_pPed) return;
     m_byteImmune = byteEnable;
@@ -180,16 +182,16 @@ void CActorPed::ToggleImmunity(unsigned char byteEnable) {
 
 #pragma optimize("y", off)
 void CActorPed::Destroy() {
-    volatile unsigned long dwPed = (unsigned long)m_pPed;
-    if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || *(unsigned long*)m_pPed == 0x863c40) {
+    volatile unsigned int dwPed = (unsigned int)m_pPed;
+    if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || *(unsigned long*)m_pPed == 0x863C40) {
         m_pPed = 0;
         m_pEntity = 0;
         m_dwGTAId = 0;
         return;
     }
-    ((CGtaEntity*)dwPed)->Destroy(1);
-    m_pPed = 0;
+    ((CGtaEntity*)(void*)dwPed)->Destroy(1);
     m_pEntity = 0;
+    m_pPed = 0;
 }
 #pragma optimize("", on)
 // Frees the actor in slot `id`: clears its slot flag, deletes the CActorPed,
