@@ -122,6 +122,8 @@ public:
     void* m_pEntity;              // 0x40
     unsigned long m_dwGTAId;      // 0x44
     int SetModelIndex(unsigned int model);
+    void* GetRwObject();
+    void GetMatrix(_MATRIX4X4* pMatrix);
 };
 
 void UnFuck(unsigned long, int);
@@ -143,6 +145,65 @@ public:
     void* m_pPed;                 // 0x2a4
     void SetModelIndex(unsigned int model);
 };
+
+class R5PreviewPedAnimationView : public CPlayerPed {
+public:
+    char gap_ped[0x25c];
+    void* ped;                    // 0x2a4
+    void UpdateAnimations(float step, int onScreen);
+};
+
+class RPCPedInteriorView : public CPlayerPed {
+public:
+    char gap_ped[0x25c];
+    void* ped;                    // 0x2a4
+    char gap_player[8];
+    unsigned char playerNumber;   // 0x2b0
+    void SetInterior(unsigned char id, int refresh);
+};
+
+class CTask {
+public:
+    virtual ~CTask();
+    char pad[4];
+    void* m_pPlayerPed;
+    void* m_pTaskType;
+    CTask();
+    void Create(unsigned long size);
+};
+
+class CTaskKillPedOnFootArmed : public CTask {
+public:
+    CTaskKillPedOnFootArmed(int unk, int unk2, int unk3, int unk4, _PED_TYPE* pToShoot);
+};
+
+#pragma pack(push, 1)
+struct R5CustomPedLoadEntryView {
+    unsigned char gap0[7];
+    unsigned char type;
+    unsigned char gap8[4];
+    int baseModel;
+    int modelId;
+    unsigned char gap14[0x32];
+    unsigned long dffChecksum;
+    unsigned long txdChecksum;
+    unsigned char gap4e[10];
+    unsigned char ready;
+    unsigned char retry;
+};
+
+class R5CustomPedLoadView {
+    R5CustomPedLoadEntryView** items;
+    unsigned int count;
+    R5CustomPedLoadEntryView* GetAt(unsigned int index) {
+        if (index >= count) return 0;
+        return items[index];
+    }
+public:
+    int LoadPedModelFiles(int baseModel, int model, unsigned long dffChecksum, unsigned long txdChecksum);
+    int EnsurePedModelReady(int model);
+};
+#pragma pack(pop)
 
 class CActorPed : public CEntity {
 public:
@@ -252,3 +313,21 @@ int CActorPool::Delete(unsigned short id) {
     }
     return 0;
 }
+
+void R5PreviewPedModelView::SetModelIndex(unsigned int model)
+{
+    unsigned long nativePed = (unsigned long)m_pPed;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
+    if (!IsActorPedModelValid(model)) model = 0;
+    if (nativePed) {
+        UnFuck(0x5A82C0, 1);
+        *(unsigned char*)0x5A82C0 = 0xC3;
+        DestroyFollowPedTask();
+        CEntity::SetModelIndex(model);
+        typedef void (CAEPedAudioEntity::*AudioInitFn)(void*);
+        union { void* p; AudioInitFn fn; } u;
+        u.p = (void*)0x4E68D0;
+        (((CAEPedAudioEntity*)((char*)nativePed + 0x294))->*u.fn)((void*)nativePed);
+    }
+}
+
