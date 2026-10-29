@@ -477,12 +477,10 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
-    union {
-        void* p;
-        void (CCamera::*fn)(int, int, int, int);
-    } u;
-    u.p = (void*)0x50C7C0;
-    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
+    typedef void (CCamera::*Fn)(int, int, int, int);
+    Fn fn;
+    *(int*)&fn = 0x50C7C0;
+    (((CCamera*)0xB6F028)->*(fn))(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 void CCamera::SetBehindPlayer()
@@ -519,6 +517,8 @@ void CBaseCamera::SetProjParams(float fFOV, float fAspect, float fNearPlane, flo
     D3DXMatrixPerspectiveFovLH(&m_mProj, fFOV, fAspect, fNearPlane, fFarPlane);
 }
 
+// Puts the camera back under script control and hard-sets its position and
+// rotation. The entity pointer is dropped so the camera re-resolves its target.
 void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ) {
     ScriptCommand(&restore_camera_to_user_defined);
     m_pEntity = 0;
