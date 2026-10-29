@@ -1119,6 +1119,11 @@ int __cdecl StrAndBoolComp(char *const &key, const StrAndBool &data)
 	return strcmp(key, (const char*)data.str);
 }
 
+int __cdecl LightweightDatabaseServer::DatabaseTableComp(char *const &key1, char *const &key2)
+{
+	return strcmp(key1, key2);
+}
+
 void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
