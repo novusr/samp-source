@@ -674,6 +674,23 @@ int RakNet::BitStream::CopyData(unsigned char** _data) const {
     return numberOfBitsUsed;
 }
 
+void RakNet::BitStream::AssertCopyData()
+{
+    if (copyData == false)
+    {
+        copyData = true;
+
+        if (numberOfBitsAllocated > 0)
+        {
+            unsigned char* newdata = (unsigned char*)malloc((numberOfBitsAllocated + 7) >> 3);
+            memcpy(newdata, data, (numberOfBitsAllocated + 7) >> 3);
+            data = newdata;
+        }
+        else
+            data = 0;
+    }
+}
+
 bool RakNet::BitStream::Read(char* output, const int numberOfBytes) {
     if ((readOffset & 7) == 0) {
         if (readOffset + (numberOfBytes << 3) > numberOfBitsUsed)
