@@ -378,6 +378,9 @@ public:
     void SetMaxStats();
     void RefreshStreamingAt(float x, float y);
     void DisableRaceCheckpoint();
+    unsigned char GetActiveInterior();
+    void AddToLocalMoney(int iAmount);
+    unsigned long GetWeaponInfo(int iWeapon, int iUnk);
 };
 #pragma pack(pop)
 
