@@ -759,6 +759,8 @@ void CCmdWindow::AddCmdProc(char* szCmdName, CMDPROC cmdHandler) {
     }
 }
 
+// Step forward through the recall history; past the newest entry the edit
+// control is restored to the text that was being typed.
 void CCmdWindow::RecallDown() {
     m_iCurrentRecallAt--;
     if (m_iCurrentRecallAt >= 0) {
@@ -1130,14 +1132,14 @@ void CGame::RequestAnimation(char *szAnimFile)
 struct CPedIntelligence;
 int FlushPedIntelligence(void)
 {
-    unsigned long ped = dwActorPed;
-    struct CPedInt { void Flush(int); };
     union {
-        void (CPedInt::*fn)(int);
+        void (CPedIntelligence::*fn)(int);
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    (((CPedInt*)*(unsigned long*)(ped + 0x47c))->*u.fn)(1);
+    unsigned long ped = dwActorPed;
+    CPedIntelligence* p = *(CPedIntelligence**)(ped + 0x47c);
+    (p->*u.fn)(1);
     return 1;
 }
 
