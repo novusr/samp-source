@@ -518,6 +518,8 @@ void R5TextDrawSelectorView::ClearAll() {
     }
 }
 
+// Enables the selector, converts the packed colour to the game's byte order
+// (a full 32-bit byte swap) and clears the current selection.
 void R5TextDrawSelectorView::Enable(unsigned long color) {
     unsigned long upper = (color >> 16) | (color & 0xff0000);
     unsigned long lower = (color << 16) | (color & 0xff00);
