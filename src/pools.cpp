@@ -1030,6 +1030,15 @@ CNewPlayerTags::CNewPlayerTags(IDirect3DDevice9* pDevice) {
     D3DXCreateSprite(pDevice, &m_pSprite);
 }
 
+CNewPlayerTags::~CNewPlayerTags() {
+    if (m_pStates)
+        m_pStates->Release();
+    if (m_pSprite) {
+        delete m_pSprite;
+        m_pSprite = 0;
+    }
+}
+
 void InternalPacketPool::ReleasePointer(InternalPacket *p) {
     if (p) {
         pool.Push(p);
