@@ -771,7 +771,12 @@ public:
     CTextDrawPool();
 };
 
-class CMenu;
+class CMenu {
+public:
+    void Show();
+    void Hide();
+};
+
 class CMenuPool {
 public:
     CMenu* m_pObject[128];
@@ -780,6 +785,8 @@ public:
     char m_bCanceled;
 
     CMenuPool();
+    void ShowMenu(unsigned char byteMenuID);
+    void HideMenu(unsigned char byteMenuID);
 };
 
 struct CGangZone {
@@ -794,6 +801,7 @@ public:
     int m_bSlotState[1024];
 
     CGangZonePool();
+    ~CGangZonePool();
     void Flash(unsigned short id, unsigned long color);
     void StopFlash(unsigned short id);
 };
@@ -1149,19 +1157,20 @@ void CPlayerPed::StopDancing()
     TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
 }
 
+#pragma optimize("y", off)
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
-    volatile unsigned long dwPed = (unsigned long)m_pPed;
-    if (!dwPed) return;
-
-    typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
-    union {
-        void* p;
-        Fn fn;
-    } u;
-    u.p = (void*)0x618970;
-    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    unsigned long dwPed = (unsigned long)m_pPed;
+    if (dwPed) {
+        typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
+        union {
+            void* p;
+            Fn fn;
+        } u;
+        u.p = (void*)0x618970;
+        (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
 }
 #pragma optimize("", on)
 
