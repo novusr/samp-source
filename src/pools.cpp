@@ -50,6 +50,8 @@ struct _VEHICLE_TYPE {
     unsigned short nModelIndex;     // 0x22
     char gap1[0x43c];               // 0x24 to 0x460
     void* pDriver;                  // 0x460
+    char gap2[0xb0];
+    unsigned char byteHorn2;        // 0x514
 };
 struct _ENTITY_TYPE {
     void* vtable;
