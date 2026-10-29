@@ -1596,11 +1596,17 @@ void CGangZonePool::Draw() {
         alt = ~alt;
         iLastTick = iTick;
     }
-    for (int i = 0; i < 1024; i++) {
-        if (m_bSlotState[i]) {
-            pGame->DrawGangZone(m_pGangZone[i]->fPos, alt ? m_pGangZone[i]->flashColor : m_pGangZone[i]->color);
+    int i = 1024;
+    CGangZone** pZone = m_pGangZone;
+    int* pSlot = m_bSlotState;
+    do {
+        if (*pSlot) {
+            pGame->DrawGangZone((*pZone)->fPos, alt ? (*pZone)->flashColor : (*pZone)->color);
         }
-    }
+        pZone++;
+        pSlot++;
+        --i;
+    } while (i != 0);
 }
 
 CPickupPool::~CPickupPool() {
@@ -1682,6 +1688,14 @@ int R5ScoreboardPlayerQueriesView::IsNPC(unsigned short id) {
     R5ScoreboardNetPlayer* player = players[id];
     if (!player) return 0;
     return player->m_bIsNPC;
+}
+
+int R5ScoreboardPlayerQueriesView::GetScore(unsigned short id) {
+    if (id > 0x3ec) return 0;
+    int* ptr = (int*)((char*)this + 0x1f8a + id * 4);
+    int val = *ptr;
+    if (!val) return 0;
+    return *(int*)(val + 4);
 }
 
 #pragma optimize("", on)
