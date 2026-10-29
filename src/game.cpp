@@ -476,6 +476,10 @@ public:
     void SetClumpAlpha(int iAlpha);
     float GetDistanceFromPoint(float X, float Y, float Z);
     float GetDistanceFromCamera();
+    void ProcessControl();
+    void SetMatrixAndUpdate(_MATRIX4X4 matrix);
+    void AdvancePosition();
+    int IsStationary();
 
 
 };
