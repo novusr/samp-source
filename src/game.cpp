@@ -336,6 +336,8 @@ public:
     int IsAnimationLoaded(char* szAnimFile);
     void RequestAnimation(char* szAnimFile);
     int IsModelLoaded(int iModelID);
+    void sub_100A0090(int a1, int a2);
+    float FindGroundZForCoord(float x, float y, float z);
 };
 
 int CGame::GetWorldWeather() {
