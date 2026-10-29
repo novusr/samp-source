@@ -1045,7 +1045,7 @@ bool CDXUTTimer::IsStopped() {
     return m_bTimerStopped;
 }
 
-// Matched ?Reset@CD3DArcBall@@QAEXXZ (0x10093840)
+// Reset CD3DArcBall orientation quaternions, matrices, drag state, and radii to defaults.
 void CD3DArcBall::Reset() {
     D3DXQuaternionIdentity(&m_qDown);
     D3DXQuaternionIdentity(&m_qNow);
@@ -1081,12 +1081,12 @@ extern "C" void __cdecl func_563280(unsigned long*);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
+#pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
 {
-    typedef void (__cdecl *fn_t)(void*);
-    ((fn_t)0x5B8700)((void*)szScene);
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5b8700)(szScene);
 }
-
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
 {
@@ -1129,10 +1129,11 @@ int ExecuteScriptBuf(void)
 #pragma optimize("y", off)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
-	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
+	ENTITY_TYPE* pEntity = m_pEntity;
+	if (pEntity == 0 || pEntity->pRwObject == 0 || *(void**)pEntity == (void*)0x863C40)
 		return;
 
-	volatile unsigned long dwEntity = (unsigned long)m_pEntity;
+	volatile unsigned long dwEntity = (unsigned long)pEntity;
 	typedef void (__cdecl *Func)(void*, int);
 	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
 }
