@@ -1284,6 +1284,14 @@ int ReplicaManager::RemoteObjectComp(Replica *const &key, const ReplicaManager::
     return 1;
 }
 
+void __cdecl R5FontConvertAnsiToWide(char *source, unsigned short *destination, int capacity)
+{
+    memset(destination, 0, capacity * sizeof(unsigned short));
+    int required = MultiByteToWideChar(0, 0, source, strlen(source), 0, 0);
+    if (required < capacity)
+        MultiByteToWideChar(0, 0, source, strlen(source), destination, required);
+}
+
 void SimpleMutex::Unlock(void)
 {
     LeaveCriticalSection(this);
