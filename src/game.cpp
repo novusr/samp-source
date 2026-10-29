@@ -1174,6 +1174,10 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+void PacketLogger::OnAttach(RakPeerInterface *peer) {
+    rakPeer = peer;
+}
+
 int ReplicaManager::RegisteredReplicaComp(Replica *const &key, const ReplicaManager::RegisteredReplica &data) {
     if (key < data.replica)
         return -1;
@@ -1346,6 +1350,15 @@ float CEntity::GetDistanceFromCamera()
 CEntity::~CEntity() {
 }
 
+#pragma optimize("y", off)
+void CEntity::DeleteRwObject()
+{
+    if (!m_pEntity || !m_pEntity->pRwObject) return;
+    ENTITY_TYPE* pEntity = m_pEntity;
+    ((IEntityGTA*)pEntity)->DeleteRwObject();
+}
+#pragma optimize("", on)
+
 void CEntity::ProcessControl(void)
 {
 }
@@ -1360,6 +1373,19 @@ void CEntity::AdvancePosition(void)
     matrix.pos.Y += step * m_pEntity->vecMoveSpeed.Y;
     matrix.pos.Z += step * m_pEntity->vecMoveSpeed.Z;
     SetMatrixAndUpdate(matrix);
+}
+
+int CEntity::IsStationary(void)
+{
+    if (!IsAdded()) return 0;
+
+    if (m_pEntity->vecMoveSpeed.X == 0.0f &&
+        m_pEntity->vecMoveSpeed.Y == 0.0f &&
+        m_pEntity->vecMoveSpeed.Z == 0.0f)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 int __cdecl GetInvalidModelInfoCount(void)
