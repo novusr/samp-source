@@ -1339,6 +1339,22 @@ void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
     }
 }
 
+CMenuPool::~CMenuPool() {
+    if (m_nCurrent != 128) {
+        m_pObject[m_nCurrent]->Hide();
+    }
+    int i = 128;
+    CMenu** pMenu = m_pObject;
+    do {
+        if (*pMenu) {
+            delete *pMenu;
+            *pMenu = 0;
+        }
+        pMenu++;
+        --i;
+    } while (i != 0);
+}
+
 void CMenuPool::ShowMenu(unsigned char byteMenuID) {
     if (byteMenuID >= 128) return;
     if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) return;
