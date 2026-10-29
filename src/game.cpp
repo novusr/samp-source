@@ -302,6 +302,16 @@ extern "C" const SCRIPT_COMMAND refresh_streaming_at;
 extern "C" const SCRIPT_COMMAND set_current_time;
 extern "C" const SCRIPT_COMMAND get_active_interior;
 extern "C" const SCRIPT_COMMAND add_to_player_money;
+extern "C" const SCRIPT_COMMAND enable_zone_names;
+void UnFuck(unsigned long, int);
+
+struct _GTA_CONTROLSET {
+    unsigned short wKeys1[24];
+    unsigned short wKeys2[24];
+    unsigned char bytePadding1[212];
+};
+extern _GTA_CONTROLSET* pGcsInternalKeys;
+_GTA_CONTROLSET* __cdecl GameGetInternalKeys();
 #define TRAIN_PASSENGER_LOCO 538
 #define TRAIN_FREIGHT_LOCO 537
 #define TRAIN_TRAM 449
