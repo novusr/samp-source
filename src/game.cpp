@@ -5,6 +5,18 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void*);
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 extern "C" __declspec(dllimport) int __stdcall MultiByteToWideChar(unsigned int, unsigned long, const char *, int, unsigned short *, int);
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void*);
+extern "C" __declspec(dllimport) int __stdcall VirtualProtect(void*, unsigned long, unsigned long, unsigned long*);
+
+struct __MIDL___MIDL_itf_dimm_0000_0012;
+struct HIMC__;
+class CDXUTIMEEditBox {
+protected:
+    static struct __MIDL___MIDL_itf_dimm_0000_0012* __stdcall Dummy_ImmLockIMC(struct HIMC__*);
+};
+
+void __cdecl DIResetMouse(void);
+void __cdecl UpdatePads(void);
+void __cdecl UnFuck(unsigned long, int);
 
 class SimpleMutex {
 public:
