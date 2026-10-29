@@ -70,7 +70,8 @@ struct PED_TYPE {
     unsigned long dwStateFlags;     // 0x46c
     char gap_task[0xc];             // 0x470 to 0x47c
     PED_TASKS_TYPE* Tasks;          // 0x47c
-    char gap_goggles[0x80];         // 0x480 to 0x500
+    unsigned long dwPlayerInfoOffset;// 0x480
+    char gap_goggles[0x7c];         // 0x484 to 0x500
     void* pGoggles;                 // 0x500
     char gap1[0x2c];                // 0x504 to 0x530
     unsigned long dwActionTrigger;  // 0x530
