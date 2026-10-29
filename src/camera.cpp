@@ -411,6 +411,9 @@ int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 extern const SCRIPT_COMMAND restore_camera_to_user_defined;
 extern const SCRIPT_COMMAND set_camera_position;
 extern const SCRIPT_COMMAND restore_camera_jumpcut;
+extern const SCRIPT_COMMAND lock_camera_position;
+extern const SCRIPT_COMMAND set_camera_behind_player;
+extern const SCRIPT_COMMAND point_camera;
 
 class CCamera {
 public:
@@ -421,6 +424,9 @@ public:
     void SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ);
     void Restore();
     void Attach(int unk1, int unk2, int unk3);
+    void SetBehindPlayer();
+    void LookAtPoint(float fX, float fY, float fZ, int iType);
+    float GetDistanceFromPoint(_VECTOR* vecPos);
 };
 
 struct D3DXVECTOR3 {
