@@ -1202,6 +1202,15 @@ void CPlayerPed::ToggleCellphone(int iOn)
     ScriptCommand(&toggle_actor_cellphone, m_dwGTAId, iOn);
 }
 
+void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
+    if (m_pPed) {
+        _WEAPON_SLOT_TYPE* pSlot = FindWeaponSlot(byteWeapon);
+        if (pSlot) {
+            pSlot->dwAmmo = wAmmo;
+        }
+    }
+}
+
 void CMenuPool::ShowMenu(unsigned char byteMenuID) {
     if (byteMenuID >= 128) return;
     if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) return;
