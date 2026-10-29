@@ -1270,6 +1270,9 @@ float CEntity::GetDistanceFromCamera()
 	return (float)sqrt(fSX + fSY + fSZ);
 }
 
+CEntity::~CEntity() {
+}
+
 int __cdecl GetInvalidModelInfoCount(void)
 {
     int count = 0;
