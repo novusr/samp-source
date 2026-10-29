@@ -473,12 +473,15 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
+    struct CTarget {
+        void Target(int a, int b, int c, int d);
+    };
     union {
         void* p;
-        void (CCamera::*fn)(int, int, int, int);
-    } u;
-    u.p = (void*)0x50C7C0;
-    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
+        void (CTarget::*f)(int, int, int, int);
+    } u = { (void*)0x50C7C0 };
+    CTarget* target = (CTarget*)0xB6F028;
+    (target->*u.f)(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 void CCamera::SetBehindPlayer()
