@@ -1169,7 +1169,7 @@ void TEABlockEncryptor::EncryptBlock(unsigned int &v0, unsigned int &v1) {
     } while (rounds != 0);
 }
 
-// Matched ?DecryptBlock@TEABlockEncryptor@@IAEXAAI0@Z (0x10056b40)
+// Decrypt 64 bits (v0 and v1) using Tiny Encryption Algorithm (TEA) with 32 rounds.
 void TEABlockEncryptor::DecryptBlock(unsigned int &v0, unsigned int &v1) {
     unsigned int sum = m_sumInit;
     int rounds = 8;
