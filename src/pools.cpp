@@ -198,6 +198,10 @@ public:
     int GetCurrentVehicleID();
     void HideMarker();
     void SetImmunities(int bBullet, int bFire, int bExplosion, int bDamage, int bUnknown);
+    int IsSwimming();
+    void StartJetpack();
+    void StopJetpack();
+    void TeleportTo(float x, float y, float z);
 
     int IsCellphoneEnabled();
     int GetPissingState();
@@ -925,12 +929,12 @@ void CPlayerPed::ClearAllWeapons()
 
 #pragma optimize("", off)
 void CPlayerPed::RemoveWeaponWhenEnteringVehicle() {
-    void* dwPedPtr = m_pPed;
-    if (dwPedPtr) {
+    PED_TYPE* pPed = m_pPed;
+    if (pPed) {
         typedef void (CGtaPedWeapon::*ClearWeaponFn)(int);
-        union { void* p; ClearWeaponFn fn; } u;
-        u.p = (void*)0x5E6370;
-        (((CGtaPedWeapon*)dwPedPtr)->*u.fn)(0);
+        ClearWeaponFn fn;
+        *(void**)&fn = (void*)0x5E6370;
+        (((CGtaPedWeapon*)pPed)->*fn)(0);
     }
 }
 #pragma optimize("", on)
