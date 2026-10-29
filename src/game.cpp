@@ -405,6 +405,9 @@ public:
     unsigned long GetWorldBoundRadius();    void GetBoundCentre(_VECTOR *pVector);    void ApplyTurnSpeed();
     void GetBoundRect(struct _FRECT *pRect);
     float GetDistanceFromCentreOfMassToBaseOfModel();
+    void SetClumpAlpha(int iAlpha);
+    float GetDistanceFromPoint(float X, float Y, float Z);
+    float GetDistanceFromCamera();
 
 
 };
