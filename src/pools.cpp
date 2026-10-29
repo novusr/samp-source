@@ -1632,6 +1632,20 @@ CLabelPool::~CLabelPool() {
     }
 }
 
+#pragma optimize("y", on)
+int CLabelPool::Delete(unsigned short wLabelID) {
+    if (wLabelID >= 2048) return 0;
+    if (!m_bLabelSlotState[wLabelID]) return 0;
+
+    if (m_Labels[wLabelID].szText)
+        free(m_Labels[wLabelID].szText);
+    memset(&m_Labels[wLabelID], 0, sizeof(LABEL));
+    m_bLabelSlotState[wLabelID] = 0;
+
+    return 1;
+}
+#pragma optimize("", on)
+
 CPlayerTags::~CPlayerTags() {
     if (m_pTexture) m_pTexture->Release();
     if (m_pVB) m_pVB->Release();
