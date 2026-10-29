@@ -816,9 +816,29 @@ public:
     char m_bCanceled;
 
     CMenuPool();
+    ~CMenuPool();
+    int Delete(unsigned char byteMenuID);
     void ShowMenu(unsigned char byteMenuID);
     void HideMenu(unsigned char byteMenuID);
 };
+
+class R5TextDrawCleanupView {
+public:
+    void ReleasePreviewTexture();
+};
+
+class R5TextDrawPool {
+    int m_bSlotState[2304];
+    R5TextDrawCleanupView* m_pTextDraw[2304];
+public:
+    void ReleasePreviewTextures();
+};
+
+class CGame {
+public:
+    unsigned long GetWeaponInfo(int iWeapon, int iUnk);
+};
+extern CGame* pGame;
 
 struct CGangZone {
     char gap[0x10];
@@ -1195,8 +1215,8 @@ void CPlayerPed::StopJetpack() {
             typedef void (CJetpackTask::*DestroyFn)(int);
             union { void* p; DestroyFn fn; } u;
             u.p = (void*)0x6801D0;
-            int flag = 1;
-            (((CJetpackTask*)dwJetPackTask)->*u.fn)(flag);
+            DestroyFn fn = u.fn;
+            (((CJetpackTask*)dwJetPackTask)->*fn)(1);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
     }
