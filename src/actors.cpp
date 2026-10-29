@@ -121,6 +121,27 @@ public:
     char gap[0x3c];
     void* m_pEntity;              // 0x40
     unsigned long m_dwGTAId;      // 0x44
+    int SetModelIndex(unsigned int model);
+};
+
+void UnFuck(unsigned long, int);
+int __stdcall IsActorPedModelValid(int);
+
+class CPlayerPed : public CEntity {
+public:
+    void DestroyFollowPedTask();
+};
+
+class CAEPedAudioEntity {
+public:
+    void Init(void* ped);
+};
+
+class R5PreviewPedModelView : public CPlayerPed {
+public:
+    char gap_ped[0x25c];
+    void* m_pPed;                 // 0x2a4
+    void SetModelIndex(unsigned int model);
 };
 
 class CActorPed : public CEntity {
