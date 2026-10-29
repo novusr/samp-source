@@ -964,7 +964,7 @@ void CPlayerPed::SetArmedWeapon(int iWeaponType, bool bUnk) {
     if ((!m_pPed || !(m_pPed->dwStateFlags & 0x100)) && !bUnk) {
         ScriptCommand(&set_actor_armed_weapon, m_dwGTAId, iWeaponType);
     } else {
-        PED_TYPE* dwPedPtr = m_pPed;
+        void* dwPedPtr = m_pPed;
         if (dwPedPtr) {
             typedef void (CGtaPedWeapon::*SetArmedFn)(int);
             union { void* p; SetArmedFn fn; } u;
@@ -1087,6 +1087,18 @@ void CPlayerPed::StopJetpack() {
             (((CJetpackTask*)dwJetPackTask)->*u.fn)(1);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
+    }
+}
+
+void CPlayerPed::StartDancing(int iStyle)
+{
+    if (iStyle < 0 || iStyle > 3) return;
+
+    m_iDanceState = 1;
+    m_iDanceStyle = iStyle;
+
+    if (m_bytePlayerNumber == 0) {
+        ApplyAnimation(DanceIdleLoops[m_iDanceStyle], DanceStyleLibs[m_iDanceStyle], 16.0f, 1, 0, 0, 0, -1);
     }
 }
 
