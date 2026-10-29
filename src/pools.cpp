@@ -80,6 +80,32 @@ struct PED_TYPE {
     unsigned char byteFightingStyle;// 0x72d
 };
 
+struct _CAMERA_AIM;
+void __stdcall GameStoreRemotePlayerAim(int iPlayer, struct _CAMERA_AIM* caAim);
+void __stdcall SetRadarColor(int nIndex, unsigned long dwColor);
+
+class CRemotePlayer {
+public:
+    char gap[0x1e5];
+    unsigned short m_PlayerID;
+    void SetPlayerColor(unsigned long color);
+};
+
+struct InternalPacket;
+namespace DataStructures {
+template <class T>
+class Queue {
+public:
+    void Push(const T& input);
+};
+}
+
+class InternalPacketPool {
+public:
+    DataStructures::Queue<InternalPacket*> pool;
+    void ReleasePointer(InternalPacket *p);
+};
+
 class CPlayerPed {
 public:
     char gap[0x48];
