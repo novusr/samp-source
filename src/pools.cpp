@@ -154,6 +154,8 @@ extern "C" const SCRIPT_COMMAND set_actor_immunities;
 extern "C" const SCRIPT_COMMAND remove_actor_from_car_and_put_at;
 extern "C" const SCRIPT_COMMAND actor_task_handsup;
 extern "C" const SCRIPT_COMMAND toggle_actor_cellphone;
+extern "C" const SCRIPT_COMMAND set_actor_money;
+extern "C" int __cdecl _isnan(double);
 const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
 extern char DanceStyleLibs[4][16];
 extern char DanceIdleLoops[4][16];
