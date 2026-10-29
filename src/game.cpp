@@ -1655,6 +1655,13 @@ void CGame::ToggleThePassingOfTime(unsigned char byteOnOff)
     }
 }
 
+void CGame::SetFrameLimit(unsigned long dwLimit)
+{
+    field_5D = dwLimit;
+    Unprotect((void*)0xC1704C, 4);
+    *(unsigned long*)0xC1704C = 200;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
