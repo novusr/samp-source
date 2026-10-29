@@ -702,6 +702,7 @@ void CGangZonePool::Flash(unsigned short id, unsigned long color) {
 }
 
 // Matched ??0CTextDrawPool@@QAE@XZ (0x10001190)
+// Clears all 2048 text-draw items and their game-object pointers.
 CTextDrawPool::CTextDrawPool() {
     int i = 2048;
     CTextDrawItem* pItem = m_items;
