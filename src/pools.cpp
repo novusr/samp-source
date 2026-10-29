@@ -249,6 +249,7 @@ int CPlayerPed::IsAPassenger() {
     return 0;
 }
 
+// Look up the slot holding the given weapon, or null when the ped does not carry it.
 _WEAPON_SLOT_TYPE* CPlayerPed::FindWeaponSlot(unsigned long dwWeapon) {
     PED_TYPE* pPed = m_pPed;
     if (pPed) {
