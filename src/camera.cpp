@@ -478,10 +478,12 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
-    typedef void (CCamera::*Fn)(int, int, int, int);
-    Fn fn;
-    *(int*)&fn = 0x50C7C0;
-    (((CCamera*)0xB6F028)->*(fn))(unk1, unk2, unk3, 1);
+    union {
+        void (CCamera::*fn)(int, int, int, int);
+        void* p;
+    } u;
+    u.p = (void*)0x50C7C0;
+    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 // Puts the camera into script control directly behind the player, with a
@@ -884,6 +886,7 @@ private:
 	bool Corrupted;
 };
 
+// Re-initialize the SHA-1 computation context with standard IVs.
 void SHA1::Reset()
 {
 	Length_Low          = 0;
