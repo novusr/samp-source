@@ -165,6 +165,7 @@ void CActorPed::SetHealth(float fHealth) {
     }
 }
 
+// Releases the underlying game ped when the wrapper is destroyed.
 CActorPed::~CActorPed() {
     Destroy();
 }
