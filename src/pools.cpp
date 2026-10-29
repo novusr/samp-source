@@ -1089,6 +1089,14 @@ void CPlayerPed::StopJetpack() {
         }
     }
 }
+
+void CPlayerPed::ToggleCellphone(int iOn)
+{
+    if (!m_pPed) return;
+    m_iCellPhoneEnabled = iOn;
+    ScriptCommand(&toggle_actor_cellphone, m_dwGTAId, iOn);
+}
+
 #pragma optimize("", on)
 
 void CPlayerTags::End() {
