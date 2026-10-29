@@ -308,6 +308,7 @@ char* Util_stristr(const char* String, const char* Pattern) {
     return 0;
 }
 
+// Performs wildcard matching between a pattern string and a target string
 int Util_wildcmp(char* wild, char* string) {
     char *cp, *mp;
 
