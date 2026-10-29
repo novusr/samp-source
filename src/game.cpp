@@ -239,6 +239,7 @@ public:
     void RequestModel(int iModelID, int iLoadingStream = 2);
     int IsAnimationLoaded(char* szAnimFile);
     void RequestAnimation(char* szAnimFile);
+    int IsModelLoaded(int iModelID);
 };
 
 int CGame::GetWorldWeather() {
