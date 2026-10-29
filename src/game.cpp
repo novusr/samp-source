@@ -75,8 +75,19 @@ void* __cdecl memset(void*, int, unsigned int);
 void* __cdecl memcpy(void*, const void*, unsigned int);
 double __cdecl sqrt(double);
 int __cdecl vsprintf(char*, const char*, ...);
+char* __cdecl strcpy(char*, const char*);
+int __cdecl _stat(const char*, void*);
 }
-#pragma intrinsic(memset, memcpy, sqrt)
+#pragma intrinsic(memset, memcpy, sqrt, strcpy)
+
+struct _stat32 {
+    char pad[36];
+};
+
+void __cdecl ResetLocalPad(int unk1, int unk2);
+int __cdecl IsFileOrDirectoryExists(char *szPath);
+unsigned long __cdecl GetColorFromEmbedCode(char *szString);
+void __cdecl RemoveColorEmbedsFromString(char *szString);
 
 float DegToRad(float fDegrees);
 
