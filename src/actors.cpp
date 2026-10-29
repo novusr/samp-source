@@ -67,6 +67,23 @@ struct _PED_TYPE;
 _PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
 float DegToRad(float fDegrees);
 
+struct _VECTOR {
+    float X;
+    float Y;
+    float Z;
+};
+
+struct _MATRIX4X4 {
+    _VECTOR right;
+    unsigned long flagsRight;
+    _VECTOR up;
+    unsigned long flagsUp;
+    _VECTOR at;
+    unsigned long flagsAt;
+    _VECTOR pos;
+    unsigned long flagsPos;
+};
+
 struct SCRIPT_COMMAND {
     unsigned short OpCode;
     char Params[16];
@@ -74,6 +91,11 @@ struct SCRIPT_COMMAND {
 int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 const SCRIPT_COMMAND set_actor_immunities = { 0x02ab, "iiiiii" };
 const SCRIPT_COMMAND kill_actor = { 0x0321, "i" };
+const SCRIPT_COMMAND rpc_select_ped_interior = { 0x04bb, "i" };
+const SCRIPT_COMMAND rpc_link_ped_interior = { 0x0860, "ii" };
+const SCRIPT_COMMAND rpc_refresh_ped_streaming = { 0x04e4, "ff" };
+
+void UpdatePreviewClumpAnimations(void* clump, float step, int onScreen);
 
 class CGtaEntity {
 public:
