@@ -907,6 +907,23 @@ void CPlayerPed::ClearAllWeapons()
     *pbyteCurrentPlayer = 0;
 }
 
+#pragma optimize("y", on)
+float CPlayerPed::GetDistanceFromVehicle(CVehicle* pVehicle) {
+    _MATRIX4X4 matFromPlayer;
+    _MATRIX4X4 matThis;
+    float fSX, fSY, fSZ;
+
+    GetMatrix(&matThis);
+    pVehicle->GetMatrix(&matFromPlayer);
+
+    fSX = (matThis.pos.X - matFromPlayer.pos.X) * (matThis.pos.X - matFromPlayer.pos.X);
+    fSY = (matThis.pos.Y - matFromPlayer.pos.Y) * (matThis.pos.Y - matFromPlayer.pos.Y);
+    fSZ = (matThis.pos.Z - matFromPlayer.pos.Z) * (matThis.pos.Z - matFromPlayer.pos.Z);
+
+    return (float)sqrt((double)(fSX + fSY + fSZ));
+}
+#pragma optimize("", on)
+
 void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ) {
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
     if (m_pPed && (m_pPed->dwStateFlags & 0x100)) {
