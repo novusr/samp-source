@@ -315,6 +315,7 @@ struct ID3DXSprite {
     virtual void Dummy9();
     virtual void Dummy10();
     virtual long __stdcall End();
+    virtual long __stdcall OnLostDevice();
 };
 
 class CNewPlayerTags {
@@ -324,6 +325,7 @@ public:
     ID3DXSprite* m_pSprite;
 
     void End();
+    void DeleteDeviceObjects();
 };
 
 #pragma pack(push, 1)
