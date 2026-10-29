@@ -224,6 +224,10 @@ public:
     void GetWorldTime(unsigned char* pHour, unsigned char* pMinute);
     void LoadRequestedModels();
     void LoadScene(char* szScene);
+    void LoadCullZone(char* szLine);
+    void RequestModel(int iModelID, int iLoadingStream = 2);
+    int IsAnimationLoaded(char* szAnimFile);
+    void RequestAnimation(char* szAnimFile);
 };
 
 int CGame::GetWorldWeather() {
@@ -1041,10 +1045,11 @@ void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
 
+#pragma optimize("y", off)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
 }
-
+#pragma optimize("", on)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
 	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
@@ -1054,7 +1059,7 @@ void CEntity::SetClumpAlpha(int iAlpha)
 	typedef void (__cdecl *Func)(void*, int);
 	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
 }
-
+#pragma optimize("", on)
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 {
 	_MATRIX4X4	matThis;
