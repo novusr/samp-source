@@ -1340,10 +1340,12 @@ void CPlayerPed::DestroyFollowPedTask()
     dwExt4 = (unsigned long)m_pPed->Tasks->pdwIK;
     if (!dwExt4) return;
 
+    volatile unsigned long* p = (volatile unsigned long*)&dwExt4;
     typedef void (CJetpackTask::*DestroyFn)(int);
     union { void* p; DestroyFn fn; } u;
     u.p = (void*)0x639330;
-    (((CJetpackTask*)dwExt4)->*u.fn)(1);
+    DestroyFn fn = u.fn;
+    (((CJetpackTask*)*p)->*fn)(1);
 
     m_pPed->Tasks->pdwIK = 0;
 }
@@ -1392,7 +1394,10 @@ void CPlayerPed::LoadShoppingDataSubsection(char* szSectionName)
 char* CPlayerPed::GetShopName() {
     if (!m_pPed) return 0;
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
-    return *(char**)((char*)m_pPed + 0x78c);
+    volatile char* pPed = (char*)m_pPed;
+    volatile char* szResult = 0;
+    szResult = *(char**)(pPed + 0x78c);
+    return (char*)szResult;
 }
 
 _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
@@ -1422,6 +1427,7 @@ void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
     }
 }
 
+#pragma optimize("y", off)
 void CPlayerPed::SetWeaponModelIndex(int iWeapon) {
     if (m_pPed) {
         PED_TYPE* dwPed = m_pPed;
@@ -1435,7 +1441,7 @@ void CPlayerPed::SetWeaponModelIndex(int iWeapon) {
         (((CGtaPedWeapon*)dwPed)->*u.fn)(dwWeaponInfo[3]);
     }
 }
-
+#pragma optimize("", on)
 CMenuPool::~CMenuPool() {
     if (m_nCurrent != 128) {
         m_pObject[m_nCurrent]->Hide();
