@@ -493,6 +493,16 @@ void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
     ScriptCommand(&point_camera, fX, fY, fZ, iType);
 }
 
+void CBaseCamera::SetProjParams(float fFOV, float fAspect, float fNearPlane, float fFarPlane)
+{
+    m_fFOV = fFOV;
+    m_fAspect = fAspect;
+    m_fNearPlane = fNearPlane;
+    m_fFarPlane = fFarPlane;
+
+    D3DXMatrixPerspectiveFovLH(&m_mProj, fFOV, fAspect, fNearPlane, fFarPlane);
+}
+
 void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ) {
     ScriptCommand(&restore_camera_to_user_defined);
     m_pEntity = 0;
