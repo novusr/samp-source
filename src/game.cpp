@@ -1675,6 +1675,19 @@ void CGame::SetFrameLimit(unsigned long dwLimit)
     *(unsigned long*)0xC1704C = 200;
 }
 
+void CGame::SetMaxStats(void)
+{
+    ((void (__cdecl *)())0x4399D0)();
+    ((void (__cdecl *)())0x439940)();
+    Unprotect((void*)0x55A070, 1);
+    *(unsigned char*)0x55A070 = 0xC3;
+}
+
+void CGame::RefreshStreamingAt(float x, float y)
+{
+    ScriptCommand(&refresh_streaming_at, x, y);
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
