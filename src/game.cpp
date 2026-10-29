@@ -567,6 +567,11 @@ public:
 
 };
 
+class CActorPed : public CEntity {
+public:
+    virtual ~CActorPed();
+};
+
 // Copies the entity transformation matrix into the output parameter
 void CEntity::GetMatrix(_MATRIX4X4* pMatrix) {
     if (!m_pEntity || !m_pEntity->mat) return;
