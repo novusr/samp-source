@@ -562,6 +562,18 @@ void CCamera::InterpolateLookAt(_VECTOR *vecFrom, _VECTOR *vecTo, int iTime, uns
     ScriptCommand(&point_camera_transverse_to, vecFrom->X, vecFrom->Y, vecFrom->Z, vecTo->X, vecTo->Y, vecTo->Z, iTime, byteCut);
 }
 
+void CCamera::FUNC_1009D660(CEntity *pEntity) {
+    m_pEntity = pEntity;
+
+    if (pEntity) {
+        _MATRIX4X4 mat;
+        pEntity->GetMatrix(&mat);
+        if (FUNC_100B4B50(&mat.pos)) {
+            InterpolatePosition(&mat.pos, &mat.pos, 100, 1);
+        }
+    }
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
