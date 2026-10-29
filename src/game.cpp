@@ -1381,8 +1381,8 @@ int CEntity::HasExceededWorldBoundries(float fPX, float fZX, float fPY, float fN
 void CEntity::DeleteRwObject()
 {
     if (!m_pEntity || !m_pEntity->pRwObject) return;
-    ENTITY_TYPE* pEntity = m_pEntity;
-    ((IEntityGTA*)pEntity)->DeleteRwObject();
+    IEntityGTA* volatile pEntity = (IEntityGTA*)m_pEntity;
+    pEntity->DeleteRwObject();
 }
 #pragma optimize("", on)
 
