@@ -163,6 +163,8 @@ void CVehicle::SetTankRot(float X, float Y) {
     m_pVehicle->fTankRotY = Y;
 }
 
+// True for the train rolling-stock models: freight/brown streak (0x21A/0x219),
+// passenger (0x23A/0x239) and the tram (0x1C1).
 int CVehicle::IsATrainPart() {
     if (m_pVehicle) {
         int nModel = m_pVehicle->nModelIndex;
