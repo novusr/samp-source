@@ -321,19 +321,34 @@ int CActorPool::Delete(unsigned short id) {
 
 class CGtaTask;
 typedef void (CGtaTask::*GtaTaskInitFn)(_PED_TYPE*, int, int, int, int);
+#pragma optimize("y", off)
 CTaskKillPedOnFootArmed::CTaskKillPedOnFootArmed(int unk, int unk2, int unk3, int unk4, _PED_TYPE* pToShoot) {
     m_pPlayerPed = 0;
     Create(92);
     void* pTaskType = m_pTaskType;
-    union {
-        GtaTaskInitFn fn;
-        unsigned long addr;
-    } u;
-    u.addr = 0x621190;
-    (((CGtaTask*)pTaskType)->*u.fn)(pToShoot, unk4, unk2, unk3, unk);
+    void (CGtaTask::*fn)(_PED_TYPE*, int, int, int, int);
+    *(unsigned long*)&fn = 0x621190;
+    (((CGtaTask*)pTaskType)->*fn)(pToShoot, unk4, unk2, unk3, unk);
 }
 
-#pragma optimize("y", off)
+#pragma optimize("y", on)
+void RPCPedInteriorView::SetInterior(unsigned char id, int refresh) {
+    if (!ped) return;
+    if (!playerNumber) {
+        ScriptCommand(&rpc_select_ped_interior, id);
+        ScriptCommand(&rpc_link_ped_interior, m_dwGTAId, id);
+        if (refresh) {
+            _MATRIX4X4 matrix;
+            GetMatrix(&matrix);
+            ScriptCommand(&rpc_refresh_ped_streaming, matrix.pos.X, matrix.pos.Y);
+        }
+    } else {
+        ScriptCommand(&rpc_link_ped_interior, m_dwGTAId, id);
+    }
+}
+#pragma optimize("", on)
+
+#pragma optimize("", on)
 void R5PreviewPedModelView::SetModelIndex(unsigned int model)
 {
     volatile unsigned long nativePed = (unsigned long)m_pPed;
