@@ -65,7 +65,10 @@ struct _MATRIX4X4 {
     float pad_p;
 };
 
-class CEntity;
+class CEntity {
+public:
+    void GetMatrix(_MATRIX4X4* pMatrix);
+};
 
 struct SCRIPT_COMMAND;
 int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
@@ -75,6 +78,11 @@ extern const SCRIPT_COMMAND restore_camera_jumpcut;
 extern const SCRIPT_COMMAND lock_camera_position;
 extern const SCRIPT_COMMAND set_camera_behind_player;
 extern const SCRIPT_COMMAND point_camera;
+extern const SCRIPT_COMMAND set_camera_position_to;
+extern const SCRIPT_COMMAND point_camera_transverse_to;
+extern const SCRIPT_COMMAND lock_camera_target_point;
+
+bool __cdecl FUNC_100B4B50(_VECTOR *vecPos);
 
 class CCamera {
 public:
@@ -88,6 +96,9 @@ public:
     void SetBehindPlayer();
     void LookAtPoint(float fX, float fY, float fZ, int iType);
     float GetDistanceFromPoint(_VECTOR* vecPos);
+    void InterpolatePosition(_VECTOR* vecFrom, _VECTOR* vecTo, int iTime, unsigned char byteCut);
+    void InterpolateLookAt(_VECTOR* vecFrom, _VECTOR* vecTo, int iTime, unsigned char byteCut);
+    void FUNC_1009D660(CEntity* pEntity);
 };
 
 struct D3DXVECTOR3 {
