@@ -726,6 +726,7 @@ CCmdWindow::CCmdWindow(IDirect3DDevice9* pD3DDevice) {
     memset(&m_szCurBuffer[0], 0, 129);
 }
 
+// Writes the game UI's dialog size into pRect (all zero when there is no UI).
 void CCmdWindow::GetDialogSize(RECT* pRect) {
     memset(pRect, 0, sizeof(RECT));
     if (m_pGameUI) {
