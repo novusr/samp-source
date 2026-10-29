@@ -324,6 +324,9 @@ public:
     int field_61;
     int field_65;
     int field_69;
+    void SetWorldTime(int iHour, int iMinute);
+    void ToggleThePassingOfTime(unsigned char byteOnOff);
+    void SetFrameLimit(unsigned long dwLimit);
     int GetWorldWeather();
     unsigned char IsHudEnabled();
     int GetLocalMoney();
@@ -1580,15 +1583,17 @@ float __cdecl NormalizeAngle(float fAngle)
 	return fAngle;
 }
 
+#pragma optimize("s", on)
 #pragma optimize("y", off)
 void __cdecl ResetLocalPad(int unk1, int unk2) {
-    CPad* pad = ((CPad* (__cdecl *)(int))0x53fb70)(0);
+    void* fn = (void*)0x53fb70;
+    CPad* pad = ((CPad* (__cdecl *)(int))fn)(0);
     union {
-        void (CPad::*fn)(int, int);
+        void (CPad::*f)(int, int);
         void* addr;
     } u;
     u.addr = (void*)0x541a70;
-    (pad->*u.fn)(unk1, unk2);
+    (pad->*u.f)(unk1, unk2);
 }
 #pragma optimize("", on)
 int __cdecl IsFileOrDirectoryExists(char *szPath) {
