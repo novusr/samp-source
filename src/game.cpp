@@ -627,6 +627,7 @@ void CDXUTScrollBar::Cap() {
 #define __max(a,b) (((a) > (b)) ? (a) : (b))
 static inline int RectHeight(RECT& rc) { return rc.bottom - rc.top; }
 
+// Updates the scrollbar thumb rectangle based on position, range, and page size.
 void CDXUTScrollBar::UpdateThumbRect() {
     if (m_nEnd - m_nStart > m_nPageSize) {
         int nThumbHeight = __max(RectHeight(m_rcTrack) * m_nPageSize / (m_nEnd - m_nStart), SCROLLBAR_MINTHUMBSIZE);
@@ -1067,28 +1068,29 @@ void CGame::LoadRequestedModels() {
 #pragma optimize("y", off)
 void CGame::LoadCullZone(char *szLine)
 {
-    ((long long (__cdecl *)(char*))0x5B4B40)(szLine);
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5B4B40)(szLine);
 }
 #pragma optimize("", on)
 
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    typedef void (__cdecl *Func)(unsigned long*);
-    Func f = (Func)0x563220;
-    f(pEntity);
+    void (* const fn)(unsigned long*) = (void (*)(unsigned long*))0x563220;
+    fn(pEntity);
 }
 
 extern "C" void __cdecl func_563280(unsigned long*);
 #pragma optimize("s", on)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
+    register void (*pfn)(unsigned long*) = (void (*)(unsigned long*))0x563280;
+    pfn(pEntity);
 }
 #pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
 {
-    typedef void (__cdecl *Func)(char*);
-    ((Func)0x5b8700)(szScene);
+    void (* const pfn)(char*) = (void (*)(char*))0x5B8700;
+    pfn(szScene);
 }
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
@@ -1106,6 +1108,7 @@ void CGame::RequestAnimation(char *szAnimFile)
 	ScriptCommand(&request_animation, szAnimFile);
 }
 
+struct CPedIntelligence;
 int FlushPedIntelligence(void)
 {
     union {
@@ -1113,8 +1116,7 @@ int FlushPedIntelligence(void)
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    unsigned long edx_val = dwActorPed;
-    CPedIntelligence* p = (CPedIntelligence*)(*(unsigned long*)(edx_val + 0x47c));
+    CPedIntelligence* p = *(CPedIntelligence**)(dwActorPed + 0x47c);
     (p->*u.fn)(1);
     return 1;
 }
