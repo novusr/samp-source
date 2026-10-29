@@ -1204,6 +1204,18 @@ unsigned long CRemotePlayer::GetPlayerColorAsARGB()
     return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;
 }
 
+void RPCVehicleParamsPoolView::AssignSpecialParamsToVehicle(unsigned short id, unsigned char objective, unsigned char doors) {
+    if (!GetSlotState(id)) return;
+    RPCVehicleParamsView* vehicle = vehicles[id];
+    if (vehicle && active[id]) {
+        if (objective) {
+            vehicle->objective = 1;
+            vehicle->specialMarker = 0;
+        }
+        vehicle->SetDoorState(doors);
+    }
+}
+
 CNewPlayerTags::CNewPlayerTags(IDirect3DDevice9* pDevice) {
     m_pDevice = pDevice;
     m_pStates = 0;
@@ -1780,6 +1792,19 @@ void CPlayerPed::StopCarrying() {
     GetMatrix(&mat);
     TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
     field_2C1 = 0;
+}
+
+void CPlayerPed::RemoveAllAttachedObjects() {
+    for (int i = 0; i < 10; i++) {
+        if (i >= 0 && i < 10 && m_bObjectSlotUsed[i] == 1) {
+            if (m_pAttachedObjects[i]) {
+                delete m_pAttachedObjects[i];
+                m_pAttachedObjects[i] = 0;
+            }
+            memset(&m_attachedObjectInfo[i], 0, sizeof(m_attachedObjectInfo[i]));
+            m_bObjectSlotUsed[i] = 0;
+        }
+    }
 }
 
 void CPickupPool::DestroyDropped(unsigned short fromPlayer) {
