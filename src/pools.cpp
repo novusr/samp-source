@@ -1187,6 +1187,18 @@ void CPlayerPed::ToggleCellphone(int iOn)
     ScriptCommand(&toggle_actor_cellphone, m_dwGTAId, iOn);
 }
 
+void CMenuPool::ShowMenu(unsigned char byteMenuID) {
+    if (byteMenuID >= 128) return;
+    if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) return;
+
+    if (m_nCurrent != 128) {
+        m_pObject[m_nCurrent]->Hide();
+    }
+    m_pObject[byteMenuID]->Show();
+    m_nCurrent = byteMenuID;
+    m_bCanceled = 0;
+}
+
 #pragma optimize("", on)
 
 void CPlayerTags::End() {
