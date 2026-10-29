@@ -2,6 +2,7 @@
 // These functions must not be invoked in an ordinary host process.
 extern "C" void __cdecl Unprotect(void* address, unsigned long bytes);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void*);
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void*);
 
 class SimpleMutex {
