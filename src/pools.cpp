@@ -938,6 +938,14 @@ void CPlayerPed::HandsUp() {
     ScriptCommand(&actor_task_handsup, m_dwGTAId, -2);
 }
 
+int CPlayerPed::HasHandsUp() {
+    if (!m_pPed || (m_pPed->dwStateFlags & 0x100)) return 0;
+    if (!IsAdded()) return 0;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
+    if (m_pPed->Tasks->pdwJumpJetPack == 0) return 0;
+    return m_pPed->Tasks->pdwJumpJetPack[0] == 0x85a29c;
+}
+
 void CPlayerTags::End() {
     if (!m_pOldStates) {
         RestoreDeviceObjects();
