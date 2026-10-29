@@ -1364,6 +1364,14 @@ void CPickupPool::Destroy(int iPickup) {
     }
 }
 
+CLabelPool::~CLabelPool() {
+    for (unsigned short wLabelID = 0; wLabelID < 2048; wLabelID++) {
+        if (m_bLabelSlotState[wLabelID]) {
+            Delete(wLabelID);
+        }
+    }
+}
+
 CPlayerTags::~CPlayerTags() {
     if (m_pTexture) m_pTexture->Release();
     if (m_pVB) m_pVB->Release();
