@@ -457,7 +457,9 @@ void BitStream::Reset() {
     numberOfBitsUsed = 0;
     readOffset = 0;
 }
+} // namespace RakNet
 
+namespace RakNet {
 void BitStream::ResetReadPointer() {
     readOffset = 0;
 }
