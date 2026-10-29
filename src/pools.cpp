@@ -40,9 +40,9 @@ int LocalPlayer::AreKeysChanged(unsigned short keyA, unsigned short keyB, unsign
 
 struct _WEAPON_SLOT_TYPE {
     unsigned long dwType;
+    char gap[8];
     unsigned long dwAmmo;
-    unsigned long dwAmmoInClip;
-    char gap[0x10];
+    char gap2[12];
 };
 
 struct _VEHICLE_TYPE {
@@ -1119,8 +1119,7 @@ void CPlayerPed::StartJetpack() {
     if (!m_pPed) return;
     *pbyteCurrentPlayer = m_bytePlayerNumber;
     TeleportTo(m_pPed->entity.mat->pos.X, m_pPed->entity.mat->pos.Y, m_pPed->entity.mat->pos.Z);
-    typedef void (__stdcall *Func)();
-    ((Func)0x439600)();
+    ((void(*)())0x439600)();
     *pbyteCurrentPlayer = 0;
 }
 
