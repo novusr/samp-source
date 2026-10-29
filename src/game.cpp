@@ -915,6 +915,18 @@ void CEntity::ApplyTurnSpeed()
 }
 
 
+// Vehicle subtypes returned by GetVehicleSubtypeFromVehiclePtr.
+enum
+{
+    VEHICLE_SUBTYPE_CAR = 1,
+    VEHICLE_SUBTYPE_BIKE = 2,
+    VEHICLE_SUBTYPE_HELI = 3,
+    VEHICLE_SUBTYPE_BOAT = 4,
+    VEHICLE_SUBTYPE_PLANE = 5,
+    VEHICLE_SUBTYPE_PUSHBIKE = 6,
+    VEHICLE_SUBTYPE_TRAIN = 7
+};
+
 // Matched ?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z (0x100b61e0)
 struct _VEHICLE_TYPE;
 
