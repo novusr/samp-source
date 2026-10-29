@@ -1188,6 +1188,9 @@ float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 	return (float)sqrt(fSX + fSY + fSZ);
 }
 
+// Straight-line distance from this entity to the player camera position
+// (0xB6F9CC/0xB6F9D0/0xB6F9D4); 100000 while the entity is unstreamed or
+// a dummy (0x863C40 vtable).
 float CEntity::GetDistanceFromCamera()
 {
 	if (!m_pEntity || *(void**)m_pEntity == (void*)0x863C40) return 100000.0f;
