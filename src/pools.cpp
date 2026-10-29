@@ -878,7 +878,7 @@ void CPlayerPed::SetTargetRotation(float fRotation)
 #pragma optimize("y", off)
 void CPlayerPed::ClearAllWeapons()
 {
-    PED_TYPE* dwPedPtr = m_pPed;
+    volatile unsigned long dwPedPtr = (unsigned long)m_pPed;
 
     *pbyteCurrentPlayer = m_bytePlayerNumber;
 
@@ -889,11 +889,23 @@ void CPlayerPed::ClearAllWeapons()
             ClearFn fn;
         } u;
         u.p = (void*)0x5E6320;
-        (dwPedPtr->*u.fn)();
+        (((PED_TYPE*)dwPedPtr)->*u.fn)();
+        *pbyteCurrentPlayer = 0;
+        return;
     }
 
     *pbyteCurrentPlayer = 0;
 }
+
+void CPlayerTags::End() {
+    if (!m_pOldStates) {
+        RestoreDeviceObjects();
+        if (!m_pOldStates)
+            return;
+    }
+    m_pOldStates->Apply();
+}
+
 #pragma optimize("", on)
 
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
