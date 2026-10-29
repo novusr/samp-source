@@ -1571,6 +1571,15 @@ void CGangZonePool::New(unsigned short id, float fMinX, float fMinY, float fMaxX
     }
 }
 
+void RPCObjectOpsView::InstantRotate(_VECTOR* angles) {
+    if (!m_pEntity) return;
+    if (!GamePool_Object_GetAt(m_dwGTAId)) return;
+    ScriptCommand(&rpc_set_object_rotation, m_dwGTAId, angles->X, angles->Y, angles->Z);
+    m_vecRot.X = angles->X;
+    m_vecRot.Y = angles->Y;
+    m_vecRot.Z = angles->Z;
+}
+
 void R5ChatPagingView::SetPageSize(int lines) {
     if (lines >= 10 && lines <= 100) {
         pageSize = lines;
