@@ -645,6 +645,22 @@ int RakNet::BitStream::CopyData(unsigned char** _data) const {
     return numberOfBitsUsed;
 }
 
+bool RakNet::BitStream::ReadAlignedBytes(unsigned char* output, const int numberOfBytesToRead) {
+    if (numberOfBytesToRead <= 0)
+        return false;
+
+    AlignReadToByteBoundary();
+
+    if (readOffset + (numberOfBytesToRead << 3) > numberOfBitsUsed)
+        return false;
+
+    memcpy(output, data + (readOffset >> 3), numberOfBytesToRead);
+
+    readOffset += numberOfBytesToRead << 3;
+
+    return true;
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
