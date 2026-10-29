@@ -406,12 +406,18 @@ struct _MATRIX4X4 {
 
 class CEntity;
 
+struct SCRIPT_COMMAND;
+int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
+extern const SCRIPT_COMMAND restore_camera_to_user_defined;
+extern const SCRIPT_COMMAND set_camera_position;
+
 class CCamera {
 public:
     CEntity* m_pEntity;
     _MATRIX4X4* m_matPos;
 
     void GetMatrix(_MATRIX4X4* pMatrix);
+    void SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ);
 };
 
 void CCamera::GetMatrix(_MATRIX4X4 *pMatrix)
