@@ -450,6 +450,10 @@ public:
     void AddBitsAndReallocate(const int numberOfBitsToWrite);
     int CopyData(unsigned char** _data) const;
     bool ReadBits(unsigned char* output, int numberOfBitsToRead, const bool alignBitsToRight = true);
+    bool ReadAlignedBytes(unsigned char* output, const int numberOfBytesToRead);
+    bool Read(char* output, const int numberOfBytes);
+    void WriteBits(const unsigned char* input, int numberOfBitsToWrite, const bool rightAlignedBits = true);
+    void Write(const char* input, const int numberOfBytes);
     void AssertCopyData();
 
 private:
