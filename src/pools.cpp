@@ -221,8 +221,22 @@ public:
     void SetTargetRotation(float fRotation);
     void ClearAllWeapons();
     void GetMatrix(_MATRIX4X4* pMatrix);
+    void SetArmedWeapon(int iWeaponType, bool bUnk);
+    void RemoveWeaponWhenEnteringVehicle();
+    float GetDistanceFromVehicle(CVehicle* pVehicle);
 
 };
+
+#pragma pack(push, 1)
+class R5LabelRemotePlayerView {
+public:
+    char prefix[0x10a];
+    unsigned char state;
+    char gap10b[0x1dd - 0x10b];
+    void* ped;
+    int IsActive();
+};
+#pragma pack(pop)
 
 int CPlayerPed::IsCellphoneEnabled() {
     return m_iCellPhoneEnabled;
