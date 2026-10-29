@@ -1138,7 +1138,9 @@ struct Pools {
 
 class CNetGame {
 public:
-    char gap[0x3de];
+    char gap0[0x23d];
+    unsigned long m_dwMapIcon[100];
+    char gap1[0x3de - 0x3cd];
     Pools* m_pPools;
 
     CVehiclePool* GetVehiclePool();
@@ -1150,6 +1152,7 @@ public:
     CLabelPool* GetLabelPool();
     CTextDrawPool* GetTextDrawPool();
     CMenuPool* GetMenuPool();
+    void SetMapIcon(unsigned char byteIndex, float fX, float fY, float fZ, unsigned char byteIcon, unsigned long dwColor, int iStyle);
 };
 
 #pragma pack(pop)
@@ -1596,7 +1599,7 @@ _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     u.p = (void*)0x5E4280;
     return (((PED_TYPE*)dwPedPtr)->*u.fn)(pVec, iBone, 0);
 }
-#pragma optimize("", on)
+#pragma optimize("y", off)
 _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
@@ -1605,7 +1608,7 @@ _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
     u.p = (void*)0x5E01C0;
     return (m_pPed->*u.fn)(pVec, iBone, 0);
 }
-
+#pragma optimize("", on)
 void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
     if (m_pPed) {
         _WEAPON_SLOT_TYPE* pSlot = FindWeaponSlot(byteWeapon);
