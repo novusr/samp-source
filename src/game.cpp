@@ -1464,6 +1464,13 @@ int __cdecl GetInvalidModelInfoCount(void)
     return count;
 }
 
+float __cdecl NormalizeAngle(float fAngle)
+{
+	if(fAngle > 180.0f) fAngle -= 360.0f;
+	if(fAngle < -180.0f) fAngle += 360.0f;
+	return fAngle;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
