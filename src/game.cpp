@@ -56,8 +56,12 @@ public:
     struct CommandStruct {
         Replica *replica;
     };
+    struct RemoteObject {
+        Replica *replica;
+    };
     static int __cdecl RegisteredReplicaComp(Replica *const &key, const RegisteredReplica &data);
     static int __cdecl CommandStructComp(Replica *const &key, const CommandStruct &data);
+    static int __cdecl RemoteObjectComp(Replica *const &key, const RemoteObject &data);
 };
 
 class CCryptoContext {
