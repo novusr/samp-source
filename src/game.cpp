@@ -732,6 +732,7 @@ void CCmdWindow::GetDialogSize(RECT* pRect) {
     }
 }
 
+// Push the last command into the recall history, dropping the oldest entry.
 void CCmdWindow::AddToRecallBuffer(char* szCmdInput) {
     int x = 10 - 1;
     while (x) {
