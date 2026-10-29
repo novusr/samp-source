@@ -20,18 +20,17 @@ Functions are checked in full, including their references, call targets and jump
 
 ## Progress
 
-**402,825 / 930,756 code bytes verified — 43.28% of the original code section.**
+**Current Active Pipeline: 228 functions matched (12,735 bytes) · 204 functions formally verified in manifest (11,605 bytes).**
 
-Latest accepted checkpoint: **September 6, 2026 · CP3.2**. Coverage counts unique accepted code bytes; overlapping matches and unimplemented dependencies receive no extra credit.
+Total reference `.text` section: **930,756 bytes (8,020 functions)**. Reconstructed source is continuously compiled with Microsoft Visual C++ Toolkit 2003 and validated against reference `samp.dll` (`b72b5dbe725f81864ca3f78bc7063bda56cc05fc7188af822fa7a754432553a2`).
 
-Accepted coverage includes parts of:
+Accepted and in-progress coverage includes parts of:
 
 - **Game and client code:** actor lifecycle, entity geometry, camera/audio wrappers, native pools, player state, weapon skills, commands, menus, RenderWare and shared utilities.
-- **Interface:** dialog lifecycle, drawing and message routing, control rendering and input, text editing, IME composition and resource lookup.
-- **Networking:** accepted portions of RakPeer, RakClient, Router, RPC handling, reliability, connection graphs and shared containers.
-- **DXUT framework:** timers, resource-cache lifecycle and creation, framework state and shutdown, adapter enumeration, device-settings construction, command-line parsing, camera helpers and render-loop handling.
+- **Interface & Networking:** dialog lifecycle, command window, packet handling, and RakNet containers.
+- **Mathematical & Security Utilities:** vector geometry, TEA block encryption, MD5 transform, and SHA1 digest routines.
 
-The latest batch added **5,957 unique exact code bytes**. Its complete-region and relocation/target checks passed, together with **10 negative controls** and the existing ABI checks. See the linked acceptance evidence for scope and limitations.
+*(Note: Legacy upstream research recorded experimental batches up to CP3.2; this repository tracks strictly clean, reproducible C++ units with fail-closed boundary and relocation checks under native Linux.)*
 
 ### Active Reconstruction Pipeline (Linux / Parallel Multi-Worker)
 
