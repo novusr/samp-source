@@ -1057,12 +1057,31 @@ void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
 
+#pragma optimize("y", off)
+void CGame::LoadCullZone(char *szLine)
+{
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5B4B40)(szLine);
+}
+#pragma optimize("", on)
+
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
     register void (__cdecl *fn)(unsigned long *) = (void (__cdecl *)(unsigned long *))0x563220;
     fn(pEntity);
 }
+
+void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
+    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
+}
+
+void CGame::LoadScene(char* szScene)
+{
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5b8700)(szScene);
+}
+
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
 {
@@ -1083,6 +1102,12 @@ void InitScripting(void)
 {
 	gst = new GAME_SCRIPT_THREAD;
 	memset(gst, 0, sizeof(GAME_SCRIPT_THREAD));
+}
+
+int CGame::IsModelLoaded(int iModelID)
+{
+	if (iModelID > 20000 || iModelID < 0) return 1;
+	return ScriptCommand(&is_model_available, iModelID);
 }
 
 #pragma optimize("", on)
