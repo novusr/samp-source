@@ -1736,6 +1736,17 @@ void CPickupPool::Destroy(int iPickup) {
     }
 }
 
+void CPlayerPed::StopCarrying() {
+    if (field_2C5) {
+        ScriptCommand(&rpc_ped_carry_object, m_dwGTAId, field_2C5, 0.0f, 0.0f, 0.0f, 6, 16, "NULL", "NULL", 0);
+        field_2C5 = 0;
+    }
+    _MATRIX4X4 mat;
+    GetMatrix(&mat);
+    TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
+    field_2C1 = 0;
+}
+
 void CPickupPool::DestroyDropped(unsigned short fromPlayer) {
     for (int i = 0; i < 4096; i++) {
         if (m_dwHnd[i] != 0 && m_droppedWeapon[i].bDroppedWeapon && m_droppedWeapon[i].fromPlayer == fromPlayer) {
