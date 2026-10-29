@@ -1452,6 +1452,7 @@ char* CPlayerPed::GetShopName() {
     return (char*)szResult;
 }
 
+#pragma optimize("y", off)
 _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
@@ -1460,7 +1461,7 @@ _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     u.p = (void*)0x5E4280;
     return (m_pPed->*u.fn)(pVec, iBone, 0);
 }
-
+#pragma optimize("", on)
 _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
