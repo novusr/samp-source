@@ -509,6 +509,7 @@ void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
     ScriptCommand(&point_camera, fX, fY, fZ, iType);
 }
 
+// Stores the projection parameters and rebuilds the left-handed projection matrix.
 void CBaseCamera::SetProjParams(float fFOV, float fAspect, float fNearPlane, float fFarPlane)
 {
     m_fFOV = fFOV;
