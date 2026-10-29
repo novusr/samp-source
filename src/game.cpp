@@ -479,6 +479,7 @@ public:
     void SetClumpAlpha(int iAlpha);
     float GetDistanceFromPoint(float X, float Y, float Z);
     float GetDistanceFromCamera();
+    int HasExceededWorldBoundries(float fPX, float fZX, float fPY, float fNY);
     void ProcessControl();
     void SetMatrixAndUpdate(_MATRIX4X4 matrix);
     void AdvancePosition();
