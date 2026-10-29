@@ -460,6 +460,11 @@ void RakNet::BitStream::Reset() {
     readOffset = 0;
 }
 
+CFirstPersonCamera::CFirstPersonCamera() :
+    m_nActiveButtonMask(0x07)
+{
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
