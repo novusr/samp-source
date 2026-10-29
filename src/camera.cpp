@@ -721,6 +721,44 @@ bool RakNet::BitStream::ReadAlignedBytes(unsigned char* output, const int number
     return true;
 }
 
+void RakNet::BitStream::WriteBits(const unsigned char *input, int numberOfBitsToWrite, const bool rightAlignedBits) {
+    if (numberOfBitsToWrite <= 0)
+        return;
+
+    AddBitsAndReallocate(numberOfBitsToWrite);
+    int offset = 0;
+    unsigned char dataByte;
+    int numberOfBitsUsedMod8;
+
+    numberOfBitsUsedMod8 = numberOfBitsUsed & 7;
+
+    while (numberOfBitsToWrite > 0) {
+        dataByte = *(input + offset);
+
+        if (numberOfBitsToWrite < 8 && rightAlignedBits)
+            dataByte <<= 8 - numberOfBitsToWrite;
+
+        if (numberOfBitsUsedMod8 == 0)
+            *(data + (numberOfBitsUsed >> 3)) = dataByte;
+        else {
+            *(data + (numberOfBitsUsed >> 3)) |= dataByte >> (numberOfBitsUsedMod8);
+
+            if (8 - (numberOfBitsUsedMod8) < 8 && 8 - (numberOfBitsUsedMod8) < numberOfBitsToWrite) {
+                *(data + (numberOfBitsUsed >> 3) + 1) = (unsigned char)(dataByte << (8 - (numberOfBitsUsedMod8)));
+            }
+        }
+
+        if (numberOfBitsToWrite >= 8)
+            numberOfBitsUsed += 8;
+        else
+            numberOfBitsUsed += numberOfBitsToWrite;
+
+        numberOfBitsToWrite -= 8;
+
+        offset++;
+    }
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
