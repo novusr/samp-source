@@ -1139,23 +1139,22 @@ void CPlayerPed::StartJetpack() {
 #pragma optimize("y", off)
 void CPlayerPed::StopJetpack() {
     if (m_pPed && !(m_pPed->dwStateFlags & 0x100)) {
-        if (m_pPed->Tasks->pdwJumpJetPack && *m_pPed->Tasks->pdwJumpJetPack == 0x8705C4) {
-            volatile unsigned long dwJetPackTask = (unsigned long)m_pPed->Tasks->pdwJumpJetPack;
+        PED_TASKS_TYPE* tasks = m_pPed->Tasks;
+        if (tasks->pdwJumpJetPack && *tasks->pdwJumpJetPack == 0x8705C4) {
+            volatile unsigned long dwJetPackTask = (unsigned long)tasks->pdwJumpJetPack;
             typedef void (CJetpackTask::*DestroyFn)(int);
             union { void* p; DestroyFn fn; } u;
             u.p = (void*)0x6801D0;
-            DestroyFn fn = u.fn;
-            (((CJetpackTask*)dwJetPackTask)->*fn)(1);
+            (((CJetpackTask*)dwJetPackTask)->*u.fn)(1);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
     }
 }
-#pragma optimize("", on)
+#pragma optimize("y", on)
 void CPlayerPed::SetMoney(int iAmount) {
     ScriptCommand(&set_actor_money, m_dwGTAId, 0);
     ScriptCommand(&set_actor_money, m_dwGTAId, iAmount);
 }
-
 #pragma optimize("", on)
 void CPlayerPed::StartDancing(int iStyle)
 {
@@ -1228,6 +1227,15 @@ void CMenuPool::HideMenu(unsigned char byteMenuID) {
     if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) return;
     m_pObject[byteMenuID]->Hide();
     m_nCurrent = 128;
+}
+
+CGangZonePool::~CGangZonePool() {
+    for (int i = 0; i < 1024; i++) {
+        if (m_pGangZone[i]) {
+            delete m_pGangZone[i];
+            m_pGangZone[i] = 0;
+        }
+    }
 }
 
 CPlayerTags::~CPlayerTags() {
