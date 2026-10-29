@@ -275,6 +275,12 @@ void Util_UrlUnencode(char *enc)
 	*write_pos='\0';
 }
 
+void CCamera::Restore()
+{
+    m_pEntity = 0;
+    ScriptCommand(&restore_camera_jumpcut);
+}
+
 inline char Util_toupper(char c) {
     return ((c > (char)0x60) && (c < (char)0x7b)) ? c - 0x20 : c;
 }
