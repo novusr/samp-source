@@ -801,6 +801,39 @@ void RPCDeleteObjectPoolView::UpdateLargestID() {
     m_iLargestID = last;
 }
 
+#pragma pack(push, 1)
+struct _StdStringView {
+    union {
+        char _Buf[16];
+        char* _Ptr;
+    } _Bx;
+    unsigned int _Mysize;
+    unsigned int _Myres;
+    char* c_str() {
+        if (_Myres < 16)
+            return _Bx._Buf;
+        return _Bx._Ptr;
+    }
+};
+
+struct RPCDeathNetPlayerView {
+    char gap[0x18];
+    _StdStringView m_PlayerName;
+};
+
+class RPCDeathPlayerPoolView {
+public:
+    char prefix[4];
+    unsigned short localId;
+    char gap_a[4];
+    _StdStringView localName;
+    char gap_mid[0x1f8a - 0x22];
+    RPCDeathNetPlayerView* players[1005];
+
+    char* GetPlayerName(unsigned short id);
+};
+#pragma pack(pop)
+
 struct tagRECT {
     long left;
     long top;
