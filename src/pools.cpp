@@ -1157,20 +1157,21 @@ void CPlayerPed::StopDancing()
     TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
 }
 
+#pragma optimize("s", on)
 #pragma optimize("y", off)
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
     unsigned long dwPed = (unsigned long)m_pPed;
-    if (dwPed) {
-        typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
-        union {
-            void* p;
-            Fn fn;
-        } u;
-        u.p = (void*)0x618970;
-        (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
-    }
+    if (!dwPed) return;
+
+    typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
+    union {
+        void* p;
+        Fn fn;
+    } u;
+    u.p = (void*)0x618970;
+    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
 }
 #pragma optimize("", on)
 
@@ -1202,6 +1203,12 @@ int R5LabelRemotePlayerView::IsActive() {
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
     field_2DA = first;
     field_2DE = second;
+}
+
+void RPCVehiclePoolView::LinkToInterior(unsigned short id, int interior) {
+    if (m_bVehicleSlotState[id]) {
+        m_pVehicles[id]->LinkToInterior(interior);
+    }
 }
 
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
