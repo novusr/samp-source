@@ -357,6 +357,7 @@ int RPCObjectOpsView::IsAdded() {
     return 0;
 }
 
+// Euclidean distance from the object's current matrix position to its target.
 float RPCObjectOpsView::DistanceRemaining(_MATRIX4X4* pMatrix) {
     float fSZ = pMatrix->pos.Z - m_vecTarget.Z;
     float fSY = pMatrix->pos.Y - m_vecTarget.Y;
