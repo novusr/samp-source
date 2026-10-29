@@ -479,10 +479,13 @@ void CCamera::Attach(int unk1, int unk2, int unk3)
     struct CAttachable {
         void Method(int a, int b, int c, int d);
     };
-    typedef void (CAttachable::*MethodPtr)(int, int, int, int);
-    MethodPtr pMethod;
-    *(int*)&pMethod = 0x50C7C0;
-    (((CAttachable*)0xB6F028)->*pMethod)(unk1, unk2, unk3, 1);
+    union {
+        void* addr;
+        void (CAttachable::*fn)(int, int, int, int);
+    } u;
+    u.addr = (void*)0x50C7C0;
+    CAttachable* p = (CAttachable*)0xB6F028;
+    (p->*(u.fn))(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 void CCamera::SetBehindPlayer()
