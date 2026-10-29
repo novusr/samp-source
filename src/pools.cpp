@@ -162,6 +162,11 @@ extern "C" const SCRIPT_COMMAND remove_actor_from_car_and_put_at;
 extern "C" const SCRIPT_COMMAND actor_task_handsup;
 extern "C" const SCRIPT_COMMAND toggle_actor_cellphone;
 extern "C" const SCRIPT_COMMAND set_actor_money;
+extern "C" const SCRIPT_COMMAND set_fighting_style;
+extern unsigned long dwExt4;
+GTA_CONTROLSET* __cdecl GameGetPlayerKeys(int iPlayer);
+extern "C" size_t __cdecl strlen(const char*);
+#pragma intrinsic(strlen)
 extern "C" int __cdecl _isnan(double);
 const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
 extern char DanceStyleLibs[4][16];
@@ -1187,12 +1192,9 @@ void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
     if (!dwPed) return;
 
     typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, int, int, int, int);
-    union {
-        void* p;
-        Fn fn;
-    } u;
-    u.p = (void*)0x618970;
-    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
+    Fn fn;
+    *(void**)&fn = (void*)0x618970;
+    (((CCommandTaskManager*)0xC15448)->*fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
 }
 #pragma optimize("", on)
 
@@ -1201,6 +1203,12 @@ void CPlayerPed::ToggleCellphone(int iOn)
     if (!m_pPed) return;
     m_iCellPhoneEnabled = iOn;
     ScriptCommand(&toggle_actor_cellphone, m_dwGTAId, iOn);
+}
+
+char* CPlayerPed::GetShopName() {
+    if (!m_pPed) return 0;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
+    return *(char**)((char*)m_pPed + 0x78c);
 }
 
 void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
