@@ -744,9 +744,26 @@ unsigned char CPlayerPed::GetSpecialKey(void)
     return 0;
 }
 
+unsigned char CPlayerPed::GetCurrentWeapon(void)
+{
+    if (!m_pPed) return 0;
+    if (GamePool_Ped_GetAt(m_dwGTAId) == 0) return 0;
+
+    unsigned long dwRetVal;
+    ScriptCommand(&get_actor_armed_weapon, m_dwGTAId, &dwRetVal);
+    return (unsigned char)dwRetVal;
+}
+
 int CPlayerPed::GetCurrentVehicleID() {
     if (!m_pPed) return 0;
     return GamePool_Vehicle_GetIndex(m_pPed->pVehicle);
+}
+
+void CPlayerPed::HideMarker() {
+    if (m_dwArrow) {
+        ScriptCommand(&disable_marker, m_dwArrow);
+        m_dwArrow = 0;
+    }
 }
 
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
