@@ -162,8 +162,21 @@ struct InternalPacket;
 namespace DataStructures {
 template <class T>
 class Queue {
+    T* array;
+    unsigned int head;
+    unsigned int tail;
+    unsigned int allocation_size;
 public:
     void Push(const T& input);
+    inline unsigned int Size() const {
+        if (head <= tail) return tail - head;
+        return allocation_size - head + tail;
+    }
+    inline T Pop() {
+        if (++head == allocation_size) head = 0;
+        if (head == 0) return array[allocation_size - 1];
+        return array[head - 1];
+    }
 };
 }
 
@@ -171,7 +184,36 @@ class InternalPacketPool {
 public:
     DataStructures::Queue<InternalPacket*> pool;
     void ReleasePointer(InternalPacket *p);
+    void ClearPool();
 };
+
+class R5RosterPlayerPoolView {
+public:
+    char gap0[0x2a];
+    int slots[1004];
+    char gap1[0x2f3a - (0x2a + 1004 * 4)];
+    int largestId;
+
+    void UpdateLargestId();
+};
+
+struct in_addr {
+    unsigned long s_addr;
+};
+extern "C" char* __stdcall inet_ntoa(in_addr in);
+extern "C" char* __cdecl strcpy(char* dest, const char* src);
+extern "C" char* __cdecl strcat(char* dest, const char* src);
+extern "C" unsigned int __cdecl strlen(const char* str);
+extern "C" char* __cdecl _itoa(int value, char* str, int radix);
+#pragma intrinsic(strcpy, strcat, strlen)
+
+#pragma pack(push, 1)
+struct PlayerID {
+    unsigned int binaryAddress;
+    unsigned short port;
+    char* ToString(bool writePort = true) const;
+};
+#pragma pack(pop)
 
 PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
 extern unsigned char* pbyteCurrentPlayer;
