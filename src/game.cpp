@@ -488,6 +488,7 @@ struct IEntityGTA {
 
 class CUniBuffer {
     static long __stdcall Dummy_ScriptStringCPtoX(void *, int, int, int *);
+    static long __stdcall Dummy_ScriptStringXtoCP(void *, int, int *, int *);
 };
 
 class CEntity {
