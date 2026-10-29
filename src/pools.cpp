@@ -120,6 +120,7 @@ public:
     int IsInJetpackMode();    float GetHealth();
     float GetArmour();
     int IsDead();
+    void SetCurrentAim(struct _CAMERA_AIM* pAim);
 
 };
 
