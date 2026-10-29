@@ -164,12 +164,17 @@ public:
 
 class CTask {
 public:
-    virtual ~CTask();
+    virtual void DummyVfunc();
     char pad[4];
     void* m_pPlayerPed;
     void* m_pTaskType;
     CTask();
     void Create(unsigned long size);
+};
+
+class __single_inheritance CGtaTask {
+public:
+    void Init(int unk, int unk3, int unk2, int unk4, _PED_TYPE* pToShoot);
 };
 
 class CTaskKillPedOnFootArmed : public CTask {
@@ -312,6 +317,20 @@ int CActorPool::Delete(unsigned short id) {
         return 1;
     }
     return 0;
+}
+
+class CGtaTask;
+typedef void (CGtaTask::*GtaTaskInitFn)(_PED_TYPE*, int, int, int, int);
+CTaskKillPedOnFootArmed::CTaskKillPedOnFootArmed(int unk, int unk2, int unk3, int unk4, _PED_TYPE* pToShoot) {
+    m_pPlayerPed = 0;
+    Create(92);
+    void* pTaskType = m_pTaskType;
+    union {
+        GtaTaskInitFn fn;
+        unsigned long addr;
+    } u;
+    u.addr = 0x621190;
+    (((CGtaTask*)pTaskType)->*u.fn)(pToShoot, unk4, unk2, unk3, unk);
 }
 
 #pragma optimize("y", off)
