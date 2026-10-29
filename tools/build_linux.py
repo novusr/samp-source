@@ -78,11 +78,15 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR, target_units=None):
 
         wine_src = f"Z:{src_path.resolve()}"
         wine_obj = f"Z:{dest_obj.resolve()}"
+        wine_include = f"Z:{(ROOT / 'include').resolve()}"
+        wine_src_dir = f"Z:{(ROOT / 'src').resolve()}"
 
         cmd = [
             "wine",
             str(cl_exe),
             *options,
+            f"/I{wine_include}",
+            f"/I{wine_src_dir}",
             f"/Fo{wine_obj}",
             wine_src,
         ]

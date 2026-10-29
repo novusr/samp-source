@@ -1245,6 +1245,16 @@ void CLocalPlayer::SetPlayerColor(unsigned long color)
     SetRadarColor(((CNetGame*)pNetGame)->m_pPools->m_pPlayer->GetLocalPlayerID(), color);
 }
 
+void CNetGame::SetMapIcon(unsigned char byteIndex, float fX, float fY, float fZ, unsigned char byteIcon, unsigned long dwColor, int iStyle)
+{
+    if (byteIndex >= 100) return;
+    if (m_dwMapIcon[byteIndex] != 0) {
+        ScriptCommand(&disable_marker, m_dwMapIcon[byteIndex]);
+        m_dwMapIcon[byteIndex] = 0;
+    }
+    m_dwMapIcon[byteIndex] = pGame->CreateRadarMarkerIcon(byteIcon, fX, fY, fZ, dwColor, iStyle);
+}
+
 unsigned long CLocalPlayer::GetPlayerColorAsARGB()
 {
     return (TranslateColorCodeToRGBA(((CNetGame*)pNetGame)->m_pPools->m_pPlayer->GetLocalPlayerID()) >> 8) | 0xFF000000;
