@@ -157,6 +157,8 @@ extern "C" const SCRIPT_COMMAND get_actor_armed_weapon;
 extern "C" const SCRIPT_COMMAND disable_marker;
 extern "C" const SCRIPT_COMMAND destroy_pickup;
 extern "C" void __cdecl free(void*);
+extern "C" void* __cdecl malloc(unsigned int);
+extern "C" unsigned long __stdcall GetTickCount();
 extern "C" const SCRIPT_COMMAND set_actor_immunities;
 extern "C" const SCRIPT_COMMAND remove_actor_from_car_and_put_at;
 extern "C" const SCRIPT_COMMAND actor_task_handsup;
