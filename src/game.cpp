@@ -1068,17 +1068,16 @@ void CGame::LoadCullZone(char *szLine)
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    register int dummy = 0;
-    typedef void (__cdecl *Func)(unsigned long*);
-    Func fn = (Func)0x563220;
+    void (* const fn)(unsigned long*) = (void (*)(unsigned long*))0x563220;
     fn(pEntity);
 }
 
 extern "C" void __cdecl func_563280(unsigned long*);
+#pragma optimize("y", off)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
-
+#pragma optimize("", on)
 void CGame::LoadScene(char* szScene)
 {
     typedef void (__cdecl *fn_t)(void*);
