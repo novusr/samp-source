@@ -1067,26 +1067,28 @@ void CGame::LoadRequestedModels() {
 #pragma optimize("y", off)
 void CGame::LoadCullZone(char *szLine)
 {
-    ((void (__cdecl *)(char*))0x5B4B40)(szLine);
+    ((long long (__cdecl *)(char*))0x5B4B40)(szLine);
 }
 #pragma optimize("", on)
 
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
+    typedef void (__cdecl *Func)(unsigned long*);
+    Func f = (Func)0x563220;
+    f(pEntity);
 }
 
 extern "C" void __cdecl func_563280(unsigned long*);
 #pragma optimize("s", on)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(void*))0x563280)((void*)pEntity);
+    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
 #pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
 {
-    register void (__cdecl *Func)(char*) = (void (__cdecl *)(char*))0x5B8700;
-    Func(szScene);
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5b8700)(szScene);
 }
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
@@ -1111,8 +1113,8 @@ int FlushPedIntelligence(void)
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    unsigned long* pPed = (unsigned long*)dwActorPed;
-    CPedIntelligence* p = (CPedIntelligence*)pPed[0x47c / 4];
+    unsigned long edx_val = dwActorPed;
+    CPedIntelligence* p = (CPedIntelligence*)(*(unsigned long*)(edx_val + 0x47c));
     (p->*u.fn)(1);
     return 1;
 }
@@ -1132,7 +1134,8 @@ int CGame::IsModelLoaded(int iModelID)
 int ExecuteScriptBuf(void)
 {
 	bScmLocalDebug = 1;
-	*(unsigned long*)((char*)gst + 0x14) = (unsigned long)ScriptBuf;
+	void* p = ScriptBuf;
+	*(void**)((char*)gst + 0x14) = p;
 	typedef void (__fastcall *Proc)(GAME_SCRIPT_THREAD*);
 	((Proc)ProcessOneCommand)(gst);
 	int ret = *(int*)((char*)gst + 0xc5);
