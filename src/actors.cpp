@@ -157,6 +157,7 @@ void CActorPed::SetTargetRotation(float fRotation) {
     m_pPed->fRotation2 = DegToRad(fRotation);
 }
 
+// Set the ped's health, killing the actor through the script if it drops to zero.
 void CActorPed::SetHealth(float fHealth) {
     if (!m_pPed) return;
     m_pPed->fHealth = fHealth;
