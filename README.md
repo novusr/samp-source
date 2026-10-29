@@ -35,14 +35,20 @@ The latest batch added **5,957 unique exact code bytes**. Its complete-region an
 
 ### Active Reconstruction Pipeline (Linux / Parallel Multi-Worker)
 
-The active workspace source tree (`src/`) is continuously verified by `tools/verify.py` and matched using `tools/r5_matcher.py`:
+The active workspace source tree (`src/`) is continuously verified by `tools/verify.py` and matched using `tools/delink.py` and `decompdecomp`:
 
-- **Verified Functions in Active Manifest:** **157 / 157 functions PASS (5,776 unique code bytes)**
-- **Unit Distribution:**
-  - `game`: 68 functions matched (e.g. `CMenu::CMenu` [264B], `GetVehicleSubtypeFromVehiclePtr` [106B], `CEntity::ApplyTurnSpeed` [28B], `CEntity::GetBoundCentre` [33B])
-  - `pools`: 41 functions matched (e.g. `GamePool_Ped_GetAt` [35B], `CPlayerPed::GetHealth` [24B])
-  - `camera`: 38 functions matched (e.g. `CCamera::GetMatrix` [113B])
-  - `actors`: 10 functions matched (e.g. `CActorPed` lifecycle, immunity, and animations)
+- **Verified Functions in Active Manifest:** **204 / 204 functions PASS (11,605 unique code bytes)**
+- **Unit Distribution (Verified):**
+  - `game`: 89 functions matched (e.g. `CMenu::CMenu` [264B], `TEABlockEncryptor::EncryptBlock` [380B], `TEABlockEncryptor::DecryptBlock` [389B], `CD3DArcBall::Reset` [265B])
+  - `pools`: 58 functions matched (e.g. `GamePool_Ped_GetAt` [35B], `CPlayerPed::GetHealth` [24B], `CGangZonePool` [40B])
+  - `camera`: 47 functions matched (e.g. `Util::MD5Transform` [2,162B], `fhicl::SHA1::ProcessMessageBlock` [1,571B], `CCamera::GetMatrix` [113B])
+  - `actors`: 10 functions matched (e.g. `ActorPool` and `CActorPed` lifecycle, immunity, and animations)
+
+- **decompdecomp Agent Swarm Pipeline (`objdiff`):**
+  - **1,546 functions** in active pipeline (159,476 code bytes)
+  - **228 functions matched** (100% byte-exact)
+  - **1,309 functions queued open** for multi-agent matching
+  - **9 functions marked `asm`** (original SA-MP inline assembly exceptions)
 
 The local 0.2.5 reference has contributed source and algorithms used in accepted reconstructions. The latest integration report records **22,342 cumulative directly attributed code bytes**; adapted implementations and shared source are tracked separately.
 
