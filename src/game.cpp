@@ -468,6 +468,11 @@ struct ENTITY_TYPE {
     void* pSector;           // 0xb4
 };
 
+class CAudioClass {
+public:
+    void Play(int event, int dummy);
+};
+
 struct IEntityGTA {
     virtual void v0();
     virtual void v1();
