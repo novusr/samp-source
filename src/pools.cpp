@@ -127,6 +127,14 @@ public:
 };
 
 PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
+extern unsigned char* pbyteCurrentPlayer;
+int __cdecl GetTaskTypeFromTask(unsigned long *task);
+unsigned long __stdcall TranslateColorCodeToRGBA(int iCode);
+
+class CJetpackTask {
+public:
+    void Destroy(int flag);
+};
 
 struct GTA_CONTROLSET {
     unsigned short wKeys1[24];
