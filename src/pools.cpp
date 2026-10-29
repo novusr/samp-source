@@ -726,6 +726,15 @@ void CPlayerPed::ResetPointers(void)
     m_pEntity = (_ENTITY_TYPE*)m_pPed;
 }
 
+void CPlayerPed::SetInitialState(void)
+{
+}
+
+int CPlayerPed::GetCurrentVehicleID() {
+    if (!m_pPed) return 0;
+    return GamePool_Vehicle_GetIndex(m_pPed->pVehicle);
+}
+
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
     field_2DA = first;
     field_2DE = second;
