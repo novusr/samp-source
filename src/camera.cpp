@@ -203,6 +203,7 @@ float __stdcall DistanceBetweenPoints(float x1, float y1, float z1, float x2, fl
     return (float)sqrt((double)(fSX + fSY + fSZ));
 }
 
+// Squared Euclidean distance between two 3D points (no sqrt, for comparisons).
 float __stdcall SquaredDistanceBetweenPoints(float x1, float y1, float z1, float x2, float y2, float z2) {
     float fSX = (x1 - x2) * (x1 - x2);
     float fSY = (y1 - y2) * (y1 - y2);
@@ -478,12 +479,14 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
+    typedef void (CCamera::*Fn)(int, int, int, int);
     union {
-        void (CCamera::*fn)(int, int, int, int);
         void* p;
+        Fn fn;
     } u;
     u.p = (void*)0x50C7C0;
-    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
+    CCamera* self = (CCamera*)0xB6F028;
+    (self->*u.fn)(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 // Puts the camera into script control directly behind the player, with a
