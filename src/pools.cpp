@@ -262,6 +262,9 @@ public:
     void HoldItem(int iObject);
     int IsJumping();
     int IsFalling();
+    void SetMoney(int iAmount);
+    float GetAimZ();
+    void SetAimZ(float fAimZ);
 };
 int __cdecl GetTaskTypeFromTask(unsigned long *task);
 
@@ -1075,7 +1078,8 @@ void CPlayerPed::StartJetpack() {
     *pbyteCurrentPlayer = m_bytePlayerNumber;
     TeleportTo(m_pPed->entity.mat->pos.X, m_pPed->entity.mat->pos.Y, m_pPed->entity.mat->pos.Z);
     typedef void (__cdecl *Func)();
-    ((Func)0x439600)();
+    Func fn = (Func)0x439600;
+    fn();
     *pbyteCurrentPlayer = 0;
 }
 
@@ -1111,6 +1115,22 @@ void CPlayerPed::StopDancing()
     GetMatrix(&mat);
     TeleportTo(mat.pos.X, mat.pos.Y, mat.pos.Z);
 }
+
+void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
+                                  _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
+{
+    volatile unsigned long dwPed = (unsigned long)m_pPed;
+    if (!dwPed) return;
+
+    typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
+    union {
+        void* p;
+        Fn fn;
+    } u;
+    u.p = (void*)0x618970;
+    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+}
+#pragma optimize("", on)
 
 void CPlayerPed::ToggleCellphone(int iOn)
 {
