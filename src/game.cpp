@@ -1047,6 +1047,21 @@ float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 	return (float)sqrt(fSX + fSY + fSZ);
 }
 
+float CEntity::GetDistanceFromCamera()
+{
+	if (!m_pEntity || *(void**)m_pEntity == (void*)0x863C40) return 100000.0f;
+
+	_MATRIX4X4	matThis;
+	float		fSX,fSY,fSZ;
+
+	GetMatrix(&matThis);
+	fSX = (matThis.pos.X - *(float*)0xB6F9CC) * (matThis.pos.X - *(float*)0xB6F9CC);
+	fSY = (matThis.pos.Y - *(float*)0xB6F9D0) * (matThis.pos.Y - *(float*)0xB6F9D0);
+	fSZ = (matThis.pos.Z - *(float*)0xB6F9D4) * (matThis.pos.Z - *(float*)0xB6F9D4);
+
+	return (float)sqrt(fSX + fSY + fSZ);
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
