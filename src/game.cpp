@@ -384,6 +384,9 @@ public:
     unsigned char GetActiveInterior();
     void AddToLocalMoney(int iAmount);
     unsigned long GetWeaponInfo(int iWeapon, int iUnk);
+    void DrawGangZone(float* fPos, unsigned long dwColor);
+    void EnableZoneNames(unsigned char byteEnable);
+    void EnableStuntBonus(bool bEnable);
 };
 #pragma pack(pop)
 
