@@ -31,8 +31,10 @@ public:
     unsigned short key3, key2, key1;
     int AreKeysChanged(unsigned short a, unsigned short b, unsigned short c);
 };
-int LocalPlayer::AreKeysChanged(unsigned short a, unsigned short b, unsigned short c) {
-    if (a == key1 && b == key2 && c == key3) return 0;
+// Compares a freshly sampled key state with the keys cached on the local
+// player; returns 1 when any of the three changed.
+int LocalPlayer::AreKeysChanged(unsigned short keyA, unsigned short keyB, unsigned short keyC) {
+    if (keyA == key1 && keyB == key2 && keyC == key3) return 0;
     return 1;
 }
 
