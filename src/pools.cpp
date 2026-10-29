@@ -1776,6 +1776,19 @@ void CGangZonePool::New(unsigned short id, float fMinX, float fMinY, float fMaxX
     }
 }
 
+CRemotePlayer::~CRemotePlayer()
+{
+    if (field_1F9) {
+        pGame->DisableMarker(field_1F9);
+        field_1F9 = 0;
+    }
+    field_1E9 = 0;
+    if (m_pPlayerPed) {
+        pGame->DeletePlayerPed(m_pPlayerPed);
+        m_pPlayerPed = 0;
+    }
+}
+
 void RPCObjectOpsView::InstantRotate(_VECTOR* angles) {
     if (!m_pEntity) return;
     if (!GamePool_Object_GetAt(m_dwGTAId)) return;
