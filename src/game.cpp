@@ -1251,6 +1251,15 @@ float CEntity::GetDistanceFromCamera()
 	return (float)sqrt(fSX + fSY + fSZ);
 }
 
+int __cdecl GetInvalidModelInfoCount(void)
+{
+    int count = 0;
+    for (unsigned long p = 0xA9C068; p != 0xAAE948; p += 4) {
+        if (!*(void**)p) count++;
+    }
+    return count;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
