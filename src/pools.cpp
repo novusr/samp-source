@@ -1534,6 +1534,14 @@ void CGangZonePool::Draw() {
     }
 }
 
+CPickupPool::~CPickupPool() {
+    for (int i = 0; i < 4096; i++) {
+        if (m_dwHnd[i] != 0) {
+            ScriptCommand(&destroy_pickup, m_dwHnd[i]);
+        }
+    }
+}
+
 void CPickupPool::Destroy(int iPickup) {
     if (m_iPickupCount <= 0 || iPickup < 0 || iPickup >= 4096) return;
     if (m_dwHnd[iPickup] != 0) {
