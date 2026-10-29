@@ -432,10 +432,19 @@ struct ENTITY_TYPE {
     void* pSector;           // 0xb4
 };
 
+class CUniBuffer {
+    static long __stdcall Dummy_ScriptStringCPtoX(void *, int, int, int *);
+};
+
 class CEntity {
 public:
     char gap[0x40];
     ENTITY_TYPE* m_pEntity;  // 0x40
+    unsigned long m_dwGTAId; // 0x44
+
+    void TeleportTo(float x, float y, float z);
+    void PlayAudio(int event);
+    void DeleteRwObject();
 
     void GetMatrix(_MATRIX4X4* pMatrix);
     void SetMatrix(_MATRIX4X4 matrix);
