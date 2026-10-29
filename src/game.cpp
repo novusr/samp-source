@@ -1314,6 +1314,8 @@ void __cdecl ConvertAnsiToWide(char const *source, unsigned short *destination, 
         MultiByteToWideChar(0, 0, source, strlen(source), destination, required);
 }
 
+void __cdecl R5FontConvertAnsiToWide(char *source, unsigned short *destination, int capacity);
+
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 int __cdecl StrAndBoolComp(char *const &key, const StrAndBool &data)
