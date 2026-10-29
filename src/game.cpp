@@ -1119,6 +1119,11 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+long __stdcall CUniBuffer::Dummy_ScriptStringCPtoX(void *p1, int p2, int p3, int *p4)
+{
+    return 0x80004001;
+}
+
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 int __cdecl StrAndBoolComp(char *const &key, const StrAndBool &data)
