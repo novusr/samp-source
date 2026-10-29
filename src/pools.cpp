@@ -57,10 +57,17 @@ struct _ENTITY_TYPE {
     void* pRwObject;
 };
 
+struct PED_TASKS_TYPE {
+    char gap[0x10];
+    unsigned long* pdwJumpJetPack;
+};
+
 struct PED_TYPE {
     char gap0[0x46c];
     unsigned long dwStateFlags;     // 0x46c
-    char gap_goggles[0x90];         // 0x470 to 0x500
+    char gap_task[0xc];             // 0x470 to 0x47c
+    PED_TASKS_TYPE* Tasks;          // 0x47c
+    char gap_goggles[0x80];         // 0x480 to 0x500
     void* pGoggles;                 // 0x500
     char gap1[0x2c];                // 0x504 to 0x530
     unsigned long dwActionTrigger;  // 0x530
