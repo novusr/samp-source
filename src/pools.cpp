@@ -776,6 +776,11 @@ public:
 
 #pragma pack(pop)
 
+class CLocalPlayer {
+public:
+    void SetPlayerColor(unsigned long color);
+};
+
 // Matched ?GetVehiclePool@CNetGame@@QAEPAVCVehiclePool@@XZ (0x10001180)
 CVehiclePool* CNetGame::GetVehiclePool() { return m_pPools->m_pVehicle; }
 
