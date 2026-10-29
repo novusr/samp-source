@@ -89,6 +89,10 @@ struct _stat32 {
 };
 
 void __cdecl ResetLocalPad(int unk1, int unk2);
+class CPad {
+public:
+    void Reset(int unk1, int unk2);
+};
 int __cdecl IsFileOrDirectoryExists(char *szPath);
 unsigned long __cdecl GetColorFromEmbedCode(char *szString);
 void __cdecl RemoveColorEmbedsFromString(char *szString);
