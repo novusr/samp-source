@@ -656,6 +656,10 @@ void CPlayerPed::SetCurrentAim(_CAMERA_AIM* pAim) {
     GameStoreRemotePlayerAim(m_bytePlayerNumber, pAim);
 }
 
+void CRemotePlayer::SetPlayerColor(unsigned long color) {
+    SetRadarColor(m_PlayerID, color);
+}
+
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
 CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
 
