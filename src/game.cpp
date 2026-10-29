@@ -934,6 +934,7 @@ enum
 // Matched ?GetVehicleSubtypeFromVehiclePtr@@YAIPAU_VEHICLE_TYPE@@@Z (0x100b61e0)
 struct _VEHICLE_TYPE;
 
+// Maps a vehicle's vtable (its runtime class) to its VEHICLE_SUBTYPE_*.
 unsigned int GetVehicleSubtypeFromVehiclePtr(_VEHICLE_TYPE *pVehicle)
 {
     if (!pVehicle)
@@ -942,19 +943,19 @@ unsigned int GetVehicleSubtypeFromVehiclePtr(_VEHICLE_TYPE *pVehicle)
     unsigned int vtable = *(unsigned int *)pVehicle;
 
     if (vtable == 0x871120)
-        return 1;
+        return VEHICLE_SUBTYPE_CAR;
     if (vtable == 0x8721A0)
-        return 4;
+        return VEHICLE_SUBTYPE_BOAT;
     if (vtable == 0x871360)
-        return 2;
+        return VEHICLE_SUBTYPE_BIKE;
     if (vtable == 0x871948)
-        return 5;
+        return VEHICLE_SUBTYPE_PLANE;
     if (vtable == 0x871680)
-        return 3;
+        return VEHICLE_SUBTYPE_HELI;
     if (vtable == 0x871528)
-        return 6;
+        return VEHICLE_SUBTYPE_PUSHBIKE;
     if (vtable == 0x872370)
-        return 7;
+        return VEHICLE_SUBTYPE_TRAIN;
 
     return 0;
 }
