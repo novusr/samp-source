@@ -278,7 +278,7 @@ int __cdecl GetTaskTypeFromTask(unsigned long *task);
 struct IDirect3DStateBlock9 {
     virtual void Dummy0();
     virtual void Dummy1();
-    virtual void Dummy2();
+    virtual unsigned long __stdcall Release();
     virtual void Dummy3();
     virtual void Dummy4();
     virtual long __stdcall Apply();
@@ -287,11 +287,13 @@ struct IDirect3DStateBlock9 {
 class CPlayerTags {
 public:
     void* m_pDevice;
-    void* m_pTexture;
-    void* m_pVB;
+    IDirect3DStateBlock9* m_pTexture;
+    IDirect3DStateBlock9* m_pVB;
     IDirect3DStateBlock9* m_pOldStates;
     IDirect3DStateBlock9* m_pNewStates;
 
+    ~CPlayerTags();
+    void DeleteDeviceObjects();
     void RestoreDeviceObjects();
     void End();
 };
@@ -1169,16 +1171,16 @@ void CPlayerPed::StopDancing()
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
-    unsigned long dwPed = (unsigned long)m_pPed;
+    volatile unsigned long dwPed = (unsigned long)m_pPed;
     if (!dwPed) return;
 
-    typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, float, int, int, int);
+    typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, int, int, int, int);
     union {
         void* p;
         Fn fn;
     } u;
     u.p = (void*)0x618970;
-    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
 }
 #pragma optimize("", on)
 
