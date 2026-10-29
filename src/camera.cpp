@@ -557,6 +557,11 @@ void CCamera::InterpolatePosition(_VECTOR *vecFrom, _VECTOR *vecTo, int iTime, u
     ScriptCommand(&set_camera_position_to, vecFrom->X, vecFrom->Y, vecFrom->Z, vecTo->X, vecTo->Y, vecTo->Z, iTime, byteCut);
 }
 
+void CCamera::InterpolateLookAt(_VECTOR *vecFrom, _VECTOR *vecTo, int iTime, unsigned char byteCut) {
+    ScriptCommand(&lock_camera_target_point, 1);
+    ScriptCommand(&point_camera_transverse_to, vecFrom->X, vecFrom->Y, vecFrom->Z, vecTo->X, vecTo->Y, vecTo->Z, iTime, byteCut);
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
