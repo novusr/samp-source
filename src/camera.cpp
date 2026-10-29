@@ -486,6 +486,13 @@ float CCamera::GetDistanceFromPoint(_VECTOR *vecPos)
     return (float)sqrt((double)(fSX * fSX + fSY * fSY + fSZ * fSZ));
 }
 
+void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
+{
+    ScriptCommand(&restore_camera_to_user_defined);
+    m_pEntity = 0;
+    ScriptCommand(&point_camera, fX, fY, fZ, iType);
+}
+
 void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ) {
     ScriptCommand(&restore_camera_to_user_defined);
     m_pEntity = 0;
