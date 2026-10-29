@@ -1643,6 +1643,18 @@ void CGame::SetWorldTime(int iHour, int iMinute)
     ScriptCommand(&set_current_time, iHour, iMinute);
 }
 
+void CGame::ToggleThePassingOfTime(unsigned char byteOnOff)
+{
+    Unprotect((void*)0x52CF10, 1);
+    if (byteOnOff) {
+        *(unsigned char*)0x52CF10 = 0x56;
+        field_69 = 1;
+    } else {
+        *(unsigned char*)0x52CF10 = 0xC3;
+        field_69 = 0;
+    }
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
