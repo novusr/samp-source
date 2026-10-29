@@ -660,6 +660,12 @@ void CRemotePlayer::SetPlayerColor(unsigned long color) {
     SetRadarColor(m_PlayerID, color);
 }
 
+void InternalPacketPool::ReleasePointer(InternalPacket *p) {
+    if (p) {
+        pool.Push(p);
+    }
+}
+
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
 CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
 
