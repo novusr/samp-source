@@ -1240,6 +1240,16 @@ float CPlayerPed::GetAimZ() {
     }
     return 0.0f;
 }
+
+#pragma optimize("y", on)
+void CPlayerPed::SetAimZ(float fAimZ) {
+    if (_isnan(fAimZ) || fAimZ > 100.0f || fAimZ < -100.0f) return;
+    if (m_pPed) {
+        *(float*)(*(char**)((char*)m_pPed + 0x480) + 0x54) = fAimZ;
+    }
+}
+#pragma optimize("", on)
+
 #pragma optimize("", on)
 
 #pragma optimize("", on)
@@ -1374,6 +1384,16 @@ CMenuPool::~CMenuPool() {
         pMenu++;
         --i;
     } while (i != 0);
+}
+
+int CMenuPool::Delete(unsigned char byteMenuID) {
+    if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) {
+        return 0;
+    }
+    m_bNotEmpty[byteMenuID] = 0;
+    delete m_pObject[byteMenuID];
+    m_pObject[byteMenuID] = 0;
+    return 1;
 }
 
 void CMenuPool::ShowMenu(unsigned char byteMenuID) {
