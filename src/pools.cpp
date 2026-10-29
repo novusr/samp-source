@@ -1221,6 +1221,13 @@ void CMenuPool::HideMenu(unsigned char byteMenuID) {
     m_nCurrent = 128;
 }
 
+CPlayerTags::~CPlayerTags() {
+    if (m_pTexture) m_pTexture->Release();
+    if (m_pVB) m_pVB->Release();
+    if (m_pOldStates) m_pOldStates->Release();
+    if (m_pNewStates) m_pNewStates->Release();
+}
+
 #pragma optimize("", on)
 
 void CPlayerTags::End() {
