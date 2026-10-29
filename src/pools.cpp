@@ -1021,8 +1021,39 @@ class CGame {
 public:
     unsigned long GetWeaponInfo(int iWeapon, int iUnk);
     void DrawGangZone(float* fPos, unsigned long dwColor);
+    void DeletePlayerPed(void* ped);
 };
 extern CGame* pGame;
+
+class R5RosterRemotePlayerView : public CRemotePlayer {
+public:
+    void Remove();
+};
+
+class RPCVehicleParamsView {
+public:
+    char gap0[0x64];
+    unsigned char objective;
+    int specialMarker;
+    void SetDoorState(int state);
+};
+
+#pragma pack(push, 1)
+class RPCVehicleParamsPoolView {
+public:
+    char prefix[0x1134];
+    RPCVehicleParamsView* vehicles[2000];
+    int slots[2000];
+    char gap[0x6d60];
+    int active[2000];
+
+    int GetSlotState(unsigned short id) {
+        if (id >= 2000) return 0;
+        return slots[id];
+    }
+    void AssignSpecialParamsToVehicle(unsigned short id, unsigned char objective, unsigned char doors);
+};
+#pragma pack(pop)
 
 struct CGangZone {
     float fPos[4];
