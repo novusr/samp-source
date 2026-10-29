@@ -213,6 +213,10 @@ extern "C" const SCRIPT_COMMAND request_model;
 extern "C" const SCRIPT_COMMAND request_animation;
 extern "C" const SCRIPT_COMMAND is_animation_loaded;
 extern "C" const SCRIPT_COMMAND is_model_available;
+extern "C" const SCRIPT_COMMAND put_train_at;
+#define TRAIN_PASSENGER_LOCO 538
+#define TRAIN_FREIGHT_LOCO 537
+#define TRAIN_TRAM 449
 void __stdcall WorldAddEntity(unsigned long *pEntity);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity);
 
