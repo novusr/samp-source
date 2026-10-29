@@ -1065,8 +1065,8 @@ void CGame::LoadRequestedModels() {
 #pragma optimize("y", off)
 void CGame::LoadCullZone(char *szLine)
 {
-    typedef void (__cdecl *Func)(char*);
-    ((Func)0x5B4B40)(szLine);
+    register void (*pfn)(char*) = (void (*)(char*))0x5B4B40;
+    pfn(szLine);
 }
 #pragma optimize("", on)
 
