@@ -839,6 +839,11 @@ void CLocalPlayer::SetPlayerColor(unsigned long color)
     SetRadarColor(((CNetGame*)pNetGame)->m_pPools->m_pPlayer->GetLocalPlayerID(), color);
 }
 
+unsigned long CLocalPlayer::GetPlayerColorAsARGB()
+{
+    return (TranslateColorCodeToRGBA(((CNetGame*)pNetGame)->m_pPools->m_pPlayer->GetLocalPlayerID()) >> 8) | 0xFF000000;
+}
+
 unsigned long CRemotePlayer::GetPlayerColorAsARGB()
 {
     return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;
