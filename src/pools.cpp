@@ -167,6 +167,10 @@ public:
     float GetArmour();
     int IsDead();
     void SetCurrentAim(struct _CAMERA_AIM* pAim);
+    void ResetPointers();
+    void SetInitialState();
+    unsigned char GetSpecialKey();
+    unsigned char GetCurrentWeapon();
 
 };
 
