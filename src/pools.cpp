@@ -723,8 +723,10 @@ class RPCDeleteObjectPoolView {
 public:
     int m_iLargestID;
     int m_slots[1000];
+    CEntity* m_pObjects[1000];
 
     void UpdateLargestID();
+    int Delete(unsigned short id);
 };
 
 // Find the highest occupied slot so later scans can stop there.
