@@ -1472,6 +1472,25 @@ CGangZonePool::~CGangZonePool() {
     } while (i != 0);
 }
 
+void CGangZonePool::New(unsigned short id, float fMinX, float fMinY, float fMaxX, float fMaxY, unsigned long color) {
+    if (m_pGangZone[id]) {
+        free(m_pGangZone[id]);
+        m_pGangZone[id] = 0;
+        m_bSlotState[id] = 0;
+    }
+    CGangZone* pZone = (CGangZone*)malloc(sizeof(CGangZone));
+    if (pZone) {
+        pZone->fPos[0] = fMinX;
+        pZone->fPos[1] = fMaxY;
+        pZone->fPos[2] = fMaxX;
+        pZone->fPos[3] = fMinY;
+        pZone->color = color;
+        pZone->flashColor = color;
+        m_pGangZone[id] = pZone;
+        m_bSlotState[id] = 1;
+    }
+}
+
 void CPickupPool::Destroy(int iPickup) {
     if (m_iPickupCount <= 0 || iPickup < 0 || iPickup >= 4096) return;
     if (m_dwHnd[iPickup] != 0) {
