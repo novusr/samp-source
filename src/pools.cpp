@@ -1247,6 +1247,21 @@ CPlayerTags::~CPlayerTags() {
     if (m_pNewStates) m_pNewStates->Release();
 }
 
+void CPlayerTags::DeleteDeviceObjects() {
+    if (m_pVB) {
+        m_pVB->Release();
+        m_pVB = 0;
+    }
+    if (m_pOldStates) {
+        m_pOldStates->Release();
+        m_pOldStates = 0;
+    }
+    if (m_pNewStates) {
+        m_pNewStates->Release();
+        m_pNewStates = 0;
+    }
+}
+
 #pragma optimize("", on)
 
 void CPlayerTags::End() {
