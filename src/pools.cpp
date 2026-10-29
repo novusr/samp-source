@@ -1921,6 +1921,15 @@ void CNewPlayerTags::DeleteDeviceObjects() {
     }
 }
 
+void CNewPlayerTags::RestoreDeviceObjects()
+{
+    if (m_pSprite)
+        m_pSprite->OnResetDevice();
+
+    if (!m_pStates)
+        m_pDevice->CreateStateBlock(1, &m_pStates);
+}
+
 void CNewPlayerTags::End() {
     if (m_pSprite)
         m_pSprite->End();
