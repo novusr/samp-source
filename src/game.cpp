@@ -53,7 +53,11 @@ public:
     struct RegisteredReplica {
         Replica *replica;
     };
+    struct CommandStruct {
+        Replica *replica;
+    };
     static int __cdecl RegisteredReplicaComp(Replica *const &key, const RegisteredReplica &data);
+    static int __cdecl CommandStructComp(Replica *const &key, const CommandStruct &data);
 };
 
 class CCryptoContext {
