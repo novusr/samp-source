@@ -1548,6 +1548,11 @@ float __cdecl NormalizeAngle(float fAngle)
 	return fAngle;
 }
 
+int __cdecl IsFileOrDirectoryExists(char *szPath) {
+    struct _stat32 buf;
+    return _stat(szPath, &buf) == 0;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
