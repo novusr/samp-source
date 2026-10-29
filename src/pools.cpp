@@ -266,6 +266,10 @@ public:
     void SetMoney(int iAmount);
     float GetAimZ();
     void SetAimZ(float fAimZ);
+    void SetAmmo(unsigned char byteWeapon, unsigned short wAmmo);
+    char* GetShopName();
+    _VECTOR* GetBonePosition(int iBone, _VECTOR* pVec);
+    _VECTOR* GetTransformedBonePosition(int iBone, _VECTOR* pVec);
 };
 int __cdecl GetTaskTypeFromTask(unsigned long *task);
 
@@ -1124,6 +1128,7 @@ void CPlayerPed::StartJetpack() {
     *pbyteCurrentPlayer = 0;
 }
 
+#pragma optimize("y", off)
 void CPlayerPed::StopJetpack() {
     if (m_pPed && !(m_pPed->dwStateFlags & 0x100)) {
         if (m_pPed->Tasks->pdwJumpJetPack && *m_pPed->Tasks->pdwJumpJetPack == 0x8705C4) {
@@ -1136,7 +1141,7 @@ void CPlayerPed::StopJetpack() {
         }
     }
 }
-
+#pragma optimize("", on)
 void CPlayerPed::StartDancing(int iStyle)
 {
     if (iStyle < 0 || iStyle > 3) return;
