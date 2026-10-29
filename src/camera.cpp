@@ -465,6 +465,12 @@ CFirstPersonCamera::CFirstPersonCamera() :
 {
 }
 
+void CCamera::SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ) {
+    ScriptCommand(&restore_camera_to_user_defined);
+    m_pEntity = 0;
+    ScriptCommand(&set_camera_position, fX, fY, fZ, fRotationX, fRotationY, fRotationZ);
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
