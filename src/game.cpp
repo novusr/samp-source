@@ -1,6 +1,13 @@
 // GTA absolute addresses are part of R5's original behavior.
 // These functions must not be invoked in an ordinary host process.
 extern "C" void __cdecl Unprotect(void* address, unsigned long bytes);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void*);
+
+class SimpleMutex {
+public:
+    void* criticalSection[6];
+    void Unlock(void);
+};
 
 class LightweightDatabaseServer {
 public:
