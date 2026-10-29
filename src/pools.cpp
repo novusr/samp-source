@@ -808,6 +808,12 @@ void R5ChatScrollBarNavigationView::R5SetTrackPos(int position) {
 
 class R5ChatPagingView {
 public:
+    int pageSize;
+    char gap_chat[0x63da - 4];
+    int cacheDirty;
+
+    void ConfigureScrollBar();
+    void SetPageSize(int lines);
     void FilterInvalidChars(char* szString);
 };
 
@@ -1504,6 +1510,21 @@ void CGangZonePool::New(unsigned short id, float fMinX, float fMinY, float fMaxX
         pZone->flashColor = color;
         m_pGangZone[id] = pZone;
         m_bSlotState[id] = 1;
+    }
+}
+
+void CGangZonePool::Draw() {
+    static int iLastTick = 0;
+    static unsigned char alt = 0;
+    int iTick = GetTickCount();
+    if (iTick - iLastTick >= 500) {
+        alt = ~alt;
+        iLastTick = iTick;
+    }
+    for (int i = 0; i < 1024; i++) {
+        if (m_bSlotState[i]) {
+            pGame->DrawGangZone(m_pGangZone[i]->fPos, alt ? m_pGangZone[i]->flashColor : m_pGangZone[i]->color);
+        }
     }
 }
 
