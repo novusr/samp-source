@@ -1068,8 +1068,7 @@ void CGame::LoadCullZone(char *szLine)
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    register void (__cdecl *fn)(unsigned long *) = (void (__cdecl *)(unsigned long *))0x563220;
-    fn(pEntity);
+    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
 }
 
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
@@ -1079,8 +1078,8 @@ void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
 
 void CGame::LoadScene(char* szScene)
 {
-    typedef void (__cdecl *Func)(char*);
-    ((Func)0x5b8700)(szScene);
+    char* s = szScene;
+    reinterpret_cast<void(__cdecl*)(char*)>(0x5B8700)(s);
 }
 
 #pragma optimize("", on)
@@ -1170,7 +1169,7 @@ void TEABlockEncryptor::UnsetKey() {
     m_bKeySet = false;
 }
 
-// Matched ?EncryptBlock@TEABlockEncryptor@@IAEXAAI0@Z (0x100569c0)
+// Encrypt 64 bits (v0 and v1) using Tiny Encryption Algorithm (TEA) with 32 rounds.
 void TEABlockEncryptor::EncryptBlock(unsigned int &v0, unsigned int &v1) {
     unsigned int sum = 0;
     int rounds = 8;
