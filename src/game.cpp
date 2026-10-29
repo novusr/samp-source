@@ -1243,6 +1243,14 @@ int ReplicaManager::RegisteredReplicaComp(Replica *const &key, const ReplicaMana
     return 1;
 }
 
+int ReplicaManager::CommandStructComp(Replica *const &key, const ReplicaManager::CommandStruct &data) {
+    if (key < data.replica)
+        return -1;
+    if (key == data.replica)
+        return 0;
+    return 1;
+}
+
 void SimpleMutex::Unlock(void)
 {
     LeaveCriticalSection(this);
