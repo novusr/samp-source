@@ -838,9 +838,41 @@ public:
     unsigned short GetLocalPlayerID() { return m_LocalPlayerID; }
 };
 #pragma pack(pop)
-class CPickupPool;
+#pragma pack(push, 1)
+struct R5_DROPPED_WEAPON {
+    bool bDroppedWeapon;
+    unsigned short fromPlayer;
+};
+#pragma pack(pop)
+
+class CPickupPool {
+public:
+    int m_iPickupCount;
+    unsigned long m_dwHnd[4096];
+    int m_iNetworkIds[4096];
+    int m_iTimer[4096];
+    R5_DROPPED_WEAPON m_droppedWeapon[4096];
+
+    void Destroy(int iPickup);
+    void DestroyDropped(unsigned short fromPlayer);
+};
+
 class CActorPool;
-class CLabelPool;
+
+#pragma pack(push, 1)
+struct LABEL {
+    char* szText;
+    char _gap4[25];
+};
+#pragma pack(pop)
+
+class CLabelPool {
+public:
+    LABEL m_Labels[2048];
+    int m_bLabelSlotState[2048];
+
+    int Delete(unsigned short wLabelID);
+};
 
 struct Pools {
     CVehiclePool* m_pVehicle;   // 0x00
@@ -1192,13 +1224,16 @@ void CPlayerPed::StopDancing()
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
-    volatile unsigned long dwPed = (unsigned long)m_pPed;
+    unsigned long dwPed = (unsigned long)m_pPed;
     if (!dwPed) return;
 
     typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, int, int, int, int);
-    Fn fn;
-    *(void**)&fn = (void*)0x618970;
-    (((CCommandTaskManager*)0xC15448)->*fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
+    union {
+        void* p;
+        Fn fn;
+    } u;
+    u.p = (void*)0x618970;
+    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
 }
 #pragma optimize("", on)
 
@@ -1213,6 +1248,15 @@ char* CPlayerPed::GetShopName() {
     if (!m_pPed) return 0;
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
     return *(char**)((char*)m_pPed + 0x78c);
+}
+
+_VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
+    if (!m_pPed) return 0;
+    if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
+    typedef _VECTOR* (PED_TYPE::*BoneFn)(_VECTOR*, int, int);
+    union { void* p; BoneFn fn; } u;
+    u.p = (void*)0x5E4280;
+    return (m_pPed->*u.fn)(pVec, iBone, 0);
 }
 
 void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
