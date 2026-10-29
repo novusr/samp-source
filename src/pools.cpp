@@ -837,11 +837,12 @@ public:
 class CGame {
 public:
     unsigned long GetWeaponInfo(int iWeapon, int iUnk);
+    void DrawGangZone(float* fPos, unsigned long dwColor);
 };
 extern CGame* pGame;
 
 struct CGangZone {
-    char gap[0x10];
+    float fPos[4];
     unsigned long color;
     unsigned long flashColor;
 };
@@ -853,6 +854,8 @@ public:
 
     CGangZonePool();
     ~CGangZonePool();
+    void New(unsigned short id, float fMinX, float fMinY, float fMaxX, float fMaxY, unsigned long color);
+    void Draw();
     void Flash(unsigned short id, unsigned long color);
     void StopFlash(unsigned short id);
 };
@@ -1273,6 +1276,21 @@ void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
     u.p = (void*)0x618970;
     (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
 }
+
+void CPlayerPed::DestroyFollowPedTask()
+{
+    if (!m_pPed) return;
+    dwExt4 = (unsigned long)m_pPed->Tasks->pdwIK;
+    if (!dwExt4) return;
+
+    typedef void (CJetpackTask::*DestroyFn)(int);
+    union { void* p; DestroyFn fn; } u;
+    u.p = (void*)0x639330;
+    (((CJetpackTask*)dwExt4)->*u.fn)(1);
+
+    m_pPed->Tasks->pdwIK = 0;
+}
+
 #pragma optimize("", on)
 
 void CPlayerPed::ToggleCellphone(int iOn)
