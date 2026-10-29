@@ -409,6 +409,7 @@ char* Util_itoa(int v, char* s, int r) {
 }
 
 extern "C" void __cdecl free(void*);
+void* __cdecl operator new[](unsigned int);
 
 namespace RakNet {
 #pragma pack(push, 1)
@@ -439,6 +440,7 @@ public:
     void Write1();
 
     void AddBitsAndReallocate(const int numberOfBitsToWrite);
+    int CopyData(unsigned char** _data) const;
 
 private:
     bool DoEndianSwap() const;
