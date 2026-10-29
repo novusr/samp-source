@@ -412,6 +412,8 @@ char* Util_itoa(int v, char* s, int r) {
 }
 
 extern "C" void __cdecl free(void*);
+extern "C" void* __cdecl memcpy(void*, const void*, unsigned int);
+#pragma intrinsic(memcpy)
 void* __cdecl operator new[](unsigned int);
 
 namespace RakNet {
