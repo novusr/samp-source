@@ -483,6 +483,8 @@ void CCamera::Attach(int unk1, int unk2, int unk3)
     (((CCamera*)0xB6F028)->*(fn))(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
+// Puts the camera into script control directly behind the player, with a
+// jump-cut restore so it snaps there instead of easing in.
 void CCamera::SetBehindPlayer()
 {
     ScriptCommand(&lock_camera_position, 0);
