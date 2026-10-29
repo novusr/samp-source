@@ -381,6 +381,7 @@ public:
     char prefix[0x1f8a];
     R5ScoreboardNetPlayer* players[1005];
     int IsNPC(unsigned short id);
+    int GetScore(unsigned short id);
 };
 #pragma pack(pop)
 
@@ -1587,6 +1588,16 @@ void R5TextDrawPool::ReleasePreviewTextures() {
 }
 
 #pragma optimize("y", on)
+void CNewPlayerTags::DeleteDeviceObjects() {
+    if (m_pStates) {
+        m_pStates->Release();
+        m_pStates = 0;
+    }
+    if (m_pSprite) {
+        m_pSprite->OnLostDevice();
+    }
+}
+
 void CNewPlayerTags::End() {
     if (m_pSprite)
         m_pSprite->End();
