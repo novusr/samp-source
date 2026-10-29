@@ -484,6 +484,7 @@ void CAudio::SetOutdoorAmbienceTrack(int nTrack) {
 struct _VECTOR {
     float X, Y, Z;
 };
+bool __cdecl FUNC_100B4B50(_VECTOR *vecPos);
 
 struct _MATRIX4X4 {
     _VECTOR right;
