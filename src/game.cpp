@@ -1126,6 +1126,11 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+void SimpleMutex::Unlock(void)
+{
+    LeaveCriticalSection(this);
+}
+
 long __stdcall CUniBuffer::Dummy_ScriptStringCPtoX(void *p1, int p2, int p3, int *p4)
 {
     return 0x80004001;
