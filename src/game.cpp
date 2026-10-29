@@ -319,6 +319,11 @@ void* __cdecl operator new(unsigned int);
 
 class CGame {
 public:
+    char pad0[0x5D];
+    unsigned long field_5D;
+    int field_61;
+    int field_65;
+    int field_69;
     int GetWorldWeather();
     unsigned char IsHudEnabled();
     int GetLocalMoney();
