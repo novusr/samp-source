@@ -923,6 +923,11 @@ void CPlayerTags::End() {
     m_pOldStates->Apply();
 }
 
+int R5LabelRemotePlayerView::IsActive() {
+    if (ped && state) return 1;
+    return 0;
+}
+
 #pragma optimize("", on)
 
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
