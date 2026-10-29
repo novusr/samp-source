@@ -495,6 +495,8 @@ void CCamera::SetBehindPlayer()
     ScriptCommand(&restore_camera_jumpcut);
 }
 
+// Distance from the camera position (0xB6F9CC..0xB6F9D4) to the given world
+// point.
 float CCamera::GetDistanceFromPoint(_VECTOR *vecPos)
 {
     float fSZ = vecPos->Z - *(float*)0xB6F9D4;
