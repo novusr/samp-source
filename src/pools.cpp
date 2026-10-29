@@ -727,6 +727,11 @@ void CRemotePlayer::SetPlayerColor(unsigned long color) {
     SetRadarColor(m_PlayerID, color);
 }
 
+unsigned long CRemotePlayer::GetPlayerColorAsARGB()
+{
+    return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;
+}
+
 void InternalPacketPool::ReleasePointer(InternalPacket *p) {
     if (p) {
         pool.Push(p);
