@@ -639,6 +639,35 @@ bool RakNet::BitStream::ReadBits(unsigned char* output, int numberOfBitsToRead, 
     return true;
 }
 
+void RakNet::BitStream::AddBitsAndReallocate(const int numberOfBitsToWrite)
+{
+    if (numberOfBitsToWrite <= 0)
+        return;
+
+    int newNumberOfBitsAllocated = numberOfBitsToWrite + numberOfBitsUsed;
+
+    if (numberOfBitsToWrite + numberOfBitsUsed > 0 && ((numberOfBitsAllocated - 1) >> 3) < ((newNumberOfBitsAllocated - 1) >> 3))
+    {
+        newNumberOfBitsAllocated = (numberOfBitsToWrite + numberOfBitsUsed) * 2;
+        int amountToAllocate = (newNumberOfBitsAllocated + 7) >> 3;
+        if (data == (unsigned char*)stackData)
+        {
+            if (amountToAllocate > 256)
+            {
+                data = (unsigned char*)malloc(amountToAllocate);
+                memcpy((void*)data, (void*)stackData, (numberOfBitsAllocated + 7) >> 3);
+            }
+        }
+        else
+        {
+            data = (unsigned char*)realloc(data, amountToAllocate);
+        }
+    }
+
+    if (newNumberOfBitsAllocated > numberOfBitsAllocated)
+        numberOfBitsAllocated = newNumberOfBitsAllocated;
+}
+
 int RakNet::BitStream::CopyData(unsigned char** _data) const {
     *_data = new unsigned char[(numberOfBitsUsed + 7) >> 3];
     memcpy(*_data, data, (numberOfBitsUsed + 7) >> 3);
