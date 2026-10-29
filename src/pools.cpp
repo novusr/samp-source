@@ -522,6 +522,16 @@ float RPCObjectOpsView::DistanceRemaining(_MATRIX4X4* pMatrix) {
 class CVehicle {
 public:
     void GetMatrix(_MATRIX4X4* pMatrix);
+    void LinkToInterior(int interior);
+};
+
+class RPCVehiclePoolView {
+public:
+    char gap0[0x1134];
+    CVehicle* m_pVehicles[2000];
+    int m_bVehicleSlotState[2000];
+
+    void LinkToInterior(unsigned short id, int interior);
 };
 class R5VehicleTrailerPoolView {
 public:
