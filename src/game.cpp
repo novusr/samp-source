@@ -445,7 +445,10 @@ class CUniBuffer {
 
 class CEntity {
 public:
-    char gap[0x40];
+    virtual ~CEntity();
+    virtual void Add();
+    virtual void Remove();
+    char gap[0x3c];
     ENTITY_TYPE* m_pEntity;  // 0x40
     unsigned long m_dwGTAId; // 0x44
 
