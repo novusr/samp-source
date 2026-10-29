@@ -254,6 +254,7 @@ void FilterInvalidChars(char* szString) {
     }
 }
 
+// Decodes a URL-encoded string in-place
 void Util_UrlUnencode(char *enc)
 {
 	char *write_pos = enc;
@@ -476,16 +477,12 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
-    struct CAttachable {
-        void Method(int a, int b, int c, int d);
-    };
     union {
-        void* addr;
-        void (CAttachable::*fn)(int, int, int, int);
+        void* p;
+        void (CCamera::*fn)(int, int, int, int);
     } u;
-    u.addr = (void*)0x50C7C0;
-    CAttachable* p = (CAttachable*)0xB6F028;
-    (p->*(u.fn))(unk1, unk2, unk3, 1);
+    u.p = (void*)0x50C7C0;
+    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 void CCamera::SetBehindPlayer()
