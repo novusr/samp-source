@@ -1073,7 +1073,8 @@ void __stdcall WorldAddEntity(unsigned long *pEntity) {
 }
 
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
+    register void (*pfn)(unsigned long*) = (void (*)(unsigned long*))0x563280;
+    pfn(pEntity);
 }
 
 void CGame::LoadScene(char* szScene)
