@@ -1094,6 +1094,13 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+extern "C" int __cdecl strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+int __cdecl StrAndBoolComp(char *const &key, const StrAndBool &data)
+{
+	return strcmp(key, (const char*)data.str);
+}
+
 void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
 }
