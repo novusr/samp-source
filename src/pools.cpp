@@ -64,6 +64,8 @@ struct PED_TASKS_TYPE {
     char gap[0xc];
     unsigned long* pdwSwimWasted;  // 0x0c
     unsigned long* pdwJumpJetPack; // 0x10
+    char gap2[0x18];
+    unsigned long* pdwIK;          // 0x2c
 };
 
 struct PED_TYPE {
