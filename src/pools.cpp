@@ -140,6 +140,8 @@ int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 extern "C" const SCRIPT_COMMAND get_actor_armed_weapon;
 extern "C" const SCRIPT_COMMAND disable_marker;
 extern "C" const SCRIPT_COMMAND set_actor_immunities;
+extern "C" const SCRIPT_COMMAND remove_actor_from_car_and_put_at;
+extern "C" const SCRIPT_COMMAND actor_task_handsup;
 const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
 void __stdcall GameStoreLocalPlayerWeaponSkills();
 void __stdcall GameSetRemotePlayerWeaponSkills(int iPlayer);
@@ -830,6 +832,27 @@ void CPlayerPed::SetTargetRotation(float fRotation)
     m_pPed->fRotation2 = DegToRad(fRotation);
     m_pPed->fRotation1 = DegToRad(fRotation);
 }
+
+#pragma optimize("y", off)
+void CPlayerPed::ClearAllWeapons()
+{
+    PED_TYPE* dwPedPtr = m_pPed;
+
+    *pbyteCurrentPlayer = m_bytePlayerNumber;
+
+    if (dwPedPtr) {
+        typedef void (PED_TYPE::*ClearFn)();
+        union {
+            void* p;
+            ClearFn fn;
+        } u;
+        u.p = (void*)0x5E6320;
+        (dwPedPtr->*u.fn)();
+    }
+
+    *pbyteCurrentPlayer = 0;
+}
+#pragma optimize("", on)
 
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
     field_2DA = first;
