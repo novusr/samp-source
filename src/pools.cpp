@@ -485,7 +485,10 @@ float RPCObjectOpsView::DistanceRemaining(_MATRIX4X4* pMatrix) {
     return (float)sqrt((double)(fSX * fSX + fSY * fSY + fSZ * fSZ));
 }
 
-class CVehicle;
+class CVehicle {
+public:
+    void GetMatrix(_MATRIX4X4* pMatrix);
+};
 class R5VehicleTrailerPoolView {
 public:
     char gap0[0x1134];
