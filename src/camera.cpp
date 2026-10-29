@@ -599,6 +599,46 @@ void CCamera::FUNC_1009D6B0()
     }
 }
 
+bool RakNet::BitStream::ReadBits(unsigned char* output, int numberOfBitsToRead, const bool alignBitsToRight)
+{
+    if (numberOfBitsToRead <= 0)
+        return false;
+
+    if (readOffset + numberOfBitsToRead > numberOfBitsUsed)
+        return false;
+
+    int readOffsetMod8;
+    int offset = 0;
+
+    memset(output, 0, (numberOfBitsToRead + 7) >> 3);
+
+    readOffsetMod8 = readOffset & 7;
+
+    while (numberOfBitsToRead > 0)
+    {
+        *(output + offset) |= *(data + (readOffset >> 3)) << (readOffsetMod8);
+
+        if (readOffsetMod8 > 0 && numberOfBitsToRead > 8 - (readOffsetMod8))
+            *(output + offset) |= *(data + (readOffset >> 3) + 1) >> (8 - (readOffsetMod8));
+
+        numberOfBitsToRead -= 8;
+
+        if (numberOfBitsToRead < 0)
+        {
+            if (alignBitsToRight)
+                *(output + offset) >>= -numberOfBitsToRead;
+
+            readOffset += 8 + numberOfBitsToRead;
+        }
+        else
+            readOffset += 8;
+
+        offset++;
+    }
+
+    return true;
+}
+
 int RakNet::BitStream::CopyData(unsigned char** _data) const {
     *_data = new unsigned char[(numberOfBitsUsed + 7) >> 3];
     memcpy(*_data, data, (numberOfBitsUsed + 7) >> 3);
