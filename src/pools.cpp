@@ -202,18 +202,27 @@ public:
     void SetStatePair(int first, int second);
 };
 
-class CPlayerPed {
+class CEntity {
 public:
-    char gap[0x40];
+    virtual ~CEntity() {}
+    char gap[0x3c];
     _ENTITY_TYPE* m_pEntity;        // 0x40
     unsigned long m_dwGTAId;        // 0x44
+    void GetMatrix(_MATRIX4X4* pMatrix);
+};
+
+class CPlayerPed : public CEntity {
+public:
     int m_iCellPhoneEnabled;        // 0x48
     int m_bObjectSlotUsed[10];      // 0x4c
     char gap_ped[0x230];            // 0x74 to 0x2a4
     PED_TYPE *m_pPed;               // 0x2a4
     char gap_dance[8];              // 0x2a8 to 0x2b0
     unsigned char m_bytePlayerNumber;// 0x2b0
-    char gap_dance2[0x1c];          // 0x2b1 to 0x2cd
+    char gap_dance2[0x10];          // 0x2b1 to 0x2c1
+    int field_2C1;                  // 0x2c1
+    unsigned long field_2C5;        // 0x2c5
+    char gap_carry2[4];             // 0x2c9 to 0x2cd
     unsigned long m_dwArrow;        // 0x2cd
     char gap_dance3[1];             // 0x2d1
     int m_iDanceState;              // 0x2d2
@@ -222,6 +231,10 @@ public:
     int m_bHasThermalGoggles;       // 0x2e6
     char gap_piss[8];               // 0x2ea to 0x2f2
     int m_iPissingState;            // 0x2f2
+
+    virtual ~CPlayerPed();
+    void Destroy();
+    void StopCarrying();
 
     int GetCurrentVehicleID();
     void HideMarker();
