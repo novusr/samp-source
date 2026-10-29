@@ -1378,6 +1378,15 @@ int CEntity::HasExceededWorldBoundries(float fPX, float fZX, float fPY, float fN
     return 0;
 }
 
+float DegToRad(float fDegrees) {
+    if (fDegrees > 360.0f || fDegrees < 0.0f) return 0.0f;
+    if (fDegrees > 180.0f) {
+        return (float)(-(3.14159265f - (((fDegrees - 180.0f) * 3.14159265f) / 180.0f)));
+    } else {
+        return (float)((fDegrees * 3.14159265f) / 180.0f);
+    }
+}
+
 #pragma optimize("y", off)
 void CEntity::DeleteRwObject()
 {
