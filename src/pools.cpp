@@ -579,13 +579,16 @@ class RPCObjectOpsView {
 public:
     char gap[0x40];
     _ENTITY_TYPE* m_pEntity; // 0x40
-    char gap1[4];            // 0x44
+    unsigned long m_dwGTAId; // 0x44
     unsigned char m_bIsAdded;// 0x48
-    char gap2[0xc2];         // 0x49 to 0x10b
+    char gap_rot[0x64];      // 0x49 to 0xad
+    _VECTOR m_vecRot;        // 0xad to 0xb9
+    char gap2[0x52];         // 0xb9 to 0x10b
     _VECTOR m_vecTarget;     // 0x10b to 0x117
 
     int IsAdded();
     float DistanceRemaining(_MATRIX4X4* pMatrix);
+    void InstantRotate(_VECTOR* angles);
 };
 
 int RPCObjectOpsView::IsAdded() {
