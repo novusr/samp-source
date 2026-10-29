@@ -54,6 +54,18 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR, target_units=None):
     out_src_dir = out_dir / "src"
     out_src_dir.mkdir(parents=True, exist_ok=True)
 
+    # Optimization: Keep wineserver persistent in background to avoid warm-up cold starts
+    try:
+        subprocess.run(["wineserver", "-p"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+    wine_env = dict(os.environ)
+    wine_env["WINEDEBUG"] = "-all"
+    wine_env["WINEDLLOVERRIDES"] = "mscoree,mshtml="
+    if "WINEPREFIX" not in wine_env:
+        wine_env["WINEPREFIX"] = str(Path.home() / ".wine")
+
     records = []
     cl_exe = bin_dir / "cl.exe"
 
@@ -78,6 +90,7 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR, target_units=None):
         proc = subprocess.run(
             cmd,
             cwd=str(out_dir),
+            env=wine_env,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -97,15 +110,28 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR, target_units=None):
         })
         print(f"Compiled {unit}.cpp -> {dest_obj.name}")
 
+    build_json_path = out_dir / "build.json"
+    if target_units and build_json_path.exists():
+        try:
+            existing_meta = json.loads(build_json_path.read_text(encoding="utf-8"))
+            unit_map = {r["unit"]: r for r in existing_meta.get("units", [])}
+            for rec in records:
+                unit_map[rec["unit"]] = rec
+            merged_records = [unit_map[k] for k in sorted(unit_map.keys())]
+        except Exception:
+            merged_records = records
+    else:
+        merged_records = records
+
     build_meta = {
         "run": run,
         "utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "options": options,
         "toolchain": toolchain_config["tools"],
-        "units": records,
+        "units": merged_records,
     }
 
-    (out_dir / "build.json").write_text(json.dumps(build_meta, indent=2) + "\n", encoding="utf-8")
+    build_json_path.write_text(json.dumps(build_meta, indent=2) + "\n", encoding="utf-8")
     print(f"PASS: compiled {len(units)} units into {out_dir}")
     return out_dir
 
