@@ -788,6 +788,22 @@ void CPlayerPed::SetImmunities(int bBullet, int bFire, int bExplosion, int bDama
     ScriptCommand(&set_actor_immunities, m_dwGTAId, bBullet, bFire, bExplosion, bDamage, bUnknown);
 }
 
+float CPlayerPed::GetTargetRotation()
+{
+    if (!m_pPed) return 0.0f;
+    if (GamePool_Ped_GetAt(m_dwGTAId) == 0) return 0.0f;
+
+    _MATRIX4X4 mat;
+    GetMatrix(&mat);
+
+    float fZAngle = (float)atan2(-mat.up.X, mat.up.Y) * (180.0f / 3.14159265f);
+    if (fZAngle < 0.0f)
+        fZAngle += 360.0f;
+    else if (fZAngle >= 360.0f)
+        fZAngle -= 360.0f;
+    return fZAngle;
+}
+
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
     field_2DA = first;
     field_2DE = second;
