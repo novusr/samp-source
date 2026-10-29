@@ -1260,6 +1260,15 @@ int ReplicaManager::CommandStructComp(Replica *const &key, const ReplicaManager:
     return 1;
 }
 
+int ReplicaManager::RemoteObjectComp(Replica *const &key, const ReplicaManager::RemoteObject &data)
+{
+    if (key < data.replica)
+        return -1;
+    if (key == data.replica)
+        return 0;
+    return 1;
+}
+
 void SimpleMutex::Unlock(void)
 {
     LeaveCriticalSection(this);
