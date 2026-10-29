@@ -615,6 +615,8 @@ protected:
     friend void CDXUTScrollBar_Anchor();
 };
 
+// Clamps the scroll position so at least one page stays visible and it never
+// runs past either end of the scroll range.
 void CDXUTScrollBar::Cap() {
     if (m_nPosition < m_nStart || m_nEnd - m_nStart <= m_nPageSize) {
         m_nPosition = m_nStart;
@@ -1132,13 +1134,12 @@ void CGame::RequestAnimation(char *szAnimFile)
 struct CPedIntelligence;
 int FlushPedIntelligence(void)
 {
-    struct CActorPedEntity { char gap[0x47c]; CPedIntelligence* p; };
+    CPedIntelligence* p = *(CPedIntelligence**)(dwActorPed + 0x47c);
     union {
         void (CPedIntelligence::*fn)(int);
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    CPedIntelligence* p = ((CActorPedEntity*)dwActorPed)->p;
     (p->*u.fn)(1);
     return 1;
 }
