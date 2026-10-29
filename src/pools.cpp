@@ -68,7 +68,10 @@ struct PED_TYPE {
     float fHealth;                  // 0x540
     char gap3[0x4];
     float fArmour;                  // 0x548
-    char gap4[0x1c];
+    char gap4[0xc];
+    float fRotation1;               // 0x558
+    float fRotation2;               // 0x55c
+    char gap4_2[0x8];
     _VEHICLE_TYPE* pContactVehicle; // 0x568
     char gap5[0x18];
     _ENTITY_TYPE* pContactEntity;   // 0x584
@@ -83,14 +86,19 @@ struct PED_TYPE {
 };
 
 struct _CAMERA_AIM;
+struct _MATRIX4X4;
 void __stdcall GameStoreRemotePlayerAim(int iPlayer, struct _CAMERA_AIM* caAim);
 void __stdcall SetRadarColor(int nIndex, unsigned long dwColor);
+unsigned long __stdcall TranslateColorCodeToRGBA(int iCode);
+float DegToRad(float fDegrees);
+extern unsigned char* pbyteCurrentPlayer;
 
 class CRemotePlayer {
 public:
     char gap[0x1e5];
     unsigned short m_PlayerID;
     void SetPlayerColor(unsigned long color);
+    unsigned long GetPlayerColorAsARGB();
 };
 
 struct InternalPacket;
