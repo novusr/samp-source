@@ -1140,11 +1140,18 @@ void CPlayerPed::StopJetpack() {
             typedef void (CJetpackTask::*DestroyFn)(int);
             union { void* p; DestroyFn fn; } u;
             u.p = (void*)0x6801D0;
-            (((CJetpackTask*)dwJetPackTask)->*u.fn)(1);
+            DestroyFn fn = u.fn;
+            (((CJetpackTask*)dwJetPackTask)->*fn)(1);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
     }
 }
+#pragma optimize("", on)
+void CPlayerPed::SetMoney(int iAmount) {
+    ScriptCommand(&set_actor_money, m_dwGTAId, 0);
+    ScriptCommand(&set_actor_money, m_dwGTAId, iAmount);
+}
+
 #pragma optimize("", on)
 void CPlayerPed::StartDancing(int iStyle)
 {
@@ -1201,6 +1208,13 @@ void CMenuPool::ShowMenu(unsigned char byteMenuID) {
     m_pObject[byteMenuID]->Show();
     m_nCurrent = byteMenuID;
     m_bCanceled = 0;
+}
+
+void CMenuPool::HideMenu(unsigned char byteMenuID) {
+    if (byteMenuID >= 128 || m_nCurrent == 128) return;
+    if (!m_bNotEmpty[byteMenuID] || !m_pObject[byteMenuID]) return;
+    m_pObject[byteMenuID]->Hide();
+    m_nCurrent = 128;
 }
 
 #pragma optimize("", on)
