@@ -1072,14 +1072,14 @@ void __stdcall WorldAddEntity(unsigned long *pEntity) {
 }
 
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    register void (*pfn)(unsigned long*) = (void (*)(unsigned long*))0x563280;
-    pfn(pEntity);
+    typedef void (__cdecl *RemoveFn)(unsigned long*);
+    RemoveFn fn = (RemoveFn)0x563280;
+    fn(pEntity);
 }
 
 void CGame::LoadScene(char* szScene)
 {
-    char* s = szScene;
-    reinterpret_cast<void(__cdecl*)(char*)>(0x5B8700)(s);
+    ((void(__cdecl*)(const char*))0x5B8700)(szScene);
 }
 
 #pragma optimize("", on)
