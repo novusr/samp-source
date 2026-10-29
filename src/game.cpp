@@ -466,6 +466,7 @@ void CEntity::GetMatrix(_MATRIX4X4* pMatrix) {
     pMatrix->pos.Z = m_pEntity->mat->pos.Z;
 }
 
+// Copy orientation and position matrix to entity's transformation matrix.
 void CEntity::SetMatrix(_MATRIX4X4 Matrix) {
     if (!m_pEntity || !m_pEntity->mat) return;
 
@@ -1111,7 +1112,8 @@ int FlushPedIntelligence(void)
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    CPedIntelligence* p = *(CPedIntelligence**)(dwActorPed + 0x47c);
+    unsigned long* pPed = (unsigned long*)dwActorPed;
+    CPedIntelligence* p = (CPedIntelligence*)pPed[0x47c / 4];
     (p->*u.fn)(1);
     return 1;
 }
@@ -1142,9 +1144,8 @@ int ExecuteScriptBuf(void)
 #pragma optimize("y", off)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
-	if (!m_pEntity) return;
-	if (!m_pEntity->pRwObject) return;
-	if (*(void**)m_pEntity == (void*)0x863C40) return;
+	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
+		return;
 
 	volatile unsigned long dwEntity = (unsigned long)m_pEntity;
 	typedef void (__cdecl *Func)(void*, int);
