@@ -500,6 +500,8 @@ float CCamera::GetDistanceFromPoint(_VECTOR *vecPos)
     return (float)sqrt((double)(fSX * fSX + fSY * fSY + fSZ * fSZ));
 }
 
+// Returns the camera to script control and points it at (fX, fY, fZ) with the
+// given GTA camera mode (iType).
 void CCamera::LookAtPoint(float fX, float fY, float fZ, int iType)
 {
     ScriptCommand(&restore_camera_to_user_defined);
