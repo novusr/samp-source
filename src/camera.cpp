@@ -286,6 +286,7 @@ inline char Util_toupper(char c) {
 }
 
 
+// Case-insensitive substring search
 char* Util_stristr(const char* String, const char* Pattern) {
     char *pptri, *sptri, *starti;
 
