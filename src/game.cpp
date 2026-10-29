@@ -1240,6 +1240,10 @@ void SimpleMutex::Unlock(void)
     LeaveCriticalSection(this);
 }
 
+void SimpleMutex::Lock(void) {
+    EnterCriticalSection(this);
+}
+
 long __stdcall CUniBuffer::Dummy_ScriptStringCPtoX(void *p1, int p2, int p3, int *p4)
 {
     return 0x80004001;
@@ -1458,6 +1462,22 @@ float DegToRad(float fDegrees) {
         return (float)((fDegrees * 3.14159265f) / 180.0f);
     }
 }
+
+#pragma optimize("y", off)
+void CEntity::TeleportTo(float x, float y, float z)
+{
+    unsigned long dwThisEntity = (unsigned long)m_pEntity;
+    if (dwThisEntity && *(unsigned long*)m_pEntity != 0x863C40) {
+        if (m_pEntity->nModelIndex != TRAIN_PASSENGER_LOCO &&
+            m_pEntity->nModelIndex != TRAIN_FREIGHT_LOCO &&
+            m_pEntity->nModelIndex != TRAIN_TRAM) {
+            ((IEntityGTA*)dwThisEntity)->Teleport(x, y, z, 0);
+        } else {
+            ScriptCommand(&put_train_at, m_dwGTAId, x, y, z);
+        }
+    }
+}
+#pragma optimize("", on)
 
 #pragma optimize("y", off)
 void CEntity::PlayAudio(int event)
