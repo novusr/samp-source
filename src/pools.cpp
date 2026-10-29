@@ -820,7 +820,9 @@ void CRemotePlayer::SetPlayerColor(unsigned long color) {
     SetRadarColor(m_PlayerID, color);
 }
 
-void CLocalPlayer::SetPlayerColor(unsigned long color) {
+void CLocalPlayer::SetPlayerColor(unsigned long color)
+{
+    SetRadarColor(((CNetGame*)pNetGame)->m_pPools->m_pPlayer->GetLocalPlayerID(), color);
 }
 
 unsigned long CRemotePlayer::GetPlayerColorAsARGB()
@@ -933,12 +935,12 @@ void CPlayerPed::ClearAllWeapons()
 
 #pragma optimize("", off)
 void CPlayerPed::RemoveWeaponWhenEnteringVehicle() {
-    PED_TYPE* pPed = m_pPed;
-    if (pPed) {
+    void* dwPedPtr = m_pPed;
+    if (dwPedPtr) {
         typedef void (CGtaPedWeapon::*ClearWeaponFn)(int);
-        ClearWeaponFn fn;
-        *(void**)&fn = (void*)0x5E6370;
-        (((CGtaPedWeapon*)pPed)->*fn)(0);
+        union { void* p; ClearWeaponFn fn; } u;
+        u.p = (void*)0x5E6370;
+        (((CGtaPedWeapon*)dwPedPtr)->*u.fn)(0);
     }
 }
 #pragma optimize("", on)
