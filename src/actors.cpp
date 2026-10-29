@@ -179,19 +179,20 @@ void CActorPed::ToggleImmunity(unsigned char byteEnable) {
 
 #pragma optimize("y", off)
 void CActorPed::Destroy() {
-    unsigned long dwPed = (unsigned long)m_pPed;
-    if (m_pPed && GamePool_Ped_GetAt(m_dwGTAId) && *(unsigned long*)m_pPed != 0x863c40) {
-        ((CGtaEntity*)dwPed)->Destroy(1);
+    volatile unsigned int dwPed = (unsigned int)m_pPed;
+    if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || *(unsigned long*)m_pPed == 0x863C40) {
         m_pPed = 0;
         m_pEntity = 0;
+        m_dwGTAId = 0;
         return;
     }
-    m_dwGTAId = 0;
-    m_pPed = 0;
+    ((CGtaEntity*)(void*)dwPed)->Destroy(1);
     m_pEntity = 0;
+    m_pPed = 0;
 }
-
-#pragma optimize("y", on)
+#pragma optimize("", on)
+// Frees the actor in slot `id`: clears its slot flag, deletes the CActorPed,
+// clears both its pointer and its GTA id, then recomputes the last active slot.
 int CActorPool::Delete(unsigned short id) {
     if (id < 1000 && slots[id] && actors[id]) {
         slots[id] = 0;
