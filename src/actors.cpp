@@ -163,3 +163,12 @@ CActorPed::~CActorPed() {
     Destroy();
 }
 
+void CActorPed::ToggleImmunity(unsigned char byteEnable) {
+    if (!m_pPed) return;
+    m_byteImmune = byteEnable;
+    if (byteEnable)
+        ScriptCommand(&set_actor_immunities, m_dwGTAId, 1, 1, 1, 1, 1);
+    else
+        ScriptCommand(&set_actor_immunities, m_dwGTAId, 0, 0, 0, 1, 0);
+}
+
