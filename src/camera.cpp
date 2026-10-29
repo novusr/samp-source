@@ -26,6 +26,7 @@ float __stdcall GetLocalAspect() {
 float __stdcall GetLocalZoom() {
     return (*cameraZoom - 35.0f) / 35.0f;
 }
+// Apply the remote player's camera zoom and aspect ratio to the shared camera state.
 void __stdcall SetRemoteCamera(unsigned char id) {
     float zoom = remoteZoom[id] * 35.0f;
     zoom += 35.0f;
