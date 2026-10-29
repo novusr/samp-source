@@ -257,7 +257,11 @@ class CPlayerPed : public CEntity {
 public:
     int m_iCellPhoneEnabled;        // 0x48
     int m_bObjectSlotUsed[10];      // 0x4c
-    char gap_ped[0x230];            // 0x74 to 0x2a4
+    struct AttachedObjectInfo {
+        int field[13];
+    };
+    AttachedObjectInfo m_attachedObjectInfo[10];      // 0x74 to 0x27c
+    CEntity* m_pAttachedObjects[10];                  // 0x27c to 0x2a4
     PED_TYPE *m_pPed;               // 0x2a4
     char gap_dance[8];              // 0x2a8 to 0x2b0
     unsigned char m_bytePlayerNumber;// 0x2b0
@@ -1552,10 +1556,13 @@ char* CPlayerPed::GetShopName() {
 _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
+    volatile PED_TYPE* pPed = m_pPed;
+    volatile _VECTOR* pResult = 0;
     typedef _VECTOR* (PED_TYPE::*BoneFn)(_VECTOR*, int, int);
     union { void* p; BoneFn fn; } u;
     u.p = (void*)0x5E4280;
-    return (m_pPed->*u.fn)(pVec, iBone, 0);
+    pResult = (((PED_TYPE*)pPed)->*u.fn)(pVec, iBone, 0);
+    return (_VECTOR*)pResult;
 }
 #pragma optimize("", on)
 _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
