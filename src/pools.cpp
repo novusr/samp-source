@@ -1287,6 +1287,15 @@ _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     return (m_pPed->*u.fn)(pVec, iBone, 0);
 }
 
+_VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
+    if (!m_pPed) return 0;
+    if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
+    typedef _VECTOR* (PED_TYPE::*BoneFn)(_VECTOR*, int, int);
+    union { void* p; BoneFn fn; } u;
+    u.p = (void*)0x5E01C0;
+    return (m_pPed->*u.fn)(pVec, iBone, 0);
+}
+
 void CPlayerPed::SetAmmo(unsigned char byteWeapon, unsigned short wAmmo) {
     if (m_pPed) {
         _WEAPON_SLOT_TYPE* pSlot = FindWeaponSlot(byteWeapon);
