@@ -1380,6 +1380,25 @@ float CEntity::GetDistanceFromCamera()
 CEntity::~CEntity() {
 }
 
+void CChatWindow::Log(int type, char *text, char *prefix) {
+    time_t now = time(0);
+    if (!field_D) return;
+    FILE *file = fopen(field_11, "a");
+    if (!file) return;
+    char stamp[65];
+    strftime(stamp, 64, "[%H:%M:%S]", localtime(&now));
+    switch (type) {
+        case 2:
+            fprintf(file, "%s <%s> %s\r\n", stamp, prefix, text);
+            break;
+        case 4:
+        case 8:
+            fprintf(file, "%s %s\r\n", stamp, text);
+            break;
+    }
+    fclose(file);
+}
+
 void CChatWindow::AddDebugMessage(char *szFormat, ...) {
     __declspec(align(8)) char buffer[512];
     memset(buffer, 0, sizeof(buffer));
@@ -1415,6 +1434,18 @@ float DegToRad(float fDegrees) {
         return (float)((fDegrees * 3.14159265f) / 180.0f);
     }
 }
+
+#pragma optimize("y", off)
+void CEntity::PlayAudio(int event)
+{
+    volatile unsigned long entity = (unsigned long)m_pEntity;
+    if (!entity) return;
+    typedef void (CAudioClass::*AudioFunc)(int, int);
+    union { void* p; AudioFunc fn; } u;
+    u.p = (void*)0x4F6420;
+    (((CAudioClass*)(entity + 0x138))->*u.fn)(event, 0);
+}
+#pragma optimize("", on)
 
 #pragma optimize("y", off)
 void CEntity::DeleteRwObject()
