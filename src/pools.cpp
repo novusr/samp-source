@@ -1023,6 +1023,8 @@ public:
     unsigned long GetWeaponInfo(int iWeapon, int iUnk);
     void DrawGangZone(float* fPos, unsigned long dwColor);
     void DeletePlayerPed(void* ped);
+    void DisableMarker(unsigned long dwMarkerID);
+    unsigned long CreateRadarMarkerIcon(unsigned char byteIcon, float fX, float fY, float fZ, unsigned long dwColor, int iStyle);
 };
 extern CGame* pGame;
 
@@ -1588,13 +1590,11 @@ char* CPlayerPed::GetShopName() {
 _VECTOR* CPlayerPed::GetBonePosition(int iBone, _VECTOR* pVec) {
     if (!m_pPed) return 0;
     if (m_pPed->entity.vtable == (void*)0x863c40) return 0;
-    volatile PED_TYPE* pPed = m_pPed;
-    volatile _VECTOR* pResult = 0;
+    void* dwPedPtr = m_pPed;
     typedef _VECTOR* (PED_TYPE::*BoneFn)(_VECTOR*, int, int);
     union { void* p; BoneFn fn; } u;
     u.p = (void*)0x5E4280;
-    pResult = (((PED_TYPE*)pPed)->*u.fn)(pVec, iBone, 0);
-    return (_VECTOR*)pResult;
+    return (((PED_TYPE*)dwPedPtr)->*u.fn)(pVec, iBone, 0);
 }
 #pragma optimize("", on)
 _VECTOR* CPlayerPed::GetTransformedBonePosition(int iBone, _VECTOR* pVec) {
