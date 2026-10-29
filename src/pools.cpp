@@ -1216,8 +1216,7 @@ void CPlayerPed::StopJetpack() {
             typedef void (CJetpackTask::*DestroyFn)(int);
             union { void* p; DestroyFn fn; } u;
             u.p = (void*)0x6801D0;
-            DestroyFn fn = u.fn;
-            (((CJetpackTask*)dwJetPackTask)->*fn)(1);
+            (((CJetpackTask*)dwJetPackTask)->*u.fn)((int)1);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
     }
@@ -1271,6 +1270,12 @@ void CPlayerPed::ToggleCellphone(int iOn)
     if (!m_pPed) return;
     m_iCellPhoneEnabled = iOn;
     ScriptCommand(&toggle_actor_cellphone, m_dwGTAId, iOn);
+}
+
+void CPlayerPed::SetFightingStyle(int iStyle)
+{
+    if (!m_pPed) return;
+    ScriptCommand(&set_fighting_style, m_dwGTAId, iStyle, 6);
 }
 
 char* CPlayerPed::GetShopName() {
