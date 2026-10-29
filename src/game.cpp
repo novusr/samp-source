@@ -362,7 +362,11 @@ public:
     int IsModelLoaded(int iModelID);
     void sub_100A0090(int a1, int a2);
     float FindGroundZForCoord(float x, float y, float z);
+    void SetMaxStats();
+    void RefreshStreamingAt(float x, float y);
+    void DisableRaceCheckpoint();
 };
+#pragma pack(pop)
 
 int CGame::GetWorldWeather() {
     return *(int*)0xc81318;
