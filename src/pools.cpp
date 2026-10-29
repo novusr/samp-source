@@ -1265,8 +1265,8 @@ void CPlayerPed::StopDancing()
 void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
                                   _VECTOR *p4, int p5, float p6, int p7, int p8, int p9)
 {
-    if (!m_pPed) return;
     unsigned long dwPed = (unsigned long)m_pPed;
+    if (!dwPed) return;
 
     typedef void (CCommandTaskManager::*Fn)(char*, unsigned long, int, int, int, _VECTOR*, int, int, int, int, int);
     union {
@@ -1274,9 +1274,9 @@ void CPlayerPed::ApplyCommandTask(char *szTaskName, int p1, int p2, int p3,
         Fn fn;
     } u;
     u.p = (void*)0x618970;
-    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, *(int*)&p6, p7, p8, p9);
+    (((CCommandTaskManager*)0xC15448)->*u.fn)(szTaskName, dwPed, p1, p2, p3, p4, p5, (int&)p6, p7, p8, p9);
 }
-
+#pragma optimize("", on)
 void CPlayerPed::DestroyFollowPedTask()
 {
     if (!m_pPed) return;
@@ -1395,6 +1395,17 @@ void CPickupPool::Destroy(int iPickup) {
         m_iTimer[iPickup] = 0;
         m_iNetworkIds[iPickup] = -1;
         m_iPickupCount--;
+    }
+}
+
+void CPickupPool::DestroyDropped(unsigned short fromPlayer) {
+    for (int i = 0; i < 4096; i++) {
+        if (m_dwHnd[i] != 0 && m_droppedWeapon[i].bDroppedWeapon && m_droppedWeapon[i].fromPlayer == fromPlayer) {
+            ScriptCommand(&destroy_pickup, m_dwHnd[i]);
+            m_dwHnd[i] = 0;
+            m_iTimer[i] = 0;
+            m_iPickupCount--;
+        }
     }
 }
 
