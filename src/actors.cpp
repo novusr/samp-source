@@ -74,6 +74,11 @@ int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 const SCRIPT_COMMAND set_actor_immunities = { 0x02ab, "iiiiii" };
 const SCRIPT_COMMAND kill_actor = { 0x0321, "i" };
 
+class CGtaEntity {
+public:
+    virtual void Destroy(int b);
+};
+
 struct _ACTOR_PED_TYPE {
     char gap0[0x46c];
     unsigned long dwStateFlags;    // 0x46c
