@@ -1146,6 +1146,18 @@ long __stdcall CUniBuffer::Dummy_ScriptStringCPtoX(void *p1, int p2, int p3, int
     return 0x80004001;
 }
 
+extern "C" __declspec(dllimport) int __stdcall MultiByteToWideChar(unsigned int, unsigned long, const char *, int, unsigned short *, int);
+extern "C" void * __cdecl memset(void *, int, unsigned int);
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(memset, strlen)
+void __cdecl ConvertAnsiToWide(char const *source, unsigned short *destination, int capacity)
+{
+    memset(destination, 0, capacity * sizeof(unsigned short));
+    int required = MultiByteToWideChar(0, 0, source, strlen(source), 0, 0);
+    if (required < capacity)
+        MultiByteToWideChar(0, 0, source, strlen(source), destination, required);
+}
+
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 int __cdecl StrAndBoolComp(char *const &key, const StrAndBool &data)
