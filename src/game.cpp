@@ -1636,6 +1636,13 @@ float CGame::FindGroundZForCoord(float x, float y, float z)
 	return fGroundZ;
 }
 
+void CGame::SetWorldTime(int iHour, int iMinute)
+{
+    *(unsigned char*)0xB70152 = (unsigned char)iMinute;
+    *(unsigned char*)0xB70153 = (unsigned char)iHour;
+    ScriptCommand(&set_current_time, iHour, iMinute);
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
