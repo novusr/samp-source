@@ -469,6 +469,17 @@ CFirstPersonCamera::CFirstPersonCamera() :
 {
 }
 
+#pragma optimize("y", off)
+void CCamera::Attach(int unk1, int unk2, int unk3)
+{
+    union {
+        void* p;
+        void (CCamera::*fn)(int, int, int, int);
+    } u;
+    u.p = (void*)0x50C7C0;
+    (((CCamera*)0xB6F028)->*(u.fn))(unk1, unk2, unk3, 1);
+}
+#pragma optimize("", on)
 void CCamera::SetBehindPlayer()
 {
     ScriptCommand(&lock_camera_position, 0);
