@@ -2,11 +2,13 @@
 // These functions must not be invoked in an ordinary host process.
 extern "C" void __cdecl Unprotect(void* address, unsigned long bytes);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void*);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void*);
 
 class SimpleMutex {
 public:
     void* criticalSection[6];
     void Unlock(void);
+    void Lock(void);
 };
 
 class LightweightDatabaseServer {
