@@ -1789,6 +1789,27 @@ CRemotePlayer::~CRemotePlayer()
     }
 }
 
+CRemotePlayer::CRemotePlayer()
+{
+    field_1E7 = 0;
+    field_10A = 0;
+    m_PlayerID = 0xFFFF;
+    m_pPlayerPed = 0;
+    field_1B8 = 0;
+    field_109 = -1;
+    field_4 = 1;
+    field_0 = 0;
+    field_8 = 0;
+    field_1F9 = 0;
+    field_C = 0;
+    field_10C = 0;
+    field_1C1 = 0;
+    field_1D5 = GetTickCount();
+    field_1D9 = GetTickCount();
+    field_1B9 = GetTickCount();
+    ResetAllSyncAttributes();
+}
+
 void RPCObjectOpsView::InstantRotate(_VECTOR* angles) {
     if (!m_pEntity) return;
     if (!GamePool_Object_GetAt(m_dwGTAId)) return;
