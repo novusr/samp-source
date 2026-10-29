@@ -652,6 +652,10 @@ CActorPool* CNetGame::GetActorPool() { return m_pPools->m_pActor; }
 // Matched ?GetGangZonePool@CNetGame@@QAEPAVCGangZonePool@@XZ (0x10017d00)
 CGangZonePool* CNetGame::GetGangZonePool() { return m_pPools->m_pGangZone; }
 
+void CPlayerPed::SetCurrentAim(_CAMERA_AIM* pAim) {
+    GameStoreRemotePlayerAim(m_bytePlayerNumber, pAim);
+}
+
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
 CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
 
