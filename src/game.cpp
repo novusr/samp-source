@@ -1,6 +1,13 @@
 // GTA absolute addresses are part of R5's original behavior.
 // These functions must not be invoked in an ordinary host process.
 extern "C" void __cdecl Unprotect(void* address, unsigned long bytes);
+
+#pragma pack(push, 1)
+struct StrAndBool {
+    char *str;
+    bool b;
+};
+#pragma pack(pop)
 #pragma pack(push, 1)
 class Game {
 public:
