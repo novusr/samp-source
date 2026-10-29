@@ -1012,6 +1012,13 @@ unsigned long CRemotePlayer::GetPlayerColorAsARGB()
     return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;
 }
 
+CNewPlayerTags::CNewPlayerTags(IDirect3DDevice9* pDevice) {
+    m_pDevice = pDevice;
+    m_pStates = 0;
+    m_pSprite = 0;
+    D3DXCreateSprite(pDevice, &m_pSprite);
+}
+
 void InternalPacketPool::ReleasePointer(InternalPacket *p) {
     if (p) {
         pool.Push(p);
