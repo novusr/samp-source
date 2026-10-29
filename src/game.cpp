@@ -44,6 +44,15 @@ void Game::SetGravity(float gravity) {
     *(float*)0x863984 = gravity;
 }
 
+class Replica;
+class ReplicaManager {
+public:
+    struct RegisteredReplica {
+        Replica *replica;
+    };
+    static int __cdecl RegisteredReplicaComp(Replica *const &key, const RegisteredReplica &data);
+};
+
 class CCryptoContext {
 public:
     unsigned long m_dwProvider;
@@ -1277,6 +1286,10 @@ float CEntity::GetDistanceFromCamera()
 }
 
 CEntity::~CEntity() {
+}
+
+void CEntity::ProcessControl(void)
+{
 }
 
 int __cdecl GetInvalidModelInfoCount(void)
