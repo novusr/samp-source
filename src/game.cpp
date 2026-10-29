@@ -1059,12 +1059,18 @@ void CGame::LoadRequestedModels() {
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
+    register void (__cdecl *fn)(unsigned long *) = (void (__cdecl *)(unsigned long *))0x563220;
+    fn(pEntity);
 }
-
+#pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
 {
 	ScriptCommand(&request_model, iModelID);
+}
+
+int CGame::IsAnimationLoaded(char *szAnimFile)
+{
+	return ScriptCommand(&is_animation_loaded, szAnimFile);
 }
 
 #pragma optimize("", on)
