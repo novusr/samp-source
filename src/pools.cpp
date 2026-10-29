@@ -1289,6 +1289,9 @@ void CPlayerTags::End() {
     m_pOldStates->Apply();
 }
 
+void CNewPlayerTags::End() {
+}
+
 int R5LabelRemotePlayerView::IsActive() {
     if (ped && state) return 1;
     return 0;
