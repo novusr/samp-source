@@ -746,6 +746,8 @@ void CCmdWindow::AddDefaultCmdProc(CMDPROC cmdDefault) {
     m_pDefaultCmd = cmdDefault;
 }
 
+// Register a named command handler, provided the command table has room
+// and the name fits in its slot.
 void CCmdWindow::AddCmdProc(char* szCmdName, CMDPROC cmdHandler) {
     if (m_iCmdCount < MAX_CMDS && (strlen(szCmdName) < MAX_CMD_STRLEN)) {
         m_pCmds[m_iCmdCount] = cmdHandler;
