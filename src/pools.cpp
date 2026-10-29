@@ -1521,6 +1521,13 @@ void CPlayerTags::DeleteDeviceObjects() {
     }
 }
 
+int R5ScoreboardPlayerQueriesView::IsNPC(unsigned short id) {
+    if (id > 1004) return 0;
+    R5ScoreboardNetPlayer* player = players[id];
+    if (!player) return 0;
+    return player->m_bIsNPC;
+}
+
 #pragma optimize("", on)
 
 void CPlayerTags::End() {
