@@ -67,6 +67,8 @@ struct _MATRIX4X4 {
 
 class CEntity {
 public:
+    char gap[0x40];
+    void* m_pEntity;
     void GetMatrix(_MATRIX4X4* pMatrix);
 };
 
@@ -99,6 +101,7 @@ public:
     void InterpolatePosition(_VECTOR* vecFrom, _VECTOR* vecTo, int iTime, unsigned char byteCut);
     void InterpolateLookAt(_VECTOR* vecFrom, _VECTOR* vecTo, int iTime, unsigned char byteCut);
     void FUNC_1009D660(CEntity* pEntity);
+    void FUNC_1009D6B0();
 };
 
 struct D3DXVECTOR3 {
