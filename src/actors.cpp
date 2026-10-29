@@ -151,3 +151,11 @@ void CActorPed::SetTargetRotation(float fRotation) {
     m_pPed->fRotation2 = DegToRad(fRotation);
 }
 
+void CActorPed::SetHealth(float fHealth) {
+    if (!m_pPed) return;
+    m_pPed->fHealth = fHealth;
+    if (m_pPed->fHealth <= 0.0f) {
+        ScriptCommand(&kill_actor, m_dwGTAId);
+    }
+}
+
