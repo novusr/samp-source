@@ -1587,6 +1587,17 @@ void __cdecl RemoveColorEmbedsFromString(char *szString) {
     *szString = 0;
 }
 
+bool FUNC_100B4B50(_VECTOR *vecPos)
+{
+	if (vecPos->X < 20000.0f && vecPos->X > -20000.0f &&
+		vecPos->Y < 20000.0f && vecPos->Y > -20000.0f &&
+		vecPos->Z < 100000.0f && vecPos->Z > -10000.0f)
+	{
+		return true;
+	}
+	return false;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
