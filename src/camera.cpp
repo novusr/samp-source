@@ -427,16 +427,18 @@ private:
     friend void RakNet_BitStream_Anchor();
 };
 #pragma pack(pop)
+void RakNet_BitStream_Anchor();
+}
 
-void RakNet_BitStream_Anchor() {
+void RakNet::RakNet_BitStream_Anchor() {
     bool (BitStream::*p)() const = &BitStream::DoEndianSwap;
 }
 
-int BitStream::GetWriteOffset() const {
+int RakNet::BitStream::GetWriteOffset() const {
     return numberOfBitsUsed;
 }
 
-BitStream::BitStream() {
+RakNet::BitStream::BitStream() {
     numberOfBitsUsed = 0;
     numberOfBitsAllocated = 256 * 8;
     readOffset = 0;
@@ -444,72 +446,70 @@ BitStream::BitStream() {
     copyData = true;
 }
 
-void BitStream::SetNumberOfBitsAllocated(const unsigned int lengthInBits) {
+void RakNet::BitStream::SetNumberOfBitsAllocated(const unsigned int lengthInBits) {
     numberOfBitsAllocated = lengthInBits;
 }
 
-BitStream::~BitStream() {
+RakNet::BitStream::~BitStream() {
     if (copyData && numberOfBitsAllocated > 256 * 8)
         free(data);
 }
 
-void BitStream::Reset() {
+void RakNet::BitStream::Reset() {
     numberOfBitsUsed = 0;
     readOffset = 0;
 }
-} // namespace RakNet
 
-namespace RakNet {
-void BitStream::ResetReadPointer() {
+void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
 
-void BitStream::ResetWritePointer() {
+void RakNet::BitStream::ResetWritePointer() {
     numberOfBitsUsed = 0;
 }
 
-bool BitStream::ReadBit() {
+bool RakNet::BitStream::ReadBit() {
     return (bool)(data[readOffset >> 3] & (0x80 >> (readOffset++ & 7)));
 }
 
-void BitStream::AlignWriteToByteBoundary() {
+void RakNet::BitStream::AlignWriteToByteBoundary() {
     if (numberOfBitsUsed)
         numberOfBitsUsed += 8 - (((numberOfBitsUsed - 1) & 7) + 1);
 }
 
-void BitStream::AlignReadToByteBoundary() {
+void RakNet::BitStream::AlignReadToByteBoundary() {
     if (readOffset)
         readOffset += 8 - (((readOffset - 1) & 7) + 1);
 }
 
-void BitStream::SetData(unsigned char* input) {
+void RakNet::BitStream::SetData(unsigned char* input) {
     data = input;
     copyData = false;
 }
 
-void BitStream::IgnoreBits(const int numberOfBits) {
+void RakNet::BitStream::IgnoreBits(const int numberOfBits) {
     readOffset += numberOfBits;
 }
 
-void BitStream::SetWriteOffset(const int offset) {
+void RakNet::BitStream::SetWriteOffset(const int offset) {
     numberOfBitsUsed = offset;
 }
 
-bool BitStream::DoEndianSwap() const {
+bool RakNet::BitStream::DoEndianSwap() const {
     return false;
 }
 
-void BitStream::AssertStreamEmpty() {
+void RakNet::BitStream::AssertStreamEmpty() {
 }
 
-void BitStream::Write0() {
+void RakNet::BitStream::Write0() {
     AddBitsAndReallocate(1);
     if ((numberOfBitsUsed & 7) == 0)
         data[numberOfBitsUsed >> 3] = 0;
     numberOfBitsUsed++;
 }
 
-void BitStream::Write1() {
+void RakNet::BitStream::Write1() {
     AddBitsAndReallocate(1);
     int numberOfBitsMod8 = numberOfBitsUsed & 7;
     if (numberOfBitsMod8 == 0)
@@ -517,8 +517,6 @@ void BitStream::Write1() {
     else
         data[numberOfBitsUsed >> 3] |= (0x80 >> numberOfBitsMod8);
     numberOfBitsUsed++;
-}
-
 }
 
 
