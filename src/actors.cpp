@@ -159,3 +159,7 @@ void CActorPed::SetHealth(float fHealth) {
     }
 }
 
+CActorPed::~CActorPed() {
+    Destroy();
+}
+
