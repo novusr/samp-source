@@ -198,7 +198,8 @@ public:
     unsigned long m_dwArrow;        // 0x2cd
     char gap_dance3[1];             // 0x2d1
     int m_iDanceState;              // 0x2d2
-    char gap_thermal[0x10];         // 0x2d6 to 0x2e6
+    int m_iDanceStyle;              // 0x2d6
+    char gap_thermal[0xc];          // 0x2da to 0x2e6
     int m_bHasThermalGoggles;       // 0x2e6
     char gap_piss[8];               // 0x2ea to 0x2f2
     int m_iPissingState;            // 0x2f2
@@ -210,6 +211,11 @@ public:
     void StartJetpack();
     void StopJetpack();
     void TeleportTo(float x, float y, float z);
+    void ToggleCellphone(int iOn);
+    void StartDancing(int iStyle);
+    void StopDancing();
+    void ApplyCommandTask(char* szTaskName, int p1, int p2, int p3, _VECTOR* p4, int p5, float p6, int p7, int p8, int p9);
+    void ApplyAnimation(char* szAnimName, char* szAnimFile, float fT, int opt1, int opt2, int opt3, int opt4, int opt5);
 
     int IsCellphoneEnabled();
     int GetPissingState();
