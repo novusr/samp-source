@@ -1074,6 +1074,11 @@ int CGame::IsAnimationLoaded(char *szAnimFile)
 	return ScriptCommand(&is_animation_loaded, szAnimFile);
 }
 
+void CGame::RequestAnimation(char *szAnimFile)
+{
+	ScriptCommand(&request_animation, szAnimFile);
+}
+
 #pragma optimize("", on)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
