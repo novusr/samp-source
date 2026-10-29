@@ -1079,6 +1079,12 @@ void CGame::RequestAnimation(char *szAnimFile)
 	ScriptCommand(&request_animation, szAnimFile);
 }
 
+void InitScripting(void)
+{
+	gst = new GAME_SCRIPT_THREAD;
+	memset(gst, 0, sizeof(GAME_SCRIPT_THREAD));
+}
+
 #pragma optimize("", on)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
