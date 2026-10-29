@@ -108,9 +108,27 @@ public:
     void ReleasePointer(InternalPacket *p);
 };
 
+PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
+
+struct GTA_CONTROLSET {
+    unsigned short wKeys1[24];
+    unsigned short wKeys2[24];
+    unsigned char bytePadding1[212];
+};
+GTA_CONTROLSET* __cdecl GameGetInternalKeys();
+
+struct SCRIPT_COMMAND {
+    unsigned short OpCode;
+    char Params[16];
+};
+int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
+extern "C" const SCRIPT_COMMAND get_actor_armed_weapon;
+
 class CPlayerPed {
 public:
-    char gap[0x48];
+    char gap[0x40];
+    _ENTITY_TYPE* m_pEntity;        // 0x40
+    unsigned long m_dwGTAId;        // 0x44
     int m_iCellPhoneEnabled;        // 0x48
     int m_bObjectSlotUsed[10];      // 0x4c
     char gap_ped[0x230];            // 0x74 to 0x2a4
