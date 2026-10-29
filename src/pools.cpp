@@ -1893,6 +1893,16 @@ int R5LabelRemotePlayerView::IsActive() {
     return 0;
 }
 
+void R5RosterRemotePlayerView::Remove() {
+    if (m_pPlayerPed) {
+        ResetAllSyncAttributes();
+        pGame->DeletePlayerPed(m_pPlayerPed);
+        m_pPlayerPed = 0;
+    }
+    field_10A = 0;
+    field_4 = 1;
+}
+
 #pragma optimize("", on)
 
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
