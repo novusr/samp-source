@@ -446,6 +446,7 @@ public:
 
 };
 
+// Copies the entity transformation matrix into the output parameter
 void CEntity::GetMatrix(_MATRIX4X4* pMatrix) {
     if (!m_pEntity || !m_pEntity->mat) return;
 
@@ -1066,8 +1067,7 @@ void CGame::LoadRequestedModels() {
 #pragma optimize("y", off)
 void CGame::LoadCullZone(char *szLine)
 {
-    register void (*pfn)(char*) = (void (*)(char*))0x5B4B40;
-    pfn(szLine);
+    ((void (__cdecl *)(char*))0x5B4B40)(szLine);
 }
 #pragma optimize("", on)
 
@@ -1080,8 +1080,7 @@ void __stdcall WorldAddEntity(unsigned long *pEntity) {
 extern "C" void __cdecl func_563280(unsigned long*);
 #pragma optimize("s", on)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    register void (*fn)(unsigned long*) = (void (*)(unsigned long*))0x563280;
-    fn(pEntity);
+    ((void (__cdecl *)(void*))0x563280)((void*)pEntity);
 }
 #pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
