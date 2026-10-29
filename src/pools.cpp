@@ -820,6 +820,9 @@ void CRemotePlayer::SetPlayerColor(unsigned long color) {
     SetRadarColor(m_PlayerID, color);
 }
 
+void CLocalPlayer::SetPlayerColor(unsigned long color) {
+}
+
 unsigned long CRemotePlayer::GetPlayerColorAsARGB()
 {
     return (TranslateColorCodeToRGBA(m_PlayerID) >> 8) | 0xFF000000;
