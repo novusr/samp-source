@@ -579,6 +579,12 @@ void CCamera::FUNC_1009D660(CEntity *pEntity) {
     }
 }
 
+int RakNet::BitStream::CopyData(unsigned char** _data) const {
+    *_data = new unsigned char[(numberOfBitsUsed + 7) >> 3];
+    memcpy(*_data, data, (numberOfBitsUsed + 7) >> 3);
+    return numberOfBitsUsed;
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
