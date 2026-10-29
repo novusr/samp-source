@@ -1571,6 +1571,16 @@ float __cdecl NormalizeAngle(float fAngle)
 	return fAngle;
 }
 
+void __cdecl ResetLocalPad(int unk1, int unk2) {
+    CPad* pad = ((CPad* (__cdecl *)(int))0x53fb70)(0);
+    union {
+        void (CPad::*fn)(int, int);
+        void* addr;
+    } u;
+    u.addr = (void*)0x541a70;
+    (pad->*u.fn)(unk1, unk2);
+}
+
 int __cdecl IsFileOrDirectoryExists(char *szPath) {
     struct _stat32 buf;
     return _stat(szPath, &buf) == 0;
@@ -1596,6 +1606,12 @@ bool FUNC_100B4B50(_VECTOR *vecPos)
 		return true;
 	}
 	return false;
+}
+
+void CGame::sub_100A0090(int a1, int a2)
+{
+	if (a1 && a2 && a1 < 1000 / a2)
+		Sleep(1000 / a2 - a1 - 1);
 }
 
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
