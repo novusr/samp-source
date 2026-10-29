@@ -1023,6 +1023,19 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
+{
+	_MATRIX4X4	matThis;
+	float		fSX,fSY,fSZ;
+
+	GetMatrix(&matThis);
+	fSX = (matThis.pos.X - X) * (matThis.pos.X - X);
+	fSY = (matThis.pos.Y - Y) * (matThis.pos.Y - Y);
+	fSZ = (matThis.pos.Z - Z) * (matThis.pos.Z - Z);
+
+	return (float)sqrt(fSX + fSY + fSZ);
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
