@@ -206,6 +206,10 @@ struct GAME_SCRIPT_THREAD {
     char pad[0xe0];
 };
 extern unsigned long dwActorPed;
+class CPedIntelligence {
+public:
+    void Flush(int a);
+};
 extern GAME_SCRIPT_THREAD* gst;
 extern int bScmLocalDebug;
 extern unsigned char ScriptBuf[255];
@@ -1077,7 +1081,6 @@ extern "C" void __cdecl func_563280(unsigned long*);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
-#pragma optimize("", on)
 void CGame::LoadScene(char* szScene)
 {
     typedef void (__cdecl *fn_t)(void*);
