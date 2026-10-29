@@ -64,25 +64,50 @@ void ActorPool::DeleteAll() {
 
 struct _PED_TYPE;
 _PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
+float DegToRad(float fDegrees);
+
+struct SCRIPT_COMMAND {
+    unsigned short OpCode;
+    char Params[16];
+};
+int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
+const SCRIPT_COMMAND set_actor_immunities = { 0x02ab, "iiiiii" };
+const SCRIPT_COMMAND kill_actor = { 0x0321, "i" };
 
 struct _ACTOR_PED_TYPE {
     char gap0[0x46c];
     unsigned long dwStateFlags;    // 0x46c
     char gap1[0xc0];               // 0x470 to 0x530
     unsigned long dwActionTrigger; // 0x530
-    char gap2[0x14];               // 0x534 to 0x548
+    char gap2[0xc];                // 0x534 to 0x540
+    float fHealth;                 // 0x540
+    char gap3[4];                  // 0x544
     float fArmour;                 // 0x548
+    char gap4[0x10];               // 0x54c to 0x55c
+    float fRotation2;              // 0x55c
 };
 
-class CActorPed {
+class CEntity {
 public:
+    virtual ~CEntity() {}
     char gap[0x3c];
     void* m_pEntity;              // 0x40
     unsigned long m_dwGTAId;      // 0x44
+};
+
+class CActorPed : public CEntity {
+public:
     _ACTOR_PED_TYPE* m_pPed;      // 0x48
+    unsigned long m_dwMarkerID;   // 0x4c
+    unsigned long m_dwArrow;      // 0x50
+    unsigned char m_byteCreateMarker; // 0x54
+    unsigned char m_byteImmune;   // 0x55
 
     virtual ~CActorPed();
     void Destroy();
+    void SetTargetRotation(float fRotation);
+    void SetHealth(float fHealth);
+    void ToggleImmunity(unsigned char byteEnable);
     unsigned char GetActionTrigger();
     unsigned long GetStateFlags();
     void SetArmour(float fArmour);
