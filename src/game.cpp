@@ -2,6 +2,11 @@
 // These functions must not be invoked in an ordinary host process.
 extern "C" void __cdecl Unprotect(void* address, unsigned long bytes);
 
+class LightweightDatabaseServer {
+public:
+    static int __cdecl DatabaseTableComp(char *const &key1, char *const &key2);
+};
+
 #pragma pack(push, 1)
 struct StrAndBool {
     char *str;
