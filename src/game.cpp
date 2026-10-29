@@ -1174,6 +1174,14 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+int ReplicaManager::RegisteredReplicaComp(Replica *const &key, const ReplicaManager::RegisteredReplica &data) {
+    if (key < data.replica)
+        return -1;
+    if (key == data.replica)
+        return 0;
+    return 1;
+}
+
 void SimpleMutex::Unlock(void)
 {
     LeaveCriticalSection(this);
