@@ -710,6 +710,7 @@ public:
 #pragma pack(pop)
 #endif
 
+// Copies camera matrix orientation and position to output parameter
 void CCamera::GetMatrix(_MATRIX4X4 *pMatrix)
 {
     pMatrix->right.X = m_matPos->right.X;
