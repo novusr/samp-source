@@ -1688,6 +1688,16 @@ void CGame::RefreshStreamingAt(float x, float y)
     ScriptCommand(&refresh_streaming_at, x, y);
 }
 
+void CGame::DisableRaceCheckpoint(void)
+{
+    if (m_dwRaceCheckpointHandle)
+    {
+        ScriptCommand(&destroy_racing_checkpoint, m_dwRaceCheckpointHandle);
+        m_dwRaceCheckpointHandle = 0;
+    }
+    m_bRaceCheckpointsEnabled = 0;
+}
+
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
 void CD3DArcBall::OnEnd() {
     m_bDrag = false;
