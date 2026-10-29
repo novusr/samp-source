@@ -1034,6 +1034,10 @@ void CD3DArcBall::Reset() {
     m_fRadius = 1.0f;
 }
 
+void CGame::LoadRequestedModels() {
+    ScriptCommand(&load_requested_models);
+}
+
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
 {
 	_MATRIX4X4	matThis;
