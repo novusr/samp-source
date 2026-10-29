@@ -935,7 +935,7 @@ unsigned int GetVehicleSubtypeFromVehiclePtr(_VEHICLE_TYPE *pVehicle)
 }
 
 
-// Matched ??0CMenu@@QAE@MMEMMPAUMENU_INT@@@Z (0x100a7420)
+// Constructor for CMenu: initializes items, headers, title buffers and column configuration.
 CMenu::CMenu(float fX, float fY, unsigned char byteColumns, float fCol1Width, float fCol2Width, MENU_INT *MenuInteraction)
 {
 	for (int i = 0; i < 12; i++)
@@ -1068,18 +1068,21 @@ void CGame::LoadCullZone(char *szLine)
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
+    register int dummy = 0;
+    typedef void (__cdecl *Func)(unsigned long*);
+    Func fn = (Func)0x563220;
+    fn(pEntity);
 }
 
+extern "C" void __cdecl func_563280(unsigned long*);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
-    typedef void (__cdecl *RemoveFn)(unsigned long*);
-    RemoveFn fn = (RemoveFn)0x563280;
-    fn(pEntity);
+    ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
 
 void CGame::LoadScene(char* szScene)
 {
-    ((void(__cdecl*)(const char*))0x5B8700)(szScene);
+    typedef void (__cdecl *fn_t)(void*);
+    ((fn_t)0x5B8700)((void*)szScene);
 }
 
 #pragma optimize("", on)
@@ -1110,7 +1113,18 @@ int CGame::IsModelLoaded(int iModelID)
 	return ScriptCommand(&is_model_available, iModelID);
 }
 
-#pragma optimize("", on)
+int ExecuteScriptBuf(void)
+{
+	bScmLocalDebug = 1;
+	*(unsigned long*)((char*)gst + 0x14) = (unsigned long)ScriptBuf;
+	typedef void (__fastcall *Proc)(GAME_SCRIPT_THREAD*);
+	((Proc)ProcessOneCommand)(gst);
+	int ret = *(int*)((char*)gst + 0xc5);
+	bScmLocalDebug = 0;
+	return ret;
+}
+
+#pragma optimize("y", off)
 void CEntity::SetClumpAlpha(int iAlpha)
 {
 	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
