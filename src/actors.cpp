@@ -35,12 +35,13 @@ ActorPool::ActorPool() {
     lastActive = 0;
 }
 
+// Recomputes lastActive as the highest occupied actor slot (0 when none).
 void ActorPool::UpdateCount() {
-    int last = 0;
-    for (int i = 0; i < 1000; ++i) {
-        if (slots[i]) last = i;
+    int lastUsed = 0;
+    for (int id = 0; id < 1000; ++id) {
+        if (slots[id]) lastUsed = id;
     }
-    lastActive = last;
+    lastActive = lastUsed;
 }
 
 unsigned short ActorPool::FindIDFromGtaPtr(int gtaId) {
@@ -179,16 +180,16 @@ void CActorPed::ToggleImmunity(unsigned char byteEnable) {
 
 #pragma optimize("y", off)
 void CActorPed::Destroy() {
-    volatile unsigned int dwPed = (unsigned int)m_pPed;
-    if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || *(unsigned long*)m_pPed == 0x863C40) {
+    volatile unsigned long dwPed = (unsigned long)m_pPed;
+    if (!m_pPed || !GamePool_Ped_GetAt(m_dwGTAId) || *(unsigned long*)m_pPed == 0x863c40) {
         m_pPed = 0;
         m_pEntity = 0;
         m_dwGTAId = 0;
         return;
     }
-    ((CGtaEntity*)(void*)dwPed)->Destroy(1);
-    m_pEntity = 0;
+    ((CGtaEntity*)dwPed)->Destroy(1);
     m_pPed = 0;
+    m_pEntity = 0;
 }
 #pragma optimize("", on)
 // Frees the actor in slot `id`: clears its slot flag, deletes the CActorPed,
