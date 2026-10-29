@@ -1,10 +1,12 @@
 // R5 layouts and loop bodies checked against frozen machine code.
 // Semantic leads: samp-reversed/saco/net/actorpool.cpp; see provenance.json.
 #pragma pack(push, 1)
+class CActorPed;
+
 class ActorPool {
 public:
     int lastActive;
-    void* actors[1000];
+    CActorPed* actors[1000];
     int slots[1000];
     int gtaIds[1000];
     ActorPool();
@@ -12,6 +14,11 @@ public:
     unsigned short FindIDFromGtaPtr(int gtaId);
     int Delete(unsigned short id); // external R5 dependency, not implemented
     void DeleteAll();
+};
+
+class CActorPool : public ActorPool {
+public:
+    int Delete(unsigned short id);
 };
 #pragma pack(pop)
 
