@@ -343,6 +343,7 @@ int Util_wildcmp(char* wild, char* string) {
     return !*wild;
 }
 
+// Case-insensitive string comparison up to n characters.
 int Util_strnicmp(const char* s1, const char* s2, unsigned int n) {
     if (n == 0) return 0;
 
@@ -474,15 +475,13 @@ CFirstPersonCamera::CFirstPersonCamera() :
 #pragma optimize("y", off)
 void CCamera::Attach(int unk1, int unk2, int unk3)
 {
-    struct CTarget {
-        void Target(int a, int b, int c, int d);
+    struct CAttachable {
+        void Method(int a, int b, int c, int d);
     };
-    union {
-        void* p;
-        void (CTarget::*f)(int, int, int, int);
-    } u = { (void*)0x50C7C0 };
-    CTarget* target = (CTarget*)0xB6F028;
-    (target->*u.f)(unk1, unk2, unk3, 1);
+    typedef void (CAttachable::*MethodPtr)(int, int, int, int);
+    MethodPtr pMethod;
+    *(int*)&pMethod = 0x50C7C0;
+    (((CAttachable*)0xB6F028)->*pMethod)(unk1, unk2, unk3, 1);
 }
 #pragma optimize("", on)
 void CCamera::SetBehindPlayer()
