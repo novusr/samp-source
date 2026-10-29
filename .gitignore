@@ -6,3 +6,5 @@ __pycache__/
 .DS_Store
 ghidra_export/
 .cache/
+.decomp-wtf/
+report.json

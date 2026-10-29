@@ -31,7 +31,7 @@ def find_toolchain(msvc_dir: Path):
     return bin_dir
 
 
-def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR):
+def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR, target_units=None):
     if not run or not all(c.isalnum() or c in "_-" for c in run):
         raise ValueError(f"Invalid run identifier: {run}")
 
@@ -44,6 +44,11 @@ def build_run(run: str, msvc_dir: Path = MSVC_DEFAULT_DIR):
         units = sorted({fn["unit"] for fn in manifest_data.get("functions", [])})
     else:
         units = ["pools", "actors", "camera", "game"]
+
+    if target_units:
+        units = [u for u in units if u in target_units]
+        if not units:
+            units = target_units
 
     out_dir = ROOT / "build" / run
     out_src_dir = out_dir / "src"
@@ -109,9 +114,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", default="baseline", help="Build run identifier (e.g. baseline, repeat)")
     parser.add_argument("--msvc-dir", default=str(MSVC_DEFAULT_DIR), help="Path to MSVC Toolkit 2003 directory")
-    args = parser.parse_args()
+    parser.add_argument("targets", nargs="*", help="Optional targets to build")
+    args, _ = parser.parse_known_args()
 
-    build_run(args.run, Path(args.msvc_dir))
+    target_units = [Path(t).stem for t in args.targets] if args.targets else None
+    build_run(args.run, Path(args.msvc_dir), target_units)
 
 
 if __name__ == "__main__":

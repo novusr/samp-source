@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
+  "custom_make": "python3",
+  "custom_args": ["tools/build_linux.py", "--run", "baseline"],
+  "build_base": true,
+  "build_target": false,
+  "watch_patterns": ["src/*.cpp", "src/**/*.h"],
+  "options": {
+    "functionRelocDiffs": "none",
+    "combineTextSections": true,
+    "combineDataSections": true
+  },
+  "units": [
+    {
+      "name": "actors",
+      "target_path": "build/target/actors.obj",
+      "base_path": "build/baseline/actors.obj",
+      "metadata": {
+        "source_path": "src/actors.cpp",
+        "complete": false
+      }
+    },
+    {
+      "name": "camera",
+      "target_path": "build/target/camera.obj",
+      "base_path": "build/baseline/camera.obj",
+      "metadata": {
+        "source_path": "src/camera.cpp",
+        "complete": false
+      }
+    },
+    {
+      "name": "game",
+      "target_path": "build/target/game.obj",
+      "base_path": "build/baseline/game.obj",
+      "metadata": {
+        "source_path": "src/game.cpp",
+        "complete": false
+      }
+    },
+    {
+      "name": "pools",
+      "target_path": "build/target/pools.obj",
+      "base_path": "build/baseline/pools.obj",
+      "metadata": {
+        "source_path": "src/pools.cpp",
+        "complete": false
+      }
+    }
+  ]
+}
