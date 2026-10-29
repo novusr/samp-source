@@ -1644,6 +1644,10 @@ void RPCObjectOpsView::InstantRotate(_VECTOR* angles) {
     m_vecRot.Z = angles->Z;
 }
 
+CPlayerPed::~CPlayerPed() {
+    Destroy();
+}
+
 void R5ChatPagingView::SetPageSize(int lines) {
     if (lines >= 10 && lines <= 100) {
         pageSize = lines;
