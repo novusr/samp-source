@@ -346,6 +346,26 @@ void RPCPedInteriorView::SetInterior(unsigned char id, int refresh) {
         ScriptCommand(&rpc_link_ped_interior, m_dwGTAId, id);
     }
 }
+
+#pragma optimize("y", on)
+int R5CustomPedLoadView::EnsurePedModelReady(int model) {
+    unsigned int index = 0;
+    while (index != count) {
+        R5CustomPedLoadEntryView* entry = GetAt(index);
+        if (entry->modelId == model && entry->type == 1) {
+            if (LoadPedModelFiles(entry->baseModel, entry->modelId, entry->dffChecksum, entry->txdChecksum)) {
+                entry->retry = 0;
+                entry->ready = 1;
+                return 1;
+            }
+            return 0;
+        }
+        index++;
+    }
+    return 0;
+}
+#pragma optimize("", on)
+
 #pragma optimize("", on)
 
 #pragma optimize("", on)
