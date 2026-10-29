@@ -307,15 +307,16 @@ CObject* CObjectPool::GetAt(unsigned short id) {
     return objects[id];
 }
 
+// Finds the slot whose CObject wraps pGtaEntity; 0xffff when it is not pooled.
 int CObjectPool::FindIDFromGtaPtr(_ENTITY_TYPE* pGtaEntity) {
-    int i = 1;
+    int id = 1;
     if (lastActive >= 1) {
         do {
-            CObject* pObj = objects[i];
+            CObject* pObj = objects[id];
             if (pObj && pGtaEntity == pObj->m_pEntity)
-                return i;
-            ++i;
-        } while (i <= lastActive);
+                return id;
+            ++id;
+        } while (id <= lastActive);
     }
     return 0xffff;
 }
