@@ -766,12 +766,14 @@ void CCmdWindow::RecallDown() {
     }
 }
 
+// Step back to the previous command in the recall history, saving the
+// text currently typed in the edit control before leaving it.
 void CCmdWindow::RecallUp() {
     if (m_iCurrentRecallAt >= (m_iTotalRecalls - 1)) return;
 
     if (m_iCurrentRecallAt == -1) {
-        strncpy(m_szCurBuffer, m_pEditControl->GetTextA(), 128);
-        m_szCurBuffer[128] = '\0';
+        strncpy(m_szCurBuffer, m_pEditControl->GetTextA(), MAX_CMD_INPUT);
+        m_szCurBuffer[MAX_CMD_INPUT] = '\0';
     }
 
     m_iCurrentRecallAt++;
@@ -1076,19 +1078,20 @@ void CGame::LoadCullZone(char *szLine)
 #pragma optimize("sy", off)
 #pragma optimize("s", on)
 void __stdcall WorldAddEntity(unsigned long *pEntity) {
-    reinterpret_cast<void (__cdecl *)(unsigned long *)>(0x563220)(pEntity);
+    ((void (__cdecl *)(unsigned long*))0x563220)(pEntity);
 }
-
+#pragma optimize("", on)
 extern "C" void __cdecl func_563280(unsigned long*);
 #pragma optimize("s", on)
 void __stdcall WorldRemoveEntity(unsigned long *pEntity) {
     ((void (__cdecl *)(unsigned long*))0x563280)(pEntity);
 }
+#pragma optimize("s", on)
 #pragma optimize("y", off)
 void CGame::LoadScene(char* szScene)
 {
-    void (* const pfn)(char*) = (void (*)(char*))0x5B8700;
-    pfn(szScene);
+    typedef void (__cdecl *Func)(char*);
+    ((Func)0x5b8700)(szScene);
 }
 #pragma optimize("", on)
 void CGame::RequestModel(int iModelID, int iLoadingStream)
@@ -1110,12 +1113,13 @@ struct CPedIntelligence;
 int FlushPedIntelligence(void)
 {
     unsigned long ped = dwActorPed;
+    struct CPedInt { void Flush(int); };
     union {
-        void (CPedIntelligence::*fn)(int);
+        void (CPedInt::*fn)(int);
         void* addr;
     } u;
     u.addr = (void*)0x601640;
-    (((CPedIntelligence*)*(unsigned long*)(ped + 0x47c))->*u.fn)(1);
+    (((CPedInt*)*(unsigned long*)(ped + 0x47c))->*u.fn)(1);
     return 1;
 }
 
@@ -1134,8 +1138,7 @@ int CGame::IsModelLoaded(int iModelID)
 int ExecuteScriptBuf(void)
 {
 	bScmLocalDebug = 1;
-	volatile void* p = ScriptBuf;
-	*(void**)((char*)gst + 0x14) = (void*)p;
+	*(unsigned long*)((char*)gst + 0x14) = (unsigned long)(void*)ScriptBuf;
 	typedef void (__fastcall *Proc)(GAME_SCRIPT_THREAD*);
 	((Proc)ProcessOneCommand)(gst);
 	int ret = *(int*)((char*)gst + 0xc5);
@@ -1151,7 +1154,7 @@ void CEntity::SetClumpAlpha(int iAlpha)
 
 	volatile unsigned long dwEntity = (unsigned long)m_pEntity;
 	typedef void (__cdecl *Func)(void*, int);
-	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
+	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, (int)iAlpha);
 }
 #pragma optimize("", on)
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
