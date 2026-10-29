@@ -177,3 +177,29 @@ void CActorPed::ToggleImmunity(unsigned char byteEnable) {
         ScriptCommand(&set_actor_immunities, m_dwGTAId, 0, 0, 0, 1, 0);
 }
 
+#pragma optimize("y", off)
+void CActorPed::Destroy() {
+    unsigned long dwPed = (unsigned long)m_pPed;
+    if (m_pPed && GamePool_Ped_GetAt(m_dwGTAId) && *(unsigned long*)m_pPed != 0x863c40) {
+        ((CGtaEntity*)dwPed)->Destroy(1);
+        m_pPed = 0;
+        m_pEntity = 0;
+        return;
+    }
+    m_dwGTAId = 0;
+    m_pPed = 0;
+    m_pEntity = 0;
+}
+
+#pragma optimize("y", on)
+int CActorPool::Delete(unsigned short id) {
+    if (id < 1000 && slots[id] && actors[id]) {
+        slots[id] = 0;
+        delete actors[id];
+        actors[id] = 0;
+        gtaIds[id] = 0;
+        UpdateCount();
+        return 1;
+    }
+    return 0;
+}
