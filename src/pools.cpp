@@ -140,7 +140,18 @@ int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 extern "C" const SCRIPT_COMMAND get_actor_armed_weapon;
 extern "C" const SCRIPT_COMMAND disable_marker;
 extern "C" const SCRIPT_COMMAND set_actor_immunities;
+const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
+void __stdcall GameStoreLocalPlayerWeaponSkills();
+void __stdcall GameSetRemotePlayerWeaponSkills(int iPlayer);
+void __stdcall GameSetLocalPlayerWeaponSkills();
 unsigned long __stdcall GamePool_Vehicle_GetIndex(_VEHICLE_TYPE *pVehicle);
+
+class CVehicle;
+class __single_inheritance CGtaPedWeapon {
+public:
+    void SetArmedWeapon(int iWeaponType);
+    void ClearWeapon(int unk);
+};
 
 class LocalPlayerRPCResetView {
 public:
