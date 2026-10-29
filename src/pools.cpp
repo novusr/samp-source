@@ -108,13 +108,55 @@ unsigned long __stdcall TranslateColorCodeToRGBA(int iCode);
 float DegToRad(float fDegrees);
 extern unsigned char* pbyteCurrentPlayer;
 
+class CPlayerPed;
+
+#pragma pack(push, 1)
 class CRemotePlayer {
 public:
-    char gap[0x1e5];
+    int field_0;
+    int field_4;
+    int field_8;
+    char field_C;
+    char _gapD[12];
+    char field_19[63];
+    char _gap58[54];
+    char field_8E[31];
+    char field_AD[24];
+    char field_C5[68];
+    char field_109;
+    char field_10A;
+    char field_10B;
+    int field_10C;
+    int field_110;
+    char _gap114[152];
+    int field_1AC;
+    int field_1B0;
+    int field_1B4;
+    char field_1B8;
+    unsigned long field_1B9;
+    unsigned long field_1BD;
+    int field_1C1;
+    int field_1C5;
+    char field_1C9[12];
+    unsigned long field_1D5;
+    unsigned long field_1D9;
+    CPlayerPed* m_pPlayerPed;
+    int field_1E1;
     unsigned short m_PlayerID;
+    short field_1E7;
+    int field_1E9;
+    int field_1ED;
+    int field_1F1;
+    int field_1F5;
+    int field_1F9;
+
+    CRemotePlayer();
+    ~CRemotePlayer();
+    void ResetAllSyncAttributes();
     void SetPlayerColor(unsigned long color);
     unsigned long GetPlayerColorAsARGB();
 };
+#pragma pack(pop)
 
 struct InternalPacket;
 namespace DataStructures {
@@ -1353,8 +1395,7 @@ void CPlayerPed::DestroyFollowPedTask()
     typedef void (CJetpackTask::*DestroyFn)(int);
     union { void* p; DestroyFn fn; } u;
     u.p = (void*)0x639330;
-    DestroyFn fn = u.fn;
-    (((CJetpackTask*)*p)->*fn)(1);
+    (((CJetpackTask*)*p)->*(u.fn))(1);
 
     m_pPed->Tasks->pdwIK = 0;
 }
