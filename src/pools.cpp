@@ -224,7 +224,32 @@ public:
     void SetArmedWeapon(int iWeaponType, bool bUnk);
     void RemoveWeaponWhenEnteringVehicle();
     float GetDistanceFromVehicle(CVehicle* pVehicle);
+    void RemoveFromVehicleAndPutAt(float fX, float fY, float fZ);
+    void HandsUp();
+    int HasHandsUp();
+    int IsAdded();
 
+};
+
+struct IDirect3DStateBlock9 {
+    virtual void Dummy0();
+    virtual void Dummy1();
+    virtual void Dummy2();
+    virtual void Dummy3();
+    virtual void Dummy4();
+    virtual long __stdcall Apply();
+};
+
+class CPlayerTags {
+public:
+    void* m_pDevice;
+    void* m_pTexture;
+    void* m_pVB;
+    IDirect3DStateBlock9* m_pOldStates;
+    IDirect3DStateBlock9* m_pNewStates;
+
+    void RestoreDeviceObjects();
+    void End();
 };
 
 #pragma pack(push, 1)
