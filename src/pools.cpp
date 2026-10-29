@@ -153,13 +153,21 @@ extern "C" const SCRIPT_COMMAND disable_marker;
 extern "C" const SCRIPT_COMMAND set_actor_immunities;
 extern "C" const SCRIPT_COMMAND remove_actor_from_car_and_put_at;
 extern "C" const SCRIPT_COMMAND actor_task_handsup;
+extern "C" const SCRIPT_COMMAND toggle_actor_cellphone;
 const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
+extern char DanceStyleLibs[4][16];
+extern char DanceIdleLoops[4][16];
 void __stdcall GameStoreLocalPlayerWeaponSkills();
 void __stdcall GameSetRemotePlayerWeaponSkills(int iPlayer);
 void __stdcall GameSetLocalPlayerWeaponSkills();
 unsigned long __stdcall GamePool_Vehicle_GetIndex(_VEHICLE_TYPE *pVehicle);
 
+struct _VECTOR;
 class CVehicle;
+class __single_inheritance CCommandTaskManager {
+public:
+    void Apply(char* szTaskName, unsigned long dwPed, int p1, int p2, int p3, _VECTOR* p4, int p5, float p6, int p7, int p8, int p9);
+};
 class __single_inheritance CGtaPedWeapon {
 public:
     void SetArmedWeapon(int iWeaponType);
@@ -945,7 +953,7 @@ void CPlayerPed::SetArmedWeapon(int iWeaponType, bool bUnk) {
     if ((!m_pPed || !(m_pPed->dwStateFlags & 0x100)) && !bUnk) {
         ScriptCommand(&set_actor_armed_weapon, m_dwGTAId, iWeaponType);
     } else {
-        void* dwPedPtr = m_pPed;
+        PED_TYPE* dwPedPtr = m_pPed;
         if (dwPedPtr) {
             typedef void (CGtaPedWeapon::*SetArmedFn)(int);
             union { void* p; SetArmedFn fn; } u;
@@ -1048,6 +1056,29 @@ int CPlayerPed::IsSwimming() {
     }
     return 0;
 }
+
+void CPlayerPed::StartJetpack() {
+    if (!m_pPed) return;
+    *pbyteCurrentPlayer = m_bytePlayerNumber;
+    TeleportTo(m_pPed->entity.mat->pos.X, m_pPed->entity.mat->pos.Y, m_pPed->entity.mat->pos.Z);
+    typedef void (__cdecl *Func)();
+    ((Func)0x439600)();
+    *pbyteCurrentPlayer = 0;
+}
+
+void CPlayerPed::StopJetpack() {
+    if (m_pPed && !(m_pPed->dwStateFlags & 0x100)) {
+        if (m_pPed->Tasks->pdwJumpJetPack && *m_pPed->Tasks->pdwJumpJetPack == 0x8705C4) {
+            volatile unsigned long dwJetPackTask = (unsigned long)m_pPed->Tasks->pdwJumpJetPack;
+            typedef void (CJetpackTask::*DestroyFn)(int);
+            union { void* p; DestroyFn fn; } u;
+            u.p = (void*)0x6801D0;
+            (((CJetpackTask*)dwJetPackTask)->*u.fn)(1);
+            m_pPed->Tasks->pdwJumpJetPack = 0;
+        }
+    }
+}
+#pragma optimize("", on)
 
 void CPlayerTags::End() {
     if (!m_pOldStates) {
