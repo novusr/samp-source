@@ -915,7 +915,7 @@ void CPlayerPed::ClearAllWeapons()
     *pbyteCurrentPlayer = 0;
 }
 
-#pragma optimize("y", off)
+#pragma optimize("", off)
 void CPlayerPed::RemoveWeaponWhenEnteringVehicle() {
     void* dwPedPtr = m_pPed;
     if (dwPedPtr) {
@@ -965,6 +965,24 @@ int CPlayerPed::HasHandsUp() {
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return 0;
     if (m_pPed->Tasks->pdwJumpJetPack == 0) return 0;
     return m_pPed->Tasks->pdwJumpJetPack[0] == 0x85a29c;
+}
+
+void CPlayerPed::HoldItem(int iObject)
+{
+}
+
+int CPlayerPed::IsJumping(void)
+{
+    if (m_pPed && !(m_pPed->dwStateFlags & 0x100))
+    {
+        void* pTaskManager = *(void**)((char*)m_pPed + 0x47c);
+        unsigned long* pTask = *(unsigned long**)((char*)pTaskManager + 0x10);
+        if (pTask)
+        {
+            return GetTaskTypeFromTask(pTask) == 211;
+        }
+    }
+    return 0;
 }
 
 void CPlayerTags::End() {
