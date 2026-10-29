@@ -516,6 +516,7 @@ void BitStream::Write1() {
 
 // Matched ?GetMatrix@CCamera@@QAEXPAU_MATRIX4X4@@@Z (0x1009d460)
 #ifndef _CAMERA_DEFS_
+#define _CAMERA_DEFS_
 struct _MATRIX4X4 {
     _VECTOR right;
     unsigned long flags;
