@@ -726,6 +726,11 @@ void CPlayerPed::ResetPointers(void)
     m_pEntity = (_ENTITY_TYPE*)m_pPed;
 }
 
+void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
+    field_2DA = first;
+    field_2DE = second;
+}
+
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
 CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
 
