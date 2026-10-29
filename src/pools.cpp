@@ -1361,9 +1361,14 @@ void CPlayerTags::End() {
     m_pOldStates->Apply();
 }
 
+#pragma optimize("y", on)
 void CNewPlayerTags::End() {
+    if (m_pSprite)
+        m_pSprite->End();
+    if (m_pStates)
+        m_pStates->Apply();
 }
-
+#pragma optimize("", on)
 int R5LabelRemotePlayerView::IsActive() {
     if (ped && state) return 1;
     return 0;
