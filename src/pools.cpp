@@ -283,6 +283,7 @@ public:
     char* GetShopName();
     _VECTOR* GetBonePosition(int iBone, _VECTOR* pVec);
     _VECTOR* GetTransformedBonePosition(int iBone, _VECTOR* pVec);
+    void SetWeaponModelIndex(int iWeapon);
 };
 int __cdecl GetTaskTypeFromTask(unsigned long *task);
 
@@ -1154,12 +1155,13 @@ void CPlayerPed::StopJetpack() {
             typedef void (CJetpackTask::*DestroyFn)(int);
             union { void* p; DestroyFn fn; } u;
             u.p = (void*)0x6801D0;
-            (((CJetpackTask*)dwJetPackTask)->*u.fn)(1);
+            int flag = 1;
+            (((CJetpackTask*)dwJetPackTask)->*u.fn)(flag);
             m_pPed->Tasks->pdwJumpJetPack = 0;
         }
     }
 }
-#pragma optimize("y", on)
+#pragma optimize("", on)
 void CPlayerPed::SetMoney(int iAmount) {
     ScriptCommand(&set_actor_money, m_dwGTAId, 0);
     ScriptCommand(&set_actor_money, m_dwGTAId, iAmount);
