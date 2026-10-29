@@ -228,8 +228,11 @@ public:
     void HandsUp();
     int HasHandsUp();
     int IsAdded();
-
+    void HoldItem(int iObject);
+    int IsJumping();
+    int IsFalling();
 };
+int __cdecl GetTaskTypeFromTask(unsigned long *task);
 
 struct IDirect3DStateBlock9 {
     virtual void Dummy0();
