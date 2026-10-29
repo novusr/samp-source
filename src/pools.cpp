@@ -900,6 +900,7 @@ public:
     int m_bLabelSlotState[2048];
 
     int Delete(unsigned short wLabelID);
+    ~CLabelPool();
 };
 
 struct Pools {
