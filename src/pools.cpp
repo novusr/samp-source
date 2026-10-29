@@ -237,6 +237,8 @@ int CPlayerPed::HasGoggles() {
     return 0;
 }
 
+// A player is a passenger when sitting in a vehicle whose driver is not
+// this ped, except in the two models that always count as passenger seats.
 int CPlayerPed::IsAPassenger() {
     PED_TYPE* pPed = m_pPed;
     _VEHICLE_TYPE* pVehicle = pPed->pVehicle;
