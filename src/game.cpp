@@ -319,9 +319,14 @@ extern unsigned char ScriptBuf[255];
 extern void* ProcessOneCommand;
 void* __cdecl operator new(unsigned int);
 
+#pragma pack(push, 1)
 class CGame {
 public:
-    char pad0[0x5D];
+    char pad0[0x29];
+    int m_bRaceCheckpointsEnabled; // 0x29
+    int m_dwRaceCheckpointMarker;  // 0x2D
+    unsigned long m_dwRaceCheckpointHandle; // 0x31
+    char pad1[0x5D - 0x35];
     unsigned long field_5D;
     int field_61;
     int field_65;
