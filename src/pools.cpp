@@ -791,6 +791,7 @@ public:
 class CLocalPlayer {
 public:
     void SetPlayerColor(unsigned long color);
+    unsigned long GetPlayerColorAsARGB();
 };
 
 // Matched ?GetVehiclePool@CNetGame@@QAEPAVCVehiclePool@@XZ (0x10001180)
