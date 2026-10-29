@@ -720,6 +720,12 @@ void InternalPacketPool::ReleasePointer(InternalPacket *p) {
     }
 }
 
+void CPlayerPed::ResetPointers(void)
+{
+    m_pPed = GamePool_Ped_GetAt(m_dwGTAId);
+    m_pEntity = (_ENTITY_TYPE*)m_pPed;
+}
+
 // Matched ?GetLabelPool@CNetGame@@QAEPAVCLabelPool@@XZ (0x1000e550)
 CLabelPool* CNetGame::GetLabelPool() { return m_pPools->m_pLabel; }
 
