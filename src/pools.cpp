@@ -730,6 +730,20 @@ void CPlayerPed::SetInitialState(void)
 {
 }
 
+unsigned char CPlayerPed::GetSpecialKey(void)
+{
+    GTA_CONTROLSET *pInternalKeys = GameGetInternalKeys();
+
+    if (pInternalKeys->wKeys1[11])
+        return 1;
+    else if (pInternalKeys->wKeys1[10])
+        return 2;
+    else if (pInternalKeys->wKeys1[9])
+        return 3;
+
+    return 0;
+}
+
 int CPlayerPed::GetCurrentVehicleID() {
     if (!m_pPed) return 0;
     return GamePool_Vehicle_GetIndex(m_pPed->pVehicle);
