@@ -357,6 +357,7 @@ int Util_strnicmp(const char* s1, const char* s2, unsigned int n) {
     return 0;
 }
 
+// Converts an integer value to a null-terminated string using the specified radix
 char* Util_itoa(int v, char* s, int r) {
     int i, neg = 0;
     char* p = s;
