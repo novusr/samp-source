@@ -437,6 +437,8 @@ struct D3DXMATRIX {
     float m[4][4];
 };
 
+extern "C" D3DXMATRIX* __stdcall D3DXMatrixPerspectiveFovLH(D3DXMATRIX *pOut, float fovy, float Aspect, float zn, float zf);
+
 struct POINT {
     long x, y;
 };
