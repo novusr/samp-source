@@ -281,6 +281,10 @@ public:
     void SetAimZ(float fAimZ);
     void SetAmmo(unsigned char byteWeapon, unsigned short wAmmo);
     char* GetShopName();
+    void SetFightingStyle(int iStyle);
+    void DestroyFollowPedTask();
+    void ProcessVehicleHorn();
+    void LoadShoppingDataSubsection(char* szSectionName);
     _VECTOR* GetBonePosition(int iBone, _VECTOR* pVec);
     _VECTOR* GetTransformedBonePosition(int iBone, _VECTOR* pVec);
     void SetWeaponModelIndex(int iWeapon);
