@@ -1202,6 +1202,11 @@ long __stdcall CUniBuffer::Dummy_ScriptStringCPtoX(void *p1, int p2, int p3, int
     return 0x80004001;
 }
 
+long __stdcall CUniBuffer::Dummy_ScriptStringXtoCP(void *p1, int p2, int *p3, int *p4)
+{
+    return 0x80004001;
+}
+
 extern "C" __declspec(dllimport) int __stdcall MultiByteToWideChar(unsigned int, unsigned long, const char *, int, unsigned short *, int);
 extern "C" void * __cdecl memset(void *, int, unsigned int);
 extern "C" unsigned int __cdecl strlen(const char *);
