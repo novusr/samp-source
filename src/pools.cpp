@@ -261,6 +261,8 @@ _WEAPON_SLOT_TYPE* CPlayerPed::FindWeaponSlot(unsigned long dwWeapon) {
     return 0;
 }
 
+// True when the ped is alive/valid, not flagged in state 0x100, and its
+// primary task is the jetpack task (vtable 0x8705C4).
 int CPlayerPed::IsInJetpackMode() {
     if (m_pPed && !(m_pPed->dwStateFlags & 0x100)) {
         void* pTaskManager = *(void**)((char*)m_pPed + 0x47c);
