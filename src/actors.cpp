@@ -62,6 +62,9 @@ void ActorPool::DeleteAll() {
     } while ((unsigned short)i < 1000);
 }
 
+struct _PED_TYPE;
+_PED_TYPE* __stdcall GamePool_Ped_GetAt(int nPedIndex);
+
 struct _ACTOR_PED_TYPE {
     char gap0[0x46c];
     unsigned long dwStateFlags;    // 0x46c
@@ -73,9 +76,13 @@ struct _ACTOR_PED_TYPE {
 
 class CActorPed {
 public:
-    char gap[0x48];
-    _ACTOR_PED_TYPE* m_pPed;       // 0x48
+    char gap[0x3c];
+    void* m_pEntity;              // 0x40
+    unsigned long m_dwGTAId;      // 0x44
+    _ACTOR_PED_TYPE* m_pPed;      // 0x48
 
+    virtual ~CActorPed();
+    void Destroy();
     unsigned char GetActionTrigger();
     unsigned long GetStateFlags();
     void SetArmour(float fArmour);
