@@ -80,13 +80,32 @@ public:
     RakPeerInterface* rakPeer;
 };
 
+typedef long time_t;
+struct tm;
+struct FILE;
+extern "C" {
+time_t __cdecl time(time_t*);
+struct tm* __cdecl localtime(const time_t*);
+unsigned int __cdecl strftime(char*, unsigned int, const char*, const struct tm*);
+FILE* __cdecl fopen(const char*, const char*);
+int __cdecl fprintf(FILE*, const char*, ...);
+int __cdecl fclose(FILE*);
+}
+
 #pragma pack(push, 1)
 class CChatWindow {
 public:
-    char pad[0x12a];
+    int field_0;
+    char _gap4[4];
+    int field_8;
+    char field_C;
+    int field_D;
+    char field_11[261];
+    char pad[0x14];
     unsigned long m_dwChatDebugColor;
     void AddEntry(int type, char* text, char* prefix, unsigned long textColor, unsigned long prefixColor);
     void AddDebugMessage(char* szFormat, ...);
+    void Log(int type, char* text, char* prefix);
 };
 #pragma pack(pop)
 
