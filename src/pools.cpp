@@ -500,6 +500,8 @@ public:
     void Enable(unsigned long color);
 };
 
+// Removes the selection highlight from every text draw in the pool
+// (2048 global + 256 player text draws = 2304 slots).
 void R5TextDrawSelectorView::ClearAll() {
     if (pNetGame) {
         R5TextDrawSelectionPoolView* pool = ((R5TextDrawSelectionNetView*)pNetGame)->pools->textdrawPool;
