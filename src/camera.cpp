@@ -759,6 +759,19 @@ void RakNet::BitStream::WriteBits(const unsigned char *input, int numberOfBitsTo
     }
 }
 
+void RakNet::BitStream::Write(const char* input, int numberOfBytes) {
+    if (numberOfBytes == 0 || input == 0)
+        return;
+
+    if ((numberOfBitsUsed & 7) == 0) {
+        AddBitsAndReallocate(numberOfBytes << 3);
+        memcpy(data + ((numberOfBitsUsed + 7) >> 3), input, numberOfBytes);
+        numberOfBitsUsed += numberOfBytes << 3;
+    } else {
+        WriteBits((const unsigned char*)input, numberOfBytes * 8, true);
+    }
+}
+
 void RakNet::BitStream::ResetReadPointer() {
     readOffset = 0;
 }
