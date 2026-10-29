@@ -195,6 +195,9 @@ struct SCRIPT_COMMAND {
 };
 int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
 extern "C" const SCRIPT_COMMAND load_requested_models;
+extern "C" const SCRIPT_COMMAND request_model;
+extern "C" const SCRIPT_COMMAND request_animation;
+extern "C" const SCRIPT_COMMAND is_animation_loaded;
 void __stdcall WorldAddEntity(unsigned long *pEntity);
 void __stdcall WorldRemoveEntity(unsigned long *pEntity);
 
@@ -1036,6 +1039,20 @@ void CD3DArcBall::Reset() {
 
 void CGame::LoadRequestedModels() {
     ScriptCommand(&load_requested_models);
+}
+
+void __stdcall WorldAddEntity(unsigned long *pEntity) {
+    ((void (__cdecl *)(unsigned long *))0x563220)(pEntity);
+}
+
+void CEntity::SetClumpAlpha(int iAlpha)
+{
+	if (!m_pEntity || !m_pEntity->pRwObject || *(void**)m_pEntity == (void*)0x863C40)
+		return;
+
+	unsigned long dwEntity = (unsigned long)m_pEntity;
+	typedef void (__cdecl *Func)(void*, int);
+	((Func)0x732B00)(((ENTITY_TYPE*)dwEntity)->pRwObject, iAlpha);
 }
 
 float CEntity::GetDistanceFromPoint(float X, float Y, float Z)
