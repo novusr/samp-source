@@ -1361,6 +1361,22 @@ void CChatWindow::AddDebugMessage(char *szFormat, ...) {
     AddEntry(8, buffer, 0, m_dwChatDebugColor, 0);
 }
 
+int CEntity::HasExceededWorldBoundries(float fPX, float fZX, float fPY, float fNY) {
+    _MATRIX4X4 matWorld;
+    if (!m_pEntity) return 0;
+    GetMatrix(&matWorld);
+    if (matWorld.pos.X > fPX) {
+        return 1;
+    } else if (matWorld.pos.X < fZX) {
+        return 1;
+    } else if (matWorld.pos.Y > fPY) {
+        return 1;
+    } else if (matWorld.pos.Y < fNY) {
+        return 1;
+    }
+    return 0;
+}
+
 #pragma optimize("y", off)
 void CEntity::DeleteRwObject()
 {
