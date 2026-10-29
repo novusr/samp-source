@@ -289,6 +289,30 @@ public:
     void End();
 };
 
+struct ID3DXSprite {
+    virtual void Dummy0();
+    virtual void Dummy1();
+    virtual void Dummy2();
+    virtual void Dummy3();
+    virtual void Dummy4();
+    virtual void Dummy5();
+    virtual void Dummy6();
+    virtual void Dummy7();
+    virtual void Dummy8();
+    virtual void Dummy9();
+    virtual void Dummy10();
+    virtual long __stdcall End();
+};
+
+class CNewPlayerTags {
+public:
+    void* m_pDevice;
+    IDirect3DStateBlock9* m_pStates;
+    ID3DXSprite* m_pSprite;
+
+    void End();
+};
+
 #pragma pack(push, 1)
 class R5LabelRemotePlayerView {
 public:
@@ -1087,9 +1111,8 @@ void CPlayerPed::StartJetpack() {
     if (!m_pPed) return;
     *pbyteCurrentPlayer = m_bytePlayerNumber;
     TeleportTo(m_pPed->entity.mat->pos.X, m_pPed->entity.mat->pos.Y, m_pPed->entity.mat->pos.Z);
-    typedef void (__cdecl *Func)();
-    Func fn = (Func)0x439600;
-    fn();
+    typedef void (__stdcall *Func)();
+    ((Func)0x439600)();
     *pbyteCurrentPlayer = 0;
 }
 
