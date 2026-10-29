@@ -588,6 +588,17 @@ void CCamera::FUNC_1009D660(CEntity *pEntity) {
     }
 }
 
+void CCamera::FUNC_1009D6B0()
+{
+    if (!m_pEntity || !m_pEntity->m_pEntity) return;
+
+    _MATRIX4X4 mat;
+    m_pEntity->GetMatrix(&mat);
+    if (FUNC_100B4B50(&mat.pos)) {
+        InterpolatePosition(&mat.pos, &mat.pos, 100, 1);
+    }
+}
+
 int RakNet::BitStream::CopyData(unsigned char** _data) const {
     *_data = new unsigned char[(numberOfBitsUsed + 7) >> 3];
     memcpy(*_data, data, (numberOfBitsUsed + 7) >> 3);
