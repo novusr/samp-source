@@ -426,6 +426,7 @@ public:
     void UpdateLargestID();
 };
 
+// Find the highest occupied slot so later scans can stop there.
 void RPCDeleteObjectPoolView::UpdateLargestID() {
     int last = 0;
     for (int i = 0; i < 1000; ++i) {
