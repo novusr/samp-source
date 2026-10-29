@@ -171,6 +171,9 @@ extern "C" size_t __cdecl strlen(const char*);
 #pragma intrinsic(strlen)
 extern "C" int __cdecl _isnan(double);
 const SCRIPT_COMMAND set_actor_armed_weapon = { 0x01b9, "ii" };
+const SCRIPT_COMMAND rpc_set_object_rotation = { 0x0453, "ifff" };
+const SCRIPT_COMMAND rpc_ped_carry_object = { 0x070a, "iifffiissi" };
+_ENTITY_TYPE* __stdcall GamePool_Object_GetAt(int iID);
 extern char DanceStyleLibs[4][16];
 extern char DanceIdleLoops[4][16];
 void __stdcall GameStoreLocalPlayerWeaponSkills();
