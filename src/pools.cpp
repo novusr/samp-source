@@ -760,10 +760,8 @@ int CPlayerPed::GetCurrentVehicleID() {
 }
 
 void CPlayerPed::HideMarker() {
-    if (m_dwArrow) {
-        ScriptCommand(&disable_marker, m_dwArrow);
-        m_dwArrow = 0;
-    }
+    if (m_dwArrow) ScriptCommand(&disable_marker, m_dwArrow);
+    m_dwArrow = 0;
 }
 
 void CPlayerPed::SetImmunities(int bBullet, int bFire, int bExplosion, int bDamage, int bUnknown) {
