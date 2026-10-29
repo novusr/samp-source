@@ -67,8 +67,28 @@ extern "C" {
 void* __cdecl memset(void*, int, unsigned int);
 void* __cdecl memcpy(void*, const void*, unsigned int);
 double __cdecl sqrt(double);
+int __cdecl vsprintf(char*, const char*, ...);
 }
 #pragma intrinsic(memset, memcpy, sqrt)
+
+float DegToRad(float fDegrees);
+
+class RakPeerInterface;
+class PacketLogger {
+public:
+    virtual void OnAttach(RakPeerInterface* peer);
+    RakPeerInterface* rakPeer;
+};
+
+#pragma pack(push, 1)
+class CChatWindow {
+public:
+    char pad[0x12a];
+    unsigned long m_dwChatDebugColor;
+    void AddEntry(int type, char* text, char* prefix, unsigned long textColor, unsigned long prefixColor);
+    void AddDebugMessage(char* szFormat, ...);
+};
+#pragma pack(pop)
 
 #pragma pack(push, 1)
 struct MENU_INT {
