@@ -1350,6 +1350,17 @@ float CEntity::GetDistanceFromCamera()
 CEntity::~CEntity() {
 }
 
+void CChatWindow::AddDebugMessage(char *szFormat, ...) {
+    __declspec(align(8)) char buffer[512];
+    memset(buffer, 0, sizeof(buffer));
+    char* args = (char*)&szFormat + sizeof(szFormat);
+    vsprintf(buffer, szFormat, args);
+    for (char *p = buffer; *p; ++p) {
+        if (*p > 0 && *p < 32) *p = ' ';
+    }
+    AddEntry(8, buffer, 0, m_dwChatDebugColor, 0);
+}
+
 #pragma optimize("y", off)
 void CEntity::DeleteRwObject()
 {
