@@ -87,7 +87,9 @@ public:
     int m_bObjectSlotUsed[10];      // 0x4c
     char gap_ped[0x230];            // 0x74 to 0x2a4
     PED_TYPE *m_pPed;               // 0x2a4
-    char gap_dance[0x2a];           // 0x2a8 to 0x2d2
+    char gap_dance[8];              // 0x2a8 to 0x2b0
+    unsigned char m_bytePlayerNumber;// 0x2b0
+    char gap_dance2[0x21];          // 0x2b1 to 0x2d2
     int m_iDanceState;              // 0x2d2
     char gap_thermal[0x10];         // 0x2d6 to 0x2e6
     int m_bHasThermalGoggles;       // 0x2e6
