@@ -700,6 +700,7 @@ unsigned SHA1::CircularShift(int bits, unsigned word)
 	return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32-bits));
 }
 
+// Process one 512-bit message block according to SHA-1 standard.
 void SHA1::ProcessMessageBlock()
 {
 	const unsigned K[] =	{
