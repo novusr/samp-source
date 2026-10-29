@@ -887,6 +887,7 @@ public:
     int m_iTimer[4096];
     R5_DROPPED_WEAPON m_droppedWeapon[4096];
 
+    ~CPickupPool();
     void Destroy(int iPickup);
     void DestroyDropped(unsigned short fromPlayer);
 };
