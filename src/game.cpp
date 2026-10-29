@@ -1468,7 +1468,7 @@ float DegToRad(float fDegrees) {
 #pragma optimize("y", off)
 void CEntity::TeleportTo(float x, float y, float z)
 {
-    unsigned long dwThisEntity = (unsigned long)m_pEntity;
+    volatile unsigned long dwThisEntity = (unsigned long)m_pEntity;
     if (dwThisEntity && *(unsigned long*)m_pEntity != 0x863C40) {
         if (m_pEntity->nModelIndex != TRAIN_PASSENGER_LOCO &&
             m_pEntity->nModelIndex != TRAIN_FREIGHT_LOCO &&
@@ -1551,6 +1551,17 @@ float __cdecl NormalizeAngle(float fAngle)
 int __cdecl IsFileOrDirectoryExists(char *szPath) {
     struct _stat32 buf;
     return _stat(szPath, &buf) == 0;
+}
+
+void __cdecl RemoveColorEmbedsFromString(char *szString) {
+    while (*szString) {
+        if (GetColorFromEmbedCode(szString) != 0xFFFFFFFF) {
+            strcpy(szString, szString + 8);
+            continue;
+        }
+        szString++;
+    }
+    *szString = 0;
 }
 
 // Matched ?OnEnd@CD3DArcBall@@QAEXXZ (0x10093bf0)
