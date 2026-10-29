@@ -393,7 +393,8 @@ struct _MATRIX4X4 {
 };
 
 extern "C" double __cdecl sqrt(double);
-#pragma intrinsic(sqrt)
+extern "C" double __cdecl atan2(double, double);
+#pragma intrinsic(sqrt, atan2)
 
 class RPCObjectOpsView {
 public:
