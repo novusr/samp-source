@@ -731,7 +731,14 @@ public:
 };
 
 class CVehiclePool;
-class CPlayerPool;
+#pragma pack(push, 1)
+class CPlayerPool {
+public:
+    char gap[4];
+    unsigned short m_LocalPlayerID;
+    unsigned short GetLocalPlayerID() { return m_LocalPlayerID; }
+};
+#pragma pack(pop)
 class CPickupPool;
 class CActorPool;
 class CLabelPool;
@@ -898,6 +905,13 @@ void CPlayerPed::ClearAllWeapons()
     }
 
     *pbyteCurrentPlayer = 0;
+}
+
+void CPlayerPed::RemoveFromVehicleAndPutAt(float fX, float fY, float fZ) {
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
+    if (m_pPed && (m_pPed->dwStateFlags & 0x100)) {
+        ScriptCommand(&remove_actor_from_car_and_put_at, m_dwGTAId, fX, fY, fZ);
+    }
 }
 
 void CPlayerTags::End() {
