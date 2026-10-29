@@ -1388,7 +1388,8 @@ void CEntity::AdvancePosition(void)
 
 int CEntity::IsStationary(void)
 {
-    if (!IsAdded()) return 0;
+    if (!m_pEntity || *(void**)m_pEntity == (void*)0x863C40 || !m_pEntity->pSector)
+        return 0;
 
     if (m_pEntity->vecMoveSpeed.X == 0.0f &&
         m_pEntity->vecMoveSpeed.Y == 0.0f &&
