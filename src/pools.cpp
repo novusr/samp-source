@@ -356,6 +356,18 @@ public:
     void* ped;
     int IsActive();
 };
+
+struct R5ScoreboardNetPlayer {
+    char gap0[8];
+    int m_bIsNPC;
+};
+
+class R5ScoreboardPlayerQueriesView {
+public:
+    char prefix[0x1f8a];
+    R5ScoreboardNetPlayer* players[1005];
+    int IsNPC(unsigned short id);
+};
 #pragma pack(pop)
 
 int CPlayerPed::IsCellphoneEnabled() {
@@ -1337,6 +1349,14 @@ void CPlayerPed::ProcessVehicleHorn()
         pGtaVehicle->byteHorn2 = (pPlayerControls->wKeys1[18] != 0);
     }
 }
+
+void CPlayerPed::LoadShoppingDataSubsection(char* szSectionName)
+{
+    if (strlen(szSectionName) > 8) return;
+    typedef void (__cdecl *LoadFn)(char*);
+    ((LoadFn)0x49bbe0)(szSectionName);
+}
+#pragma optimize("", on)
 
 char* CPlayerPed::GetShopName() {
     if (!m_pPed) return 0;
