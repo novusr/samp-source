@@ -286,6 +286,7 @@ public:
     void HideMarker();
     void SetImmunities(int bBullet, int bFire, int bExplosion, int bDamage, int bUnknown);
     int IsSwimming();
+    void RemoveAllAttachedObjects();
     void StartJetpack();
     void StopJetpack();
     void TeleportTo(float x, float y, float z);
