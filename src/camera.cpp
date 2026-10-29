@@ -52,6 +52,128 @@ struct _VECTOR {
 };
 #pragma pack(pop)
 
+#define _CAMERA_DEFS_
+struct _MATRIX4X4 {
+    _VECTOR right;
+    unsigned long flags;
+    _VECTOR up;
+    float pad_u;
+    _VECTOR at;
+    float pad_a;
+    _VECTOR pos;
+    float pad_p;
+};
+
+class CEntity;
+
+struct SCRIPT_COMMAND;
+int ScriptCommand(const SCRIPT_COMMAND* pScriptCommand, ...);
+extern const SCRIPT_COMMAND restore_camera_to_user_defined;
+extern const SCRIPT_COMMAND set_camera_position;
+extern const SCRIPT_COMMAND restore_camera_jumpcut;
+extern const SCRIPT_COMMAND lock_camera_position;
+extern const SCRIPT_COMMAND set_camera_behind_player;
+extern const SCRIPT_COMMAND point_camera;
+
+class CCamera {
+public:
+    CEntity* m_pEntity;
+    _MATRIX4X4* m_matPos;
+
+    void GetMatrix(_MATRIX4X4* pMatrix);
+    void SetPosition(float fX, float fY, float fZ, float fRotationX, float fRotationY, float fRotationZ);
+    void Restore();
+    void Attach(int unk1, int unk2, int unk3);
+    void SetBehindPlayer();
+    void LookAtPoint(float fX, float fY, float fZ, int iType);
+    float GetDistanceFromPoint(_VECTOR* vecPos);
+};
+
+struct D3DXVECTOR3 {
+    float x, y, z;
+};
+
+struct D3DXMATRIX {
+    float m[4][4];
+};
+
+extern "C" D3DXMATRIX* __stdcall D3DXMatrixPerspectiveFovLH(D3DXMATRIX *pOut, float fovy, float Aspect, float zn, float zf);
+
+struct POINT {
+    long x, y;
+};
+
+struct D3DXVECTOR2 {
+    float x, y;
+};
+
+struct RECT {
+    long left;
+    long top;
+    long right;
+    long bottom;
+};
+
+#pragma pack(push, 1)
+class CBaseCamera {
+public:
+    CBaseCamera();
+    virtual long HandleMessages(void* hWnd, unsigned int uMsg, unsigned int wParam, long lParam);
+    virtual void FrameMove(float fElapsedTime) = 0;
+    virtual void Reset();
+    virtual void SetViewParams(D3DXVECTOR3* pvEyePt, D3DXVECTOR3* pvLookatPt);
+    virtual void SetProjParams(float fFOV, float fAspect, float fNearPlane, float fFarPlane);
+    virtual void SetDragRect(RECT& rc);
+
+    D3DXMATRIX m_mView;
+    D3DXMATRIX m_mProj;
+    unsigned char m_aKeys[8];
+    POINT m_ptLastMousePosition;
+    bool m_bMouseLButtonDown;
+    bool m_bMouseMButtonDown;
+    bool m_bMouseRButtonDown;
+    int m_nCurrentButtonMask;
+    int m_nMouseWheelDelta;
+    D3DXVECTOR2 m_vMouseDelta;
+    float m_fFramesToSmoothMouseData;
+    D3DXVECTOR3 m_vDefaultEye;
+    D3DXVECTOR3 m_vDefaultLookAt;
+    D3DXVECTOR3 m_vEye;
+    D3DXVECTOR3 m_vLookAt;
+    float m_fCameraYawAngle;
+    float m_fCameraPitchAngle;
+    RECT m_rcDrag;
+    D3DXVECTOR3 m_vVelocity;
+    bool m_bMovementDrag;
+    D3DXVECTOR3 m_vVelocityDrag;
+    float m_fDragTimer;
+    float m_fTotalDragTimeToZero;
+    D3DXVECTOR2 m_vRotVelocity;
+    float m_fFOV;
+    float m_fAspect;
+    float m_fNearPlane;
+    float m_fFarPlane;
+    float m_fRotationScaler;
+    float m_fMoveScaler;
+    bool m_bInvertPitch;
+    bool m_bEnablePositionMovement;
+    bool m_bEnableYAxisMovement;
+    bool m_bClipToBoundary;
+    D3DXVECTOR3 m_vMinBoundary;
+    D3DXVECTOR3 m_vMaxBoundary;
+    bool m_bResetCursorAfterMove;
+};
+
+class CFirstPersonCamera : public CBaseCamera {
+public:
+    CFirstPersonCamera();
+    virtual void FrameMove(float fElapsedTime);
+
+    D3DXMATRIX m_mCameraWorld;
+    int m_nActiveButtonMask;
+};
+#pragma pack(pop)
+
 float FloatDifference(float f1, float f2) {
     return f1 - f2;
 }
