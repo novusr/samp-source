@@ -314,9 +314,10 @@ int CActorPool::Delete(unsigned short id) {
     return 0;
 }
 
+#pragma optimize("y", off)
 void R5PreviewPedModelView::SetModelIndex(unsigned int model)
 {
-    unsigned long nativePed = (unsigned long)m_pPed;
+    volatile unsigned long nativePed = (unsigned long)m_pPed;
     if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
     if (!IsActorPedModelValid(model)) model = 0;
     if (nativePed) {
@@ -330,4 +331,13 @@ void R5PreviewPedModelView::SetModelIndex(unsigned int model)
         (((CAEPedAudioEntity*)((char*)nativePed + 0x294))->*u.fn)((void*)nativePed);
     }
 }
-
+#pragma optimize("y", on)
+void R5PreviewPedAnimationView::UpdateAnimations(float step, int onScreen) {
+    if (ped) {
+        void* clump = GetRwObject();
+        if (clump) {
+            UpdatePreviewClumpAnimations(clump, step, onScreen);
+        }
+    }
+}
+#pragma optimize("", on)
