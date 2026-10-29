@@ -1532,7 +1532,7 @@ void R5TextDrawPool::ReleasePreviewTextures() {
             m_pTextDraw[i]->ReleasePreviewTexture();
         }
         i++;
-    } while (i < 2304);
+    } while (i != 2304);
 }
 
 #pragma optimize("y", on)
