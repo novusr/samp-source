@@ -412,8 +412,11 @@ char* Util_itoa(int v, char* s, int r) {
 }
 
 extern "C" void __cdecl free(void*);
+extern "C" void* __cdecl malloc(unsigned int);
+extern "C" void* __cdecl realloc(void*, unsigned int);
 extern "C" void* __cdecl memcpy(void*, const void*, unsigned int);
-#pragma intrinsic(memcpy)
+extern "C" void* __cdecl memset(void*, int, unsigned int);
+#pragma intrinsic(memcpy, memset)
 void* __cdecl operator new[](unsigned int);
 
 namespace RakNet {
@@ -446,6 +449,8 @@ public:
 
     void AddBitsAndReallocate(const int numberOfBitsToWrite);
     int CopyData(unsigned char** _data) const;
+    bool ReadBits(unsigned char* output, int numberOfBitsToRead, const bool alignBitsToRight = true);
+    void AssertCopyData();
 
 private:
     bool DoEndianSwap() const;
