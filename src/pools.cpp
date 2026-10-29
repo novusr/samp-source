@@ -766,6 +766,12 @@ void CPlayerPed::HideMarker() {
     }
 }
 
+void CPlayerPed::SetImmunities(int bBullet, int bFire, int bExplosion, int bDamage, int bUnknown) {
+    if (!m_pPed) return;
+    if (!GamePool_Ped_GetAt(m_dwGTAId)) return;
+    ScriptCommand(&set_actor_immunities, m_dwGTAId, bBullet, bFire, bExplosion, bDamage, bUnknown);
+}
+
 void LocalPlayerRPCResetView::SetStatePair(int first, int second) {
     field_2DA = first;
     field_2DE = second;
